@@ -24,13 +24,13 @@
             font-family: 'Fredoka', sans-serif;
             font-family: 'Mitr', sans-serif;
         }
-
     </style>
         
         <body>
         <div class="container">
             <div class="card">
                 <center><h1>อยู่ในช่วงปรับปรุง</h1></center>
+                
             </div>
         </div>
         </body>
