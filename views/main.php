@@ -29,6 +29,8 @@
 
     $numb_service_today = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND u.repair_date = '$today_date' $conditions  ")->fetchColumn();
 
+    $numb_service_
+
     //$numb_equipment = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."equipment_main s WHERE s.flag != '0' $conditions  ")->fetchColumn();
     //$numb_donate = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."donate_main s WHERE s.flag != '0'  $conditions  ")->fetchColumn();
     ?>
@@ -58,8 +60,18 @@
                             <div class="col-xl-2">
                                     <div class="card card-custom gutter-b" style="height: 150px">
                                         <div class="card-body">
+                                            <span class="svg-icon svg-icon-3x svg-icon-success"><i class="fas fa-user-plus fa-3x text-success"></i></span>
+                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php//echo $numb_service_today;?></div>
+                                            <a href="#" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">แจ้งรับการซ่อม</a>
+                                        </div>
+                                    </div>
+                            </div>
+
+                            <div class="col-xl-2">
+                                    <div class="card card-custom gutter-b" style="height: 150px">
+                                        <div class="card-body">
                                             <span class="svg-icon svg-icon-3x svg-icon-success"><i class="fas fa-screwdriver fa-3x text-success"></i></span>
-                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_service_today;?></div>
+                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php//echo $numb_service_today;?></div>
                                             <a href="#" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">รายการกำลังซ่อม</a>
                                         </div>
                                     </div>
@@ -69,7 +81,7 @@
                                     <div class="card card-custom gutter-b" style="height: 150px">
                                         <div class="card-body">
                                             <span class="svg-icon svg-icon-3x svg-icon-success"><i class="far fa-calendar-check fa-3x text-success"></i></span>
-                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_service_today;?></div>
+                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php//echo $numb_service_today;?></div>
                                             <a href="#" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">รายการซ่อมเสร็จ</a>
                                         </div>
                                     </div>
@@ -79,7 +91,7 @@
                                     <div class="card card-custom gutter-b" style="height: 150px">
                                         <div class="card-body">
                                             <span class="svg-icon svg-icon-3x svg-icon-success"><i class="fas fa-truck fa-3x text-success"></i></span>
-                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_service_today;?></div>
+                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php//echo $numb_service_today;?></div>
                                             <a href="#" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">รายการซ่อมภายนอก</a>
                                         </div>
                                     </div>
@@ -89,11 +101,13 @@
                                     <div class="card card-custom gutter-b" style="height: 150px">
                                         <div class="card-body">
                                             <span class="svg-icon svg-icon-3x svg-icon-success"><i class="fas fa-user-clock fa-3x text-success"></i></span>
-                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_service_today;?></div>
+                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php//echo $numb_service_today;?></div>
                                             <a href="#" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">รายการรอรับคืน</a>
                                         </div>
                                     </div>
                             </div>
+
+                            
 
                             
 
