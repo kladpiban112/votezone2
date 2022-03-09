@@ -593,8 +593,7 @@ $('#btnSave').click(function(e){
                       //liff.closeWindow();
                   });
                 }
-            }
-      } // success
+            }// success
         });
 
         }
