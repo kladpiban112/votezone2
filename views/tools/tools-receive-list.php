@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 
 $receive_date_get = filter_input(INPUT_GET, 'receivedate', FILTER_SANITIZE_STRING);
 $receivedate = date_saveto_db($receive_date_get);

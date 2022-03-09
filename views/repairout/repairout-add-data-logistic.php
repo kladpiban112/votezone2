@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 session_start();
 require_once '../../core/config.php';
 require_once ABSPATH.'/checklogin.php';

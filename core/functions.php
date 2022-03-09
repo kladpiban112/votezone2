@@ -1162,14 +1162,13 @@ function getRepairPayment($repairid){
 
 function getOrgProfile($orgid){
     global $conn;
-    $stmt = $conn->prepare("SELECT *  
-	FROM ".DB_PREFIX."org_main WHERE org_id = ?  AND flag = '1'  LIMIT 1");
+    $stmt = $conn->prepare("SELECT * FROM ".DB_PREFIX."org_main WHERE org_id = ?  AND flag = '1'  LIMIT 1");
     $stmt->execute([$orgid]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $rs = [
         'org_name' => $result['org_name'],
         'org_shortname' => $result['org_shortname'],
-        'org_line_token' => $result['line_token'],
+        'org_line_token' => $result['org_line_token'],
     ];
     return $rs;
 }

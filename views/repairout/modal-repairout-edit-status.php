@@ -39,8 +39,6 @@
                                         </div>
 
                                         
-                                        
-                                        
                                       </div>
 
                                       <div class="form-group row">
@@ -108,8 +106,6 @@
 
 $(document).ready(function () {
     'use strict';
-
-
 
 }); 
 

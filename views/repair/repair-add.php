@@ -14,15 +14,15 @@ if($action == "edit"){
 
 	$stmt_data = $conn->prepare ("SELECT p.*,o.org_name FROM ".DB_PREFIX."person_main p 
 	LEFT JOIN ".DB_PREFIX."org_main o ON p.org_id = o.org_id 
-  WHERE p.oid = '$personid'  LIMIT 1");
-  $stmt_data->execute();	
-  $row_person = $stmt_data->fetch(PDO::FETCH_ASSOC);
+    WHERE p.oid = '$personid'  LIMIT 1");
+    $stmt_data->execute();	
+    $row_person = $stmt_data->fetch(PDO::FETCH_ASSOC);
   
    $sql_service = "SELECT s.* FROM ".DB_PREFIX."repair_main s 
 	LEFT JOIN ".DB_PREFIX."person_main p ON s.person_id = p.oid 
-  WHERE s.repair_id = '$repairid' AND s.flag != '0'  LIMIT 1";
-  $stmt_service = $conn->prepare ($sql_service);
-  $stmt_service->execute();	
+    WHERE s.repair_id = '$repairid' AND s.flag != '0'  LIMIT 1";
+    $stmt_service = $conn->prepare ($sql_service);
+    $stmt_service->execute();	    
 	$row_service = $stmt_service->fetch(PDO::FETCH_ASSOC);
 
 }else{
@@ -571,7 +571,6 @@ $('#btnSave').click(function(e){
             contentType: false,
             success: function(data) {  
               if (data.code == "200") {
-                
                 Swal.fire({
                 icon: 'success',
                 title: 'บันทึกสำเร็จ',
@@ -579,7 +578,7 @@ $('#btnSave').click(function(e){
                 timer: 1500
                 })
                     .then((value) => {
-                    lineAlert();
+                    // lineAlert();
                     window.location.replace("dashboard.php?module=repair&page=repair-add-data&personid="+data.personid+"&repairid="+data.repairid+"&act="+data.act);
                     
                 }); 
@@ -594,7 +593,10 @@ $('#btnSave').click(function(e){
                       //liff.closeWindow();
                   });
                 }
-            } // success
+            }, error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.status);
+        console.log(xhr);
+      } // success
         });
 
         }

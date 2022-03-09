@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 session_start();
 require_once "../../core/config.php";
 require_once ABSPATH."/checklogin.php";
@@ -46,13 +47,8 @@ $numb_rows = $stmt_data->rowCount();
                 $cost = $row['cost']; // ค่าซ่อม
                 $cost_payment = $row['cost_payment']; // ค่าซ่อมชำระแล้ว
                 $cost_success = $row['cost_success'];
-
-      
                 ?>
-
-
-            
- 
+                
                 <tr>
                             <td class="text-center"><?php echo $cost;?></td>
                             <td class="text-center"><?php echo $cost_payment;?></td>

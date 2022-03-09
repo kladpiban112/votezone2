@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 $search = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING);
 if ($search != '') {
     $search_data = " AND u.spare_name LIKE '%$search%' OR u.spare_code LIKE '%$search%'  ";

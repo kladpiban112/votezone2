@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 $search = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING);
 $eq_typeid = filter_input(INPUT_GET, 'eq_typeid', FILTER_SANITIZE_STRING);
 if($search != ""){
