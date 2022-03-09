@@ -29,7 +29,11 @@
     $numb_service = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' $conditions ")->fetchColumn();
 
     $numb_service_today = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND u.repair_date = '$today_date' $conditions  ")->fetchColumn();
-
+    
+    $numb_servic = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '1' $conditions ")->fetchColumn();
+    $numb_servi = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '2' $conditions ")->fetchColumn();
+    $numb_serv = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '3' $conditions ")->fetchColumn();
+    $numb_ser = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '4'  $conditions ")->fetchColumn();
 
     //$numb_equipment = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."equipment_main s WHERE s.flag != '0' $conditions  ")->fetchColumn();
     //$numb_donate = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."donate_main s WHERE s.flag != '0'  $conditions  ")->fetchColumn();
@@ -275,7 +279,7 @@
                             <td><?php echo $repair_date;?></td>
                             <td class="text-center"><?php echo $repair_inout_show;?></td>
                             <td><?php echo $repair_typetitle;?></td>
-                            <td><?php echo $eq_name;;?></br><small>รหัส : <?php echo $eq_code;?></small></td>
+                            <td><?php echo $eq_name;?></br><small>รหัส : <?php echo $eq_code;?></small></td>
                             <td><?php echo $repair_title;?></td>
                             <td><?php echo $fullname;?></br><small>เลขบัตร : <?php echo $cid;?></small></td>
                             <td><?php echo $org_shortname;?></td>
