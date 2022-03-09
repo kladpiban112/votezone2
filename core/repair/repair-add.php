@@ -51,7 +51,7 @@ $line_token_key = $func_orgprofile['org_line_token'];
 
 
 
-
+$exist_person = "";
 if($act == 'add'){
 
 // check for duplicate email

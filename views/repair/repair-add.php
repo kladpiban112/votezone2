@@ -578,7 +578,7 @@ $('#btnSave').click(function(e){
                 timer: 1500
                 })
                     .then((value) => {
-                    // lineAlert();
+                    lineAlert();
                     window.location.replace("dashboard.php?module=repair&page=repair-add-data&personid="+data.personid+"&repairid="+data.repairid+"&act="+data.act);
                     
                 }); 
@@ -593,9 +593,7 @@ $('#btnSave').click(function(e){
                       //liff.closeWindow();
                   });
                 }
-            }, error: function (xhr, ajaxOptions, thrownError) {
-        alert(xhr.status);
-        console.log(xhr);
+            }
       } // success
         });
 
