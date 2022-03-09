@@ -52,13 +52,8 @@ if($action == "edit"){
     $stmt_data->execute();	
     $row_person = $stmt_data->fetch(PDO::FETCH_ASSOC);
   
-    
-
-
 }
 ?>
-
-
 
 		<!--begin::Card-->
 		<div class="card card-custom gutter-b example example-compact">

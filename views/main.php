@@ -23,20 +23,19 @@
         }else{
 
         $conditions = " AND u.org_id = '$logged_org_id' ";
+
         }
 
     $numb_service = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' $conditions ")->fetchColumn();
 
     $numb_service_today = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND u.repair_date = '$today_date' $conditions  ")->fetchColumn();
 
-    $numb_service_
 
     //$numb_equipment = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."equipment_main s WHERE s.flag != '0' $conditions  ")->fetchColumn();
     //$numb_donate = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."donate_main s WHERE s.flag != '0'  $conditions  ")->fetchColumn();
     ?>
 
 	<div class="row">
-							
                             <div class="col-xl-2">
                                     <div class="card card-custom gutter-b" style="height: 150px">
                                         <div class="card-body">
@@ -107,11 +106,6 @@
                                     </div>
                             </div>
 
-                            
-
-                            
-
-
                             <!--<div class="col-xl-3">
                                     <div class="card card-custom gutter-b" style="height: 150px">
                                         <div class="card-body">
@@ -131,10 +125,6 @@
                                         </div>
                                     </div>
                             </div>-->
-
-					
-					
-					
 				</div>
 
 
@@ -285,7 +275,7 @@
                             <td><?php echo $repair_date;?></td>
                             <td class="text-center"><?php echo $repair_inout_show;?></td>
                             <td><?php echo $repair_typetitle;?></td>
-                            <td><?php echo $eq_name;?></br><small>รหัส : <?php echo $eq_code;?></small></td>
+                            <td><?php echo $eq_name;;?></br><small>รหัส : <?php echo $eq_code;?></small></td>
                             <td><?php echo $repair_title;?></td>
                             <td><?php echo $fullname;?></br><small>เลขบัตร : <?php echo $cid;?></small></td>
                             <td><?php echo $org_shortname;?></td>
@@ -302,8 +292,8 @@
                                         <!--begin::Navigation-->
 
                                     <?php 
-                                    if($repair_out == 'I'){
-                                        
+                                    if($repair_inout == 'I'){
+
                                         ?>    
                                     <ul class="navi navi-hover py-1">
                                         <li class="navi-item">
@@ -336,7 +326,7 @@
                                             </a>
                                         </li> 
                                     </ul>
-                                    <?php }else{?>
+                                    <?php }else {?>
 
                                         <ul class="navi navi-hover py-1">
                                         <li class="navi-item">
