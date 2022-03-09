@@ -21,6 +21,7 @@ $spare_desc = filter_input(INPUT_POST, 'spare_desc', FILTER_SANITIZE_STRING);
 $flag = 1;
 $now = date('Y-m-d H:i:s');
 $status_out = 'I';
+$receive_id = '';
 
 $query = 'INSERT INTO '.DB_PREFIX.'repair_spare (oid,repair_id,spare_id,spare_code,spare_quantity,spare_unit,spare_price,spare_desc, flag,add_date,add_users,status_out,spare_other) VALUES (NULL, ?,?,?,?,?,?,?,?,?,?,?,?)';
 $stmt = $conn->prepare($query);

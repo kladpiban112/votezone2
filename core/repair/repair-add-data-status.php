@@ -17,7 +17,7 @@ $staff_id = filter_input(INPUT_POST, 'staff_id', FILTER_SANITIZE_STRING);
 $flag = 1;
 $now = date("Y-m-d H:i:s");
 $status_out = 'I';
-
+$receive_id = '';
 
 $query = "INSERT INTO ".DB_PREFIX."repair_status (oid,repair_id,status_date,status_id,status_desc,staff_id,flag,add_date,add_users,status_out) VALUES (NULL, ?,?,?,?,?,?,?,?,?)"; 
 $stmt = $conn->prepare($query);

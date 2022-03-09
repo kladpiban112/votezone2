@@ -14,6 +14,7 @@ $cost_note = filter_input(INPUT_POST, 'cost_note', FILTER_SANITIZE_STRING);
 $flag = 1;
 $now = date("Y-m-d H:i:s");
 //$status_out = 'I';
+$receive_id = '';
 
 // check for duplicate 
 $stmt = $conn->prepare("SELECT * FROM ".DB_PREFIX."repair_payment WHERE repair_id = ? AND flag = '1' ");

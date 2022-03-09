@@ -1171,7 +1171,6 @@ $('#btnAddStatus').click(function(e) {
             timer: 1000
         });
     } else {
-
         var data = new FormData(this.form);
         $.ajax({
             type: "POST",
@@ -1321,8 +1320,6 @@ $('.editor').trumbowyg({
             ico: 'insertImage'
         }
     },
-
-
     btns: [
         ['viewHTML'],
         ['undo', 'redo'],
@@ -1339,7 +1336,6 @@ $('.editor').trumbowyg({
         ['foreColor', 'backColor'],
         ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
     ],
-
     plugins: {
         upload: {
             serverPath: '<?php echo ADMIN_URL; ?>/assets/plugins/trumbowyg/texteditor-upload.php',

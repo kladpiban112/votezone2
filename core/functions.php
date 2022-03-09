@@ -939,7 +939,7 @@ function getRepaircode($orgid,$datereceive)
 
 					$stmt = $conn->prepare("UPDATE ".DB_PREFIX."repair_main  SET  repair_status = ?  WHERE repair_id = ?  ");
 		            $stmt->execute([$status_id, $repairid]);
-
+					$org_name = "";
 
 					
 			  }else  {
