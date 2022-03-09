@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 $personid = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
 $personid_enc = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
 $repairid = filter_input(INPUT_GET, 'repairid', FILTER_SANITIZE_STRING);
@@ -627,6 +628,7 @@ $('#btnSave').click(function(e){
 			processData: false,
             contentType: false,
             success: function(data) {  
+                console.log(data);
               if (data.code == "200") {
                 
                 Swal.fire({
@@ -636,7 +638,7 @@ $('#btnSave').click(function(e){
                 timer: 1500
                 })
                     .then((value) => {
-                    lineAlert();
+                    // lineAlert();
                     window.location.replace("dashboard.php?module=repairout&page=repairout-add-data&personid="+data.personid+"&repairid="+data.repairid+"&act="+data.act);
                     
                 }); 
