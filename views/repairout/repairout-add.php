@@ -551,13 +551,13 @@ var tambon = $("#txt_tambon").val();
 }	
 
 
-function lineAlert(){
+function lineAlertout(){
 
 var org_id = $("#org_id").val();
 
     $.ajax({
         type: "POST",
-        url: "core/repair/repair-add-notify.php",
+        url: "core/repairout/repair-out-notify.php",
         //dataType: "json",
         data: {org_id:org_id},
         success: function(data) {
@@ -637,7 +637,7 @@ $('#btnSave').click(function(e){
                 timer: 1500
                 })
                     .then((value) => {
-                    // lineAlert(); 
+                        // lineAlertout(); 
                     window.location.replace("dashboard.php?module=repairout&page=repairout-add-data&personid="+data.personid+"&repairid="+data.repairid+"&act="+data.act);
                     
                 }); 
