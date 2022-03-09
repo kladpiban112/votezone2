@@ -637,7 +637,7 @@ $('#btnSave').click(function(e){
                 timer: 1500
                 })
                     .then((value) => {
-                    // lineAlert();
+                    // lineAlert(); 
                     window.location.replace("dashboard.php?module=repairout&page=repairout-add-data&personid="+data.personid+"&repairid="+data.repairid+"&act="+data.act);
                     
                 }); 
