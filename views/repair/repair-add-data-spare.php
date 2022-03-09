@@ -64,7 +64,6 @@ $numb_rows = $stmt_data->rowCount();
 
 
 
-
             <tr>
                 <td class="text-center" width="20px"><?php echo $i; ?></td>
 
