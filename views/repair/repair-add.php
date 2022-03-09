@@ -593,6 +593,7 @@ $('#btnSave').click(function(e){
                       //liff.closeWindow();
                   });
                 }
+<<<<<<< HEAD
             }// success
         });
 
