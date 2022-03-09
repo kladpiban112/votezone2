@@ -630,7 +630,6 @@ $('#btnSave').click(function(e){
             success: function(data) {  
                 console.log(data);
               if (data.code == "200") {
-                
                 Swal.fire({
                 icon: 'success',
                 title: 'บันทึกสำเร็จ',
