@@ -47,7 +47,7 @@ $repair_place = filter_input(INPUT_POST, 'repair_place', FILTER_SANITIZE_STRING)
 $flag = '1';
 $now = date("Y-m-d H:i:s");
 
-
+$exist_person = "";
 if($act == 'add'){
 
 // check for duplicate email

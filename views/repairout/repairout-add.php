@@ -552,21 +552,19 @@ var tambon = $("#txt_tambon").val();
 
 
 function lineAlertout(){
+    var org_id = $("#org_id").val();
 
-var org_id = $("#org_id").val();
-
-    $.ajax({
-        type: "POST",
-        url: "core/repairout/repair-out-notify.php",
-        //dataType: "json",
-        data: {org_id:org_id},
-        success: function(data) {
-        
-            //$("#tambon").empty();
-            //$("#tambon").append(data);
-        } // success
-    });
-
+        $.ajax({
+            type: "POST",
+            url: "core/repairout/repair-out-notify.php",
+            //dataType: "json",
+            data: {org_id:org_id},
+            success: function(data,xhr) {
+            console.log(xhr);
+                //$("#tambon").empty();
+                //$("#tambon").append(data);
+            } // success
+        });
 }	
 
 
@@ -628,7 +626,6 @@ $('#btnSave').click(function(e){
 			processData: false,
             contentType: false,
             success: function(data) {  
-                console.log(data);
               if (data.code == "200") {
                 Swal.fire({
                 icon: 'success',
@@ -637,7 +634,7 @@ $('#btnSave').click(function(e){
                 timer: 1500
                 })
                     .then((value) => {
-                        // lineAlertout(); 
+                       lineAlertout(); 
                     window.location.replace("dashboard.php?module=repairout&page=repairout-add-data&personid="+data.personid+"&repairid="+data.repairid+"&act="+data.act);
                     
                 }); 
