@@ -634,7 +634,7 @@ $('#btnSave').click(function(e){
                 timer: 1500
                 })
                     .then((value) => {
-                       lineAlertout(); 
+                    lineAlertout(); 
                     window.location.replace("dashboard.php?module=repairout&page=repairout-add-data&personid="+data.personid+"&repairid="+data.repairid+"&act="+data.act);
                     
                 }); 
@@ -649,7 +649,10 @@ $('#btnSave').click(function(e){
                       //liff.closeWindow();
                   });
                 }
-            } // success
+            },error: function (jqXHR, exception) {
+    console.log(jqXHR);
+    // Your error handling logic here..
+}// success
         });
 
         }
