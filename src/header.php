@@ -32,7 +32,7 @@
 				<!--begin::Header-->
 <div id="kt_header" class="header  header-fixed " >
 	<!--begin::Container-->
-	<div class=" container  d-flex align-items-stretch justify-content-between">
+	<div class=" container-fluid  d-flex align-items-stretch justify-content-between">
 		<!--begin::Left-->
 		<div class="d-flex align-items-stretch mr-3">
 			<!--begin::Header Logo-->

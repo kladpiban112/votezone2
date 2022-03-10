@@ -44,7 +44,7 @@ $pagenum = filter_input(INPUT_GET, 'pagenum', FILTER_SANITIZE_NUMBER_INT);
 					<!--begin::Entry-->
 	<div class="d-flex flex-column-fluid">
 		<!--begin::Container-->
-		<div class=" container ">
+		<div class=" container-fluid">
 <!--begin::Dashboard-->
 <!--begin::Row-->
 <div class="row">

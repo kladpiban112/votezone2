@@ -92,7 +92,7 @@ if($action == "edit"){
                     <option value="" <?php if($row_service['repair_refid'] == '' ){echo "selected";} ?>>ระบุเลขที่ใบแจ้งซ่อม</option>
                     <?php
 				
-					$stmt_user_role = $conn->prepare("SELECT * FROM ".DB_PREFIX."repair_main WHERE org_id = '$logged_org_id'  AND repair_inout = 'I'  ");
+					$stmt_user_role = $conn->prepare("SELECT * FROM ".DB_PREFIX."repair_main WHERE org_id = '$logged_org_id'  AND repair_inout = 'I' AND flag = '1'  ");
 					$stmt_user_role->execute();		
 					while ($row = $stmt_user_role->fetch(PDO::FETCH_ASSOC))
 						{
