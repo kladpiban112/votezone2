@@ -1,4 +1,6 @@
 <?php
+error_reporting(0);
+
 $personid = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
 $repairid = filter_input(INPUT_GET, 'repairid', FILTER_SANITIZE_STRING);
 $act = filter_input(INPUT_GET, 'act', FILTER_SANITIZE_STRING);
@@ -525,6 +527,7 @@ $('#btnAddQuotation').click(function(e){
             contentType: false,
             success: function(data) {  
               if (data.code == "200") {
+                console.log(data);
                 Swal.fire({
                 icon: 'success',
                 title: 'บันทึกสำเร็จ',
@@ -562,6 +565,9 @@ $('#btnAddQuotation').click(function(e){
                       //liff.closeWindow();
                   });
                 }
+            },error: function (jqXHR, exception) {
+                console.log(jqXHR);
+                // Your error handling logic here..
             } // success
         });
 

@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 
 $startdate = filter_input(INPUT_GET, 'startdate', FILTER_SANITIZE_STRING);
 $startdate_ymd = date_saveto_db($startdate);

@@ -1,4 +1,6 @@
 <?php
+error_reporting(0);
+
 $personid = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
 $repairid = filter_input(INPUT_GET, 'repairid', FILTER_SANITIZE_STRING);
 $spareid = filter_input(INPUT_GET, 'spareid', FILTER_SANITIZE_STRING);

@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 
 $service_date = filter_input(INPUT_GET, 'servicedate', FILTER_SANITIZE_STRING);
 $service_date_ymd = date_saveto_db($service_date);

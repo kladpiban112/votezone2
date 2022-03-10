@@ -1,4 +1,6 @@
 <?php
+error_reporting(0);
+
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING);
 $act = filter_input(INPUT_GET, 'act', FILTER_SANITIZE_STRING);
 $spareid = base64_decode($id);
@@ -175,7 +177,7 @@ if($action == "edit"){
 					<div class="col-lg-12">
 					<div class="symbol symbol-50 symbol-lg-100 text-center">
 					<?php if($row_data['spare_img'] == ""){?>
-                    <img src="uploads/equipment/no-image.jpg" alt="image"/>
+                    <img src="uploads/no-image.jpg" alt="image"/>
                             <?php }else{?>
                                 <img src="uploads/spare/<?php echo $row_data['spare_img'];?>" alt="image"/>
                                 <?php   } ?>

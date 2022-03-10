@@ -36,8 +36,8 @@ $startdate = date_saveto_db($startdate);
 $outdate = filter_input(INPUT_POST, 'outdate', FILTER_SANITIZE_STRING);
 $outdate = date_saveto_db($outdate);
 $out_desc = filter_input(INPUT_POST, 'out_desc', FILTER_SANITIZE_STRING);
-
-
+$exist_person = '';
+$serviceid = '';
 //$flag = '1';
 $now = date("Y-m-d H:i:s");
 

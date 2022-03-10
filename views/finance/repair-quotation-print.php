@@ -1,4 +1,6 @@
 <?php
+error_reporting(0);
+
 $personid_enc = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
 $repairid_enc = filter_input(INPUT_GET, 'repairid', FILTER_SANITIZE_STRING);
 $qtid_enc = filter_input(INPUT_GET, 'qtid', FILTER_SANITIZE_STRING);
@@ -214,7 +216,7 @@ if ($action == 'view') {
                     <button type="button" class="btn btn-secondary btn-sm" onclick="javascript:history.back()"><i
                             class="fa fa-chevron-left" title="ย้อนกลับ"></i> ย้อนกลับ</button>
 
-                    <a href="../pdfprint/finance/rpt-repair-quatation.php?personid=<?php echo $personid_enc; ?>&repairid=<?php echo $repairid_enc; ?>&qtid=<?php echo $qtid_enc; ?>&act=<?php echo base64_encode('view'); ?>"
+                    <a href="././pdfprint/finance/rpt-repair-quatation.php?personid=<?php echo $personid_enc; ?>&repairid=<?php echo $repairid_enc; ?>&qtid=<?php echo $qtid_enc; ?>&act=<?php echo base64_encode('view'); ?>"
                         class="btn btn-success btn-sm font-weight-bold" target="_blank"><i class="fa fa-print"
                             title=""></i> พิมพ์เอกสาร</a>
                     <!-- <button type="button" class="btn btn-success btn-sm font-weight-bold"

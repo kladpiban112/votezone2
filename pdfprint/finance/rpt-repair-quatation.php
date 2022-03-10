@@ -11,7 +11,7 @@ require_once '../../core/functions.php';
 ob_start();
 $datenow = date('Y-m-d');
 $dtnow = date('Y-m-d H:i:s');
-
+$max = '';
 $personid = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
 $repairid = filter_input(INPUT_GET, 'repairid', FILTER_SANITIZE_STRING);
 $qtid = filter_input(INPUT_GET, 'qtid', FILTER_SANITIZE_STRING);
@@ -161,9 +161,9 @@ if ($action == 'view') {
   <?php
                             $orglogo = getOrgLogo($row_person['org_id']);
                             if ($orglogo == '') {?>
-                                <img src="../../assets/images/logo.png" alt="image" width="50" />
+                                <img src="../../assets/images/logo.png" alt="image" width="80" />
                                 <?php } else {?>
-                                <img src="../../uploads/logo/<?php echo $orglogo; ?>" alt="image" width="50">
+                                <img src="../../uploads/logo/<?php echo $orglogo; ?>" alt="image" width="80">
                                 <?php   } ?>
                             </a>
 </td>

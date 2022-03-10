@@ -505,11 +505,12 @@ $('#btnSavePerson').click(function(e){
                       //liff.closeWindow();
                   });
                 }
-            } // success
+            },error: function (jqXHR, exception) {
+              console.log(jqXHR);
+              // Your error handling logic here..
+          } // success
         });
-
         }
-    
       }); //  click
 
 </script>

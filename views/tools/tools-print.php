@@ -1,4 +1,6 @@
 <?php
+error_reporting(0);
+
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING);
 $oid = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING);
 //$serviceid = filter_input(INPUT_GET, 'serviceid', FILTER_SANITIZE_STRING);

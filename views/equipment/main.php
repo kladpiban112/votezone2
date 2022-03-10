@@ -186,7 +186,7 @@ if($eq_typeid != ""){
                             <td class="text-center"><?php echo $i;?></td>
                             <td class="text-center"><div class="symbol symbol-50 symbol-lg-60">
                             <?php if($eq_img == ""){?>
-                                         <img src="uploads/equipment/no-image.jpg" alt="image"/>
+                                         <img src="uploads/no-image.jpg" alt="image"/>
                                    
                             <?php }else{?>
                                         <img src="uploads/equipment/<?php echo $eq_img;?>" alt="image"/>

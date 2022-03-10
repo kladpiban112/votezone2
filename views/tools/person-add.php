@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 $personid = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
 $serviceid = filter_input(INPUT_GET, 'serviceid', FILTER_SANITIZE_STRING);
 $servicetype = filter_input(INPUT_GET, 'servicetype', FILTER_SANITIZE_STRING);

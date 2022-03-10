@@ -1,3 +1,4 @@
+<?php error_reporting(0);?>
 <!--begin::Card-->
 <div class="card card-custom gutter-b example example-compact">
     <div class="card-header">

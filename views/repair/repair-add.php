@@ -594,9 +594,9 @@ $('#btnSave').click(function(e){
                   });
                 }
             },error: function (jqXHR, exception) {
-    console.log(jqXHR);
-    // Your error handling logic here..
-} // success
+                console.log(jqXHR);
+                // Your error handling logic here..
+            } // success
         });
         }
       }); //  click

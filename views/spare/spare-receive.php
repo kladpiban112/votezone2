@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING);
 $act = filter_input(INPUT_GET, 'act', FILTER_SANITIZE_STRING);
 $receiveid = base64_decode($id);
@@ -149,7 +150,7 @@ if ($action == 'edit') {
                         </div>
                         <div class="col-lg-2">
                             <label>จำนวน</label>
-                            <input type="text" class="form-control" name="spare_quantity" id="spare_quantity"
+                            <input type="number" class="form-control" name="spare_quantity" id="spare_quantity"
                                 placeholder="" value="" />
                         </div>
 
@@ -165,7 +166,7 @@ if ($action == 'edit') {
 
                         <div class="col-lg-2">
                             <label>ราคา(บาท)</label>
-                            <input type="text" class="form-control" name="spare_price" id="spare_price" placeholder=""
+                            <input type="number" class="form-control" name="spare_price" id="spare_price" placeholder=""
                                 value="0" />
                         </div>
 

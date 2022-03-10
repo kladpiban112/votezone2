@@ -39,11 +39,6 @@ require_once ABSPATH."/functions.php";
 			//}
 
 
-			
-
-
-			
-
 			$act_enc = base64_encode('edit');
 			$msg = "success";
 			echo json_encode(['code'=>200, 'msg'=>$msg,'oid'=>$id]);
