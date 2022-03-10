@@ -18,6 +18,8 @@
     <?php
     error_reporting(0);
     $today_date = date("Y-m-d");
+    $today = date("d")."/".date("m")."/".(date("Y")+543);
+    $repair_today = "#";
     if($logged_user_role_id == '1'){
         $conditions = " ";
         }else{
@@ -34,7 +36,7 @@
     $numb_begin_work = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '2' $conditions ")->fetchColumn();
     $numb_finish_repair = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '3' $conditions ")->fetchColumn();
     $numb_add_out = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_inout = 'O'  $conditions ")->fetchColumn();
-
+    if( $numb_service_today != '0'){$repair_today = "dashboard.php?act=&module=repair&page=main&startdate=".$today."&enddate=&status=&search=";}
     //$numb_equipment = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."equipment_main s WHERE s.flag != '0' $conditions  ")->fetchColumn();
     //$numb_donate = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."donate_main s WHERE s.flag != '0'  $conditions  ")->fetchColumn();
     ?>
@@ -45,7 +47,7 @@
                                         <div class="card-body">
                                             <span class="svg-icon svg-icon-3x svg-icon-success"><i class="fas fa-calendar-day fa-3x text-success"></i></span>
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_service_today;?></div>
-                                            <a href="#" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">รายการซ่อมวันนี้</a>
+                                            <a href="<?php echo $repair_today ?>" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">รายการซ่อมวันนี้</a>
                                         </div>
                                     </div>
                             </div>
@@ -55,7 +57,7 @@
                                         <div class="card-body">
                                             <span class="svg-icon svg-icon-3x svg-icon-success"><i class="fas fa-user-cog fa-3x text-success"></i></span>
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_service;?></div>
-                                            <a href="#" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">รายการซ่อม</a>
+                                            <a href="././dashboard.php?module=repair&page=main" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">รายการซ่อม</a>
                                         </div>
                                     </div>
                             </div>
@@ -65,7 +67,7 @@
                                         <div class="card-body">
                                             <span class="svg-icon svg-icon-3x svg-icon-success"><i class="fas fa-user-plus fa-3x text-success"></i></span>
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_add_today;?></div>
-                                            <a href="#" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">แจ้งรับการซ่อม</a>
+                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=1&search=" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">แจ้งรับการซ่อม</a>
                                         </div>
                                     </div>
                             </div>
@@ -75,7 +77,7 @@
                                         <div class="card-body">
                                             <span class="svg-icon svg-icon-3x svg-icon-success"><i class="fas fa-screwdriver fa-3x text-success"></i></span>
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_begin_work;?></div>
-                                            <a href="#" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">รายการกำลังซ่อม</a>
+                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=2&search=" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">รายการกำลังซ่อม</a>
                                         </div>
                                     </div>
                             </div>
@@ -85,7 +87,7 @@
                                         <div class="card-body">
                                             <span class="svg-icon svg-icon-3x svg-icon-success"><i class="far fa-calendar-check fa-3x text-success"></i></span>
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_finish_repair;?></div>
-                                            <a href="#" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">รายการซ่อมเสร็จ</a>
+                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=3&search=" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">รายการซ่อมเสร็จ</a>
                                         </div>
                                     </div>
                             </div>
@@ -95,7 +97,7 @@
                                         <div class="card-body">
                                             <span class="svg-icon svg-icon-3x svg-icon-success"><i class="fas fa-truck fa-3x text-success"></i></span>
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_add_out;?></div>
-                                            <a href="#" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">รายการซ่อมภายนอก</a>
+                                            <a href="././dashboard.php?module=repairout&page=main" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">รายการซ่อมภายนอก</a>
                                         </div>
                                     </div>
                             </div>

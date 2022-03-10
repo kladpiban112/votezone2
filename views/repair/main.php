@@ -311,7 +311,7 @@ if ($status != '') {
                                         </li>
                                         <li class="navi-item">
                                             <a target="_blank"
-                                                href="./../pdfprint/repair/rpt-repair-pdf.php?personid=<?php echo $personid_enc; ?>&repairid=<?php echo $repairid_enc; ?>&act=<?php echo base64_encode('view'); ?>"
+                                                href="././pdfprint/repair/rpt-repair-pdf.php?personid=<?php echo $personid_enc; ?>&repairid=<?php echo $repairid_enc; ?>&act=<?php echo base64_encode('view'); ?>"
                                                 class="navi-link">
                                                 <span class="navi-icon"><i class="fas fa-print"></i></span>
                                                 <span class="navi-text">พิมพ์ใบแจ้งซ่อม</span>

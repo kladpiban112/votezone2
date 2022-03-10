@@ -2,7 +2,8 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
+$max = '';
+$sum_spare_price = 0.0;
 // add Lib mPDF to projectr
 require_once '../../core/config.php';
 require_once '../../vendor/autoload.php';
@@ -142,7 +143,7 @@ if ($action == 'view') {
                             if ($orglogo == '') {?>
                                 <img src="../../assets/images/logo.png" alt="image" width="50" />
                                 <?php } else {?>
-                                <img src="../../uploads/logo/<?php echo $orglogo; ?>" alt="image" width="50">
+                                <img src="../../uploads/logo/<?php echo $orglogo; ?>" alt="image" width="80">
                                 <?php   } ?>
                             </a>
 </td>
@@ -287,7 +288,7 @@ mpdf-->
         } // end while
     } else {?>
             <tr>
-                <td class="text-center" height="50px" colspan="8">ไม่มีข้อมูล</td>
+                <td class="text-center" height="50px" colspan="6">ไม่มีข้อมูล</td>
             </tr>
             <?php }
             ?>
@@ -373,7 +374,7 @@ mpdf-->
         } // end while
     } else {?>
             <tr>
-                <td class="text-center" height="50px" colspan="8">ไม่มีข้อมูล</td>
+                <td class="text-center" height="50px" colspan="5">ไม่มีข้อมูล</td>
             </tr>
             <?php }
             ?>

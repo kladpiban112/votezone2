@@ -210,7 +210,7 @@ $query = "INSERT INTO ".DB_PREFIX."repair_main (repair_id,person_id,org_id, repa
 $qr = new BarcodeQR();
 
 // create URL QR code
-$eq_id_enc = base64_encode($eq_id);
+// $eq_id_enc = base64_encode($eq_id);
 $qr->url(ADMIN_URL."/public/qrcode-repair/index.php?serviceid=$service_oid_enc");
 
 // display new QR code image

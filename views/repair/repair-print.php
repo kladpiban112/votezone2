@@ -1,4 +1,6 @@
 <?php
+error_reporting(0);
+
 $personid_enc = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
 $repairid_enc = filter_input(INPUT_GET, 'repairid', FILTER_SANITIZE_STRING);
 $act = filter_input(INPUT_GET, 'act', FILTER_SANITIZE_STRING);
@@ -316,7 +318,7 @@ if ($action == 'view') {
                     <button type="button" class="btn btn-secondary btn-sm" onclick="javascript:history.back()"><i
                             class="fa fa-chevron-left" title="ย้อนกลับ"></i> ย้อนกลับ</button>
                     <a target="_blank"
-                        href="./../pdfprint/repair/rpt-repair-pdf.php?personid=<?php echo $personid_enc; ?>&repairid=<?php echo $repairid_enc; ?>&act=<?php echo base64_encode('view'); ?>"
+                        href="././pdfprint/repair/rpt-repair-pdf.php?personid=<?php echo $personid_enc; ?>&repairid=<?php echo $repairid_enc; ?>&act=<?php echo base64_encode('view'); ?>"
                         class="btn btn-success btn-sm font-weight-bold">
                         <i class="fas fa-print"></i>พิมพ์ใบแจ้งซ่อม
                     </a>
