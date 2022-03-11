@@ -1,6 +1,6 @@
 		<!--begin::Card-->
 		<div class="card card-custom gutter-b example example-compact">
-			<div class="card-header">
+			<div class="card-header ">
 				<h3 class="card-title">
                 DASHBOARD
 				</h3>
@@ -13,7 +13,7 @@
 			</div>
 
 
-	<div class="card-body">
+	<div class="card-body ">
 
     <?php
     $today_date = date("Y-m-d");
