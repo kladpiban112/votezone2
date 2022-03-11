@@ -43,61 +43,61 @@
 
 	<div class="row">
                             <div class="col-xl-2">
-                                    <div class="card card-custom gutter-b" style="height: 150px">
+                                    <div class="card card-custom gutter-b bg-secondary" style="height: 150px">
                                         <div class="card-body">
                                             <span class="svg-icon svg-icon-3x svg-icon-success"><i class="fas fa-calendar-day fa-3x text-success"></i></span>
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_service_today;?></div>
-                                            <a href="<?php echo $repair_today ?>" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">รายการซ่อมวันนี้</a>
+                                            <a href="<?php echo $repair_today ?>" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-1">รายการซ่อมวันนี้</a>
                                         </div>
                                     </div>
                             </div>
 
                             <div class="col-xl-2">
-                                    <div class="card card-custom gutter-b" style="height: 150px">
+                                    <div class="card card-custom gutter-b bg-secondary " style="height: 150px">
                                         <div class="card-body">
                                             <span class="svg-icon svg-icon-3x svg-icon-success"><i class="fas fa-user-cog fa-3x text-success"></i></span>
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_service;?></div>
-                                            <a href="././dashboard.php?module=repair&page=main" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">รายการซ่อม</a>
+                                            <a href="././dashboard.php?module=repair&page=main" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-1">รายการซ่อม</a>
                                         </div>
                                     </div>
                             </div>
 
                             <div class="col-xl-2">
-                                    <div class="card card-custom gutter-b" style="height: 150px">
+                                    <div class="card card-custom gutter-b bg-secondary" style="height: 150px">
                                         <div class="card-body">
                                             <span class="svg-icon svg-icon-3x svg-icon-success"><i class="fas fa-user-plus fa-3x text-success"></i></span>
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_add_today;?></div>
-                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=1&search=" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">แจ้งรับการซ่อม</a>
+                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=1&search=" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-1">แจ้งรับการซ่อม</a>
                                         </div>
                                     </div>
                             </div>
 
                             <div class="col-xl-2">
-                                    <div class="card card-custom gutter-b" style="height: 150px">
+                                    <div class="card card-custom gutter-b bg-secondary" style="height: 150px">
                                         <div class="card-body">
                                             <span class="svg-icon svg-icon-3x svg-icon-success"><i class="fas fa-screwdriver fa-3x text-success"></i></span>
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_begin_work;?></div>
-                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=2&search=" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">รายการกำลังซ่อม</a>
+                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=2&search=" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-1">รายการกำลังซ่อม</a>
                                         </div>
                                     </div>
                             </div>
 
                             <div class="col-xl-2">
-                                    <div class="card card-custom gutter-b" style="height: 150px">
+                                    <div class="card card-custom gutter-b bg-secondary" style="height: 150px">
                                         <div class="card-body">
                                             <span class="svg-icon svg-icon-3x svg-icon-success"><i class="far fa-calendar-check fa-3x text-success"></i></span>
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_finish_repair;?></div>
-                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=3&search=" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">รายการซ่อมเสร็จ</a>
+                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=3&search=" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-1">รายการซ่อมเสร็จ</a>
                                         </div>
                                     </div>
                             </div>
 
                             <div class="col-xl-2">
-                                    <div class="card card-custom gutter-b" style="height: 150px">
+                                    <div class="card card-custom gutter-b bg-secondary" style="height: 150px">
                                         <div class="card-body">
                                             <span class="svg-icon svg-icon-3x svg-icon-success"><i class="fas fa-truck fa-3x text-success"></i></span>
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_add_out;?></div>
-                                            <a href="././dashboard.php?module=repairout&page=main" class="text-muted text-hover-primary font-weight-bold font-size-lg mt-1">รายการซ่อมภายนอก</a>
+                                            <a href="././dashboard.php?module=repairout&page=main" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-1">รายการซ่อมภายนอก</a>
                                         </div>
                                     </div>
                             </div>
