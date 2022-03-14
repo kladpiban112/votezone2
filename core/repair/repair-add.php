@@ -145,11 +145,21 @@ if($exist_person!=0){
 		//$txt_newjob = "มีงานซ่อมเข้าใหม่ ตรวจสอบที่ ".ADMIN_URL;
 		//line_text($txt_newjob,$line_token_key);
 
+		// set BarcodeQR object
+		$qr = new BarcodeQR();
+
+		// create URL QR code
+		// $eq_id_enc = base64_encode($eq_id);
+		$qr->url(ADMIN_URL."/public/qrcode-repair/index.php?serviceid=$service_oid_enc");
+
+		// display new QR code image
+		$qr->draw(300, "../../uploads/qrcode-repair/$service_oid");
+
 
 	
 		$act_enc = base64_encode('edit');
 		$msg = "success";
-		echo json_encode(['code'=>200, 'msg'=>$exist_person,'personid'=>$person_oid_enc,'repairid'=>$service_oid_enc,'act'=>$act_enc]);
+		echo json_encode(['code'=>200, 'msg'=>$exist_person,'personid'=>$person_oid_enc,'repairid'=>$service_oid_enc,'act'=>$act_enc,'action'=>$act]);
 
 }else{
 
@@ -250,7 +260,7 @@ if($_FILES['img_profile']['name'])
 
 			$act_enc = base64_encode('edit');
 			$msg = "success";
-			echo json_encode(['code'=>200, 'msg'=>$exist_person,'personid'=>$person_oid_enc,'repairid'=>$service_oid_enc,'act'=>$act_enc]);
+			echo json_encode(['code'=>200, 'msg'=>$exist_person,'personid'=>$person_oid_enc,'repairid'=>$service_oid_enc,'act'=>$act_enc,'action'=>$act]);
 		  
 	}	
 			
@@ -338,7 +348,7 @@ if($_FILES['img_profile']['name'])
 			$act_enc = base64_encode('edit');
 			$act_enc = base64_encode('edit');
 			$msg = "success";
-			echo json_encode(['code'=>200, 'msg'=>$exist_person,'personid'=>$person_oid_enc,'repairid'=>$service_oid_enc,'act'=>$act_enc]);
+			echo json_encode(['code'=>200, 'msg'=>$exist_person,'personid'=>$person_oid_enc,'repairid'=>$service_oid_enc,'act'=>$act_enc,'action'=>$act]);
 			
 
 

@@ -89,8 +89,6 @@
                                         
                                       </div>
                                    
-    
-    
                                     </div>
                                     <div class="modal-footer">
                                   
@@ -108,8 +106,6 @@
 
 $(document).ready(function () {
     'use strict';
-
-
 
 }); 
 

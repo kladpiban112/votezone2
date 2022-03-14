@@ -1,9 +1,13 @@
-<?php
+<?php 
+error_reporting(0);
 $personid = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
 $repairid = filter_input(INPUT_GET, 'repairid', FILTER_SANITIZE_STRING);
+$personid_enc = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
+$repairid_enc = filter_input(INPUT_GET, 'repairid', FILTER_SANITIZE_STRING);
 $act = filter_input(INPUT_GET, 'act', FILTER_SANITIZE_STRING);
 $personid = base64_decode($personid);
 $repairid = base64_decode($repairid);
+
 $action = base64_decode($act);
 if ($action == 'view') {
     $txt_title = 'ดูข้อมูล';
@@ -29,7 +33,7 @@ if ($action == 'view') {
     $row_service = $stmt_service->fetch(PDO::FETCH_ASSOC);
 
     $repairdate = date_db_2form($row_service['repair_date']);
-    $repair_code = $row_service['repair_outcode'];
+    $repair_code = $row_service['repair_code'];
     $repair_typetitle = $row_service['repair_typetitle'];
 
     $approve_date = date_db_2form($row_service['approve_date']);
@@ -38,7 +42,6 @@ if ($action == 'view') {
 } else {
 }
 ?>
-
 
 
 
@@ -294,8 +297,13 @@ if ($action == 'view') {
                     <!--<button type="button" class="btn btn-light-primary font-weight-bold" onclick="printDiv('printableArea')">ดาวน์โหลดเอกสาร</button>-->
                     <button type="button" class="btn btn-secondary btn-sm" onclick="javascript:history.back()"><i
                             class="fa fa-chevron-left" title="ย้อนกลับ"></i> ย้อนกลับ</button>
-                    <button type="button" class="btn btn-success btn-sm font-weight-bold"
-                        onclick="printDiv('printableArea')"><i class="fa fa-print" title=""></i> พิมพ์เอกสาร</button>
+                    <!-- <button type="button" class="btn btn-success btn-sm font-weight-bold" 
+                        onclick="printDiv('printableArea')"><i class="fa fa-print" title=""></i> พิมพ์เอกสาร</button> -->
+                        <a target="_blank"
+                        href="././pdfprint/repairout/rpt-repair-pdf.php?personid=<?php echo $personid_enc; ?>&repairid=<?php echo $repairid_enc; ?>&act=<?php echo base64_encode('view'); ?>"
+                        class="btn btn-success btn-sm font-weight-bold">
+                        <i class="fas fa-print"></i>พิมพ์ใบแจ้งซ่อม
+                    </a>
                 </div>
             </div>
         </div>

@@ -485,26 +485,23 @@ var tambon = $("#txt_tambon").val();
 
 }	
 
+function lineAlert(action){
+    if(action == 'add'){
+        var org_id = $("#org_id").val();
 
-function lineAlert(){
-
-var org_id = $("#org_id").val();
-
-    $.ajax({
-        type: "POST",
-        url: "core/repair/repair-add-notify.php",
-        //dataType: "json",
-        data: {org_id:org_id},
-        success: function(data) {
-        
-            //$("#tambon").empty();
-            //$("#tambon").append(data);
-        } // success
-    });
-
+        $.ajax({
+            type: "POST",
+            url: "core/repair/repair-add-notify.php",
+            //dataType: "json",
+            data: {org_id:org_id},
+            success: function(data) {
+            
+                //$("#tambon").empty();
+                //$("#tambon").append(data);
+            } // success
+        });
+    }
 }	
-
-
 
 
 
@@ -578,7 +575,7 @@ $('#btnSave').click(function(e){
                 timer: 1500
                 })
                     .then((value) => {
-                   // lineAlert();
+                    lineAlert(data.action);
                     window.location.replace("dashboard.php?module=repair&page=repair-add-data&personid="+data.personid+"&repairid="+data.repairid+"&act="+data.act);
                     
                 }); 
@@ -593,6 +590,7 @@ $('#btnSave').click(function(e){
                       //liff.closeWindow();
                   });
                 }
+
             },error: function (jqXHR, exception) {
                 console.log(jqXHR);
                 // Your error handling logic here..

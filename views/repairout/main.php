@@ -463,7 +463,7 @@ function delRepairMain(id) {
                         confirmButtonText: 'ใช่, ต้องการยกเลิกรายการ !'
                     }).then((result) => {
                         if (result.value) { //Yes
-                            $.post("core/repair/repair-del.php", {id: id}, function(result){
+                            $.post("core/repairout/repair-del.php", {id: id}, function(result){
                                 //  $("test").html(result);
                                 // console.log(result.code);
                                 location.reload();

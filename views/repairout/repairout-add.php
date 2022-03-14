@@ -92,7 +92,7 @@ if($action == "edit"){
                     <option value="" <?php if($row_service['repair_refid'] == '' ){echo "selected";} ?>>ระบุเลขที่ใบแจ้งซ่อม</option>
                     <?php
 				
-					$stmt_user_role = $conn->prepare("SELECT * FROM ".DB_PREFIX."repair_main WHERE org_id = '$logged_org_id'  AND repair_inout = 'I' AND flag = '1'  ");
+					$stmt_user_role = $conn->prepare("SELECT * FROM ".DB_PREFIX."repair_main WHERE org_id = '$logged_org_id'  AND repair_inout = 'I' AND flag = '1' AND flag_out = '0'  ");
 					$stmt_user_role->execute();		
 					while ($row = $stmt_user_role->fetch(PDO::FETCH_ASSOC))
 						{
@@ -546,7 +546,8 @@ var tambon = $("#txt_tambon").val();
 }	
 
 
-function lineAlertout(){
+function lineAlertout(action){
+if(action == 'add'){
     var org_id = $("#org_id").val();
 
         $.ajax({
@@ -560,6 +561,7 @@ function lineAlertout(){
                 //$("#tambon").append(data);
             } // success
         });
+}        
 }	
 
 
@@ -629,7 +631,8 @@ $('#btnSave').click(function(e){
                 timer: 1500
                 })
                     .then((value) => {
-                    lineAlertout(); 
+                    
+                    lineAlertout(data.action);
                     window.location.replace("dashboard.php?module=repairout&page=repairout-add-data&personid="+data.personid+"&repairid="+data.repairid+"&act="+data.act);
                     
                 }); 

@@ -138,11 +138,24 @@ if($exist_person!=0){
 		$service_oid = $conn->lastInsertId(); // last inserted ID
 		$service_oid_enc = base64_encode($service_oid);
 
+		// set BarcodeQR object
+		$qr = new BarcodeQR();
 
+		// create URL QR code
+		// $eq_id_enc = base64_encode($eq_id);
+		$qr->url(ADMIN_URL."/public/qrcode-repair/index.php?serviceid=$service_oid_enc");
+
+		// display new QR code image
+		$qr->draw(300, "../../uploads/qrcode-repair/$service_oid");
+
+		$query_update = "UPDATE ".DB_PREFIX."repair_main SET flag_out = '1' WHERE repair_id = ? LIMIT 1"; 
+		$stmt = $conn->prepare($query_update);
+		$stmt->bindParam(1, $repair_refid, PDO::PARAM_STR);
+		$stmt->execute();
 	
 		$act_enc = base64_encode('edit');
 		$msg = "success";
-		echo json_encode(['code'=>200, 'msg'=>$exist_person,'personid'=>$person_oid_enc,'repairid'=>$service_oid_enc,'act'=>$act_enc]);
+		echo json_encode(['code'=>200, 'msg'=>$exist_person,'personid'=>$person_oid_enc,'repairid'=>$service_oid_enc,'act'=>$act_enc,'action'=>$act]);
 
 }else{
 
@@ -202,7 +215,7 @@ $query = "INSERT INTO ".DB_PREFIX."repair_main (repair_id,person_id,org_id, repa
 $qr = new BarcodeQR();
 
 // create URL QR code
-$eq_id_enc = base64_encode($eq_id);
+// $eq_id_enc = base64_encode($eq_id);
 $qr->url(ADMIN_URL."/public/qrcode-repair/index.php?serviceid=$service_oid_enc");
 
 // display new QR code image
@@ -237,12 +250,15 @@ if($_FILES['img_profile']['name'])
 		}
 	}
 
-	
+	$query_update = "UPDATE ".DB_PREFIX."repair_main SET flag_out = '1' WHERE repair_id = ? LIMIT 1"; 
+	$stmt = $conn->prepare($query_update);
+	$stmt->bindParam(1, $repair_refid, PDO::PARAM_STR);
+	$stmt->execute();
 
 
 			$act_enc = base64_encode('edit');
 			$msg = "success";
-			echo json_encode(['code'=>200, 'msg'=>$exist_person,'personid'=>$person_oid_enc,'repairid'=>$service_oid_enc,'act'=>$act_enc]);
+			echo json_encode(['code'=>200, 'msg'=>$exist_person,'personid'=>$person_oid_enc,'repairid'=>$service_oid_enc,'act'=>$act_enc,'action'=>$act]);
 		  
 	}	
 			
@@ -330,7 +346,7 @@ if($_FILES['img_profile']['name'])
 			$act_enc = base64_encode('edit');
 			$act_enc = base64_encode('edit');
 			$msg = "success";
-			echo json_encode(['code'=>200, 'msg'=>$exist_person,'personid'=>$person_oid_enc,'repairid'=>$service_oid_enc,'act'=>$act_enc]);
+			echo json_encode(['code'=>200, 'msg'=>$exist_person,'personid'=>$person_oid_enc,'repairid'=>$service_oid_enc,'act'=>$act_enc,'action'=>$act]);
 			
 
 
