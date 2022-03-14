@@ -436,6 +436,8 @@ $mpdf = new \Mpdf\Mpdf([
     'margin_bottom' => 25,
     'margin_header' => 10,
     'margin_footer' => 10,
+    'debug' => true,
+    'allow_output_buffering' => true
      ]);
      $mpdf->SetProtection(['print']);
      $mpdf->SetTitle('DFix Corp. - Repair invoices');
