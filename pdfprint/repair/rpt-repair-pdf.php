@@ -422,7 +422,7 @@ mpdf-->
 <?php
 
 $html = ob_get_contents();
-ob_end_clean();
+
 
 $mpdf = new \Mpdf\Mpdf([
     'mode' => 'utf-8',
@@ -436,9 +436,8 @@ $mpdf = new \Mpdf\Mpdf([
     'margin_bottom' => 25,
     'margin_header' => 10,
     'margin_footer' => 10,
-    'debug' => true,
-    'allow_output_buffering' => true
      ]);
+     
      $mpdf->SetProtection(['print']);
      $mpdf->SetTitle('DFix Corp. - Repair invoices');
      $mpdf->SetAuthor('DFix Corp.');
@@ -449,6 +448,7 @@ $mpdf = new \Mpdf\Mpdf([
 
 $mpdf->SetDisplayMode('fullpage');
 $mpdf->WriteHTML($html);
+ob_end_clean();
 $mpdf->Output();
 
 ?>
