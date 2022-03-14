@@ -422,7 +422,6 @@ mpdf-->
 <?php
 
 $html = ob_get_contents();
-ob_end_clean();
 
 $mpdf = new \Mpdf\Mpdf([
     'mode' => 'utf-8',
@@ -447,6 +446,7 @@ $mpdf = new \Mpdf\Mpdf([
 
 $mpdf->SetDisplayMode('fullpage');
 $mpdf->WriteHTML($html);
+ob_end_clean();
 $mpdf->Output();
 
 ?>

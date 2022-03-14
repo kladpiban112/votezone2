@@ -437,6 +437,7 @@ $mpdf = new \Mpdf\Mpdf([
     'margin_header' => 10,
     'margin_footer' => 10,
      ]);
+     
      $mpdf->SetProtection(['print']);
      $mpdf->SetTitle('DFix Corp. - Repair invoices');
      $mpdf->SetAuthor('DFix Corp.');
