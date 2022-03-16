@@ -10,12 +10,19 @@ $enddate_ymd = date_saveto_db($enddate);
 $status = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_STRING);
 $search = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING);
 
+$refid = filter_input(INPUT_GET, 'refid', FILTER_SANITIZE_STRING);
+
+
 if(($startdate_ymd != "") AND ($enddate_ymd != "")){
     $repairdate_data = " AND u.repair_date BETWEEN '$startdate_ymd'  AND  '$enddate_ymd' ";
 }else if(($startdate_ymd != "") AND ($enddate_ymd == "")){
     $repairdate_data = " AND u.repair_date >= '$startdate_ymd'  ";
 }
-
+if($refid != ""){
+    $refid_decode = base64_decode($refid);
+    $refid_data = " AND u.repair_refid = '$refid_decode'  ";
+}
+echo base64_decode($refid);
 if($search != ""){
     $search_data = " AND p.cid LIKE '%$search%' OR p.fname LIKE '%$search%'  ";
 }
@@ -64,7 +71,7 @@ if($status != ""){
 				<span class="form-text text-muted"></span>
 				
 			</div>
-
+ 
             <div class="col-lg-2">
                 <label>สถานะการซ่อม</label>
                                           <select class="form-control " name="status" id="status">
@@ -108,7 +115,7 @@ if($status != ""){
         
     $numb_data = $conn->query("SELECT count(1) FROM ".DB_PREFIX."repair_main u  
     LEFT JOIN ".DB_PREFIX."person_main p ON u.person_id = p.oid
-    WHERE u.flag != 0  $conditions  $search_data $repairdate_data $status_data")->fetchColumn();
+    WHERE u.flag != 0  $conditions  $search_data $repairdate_data $status_data $refid_data ")->fetchColumn();
 
   
         if (!(isset($pagenum))) { $pagenum = 1; }
@@ -148,7 +155,7 @@ if($status != ""){
         LEFT JOIN ".DB_PREFIX."equipment_main e ON u.eq_id = e.oid
         LEFT JOIN ".DB_PREFIX."repair_status_type st ON u.repair_status = st.status_typeid
         LEFT JOIN ".DB_PREFIX."repair_main r ON u.repair_refid = r.repair_id
-        WHERE u.flag != 0  $conditions $search_data  $repairdate_data $status_data
+        WHERE u.flag != 0  $conditions $search_data  $repairdate_data $status_data $refid_data 
         ORDER BY u.repair_id DESC
         $max";
         $stmt_data = $conn->prepare ($sql);

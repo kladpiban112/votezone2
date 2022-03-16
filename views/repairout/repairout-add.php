@@ -89,18 +89,20 @@ if($action == "edit"){
             <div class="col-lg-12">
 				<label>เลขที่แจ้งซ่อม</label>
                     <select class="form-control " name="repair_refid" id="repair_refid" >
-                    <option value="" <?php if($row_service['repair_refid'] == '' ){echo "selected";} ?>>ระบุเลขที่ใบแจ้งซ่อม</option>
+                    <option value="" disabled="disabled" <?php if($row_service['repair_refid'] == '' ){echo "selected ";} ?>>ระบุเลขที่ใบแจ้งซ่อม</option>
                     <?php
-				
-					$stmt_user_role = $conn->prepare("SELECT * FROM ".DB_PREFIX."repair_main WHERE org_id = '$logged_org_id'  AND repair_inout = 'I' AND flag = '1' AND flag_out = '0'  ");
+                    if($action == 'edit'){$flag = "AND repair_id = $refid ";}else{$flag = " AND flag_out = '0' ";}
+					$stmt_user_role = $conn->prepare("SELECT * FROM ".DB_PREFIX."repair_main WHERE org_id = '$logged_org_id'  AND repair_inout = 'I' AND flag = '1' ".$flag);
 					$stmt_user_role->execute();		
 					while ($row = $stmt_user_role->fetch(PDO::FETCH_ASSOC))
 						{
 						$id_selected = $row['repair_id'];
 						$title_selected = stripslashes($row['repair_code']);
                         $repair_title = stripslashes($row['repair_title']);
+                        echo $refid ;
+                        echo $id_selected_ref ;
 						?>
-						<option value="<?php echo $id_selected;?>" <?php if($refid == $id_selected ){echo "selected";} ?>><?php echo $title_selected." : ".$repair_title;?></option>
+						<option value="<?php echo $id_selected;?>" <?php if($refid == $id_selected ){echo "selected ";} ?>><?php echo $title_selected." : ".$repair_title ;?></option>
 						<?php
 						}
 					?>

@@ -170,7 +170,7 @@ if ($status != '') {
                         <!-- <th>qrcode</th> -->
                         <th>เลขที่แจ้งซ่อม</th>
                         <th>วันที่แจ้งซ่อม</th>
-                        <!-- <th>รูปแบบการซ่อม</th> -->
+                        <th>รูปแบบการซ่อม</th>
                         <th>ประเภทแจ้งซ่อม</th>
                         <th>อุปกรณ์</th>
                         <th>อาการแจ้งซ่อม</th>
@@ -217,7 +217,9 @@ if ($status != '') {
 
                 $repair_status = $row['repair_status'];
                 $repair_inout = $row['repair_inout'];
-                if ($repair_inout == 'I') {
+                $repair_inout_flag = $row['flag_out'];
+                
+                if ($repair_inout_flag == '0') {
                     $repair_inout_show = "<i class='fas fa-tools text-success'></i>";
                 } else {
                     $repair_inout_show = "<i class='fas fa-truck text-danger'></i>";
@@ -280,7 +282,7 @@ if ($status != '') {
                             </td> -->
                         <td class="text-center"><?php echo $repair_code; ?></td>
                         <td><?php echo $repair_date; ?></td>
-                        <!-- <td class="text-center"><?php echo $repair_inout_show; ?></td> -->
+                        <td class="text-center"><?php echo $repair_inout_show; ?></td>
                         <td><?php echo $repair_typetitle; ?></td>
                         <td><?php echo $eq_name; ?></br><small>รหัส : <?php echo $eq_code; ?></small></td>
                         <td><?php echo $repair_title; ?></td>
@@ -299,14 +301,14 @@ if ($status != '') {
                                     <!--begin::Navigation-->
 
                                     <?php
-                                    if ($repair_inout == 'I') {
+                                    if ($repair_inout == 'I' && $repair_inout_flag == '0') {
                                         ?>
                                     <ul class="navi navi-hover py-1">
                                         <li class="navi-item">
-                                            <a href="dashboard.php?module=repair&page=repair-print&personid=<?php echo $personid_enc; ?>&repairid=<?php echo $repairid_enc; ?>&act=<?php echo base64_encode('view'); ?>"
+                                            <a href="dashboard.php?module=repair&page=repair-print&personid=<?php echo $personid_enc;?>&repairid=<?php echo $repairid_enc; ?>&act=<?php echo base64_encode('view'); ?>"
                                                 class="navi-link">
                                                 <span class="navi-icon"><i class="fas fa-clipboard-list"></i></span>
-                                                <span class="navi-text">ใบแจ้งซ่อม</span>
+                                                <span class="navi-text">ใบแจ้งซ่อม </span>
                                             </a>
                                         </li>
                                         <li class="navi-item">
@@ -345,9 +347,9 @@ if ($status != '') {
                                         </li>
                                     </ul>
                                     <?php
-                                    } else {?>
+                                    } elseif($repair_inout == 'I' && $repair_inout_flag == '1'){?>
 
-                                    <ul class="navi navi-hover py-1">
+                                    <!-- <ul class="navi navi-hover py-1">
                                         <li class="navi-item">
                                             <a href="dashboard.php?module=repairout&page=repairout-print&personid=<?php echo $personid_enc; ?>&repairid=<?php echo $repairid_enc; ?>&act=<?php echo base64_encode('view'); ?>"
                                                 class="navi-link">
@@ -365,7 +367,7 @@ if ($status != '') {
                                         </li>
 
                                         <li class="navi-item">
-                                            <a href="dashboard.php?module=repairout&page=repairout-add-data&repairid=<?php echo $repairid_enc; ?>&personid=<?php echo $personid_enc; ?>&act=<?php echo base64_encode('edit'); ?>"
+                                            <a href="dashboard.php?module=repairout&page=main&refid=<?php echo $repairid_enc; ?> "
                                                 class="navi-link">
                                                 <span class="navi-icon"><i class="fas fa-cogs"></i></span>
                                                 <span class="navi-text">บันทึกผลการซ่อมภายนอก</span>
@@ -381,9 +383,16 @@ if ($status != '') {
                                                 <span class="navi-text">ยกเลิกรายการ</span>
                                             </a>
                                         </li>
+                                    </ul> -->
+                                    <ul class="navi navi-hover py-1">
+                                    <li class="navi-item">
+                                            <a href="dashboard.php?module=repairout&page=main&refid=<?php echo $repairid_enc; ?> "
+                                                class="navi-link">
+                                                <span class="navi-icon"><i class="fas fa-cogs"></i></span>
+                                                <span class="navi-text">ส่งซ่อมภายนอก </span>
+                                            </a>
+                                        </li>
                                     </ul>
-
-
                                     <?php } ?>
                                     <!--end::Navigation-->
                                 </div>
