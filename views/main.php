@@ -70,7 +70,7 @@
                                         <div class="card-body">
                                             <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bx-message-alt-check bx-lg'></i></span>
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_add_today;?></div>
-                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=1&search=" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">แจ้งรับการซ่อม</a>
+                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=1&search=" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">บันทึกรับการซ่อม</a>
                                         </div>
                                     </div>
                             </div>
