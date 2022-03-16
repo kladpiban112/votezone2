@@ -33,7 +33,6 @@ $row_qt = $stmt_qt->fetch(PDO::FETCH_ASSOC);
 $qtapprovedate = date_db_2form($row_qt['qt_approvedate']);
 $qtapproveusers = $row_qt['qt_approveusers'];
 
-
 } else {
     $txt_title = 'เพิ่ม';
     $action = 'add';
