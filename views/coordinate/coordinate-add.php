@@ -142,7 +142,6 @@ if($action == "edit"){
 			</div>
 
 			
-
             <div class="col-lg-3">
 				<label>ถนน</label>
              <input type="text" class="form-control"  name="road" id="road" placeholder="ถนน" value="<?php echo $row_service['road'];?>"/>
