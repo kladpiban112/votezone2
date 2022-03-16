@@ -85,7 +85,7 @@ if($cost == $cost_payment){
 
 
 
-$receiveid_enc = base64_encode($receive_id);
+// $receiveid_enc = base64_encode($receive_id);
 $msg = "success";
 $act_enc = base64_encode('edit');
 
@@ -94,7 +94,11 @@ $person_oid_enc = base64_encode($personid);
 echo json_encode(['code'=>200, 'msg'=>$msg,'personid'=>$person_oid_enc,'repairid'=>$repair_oid_enc,'act'=>$act_enc]);	
 	
 }else{
-
+	$msg = "success";
+	$act_enc = base64_encode('edit');
+	
+	$repair_oid_enc = base64_encode($repairid);
+	$person_oid_enc = base64_encode($personid);
 	echo json_encode(['code'=>201, 'msg'=>$msg,'personid'=>$person_oid_enc,'repairid'=>$repair_oid_enc,'act'=>$act_enc]);	
 
 }
