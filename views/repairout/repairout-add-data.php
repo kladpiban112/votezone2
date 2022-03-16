@@ -1,6 +1,8 @@
 <?php
 $personid = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
 $repairid = filter_input(INPUT_GET, 'repairid', FILTER_SANITIZE_STRING);
+$personid_enc = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
+$repairid_enc = filter_input(INPUT_GET, 'repairid', FILTER_SANITIZE_STRING);
 $act = filter_input(INPUT_GET, 'act', FILTER_SANITIZE_STRING);
 $personid = base64_decode($personid);
 $repairid = base64_decode($repairid);
@@ -464,7 +466,9 @@ $qtapproveusers = $row_qt['qt_approveusers'];
                     <div id="logistic_detail"></div>
 
 
-                    <span><i class="fas fa-user-check"></i> ข้อมูลการรับคืน </span>
+                    <span><i class="fas fa-user-check"></i> ข้อมูลการรับคืน <a target="_blank" href="././pdfprint/return/rpt-return-pdf.php?personid=<?php echo $personid_enc; ?>&repairid=<?php echo $repairid_enc; ?>&act=<?php echo base64_encode('view'); ?>" class="btn btn-sm btn-success"
+                             ><i class="far fa-plus-square"></i>
+                            พิมพ์ใบรับคืน</a></span> </span>
                     <hr>
 
                     <div class="form-group row">

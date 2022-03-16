@@ -5,6 +5,8 @@ $repairid = filter_input(INPUT_GET, 'repairid', FILTER_SANITIZE_STRING);
 $act = filter_input(INPUT_GET, 'act', FILTER_SANITIZE_STRING);
 $personid = base64_decode($personid);
 $repairid = base64_decode($repairid);
+$personid_enc = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
+$repairid_enc = filter_input(INPUT_GET, 'repairid', FILTER_SANITIZE_STRING);
 $action = base64_decode($act);
 if ($action == 'edit') {
     $txt_title = 'แก้ไข';
@@ -439,7 +441,10 @@ if ($action == 'edit') {
                     
 
 
-                    <span><i class="fas fa-user-check"></i> ข้อมูลการรับคืน </span>
+                    <span><i class="fas fa-user-check"></i> ข้อมูลการรับคืน <a target="_blank" href="././pdfprint/return/rpt-return-pdf.php?personid=<?php echo $personid_enc; ?>&repairid=<?php echo $repairid_enc; ?>&act=<?php echo base64_encode('view'); ?>" class="btn btn-sm btn-primary"
+                            ><i class="far fa-plus-square"></i>
+                            พิมพ์ใบรับคืน</a></span>
+                    <hr></span>
                     <hr>
 
                     <div class="form-group row">

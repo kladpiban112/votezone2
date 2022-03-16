@@ -335,6 +335,14 @@ if ($status != '') {
                                                 <span class="navi-text">บันทึกผลการซ่อม</span>
                                             </a>
                                         </li>
+                                        <!-- <li class="navi-item">
+                                            <a target="_blank"
+                                                href="././pdfprint/return/rpt-return-pdf.php?personid=<?php echo $personid_enc; ?>&repairid=<?php echo $repairid_enc; ?>&act=<?php echo base64_encode('view'); ?>"
+                                                class="navi-link">
+                                                <span class="navi-icon"><i class="fas fa-print"></i></span>
+                                                <span class="navi-text">พิมพ์ใบรับคืนสินค้า</span>
+                                            </a>
+                                        </li> -->
 
                                         <li class="navi-separator my-3"></li>
 
