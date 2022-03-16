@@ -40,7 +40,7 @@ $qt_status = filter_input(INPUT_POST, 'qtstatus', FILTER_SANITIZE_STRING); //
 
 $d_day = substr($qtdate,0,2);
 $d_month = substr($qtdate,3,2);
-$d_year = (substr($qtdate,6,4)-543);
+$d_year = (is_numeric(substr($qtdate,6,4))-543);
 $period = $d_year.$d_month;
 
 $flag = 1;
