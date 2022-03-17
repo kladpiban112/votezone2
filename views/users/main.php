@@ -171,6 +171,7 @@
 $p = 4;	//	กำหนดช่วงตัวเลขทางซ้าย และ ขวา ของหน้าที่ถูกเลือก
 $Prev_Page = $pagenum-1;
 $Next_Page = $pagenum+1;
+$search = "";
 $page_link = "dashboard.php?module=$module&page=main&search=$search&pagenum";
 
 if($pagenum==1)		//	กรณีอยู่หน้า 1 หรือยังไม่เลือกหน้า

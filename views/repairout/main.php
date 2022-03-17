@@ -22,7 +22,6 @@ if($refid != ""){
     $refid_decode = base64_decode($refid);
     $refid_data = " AND u.repair_refid = '$refid_decode'  ";
 }
-echo base64_decode($refid);
 if($search != ""){
     $search_data = " AND p.cid LIKE '%$search%' OR p.fname LIKE '%$search%'  ";
 }
