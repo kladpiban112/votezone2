@@ -1042,6 +1042,9 @@ $('#btnSave').click(function(e) {
                             //liff.closeWindow();
                         });
                 }
+            },error: function (jqXHR, exception) {
+                console.log(jqXHR);
+                // Your error handling logic here..
             } // success
         });
 
@@ -1282,6 +1285,9 @@ $('#btnAddCost').click(function(e) {
                             //liff.closeWindow();
                         });
                 }
+            },error: function (jqXHR, exception) {
+                console.log(jqXHR);
+                // Your error handling logic here..
             } // success
         });
 

@@ -536,7 +536,7 @@ $qtapproveusers = $row_qt['qt_approveusers'];
                     <!--end::Info-->
 
                     <!--begin::Label-->
-                    <a href="#" title="ลบไฟล์">
+                    <a href="#" onclick='confirm_delete_file(<?php echo $file_id; ?>)' title="ลบไฟล์">
                     <span class="label label-lg label-light-danger label-inline font-weight-bold py-4"><i class="fas fa-trash text-danger"></i></span>
                     </a>
                     <!--end::Label-->
@@ -1167,6 +1167,30 @@ function confirm_delete(id) {
     }).then((result) => {
         if (result.value) { //Yes
             $.post("core/repairout/repairout-photo-del.php", {
+                id: id
+            }, function(result) {
+                //  $("test").html(result);
+                // console.log(result.code);
+                location.reload();
+            });
+        }
+    })
+}
+
+function confirm_delete_file(id) {
+    console.log(id);
+    Swal.fire({
+        title: 'แน่ใจนะ?',
+        text: "ต้องการลบรูปภาพ",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'ยกเลิก',
+        confirmButtonText: 'ใช่, ต้องการลบรูปภาพ!'
+    }).then((result) => {
+        if (result.value) { //Yes
+            $.post("core/repairout/repairout-docx-del.php", {
                 id: id
             }, function(result) {
                 //  $("test").html(result);

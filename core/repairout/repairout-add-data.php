@@ -77,80 +77,82 @@ if($act == 'add'){
 	$stmt->bindParam(15, $repairid, PDO::PARAM_INT);
 	$stmt->execute();
 
-for($f=0;$f<count($_FILES["files"]);$f++){
+if(count($_FILES["files"]['name']) != 0){
+    for($f=0;$f<count($_FILES["files"]['name']);$f++){
 
-    $f_name = $_FILES['files']['name'][$f];
-    $f_ext = strtolower(substr(strrchr($f_name, '.'), 1));
-    $f_size = $_FILES['files']['size'][$f];
+        $f_name = $_FILES['files']['name'][$f];
+        $f_ext = strtolower(substr(strrchr($f_name, '.'), 1));
+        $f_size = $_FILES['files']['size'][$f];
 
-    $file_code = random_code();
-    $file_name_new = $file_code."-".$_FILES['files']['name'][$f];
+        $file_code = random_code();
+        $file_name_new = $file_code."-".$_FILES['files']['name'][$f];
 
-    $file_name_new = RewriteFile($file_name_new); 
-    if (($f_ext == "jpg") && ($f_ext == "jpeg") && ($f_ext == "gif") && ($f_ext == "png")) 
-    {
+        $file_name_new = RewriteFile($file_name_new); 
+        if (($f_ext == "jpg") && ($f_ext == "jpeg") && ($f_ext == "gif") && ($f_ext == "png")) 
+        {
 
-        move_uploaded_file($_FILES["files"]["tmp_name"], "../../uploads/temp/".$file_name_new);
+            move_uploaded_file($_FILES["files"]["tmp_name"], "../../uploads/temp/".$file_name_new);
 
 
-    // create big image
-    $resizeObj = new resize("../../uploads/temp/".$file_name_new); 
-    $resizeObj -> resizeImage(1080, 900, 'auto'); // (options: exact, portrait, landscape, auto, crop) 
-    $resizeObj -> saveImage("../../uploads/repair/".$file_name_new);
-    
-    @unlink ("../../uploads/temp/".$file_name_new);
+        // create big image
+        $resizeObj = new resize("../../uploads/temp/".$file_name_new); 
+        $resizeObj -> resizeImage(1080, 900, 'auto'); // (options: exact, portrait, landscape, auto, crop) 
+        $resizeObj -> saveImage("../../uploads/repair/".$file_name_new);
+        
+        @unlink ("../../uploads/temp/".$file_name_new);
 
-    }else{
-        move_uploaded_file($_FILES["files"]["tmp_name"][$f], "../../uploads/repair/".$file_name_new);
+        }else{
+            move_uploaded_file($_FILES["files"]["tmp_name"][$f], "../../uploads/repair/".$file_name_new);
+
+        }
+
+        if($f_name != ""){
+        $query = "INSERT INTO ".DB_PREFIX."repair_files (file_id, repair_id, file_oldname, file_name,file_ext,file_size,file_status) VALUES (NULL, ?, ?, ?, ?, ?, '1')"; 
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(1, $repairid, PDO::PARAM_INT);
+        $stmt->bindParam(2, $f_name, PDO::PARAM_STR);
+        $stmt->bindParam(3, $file_name_new, PDO::PARAM_STR);
+        $stmt->bindParam(4, $f_ext, PDO::PARAM_STR);
+        $stmt->bindParam(5, $f_size, PDO::PARAM_INT);
+        $stmt->execute();
+        }
+
+
 
     }
-
-    if($f_name != ""){
-    $query = "INSERT INTO ".DB_PREFIX."repair_files (file_id, repair_id, file_oldname, file_name,file_ext,file_size,file_status) VALUES (NULL, ?, ?, ?, ?, ?, '1')"; 
-    $stmt = $conn->prepare($query);
-    $stmt->bindParam(1, $repairid, PDO::PARAM_INT);
-    $stmt->bindParam(2, $f_name, PDO::PARAM_STR);
-    $stmt->bindParam(3, $file_name_new, PDO::PARAM_STR);
-    $stmt->bindParam(4, $f_ext, PDO::PARAM_STR);
-    $stmt->bindParam(5, $f_size, PDO::PARAM_INT);
-    $stmt->execute();
-    }
-
-
-
 }
 
+if(count($_FILES["doc"]['name']) != 0){
+    for($f=0;$f<count($_FILES["doc"]['name']);$f++){
 
-for($f=0;$f<count($_FILES["doc"]);$f++){
+        $f_name = $_FILES['doc']['name'][$f];
+        $f_ext = strtolower(substr(strrchr($f_name, '.'), 1));
+        $f_size = $_FILES['doc']['size'][$f];
 
-    $f_name = $_FILES['doc']['name'][$f];
-    $f_ext = strtolower(substr(strrchr($f_name, '.'), 1));
-    $f_size = $_FILES['doc']['size'][$f];
+        $file_code = random_code();
+        $file_name_new = $file_code."-".$_FILES['doc']['name'][$f];
 
-    $file_code = random_code();
-    $file_name_new = $file_code."-".$_FILES['doc']['name'][$f];
+        $file_name_new = RewriteFile($file_name_new); 
 
-    $file_name_new = RewriteFile($file_name_new); 
-
-    move_uploaded_file($_FILES["doc"]["tmp_name"][$f], "../../uploads/repair/".$file_name_new);
+        move_uploaded_file($_FILES["doc"]["tmp_name"][$f], "../../uploads/repair/".$file_name_new);
 
 
 
-    if($f_name != ""){
-    $query = "INSERT INTO ".DB_PREFIX."repair_document (file_id, repair_id, file_oldname, file_name,file_ext,file_size,file_status) VALUES (NULL, ?, ?, ?, ?, ?, '1')"; 
-    $stmt = $conn->prepare($query);
-    $stmt->bindParam(1, $repairid, PDO::PARAM_INT);
-    $stmt->bindParam(2, $f_name, PDO::PARAM_STR);
-    $stmt->bindParam(3, $file_name_new, PDO::PARAM_STR);
-    $stmt->bindParam(4, $f_ext, PDO::PARAM_STR);
-    $stmt->bindParam(5, $f_size, PDO::PARAM_INT);
-    $stmt->execute();
+        if($f_name != ""){
+        $query = "INSERT INTO ".DB_PREFIX."repair_document (file_id, repair_id, file_oldname, file_name,file_ext,file_size,file_status) VALUES (NULL, ?, ?, ?, ?, ?, '1')"; 
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(1, $repairid, PDO::PARAM_INT);
+        $stmt->bindParam(2, $f_name, PDO::PARAM_STR);
+        $stmt->bindParam(3, $file_name_new, PDO::PARAM_STR);
+        $stmt->bindParam(4, $f_ext, PDO::PARAM_STR);
+        $stmt->bindParam(5, $f_size, PDO::PARAM_INT);
+        $stmt->execute();
+        }
+
+
+
     }
-
-
-
 }
-
 
 	
 
