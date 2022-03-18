@@ -54,7 +54,7 @@ $lastid = $conn->lastInsertId(); // last inserted ID
 
 addRepairStatus($repairid);
 
-$receiveid_enc = base64_encode($receive_id);
+// $receiveid_enc = base64_encode($receive_id);
 $msg = 'success';
 $act_enc = base64_encode('edit');
 echo json_encode(['code' => 200, 'msg' => $msg]);

@@ -226,7 +226,7 @@ mpdf-->
                     FROM '.DB_PREFIX.'repair_spare u 
                     LEFT JOIN  '.DB_PREFIX.'spare_main s ON u.spare_id = s.spare_id
                     LEFT JOIN '.DB_PREFIX."cunit t ON u.spare_unit = t.unit_id
-                    WHERE u.flag != '0' AND u.status_out = 'I' $conditions 
+                    WHERE u.flag != '0' AND u.status_out = 'O' $conditions 
                     ORDER BY u.oid ASC
                     $max");
                     $stmt_data->execute();
@@ -313,7 +313,7 @@ mpdf-->
                     FROM '.DB_PREFIX.'repair_status u 
                     LEFT JOIN  '.DB_PREFIX.'repair_status_type s ON u.status_id = s.status_typeid
                     LEFT JOIN  '.DB_PREFIX."staff_main st ON u.staff_id = st.oid 
-                    WHERE u.flag != '0' AND u.status_out = 'I'  $conditions 
+                    WHERE u.flag != '0' AND u.status_out = 'O'  $conditions 
                     ORDER BY u.oid ASC
                     $max");
                     $stmt_data->execute();
