@@ -301,7 +301,7 @@ if ($status != '') {
                                     <!--begin::Navigation-->
 
                                     <?php
-                                    if ($repair_inout == 'I' && $repair_inout_flag == '0') {
+                                    if ($repair_inout == 'I' ) {
                                         ?>
                                     <ul class="navi navi-hover py-1">
                                         <li class="navi-item">
@@ -344,8 +344,16 @@ if ($status != '') {
                                             </a>
                                         </li> -->
 
-                                        <li class="navi-separator my-3"></li>
-
+                                        <li class="navi-separator my-3"></li>   
+                                       <?php if($repair_inout == 'I' && $repair_inout_flag == '1') {?>
+                                        <li class="navi-item">
+                                            <a href="dashboard.php?module=repairout&page=main&refid=<?php echo $repairid_enc; ?> "
+                                                class="navi-link">
+                                                <span class="navi-icon"><i class="fas fa-cogs"></i></span>
+                                                <span class="navi-text">ส่งซ่อมภายนอก </span>
+                                            </a>
+                                        </li>
+                                        <?php } else { ?>
                                         <li class="navi-item">
                                             <a href="#" class="navi-link"
                                                 onclick='delRepairMain(<?php echo $repairid; ?>)'>
@@ -353,9 +361,10 @@ if ($status != '') {
                                                 <span class="navi-text">ยกเลิกรายการ</span>
                                             </a>
                                         </li>
+                                        <?php } ?>
                                     </ul>
                                     <?php
-                                    } elseif($repair_inout == 'I' && $repair_inout_flag == '1'){?>
+                                    } else{?>
 
                                     <!-- <ul class="navi navi-hover py-1">
                                         <li class="navi-item">
