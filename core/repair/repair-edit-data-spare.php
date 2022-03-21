@@ -56,7 +56,7 @@ if ($spare_id != '0') {
     $act = 'add';
     addSpareReceive($act, $spare_id_old, $spare_quantity_old, $spare_unit_old);
 }
-$receiveid_enc = base64_encode($receive_id);
+//$receiveid_enc = base64_encode($receive_id);
 $msg = 'success';
 $act_enc = base64_encode('edit');
 //echo json_encode(['code'=>200, 'msg'=>$msg]);

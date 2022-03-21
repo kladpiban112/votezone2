@@ -41,7 +41,7 @@ $lastid = $conn->lastInsertId(); // last inserted ID
 //$act = 'delete';
 //addSpareReceive($act, $spare_id, $spare_quantity, $spare_unit);
 
-$receiveid_enc = base64_encode($receive_id);
+//$receiveid_enc = base64_encode($receive_id);
 $msg = 'success';
 $act_enc = base64_encode('edit');
 echo json_encode(['code' => 200, 'msg' => $msg]);

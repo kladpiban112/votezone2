@@ -235,14 +235,13 @@ mpdf-->
                     $numb_rows = $stmt_data->rowCount();
                     ?>
     <br>
-    <span style="font-size: 14pt;">รายละเอียดสินค้า</span>
+    <span style="font-size: 14pt;">รายละเอียดอุปกรณ์</span>
     <table class="items" width="100%" style="font-size: 14pt; border-collapse: collapse;" cellpadding="8">
         <thead>
             <tr>
                 <td>ลำดับ</td>
-                <td>วันที่</td>
-                <td>สถานะการซ่อม</td>
-                <td>ผู้ซ่อม</td>
+                <td>ชื่ออุปกรณ์</td>
+                <td>รหัสอุปกรณ์</td>
                 <td>รายละเอียด</td>
 
             </tr>
@@ -437,9 +436,6 @@ mpdf-->
             $gstaff_name = str_replace(',', '</br>', $row_detail['gstaff_name']);
             $gstaff_id = $row_detail['gstaff_id'];
             $gstaff_id_exp = explode(',', $gstaff_id); ?>
-
-
-
 
             <tr>
                 <td class="text-center" width="20px"><?php echo $i; ?></td>

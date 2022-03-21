@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 $personid = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
 $repairid = filter_input(INPUT_GET, 'repairid', FILTER_SANITIZE_STRING);
 $personid_enc = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
@@ -10,6 +11,7 @@ $action = base64_decode($act);
 if ($action == 'edit') {
     $txt_title = 'แก้ไข';
     $action = $action;
+
 
     $stmt_data = $conn->prepare('SELECT p.*,o.org_name FROM '.DB_PREFIX.'person_main p 
 	LEFT JOIN '.DB_PREFIX."org_main o ON p.org_id = o.org_id 
@@ -32,9 +34,9 @@ if ($action == 'edit') {
 $stmt_qt->execute();
 
 $row_qt = $stmt_qt->fetch(PDO::FETCH_ASSOC);
+
 $qtapprovedate = date_db_2form($row_qt['qt_approvedate']);
 $qtapproveusers = $row_qt['qt_approveusers'];
-
 } else {
     $txt_title = 'เพิ่ม';
     $action = 'add';
@@ -466,7 +468,7 @@ $qtapproveusers = $row_qt['qt_approveusers'];
                     <div id="logistic_detail"></div>
 
 
-                    <span><i class="fas fa-user-check"></i> ข้อมูลการรับคืน <a target="_blank" href="././pdfprint/return/rpt-return-pdf.php?personid=<?php echo $personid_enc; ?>&repairid=<?php echo $repairid_enc; ?>&act=<?php echo base64_encode('view'); ?>" class="btn btn-sm btn-success"
+                    <span><i class="fas fa-user-check"></i> ข้อมูลการรับคืน <a target="_blank" href="././pdfprint/return_out/rpt-return-pdf.php?personid=<?php echo $personid_enc; ?>&repairid=<?php echo $repairid_enc; ?>&act=<?php echo base64_encode('view'); ?>" class="btn btn-sm btn-success"
                              ><i class="far fa-plus-square"></i>
                             พิมพ์ใบรับคืน</a></span> </span>
                     <hr>

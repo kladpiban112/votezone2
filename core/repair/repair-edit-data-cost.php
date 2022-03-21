@@ -35,7 +35,7 @@ $stmt->execute();
 $lastid = $conn->lastInsertId(); // last inserted ID
 
 
-$receiveid_enc = base64_encode($receive_id);
+//$receiveid_enc = base64_encode($receive_id);
 $msg = "success";
 $act_enc = base64_encode('edit');
 $repair_oid_enc = base64_encode($repairid);
