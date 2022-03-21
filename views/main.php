@@ -51,7 +51,18 @@
                                             <img src="./assets/images/event.png" alt="event" style="width:45x;height:45px;">
                                             <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bx-calendar bx-lg'></i></span> -->
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_service_today;?></div>
-                                            <a href="<?php echo $repair_today ?>" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">รายการซ่อมวันนี้</a>
+                                            <a href="<?php echo $repair_today ?>" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">แจ้งซ่อมวันนี้</a>
+                                        </div>
+                                    </div>
+                            </div>
+
+                            <div class="col-xl-2">
+                                    <div class="card card-custom gutter-b bg-warning" style="height: 150px">
+                                        <div class="card-body">
+                                            <img src="./assets/images/checklist.png" alt="checklist" style="width:45x;height:45px;">
+                                            <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-collection bx-lg'></i></span> -->
+                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_service;?></div>
+                                            <a href="././dashboard.php?module=repair&page=main" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">รายการซ่อมทั้งหมด</a>
                                         </div>
                                     </div>
                             </div>
@@ -59,57 +70,107 @@
                             <div class="col-xl-2">
                                     <div class="card card-custom gutter-b bg-success" style="height: 150px">
                                         <div class="card-body">
-                                            <img src="./assets/images/checklist.png" alt="checklist" style="width:45x;height:45px;">
-                                            <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-collection bx-lg'></i></span> -->
-                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_service;?></div>
-                                            <a href="././dashboard.php?module=repair&page=main" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">รายการซ่อม</a>
-                                        </div>
-                                    </div>
-                            </div>
-
-                            <div class="col-xl-2">
-                                    <div class="card card-custom gutter-b bg-info" style="height: 150px">
-                                        <div class="card-body">
                                         <img src="./assets/images/technical.png" alt="technical" style="width:45x;height:45px;">
                                             <!-- <span class="svg-icon svg-icon-3x svg-icon-success "><i class='bx bx-message-alt-check bx-lg'></i></span> -->
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_add_today;?></div>
-                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=1&search=" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">บันทึกรับการซ่อม</a>
+                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=1&search=" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">รอซ่อม</a>
                                         </div>
                                     </div>
                             </div>
 
                             <div class="col-xl-2">
-                                    <div class="card card-custom gutter-b bg-danger" style="height: 150px">
+                                    <div class="card card-custom gutter-b bg-success" style="height: 150px">
+                                        <div class="card-body">
+                                        <img src="./assets/images/money.png" alt="money" style="width:45x;height:45px;">
+                                            <!-- <span class="svg-icon svg-icon-3x svg-icon-success "><i class='bx bx-message-alt-check bx-lg'></i></span> -->
+                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_add_today;?></div>
+                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=1&search=" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">เสนอราคา</a>
+                                        </div>
+                                    </div>
+                            </div>
+
+                            <div class="col-xl-2">
+                                    <div class="card card-custom gutter-b bg-success" style="height: 150px">
                                         <div class="card-body">
                                         <img src="./assets/images/tools.png" alt="tools" style="width:45x;height:45px;">
                                             <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-cog bx-lg'></i></span> -->
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_begin_work;?></div>
-                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=2&search=" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">รายการกำลังซ่อม</a>
+                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=2&search=" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">กำลังซ่อม</a>
                                         </div>
                                     </div>
                             </div>
 
                             <div class="col-xl-2">
-                                    <div class="card card-custom gutter-b bg-primary" style="height: 150px">
+                                    <div class="card card-custom gutter-b bg-success" style="height: 150px">
+                                        <div class="card-body">
+                                        <img src="./assets/images/pause.png" alt="pause" style="width:45x;height:45px;">
+                                            <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-cog bx-lg'></i></span> -->
+                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_begin_work;?></div>
+                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=2&search=" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">พักการซ่อม</a>
+                                        </div>
+                                    </div>
+                            </div>
+
+                            <div class="col-xl-2">
+                                    <div class="card card-custom gutter-b bg-success" style="height: 150px">
                                         <div class="card-body">
                                         <img src="./assets/images/delivery-truck.png" alt="delivery-truck" style="width:50x;height:50px;">
                                             <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-car-mechanic bx-lg'></i></span> -->
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_add_out;?></div>
-                                            <a href="././dashboard.php?module=repairout&page=main" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">รายการซ่อมภายนอก</a>
+                                            <a href="././dashboard.php?module=repairout&page=main" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">ส่งซ่อมภายนอก</a>
                                         </div>
                                     </div>
                             </div>
 
                             <div class="col-xl-2">
-                                    <div class="card card-custom gutter-b bg-dark" style="height: 150px">
+                                    <div class="card card-custom gutter-b bg-success" style="height: 150px">
                                         <div class="card-body">
-                                        <img src="./assets/images/checked.png" alt="checked" style="width:45x;height:45px;">
-                                            <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-select-multiple bx-lg'></i></span> -->
-                                            <div class="text-light font-weight-bolder font-size-h2 mt-3"><?php echo $numb_finish_repair;?></div>
-                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=3&search=" class="text-light text-hover-primary font-weight-bold font-size-lg mt-3">รายการซ่อมเสร็จ</a>
+                                        <img src="./assets/images/delivery-truck.png" alt="delivery-truck" style="width:50x;height:50px;">
+                                            <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-car-mechanic bx-lg'></i></span> -->
+                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_add_out;?></div>
+                                            <a href="././dashboard.php?module=repairout&page=main" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">ส่งกลับจากภายนอก</a>
                                         </div>
                                     </div>
                             </div>
+
+                            <div class="col-xl-2">
+                                    <div class="card card-custom gutter-b bg-success" style="height: 150px">
+                                        <div class="card-body">
+                                        <img src="./assets/images/cross.png" alt="cross" style="width:45x;height:45px;">
+                                            <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-select-multiple bx-lg'></i></span> -->
+                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_finish_repair;?></div>
+                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=3&search=" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">ยกเลิกการซ่อม</a>
+                                        </div>
+                                    </div>
+                            </div>
+
+                            <div class="col-xl-2">
+                                    <div class="card card-custom gutter-b bg-success" style="height: 150px">
+                                        <div class="card-body">
+                                        <img src="./assets/images/checked.png" alt="checked" style="width:45x;height:45px;">
+                                            <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-select-multiple bx-lg'></i></span> -->
+                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_finish_repair;?></div>
+                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=3&search=" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">รายการซ่อมเสร็จ</a>
+                                        </div>
+                                    </div>
+                            </div>
+
+                            <div class="col-xl-2">
+                                    <div class="card card-custom gutter-b bg-success" style="height: 150px">
+                                        <div class="card-body">
+                                            <img src="./assets/images/completed-task.png" alt="completed-task" style="width:50px;height:50px;">
+                                            <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bx-calendar bx-lg'></i></span> -->
+                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_service_today;?></div>
+                                            <a href="<?php echo $repair_today ?>" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">ปิดงานซ่อม</a>
+                                        </div>
+                                    </div>
+                            </div>
+
+                            
+
+                            
+
+
 
                             
 
