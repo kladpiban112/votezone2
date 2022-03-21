@@ -212,8 +212,8 @@
 		<!--begin::Advance Table Widget 1-->
 <div class="card card-custom card-stretch gutter-b">
     <!--begin::Header-->
-    <div class="card-header border-0 py-5">
-        <h3 class="card-title align-items-start flex-column">
+    <div class="card-header border-0 py-5 bg-secondary">
+        <h3 class="card-title align-items-start flex-column ">
             <span class="card-label font-weight-bolder text-dark"><i class="fas fa-users-cog"></i>&nbsp;รายการแจ้งซ่อมบันทึกล่าสุด</span>
             <span class="text-muted mt-3 font-weight-bold font-size-sm"><a href="dashboard.php?module=repair&page=main">ทั้งหมด <?php echo $numb_service;?> รายการ</a></span>
         </h3>
@@ -226,7 +226,7 @@
     <!--end::Header-->
 
     <!--begin::Body-->
-    <div class="card-body py-0">
+    <div class="card-body py-0 bg-light">
     <?php 
     //$numb_data = $conn->query("SELECT count(1) FROM ".DB_PREFIX."service_main s  WHERE s.flag != '0' $conditions  ")->fetchColumn();
         

@@ -1,7 +1,7 @@
 <div id="kt_header_mobile" class="header-mobile " >
 	<!--begin::Logo-->
 	<a href="index.php">
-		<img alt="Logo" src="assets/images/dfix-logo.png" class="logo-default max-h-30px"/>
+		<img alt="Logo" src="assets/images/ThaiAkitechPro.png" class="logo-default max-h-30px"/>
 	</a>
 	<!--end::Logo-->
 
@@ -38,8 +38,8 @@
 			<!--begin::Header Logo-->
 			<div class="header-logo">
 				<a href="dashboard.php">
-					<img alt="Logo" src="assets/images/dfix-logo.png" class="logo-default max-h-40px"/>
-					<img alt="Logo" src="assets/images/dfix-logo.png" class="logo-sticky max-h-40px"/>
+					<img alt="Logo" src="assets/images/ThaiAkitechPro.png" class="logo-default max-h-40px"/>
+					<img alt="Logo" src="assets/images/ThaiAkitechPro.png" class="logo-sticky max-h-40px"/>
 				</a>
 			</div>
 			<!--end::Header Logo-->
