@@ -16,7 +16,7 @@ $func_orgprofile = getOrgProfile($org_id);
 $line_token_key = "3HC0yOTARTdWkA7bYyHCf7aat8ys6wU2uIipjKnoXE3";
 
  // line notify
-		$txt_outjob = "แจ้งซ่อมภายนอกกรุณาตรวจสอบที่ ".ADMIN_URL;
+		$txt_outjob = "มีงานแจ้งซ่อมภายนอกกรุณาตรวจสอบ ";
 		line_text($txt_outjob,$line_token_key);
 
 ?>
