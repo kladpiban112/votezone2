@@ -222,15 +222,8 @@ mpdf-->
 
  <?php
                     //$repairid = filter_input(INPUT_POST, 'repairid', FILTER_SANITIZE_STRING);
-
                     $conditions = " AND u.repair_id = '$repairid' ";
-                    $stmt_data = $conn->prepare('SELECT u.*,s.status_title,st.fname,st.lname,st.nickname
-                    FROM '.DB_PREFIX.'repair_status u 
-                    LEFT JOIN  '.DB_PREFIX.'repair_status_type s ON u.status_id = s.status_typeid
-                    LEFT JOIN  '.DB_PREFIX."staff_main st ON u.staff_id = st.oid 
-                    WHERE u.flag != '0' AND u.status_out = 'I'  $conditions 
-                    ORDER BY u.oid ASC
-                    $max");
+                    $stmt_data = $conn->prepare('SELECT u.* FROM '.DB_PREFIX.'repair_main u WHERE u.flag != "0" AND u.repair_inout = "I"'.  $conditions .'ORDER BY u.repair_id ASC'. $max );
                     $stmt_data->execute();
                     $numb_rows = $stmt_data->rowCount();
                     ?>
@@ -253,42 +246,25 @@ mpdf-->
         $i = 0;
         while ($row = $stmt_data->fetch(PDO::FETCH_ASSOC)) {
             ++$i;
-            $oid = $row['oid'];
-            $oid_enc = base64_encode($oid);
-            $status_date = date_db_2form($row['status_date']);
-            $status_title = $row['status_title'];
-            $status_desc = $row['status_desc'];
-            $staff_name = $row['prename_title'].$row['fname'].' '.$row['lname'].' ('.$row['nickname'].')';
+            $eq_name = $row['eq_name'];
+            $eq_code = $row['eq_code'];
+            $eq_desc = $row['eq_desc'];
 
-            $stmt_detail = $conn->prepare("SELECT GROUP_CONCAT(s.fname,' ',s.lname) AS gstaff_name,GROUP_CONCAT(s.oid) AS gstaff_id
-                FROM ".DB_PREFIX.'repair_staff u 
-                LEFT JOIN  '.DB_PREFIX."staff_main s ON u.staff_id = s.oid
-                WHERE u.status_id = '$oid' ");
-            $stmt_detail->execute();
-            $row_detail = $stmt_detail->fetch(PDO::FETCH_ASSOC);
-            $gstaff_name = str_replace(',', '</br>', $row_detail['gstaff_name']);
-            $gstaff_id = $row_detail['gstaff_id'];
-            $gstaff_id_exp = explode(',', $gstaff_id); ?>
-
-
+             ?>
 
 
             <tr>
                 <td class="text-center" width="20px"><?php echo $i; ?></td>
-
-                <td><?php echo $status_date; ?></td>
-                <td><?php echo $status_title; ?></td>
-                <td><?php echo $gstaff_name; ?></td>
-                <td><?php echo $status_desc; ?></td>
-
-
+                <td><?php echo $eq_name; ?></td>
+                <td><?php echo $eq_code; ?></td>
+                <td><?php echo $eq_desc; ?></td>
             </tr>
 
             <?php
         } // end while
     } else {?>
             <tr>
-                <td class="text-center" height="50px" colspan="5">ไม่มีข้อมูล</td>
+                <td class="text-center" height="50px" colspan="4" >ไม่มีข้อมูล<?php echo $repairid; ?></td>
             </tr>
             <?php }
             ?>
