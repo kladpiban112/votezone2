@@ -44,7 +44,7 @@ if($action == "edit"){
     $stmt_service->execute();	
 	$row_service = $stmt_service->fetch(PDO::FETCH_ASSOC);
     $personid = $row_service['person_id'];
-    $repair_date = "";
+    $repair_date = date('d').'/'.date('m').'/'.(date('Y')+543);
 
     $stmt_data = $conn->prepare ("SELECT p.*,o.org_name FROM ".DB_PREFIX."person_main p 
 	LEFT JOIN ".DB_PREFIX."org_main o ON p.org_id = o.org_id 

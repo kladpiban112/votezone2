@@ -658,7 +658,7 @@ if ($action == 'edit') {
                         <div class="col-lg-2">
                             <label>วันที่ทำรายการ</label>
                             <input type="text" class="form-control" name="statusdate" id="statusdate"
-                                data-date-language="th-th" maxlength="10" placeholder="" value="" />
+                                data-date-language="th-th" maxlength="10" placeholder="" value="<?php echo date('d').'/'.date('m').'/'.(date('Y')+543);?>" />
                         </div>
                         <div class="col-lg-4">
                             <label>สถานะการซ่อม</label>

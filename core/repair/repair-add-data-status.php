@@ -14,6 +14,8 @@ $statusdate = filter_input(INPUT_POST, 'statusdate', FILTER_SANITIZE_STRING);
 $statusdate = date_saveto_db($statusdate);
 $status_desc = filter_input(INPUT_POST, 'status_desc', FILTER_SANITIZE_STRING);
 $staff_id = filter_input(INPUT_POST, 'staff_id', FILTER_SANITIZE_STRING);
+
+
 $flag = 1;
 $now = date("Y-m-d H:i:s");
 $status_out = 'I';
