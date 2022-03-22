@@ -289,7 +289,24 @@ if ($action == 'edit') {
 
 
     </div> -->
+                    <div class="form-group row">
+                        <div class="col-lg-3">
+                            <label>ประกันสินค้า</label>
+                            <select class="form-control " name="repair_warranty" id="repair_warranty">
+                            <option value="" <?php if ($row_service['repair_warranty'] == '') {
+                        echo 'selected';
+                    } ?>>ระบุ</option>
 
+                                <option value="0" <?php if ($row_service['repair_warranty'] == '0') {
+                        echo 'selected';
+                    } ?>>ไม่มีประกัน</option>
+                                <option value="1" <?php if ($row_service['repair_warranty'] == '1') {
+                        echo 'selected';
+                    } ?>>มีประกัน</option>
+
+                            </select>
+                        </div>
+                    </div>
 
                     <span><i class="fas fa-user-cog"></i> รายละเอียดการแจ้งซ่อม</span>
                     <hr>
@@ -349,6 +366,13 @@ if ($action == 'edit') {
                             <label>รายละเอียด/อาการแจ้งซ่อม</label>
                             <textarea rows="" class="form-control editor" name="repair_desc"
                                 id="repair_desc"><?php echo $row_service['repair_desc']; ?></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            <label>อุปกรณ์ที่นำมาด้วย</label>
+                            <input type="text" class="form-control" placeholder="" name="eq_others" id="eq_others"
+                                value="<?php echo $row_service['eq_others']; ?>" />
                         </div>
                     </div>
 

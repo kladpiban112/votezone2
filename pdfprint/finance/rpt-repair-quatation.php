@@ -172,7 +172,7 @@ if ($action == 'view') {
                            
                             <span>
                                 <h4><?php echo getOrgName($row_person['org_id']); ?></h4>
-                                <span><?php echo getOrgAddr($row_person['org_id']); ?></span>
+                                <span><?php echo getOrgAddr($row_person['org_id']); ?> </span>
                                 <span>โทรศัพท์ <?php echo getOrgTelephone($row_person['org_id']); ?></span>
                             </span>
 </td>

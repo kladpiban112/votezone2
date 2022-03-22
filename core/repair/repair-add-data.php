@@ -26,6 +26,8 @@ $repair_desc = filter_input(INPUT_POST, 'repair_desc', FILTER_SANITIZE_STRING); 
 $eq_id = filter_input(INPUT_POST, 'eq_id', FILTER_SANITIZE_STRING); // 
 $eq_name = filter_input(INPUT_POST, 'eq_name', FILTER_SANITIZE_STRING); // 
 $eq_code = filter_input(INPUT_POST, 'eq_code', FILTER_SANITIZE_STRING); // 
+$eq_others = filter_input(INPUT_POST, 'eq_others', FILTER_SANITIZE_STRING); // 
+$repair_warranty = filter_input(INPUT_POST, 'repair_warranty', FILTER_SANITIZE_STRING); // 
 
 $approvedate = filter_input(INPUT_POST, 'approvedate', FILTER_SANITIZE_STRING);
 $approvedate = date_saveto_db($approvedate);
@@ -55,7 +57,7 @@ if($act == 'add'){
 
 
 
-	$query = "UPDATE ".DB_PREFIX."repair_main SET repair_title = ?, repair_desc = ?,edit_date = ?,edit_users = ?,eq_id = ? ,eq_name = ?,eq_code = ?,approve_date = ? ,approve_username = ?, return_date = ? ,return_username = ?,repair_place = ? WHERE repair_id = ? LIMIT 1"; 
+	$query = "UPDATE ".DB_PREFIX."repair_main SET repair_title = ?, repair_desc = ?,edit_date = ?,edit_users = ?,eq_id = ? ,eq_name = ?,eq_code = ?,eq_others = ?,approve_date = ? ,approve_username = ?, return_date = ? ,return_username = ?,repair_place = ?,repair_warranty = ? WHERE repair_id = ? LIMIT 1"; 
 	$stmt = $conn->prepare($query);
 
 	$stmt->bindParam(1, $repair_title, PDO::PARAM_STR);
@@ -65,12 +67,14 @@ if($act == 'add'){
 	$stmt->bindParam(5, $eq_id, PDO::PARAM_STR);
 	$stmt->bindParam(6, $eq_name, PDO::PARAM_STR);
 	$stmt->bindParam(7, $eq_code, PDO::PARAM_STR);
-	$stmt->bindParam(8, $approvedate, PDO::PARAM_STR);
-	$stmt->bindParam(9, $approve_username, PDO::PARAM_STR);
-	$stmt->bindParam(10, $returndate, PDO::PARAM_STR);
-    $stmt->bindParam(11, $return_username, PDO::PARAM_STR);
-    $stmt->bindParam(12, $repair_place, PDO::PARAM_STR);
-	$stmt->bindParam(13, $repairid, PDO::PARAM_INT);
+    $stmt->bindParam(8, $eq_others, PDO::PARAM_STR);
+	$stmt->bindParam(9, $approvedate, PDO::PARAM_STR);
+	$stmt->bindParam(10, $approve_username, PDO::PARAM_STR);
+	$stmt->bindParam(11, $returndate, PDO::PARAM_STR);
+    $stmt->bindParam(12, $return_username, PDO::PARAM_STR);
+    $stmt->bindParam(13, $repair_place, PDO::PARAM_STR);
+    $stmt->bindParam(14, $repair_warranty,PDO::PARAM_STR);
+	$stmt->bindParam(15, $repairid, PDO::PARAM_INT);
 	$stmt->execute();
 
 if(count($_FILES["files"]['name']) != 0){

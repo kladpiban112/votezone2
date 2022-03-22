@@ -382,17 +382,7 @@ mpdf-->
         </tbody>
     </table>
 
-    <br>
-
-
-
-
-
-
     <!-- end: Invoice body-->
-
-
-
 
     <!-- begin: Invoice footer-->
     <div class="row justify-content-center bg-gray-100 py-8 px-8 py-md-10 px-md-0">
@@ -408,8 +398,29 @@ mpdf-->
         </div>
     </div>
     <!-- end: Invoice footer-->
+    <div>
+           <br> </br>
+    </div>
+    <table width="100%" style="font-size: 14pt; border-collapse: collapse;" cellpadding="3">
+        <tr>
+            <td width="50%" style="border: 0 mm solid #888888; ">
+                <span style="font-size: 14pt; color: black;">ผู้แจ้ง : <?php echo $fullname; ?></span>
+                <br>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</br>
+                <br>วันที่แจ้งซ่อม : <?php echo $repairdate; ?></br>
+            </td>
 
+            <td width="20%" style="border: 0 mm solid #888888;">
 
+            </td>
+
+            <td width="30%" style="border: 0 mm solid #888888;">
+                <span style="font-size: 14pt; color:black;">ผู้รับแจ้ง : <?php echo getUsername($user_add); ?></span>
+                <br>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</br>
+                <br>วันที่อนุมัติแจ้งซ่อม : <?php echo $approve_date; ?> </br>
+            </td>
+
+        </tr>
+    </table>
 
 
     <!-- end::Card-->

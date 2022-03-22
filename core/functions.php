@@ -791,7 +791,7 @@ function getEqcode($orgid,$datereceive)
 					$changwatname = $row['changwatname'];
 					$ampurname = $row['ampurname'];
 					$tambonname = $row['tambonname'];
-					$addr =  $org_address." ต.".$tambonname." อ.".$ampurname." จ.".$changwatname;
+					$addr =  $org_address." ต.".$tambonname." อ.".$ampurname."&nbsp; จ.".$changwatname;
 			  }else  {
 				$addr = "";
 			  }
