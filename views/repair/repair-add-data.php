@@ -398,7 +398,6 @@ if ($action == 'edit') {
                     </div>
 
 
-
                 </div>
                 <!--col-->
 
@@ -505,72 +504,72 @@ if ($action == 'edit') {
 
                     <div class="form-group row">
 
-<?php
+                    <?php
 
-  $sql_files = 'SELECT * FROM '.DB_PREFIX."repair_document WHERE repair_id = '$repairid' AND file_status = '1' ORDER BY file_id ASC ";
-  $stmt_files = $conn->prepare($sql_files);
-  $stmt_files->execute();
+                    $sql_files = 'SELECT * FROM '.DB_PREFIX."repair_document WHERE repair_id = '$repairid' AND file_status = '1' ORDER BY file_id ASC ";
+                    $stmt_files = $conn->prepare($sql_files);
+                    $stmt_files->execute();
 
-  while ($row_files = $stmt_files->fetch(PDO::FETCH_ASSOC)) {
-      $file_id = $row_files['file_id'];
-      $file_name = $row_files['file_name']; 
-      $file_oldname = $row_files['file_oldname']; 
-      ?>
+                    while ($row_files = $stmt_files->fetch(PDO::FETCH_ASSOC)) {
+                        $file_id = $row_files['file_id'];
+                        $file_name = $row_files['file_name']; 
+                        $file_oldname = $row_files['file_oldname']; 
+                        ?>
 
-<div class="col-lg-12">
+                    <div class="col-lg-12">
 
-<!--begin::Item-->
-<div class="mb-6">
-            <!--begin::Content-->
-            <div class="d-flex align-items-center flex-grow-1">
-                <!--begin::Checkbox-->
-                <label class="mr-4">
-                <a href="uploads/repair/<?php echo $file_name; ?>" target="_blank">
-                    <span class="label label-lg label-light-primary label-inline font-weight-bold py-2"><i class="fas fa-file-invoice"></i></span>
-                    </a>
-                    <span></span>
-                </label>
-                <!--end::Checkbox-->
+                    <!--begin::Item-->
+                    <div class="mb-6">
+                                <!--begin::Content-->
+                                <div class="d-flex align-items-center flex-grow-1">
+                                    <!--begin::Checkbox-->
+                                    <label class="mr-4">
+                                    <a href="uploads/repair/<?php echo $file_name; ?>" target="_blank">
+                                        <span class="label label-lg label-light-primary label-inline font-weight-bold py-2"><i class="fas fa-file-invoice"></i></span>
+                                        </a>
+                                        <span></span>
+                                    </label>
+                                    <!--end::Checkbox-->
 
-                <!--begin::Section-->
-                <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
-                    <!--begin::Info-->
-                    <div class="d-flex flex-column align-items-cente py-2 w-75">
-                        <!--begin::Title-->
-                        <a href="uploads/repair/<?php echo $file_name; ?>" target="_blank" class="text-dark-75 font-weight-bold text-hover-primary font-size-lg mb-1">
-                            <?php echo $file_oldname;?>
-                        </a>
-                        <!--end::Title-->
+                                    <!--begin::Section-->
+                                    <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
+                                        <!--begin::Info-->
+                                        <div class="d-flex flex-column align-items-cente py-2 w-75">
+                                            <!--begin::Title-->
+                                            <a href="uploads/repair/<?php echo $file_name; ?>" target="_blank" class="text-dark-75 font-weight-bold text-hover-primary font-size-lg mb-1">
+                                                <?php echo $file_oldname;?>
+                                            </a>
+                                            <!--end::Title-->
 
-                        <!--begin::Data-->
+                                            <!--begin::Data-->
+                                        
+                                            <!--end::Data-->
+                                        </div>
+                                        <!--end::Info-->
+
+                                        <!--begin::Label-->
+                                        <a href="#" onclick='confirm_delete_file(<?php echo $file_id; ?>)' title="ลบไฟล์">
+                                        <span class="label label-lg label-light-danger label-inline font-weight-bold py-4"><i class="fas fa-trash text-danger"></i></span>
+                                        </a>
+                                        <!--end::Label-->
+                                    </div>
+                                    <!--end::Section-->
+                                </div>
+                                <!--end::Content-->
+                            </div>
+                            <!--end::Item-->
+
+
+
                     
-                        <!--end::Data-->
                     </div>
-                    <!--end::Info-->
 
-                    <!--begin::Label-->
-                    <a href="#" onclick='confirm_delete_file(<?php echo $file_id; ?>)' title="ลบไฟล์">
-                    <span class="label label-lg label-light-danger label-inline font-weight-bold py-4"><i class="fas fa-trash text-danger"></i></span>
-                    </a>
-                    <!--end::Label-->
-                </div>
-                <!--end::Section-->
-            </div>
-            <!--end::Content-->
-        </div>
-        <!--end::Item-->
+                    <?php
+                    }
+                    ?>
 
 
-
-   
-</div>
-
-<?php
-  }
-  ?>
-
-
-</div>
+                    </div>
 
 
                     <span><i class="fas fa-camera"></i> รูปถ่ายอุปกรณ์แจ้งซ่อม </span>
@@ -589,30 +588,26 @@ if ($action == 'edit') {
                               $file_name = $row_files['file_name']; ?>
 
                         <div class="col-lg-6">
-
+                        
                             <div class="symbol symbol-150 mr-3">
-                                <img src="uploads/repair/<?php echo $file_name; ?>" alt="image"
-                                    class="img img-responsive" />
+                            <a href="uploads/repair/<?php echo $file_name; ?>" data-toggle="lightbox">
+                                <img src="uploads/repair/<?php echo $file_name; ?>" alt="image" class="img-fluid"/>
+                          </a>
                                 <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                                     data-action="remove" data-toggle="tooltip" title="ลบรูปภาพ">
                                     <a href="#" onclick='confirm_delete(<?php echo $file_id; ?>)'><i
                                             class="ki ki-bold-close icon-xs text-muted"></i></a>
                                 </span>
+                             </a>
                             </div>
+                    
                         </div>
 
                         <?php
                           }
                           ?>
-
-
                     </div>
-
-
-
                 </div>
-
-
             </div>
             <!--col-->
         </div>
@@ -998,6 +993,10 @@ if ($action == 'edit') {
 <!--end::Modal-->
 
 <script>
+$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+  event.preventDefault();
+  $(this).ekkoLightbox();
+});
 $(document).ready(function() {
     'use strict';
     check_data_repairout();
@@ -1640,7 +1639,29 @@ $('#btnAddLogistic').click(function(e) {
 }); //  click
 
 
-
+function confirm_delete_file(id) {
+    console.log(id);
+    Swal.fire({
+        title: 'แน่ใจนะ?',
+        text: "ต้องการลบรูปภาพ",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'ยกเลิก',
+        confirmButtonText: 'ใช่, ต้องการลบรูปภาพ!'
+    }).then((result) => {
+        if (result.value) { //Yes
+            $.post("core/repairout/repairout-docx-del.php", {
+                id: id
+            }, function(result) {
+                //  $("test").html(result);
+                // console.log(result.code);
+                location.reload();
+            });
+        }
+    })
+}
 
 
 $('.editor').trumbowyg({
