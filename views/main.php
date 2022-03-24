@@ -40,7 +40,7 @@
 
     $numb_pause = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '4' $conditions ")->fetchColumn();//พักการซ่อม
 
-    $numb_add_out = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_inout = 'O'  $conditions ")->fetchColumn();//ส่งซ่อมภายนอก
+    $numb_add_out = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '5'  $conditions ")->fetchColumn();//ส่งซ่อมภายนอก
 
     $numb_add_come = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '6' $conditions ")->fetchColumn();//ส่งกลับจากภายนอก
 
