@@ -14,22 +14,22 @@ if ($action == 'edit') {
 
     $stmt_data = $conn->prepare('SELECT p.*,o.org_name FROM '.DB_PREFIX.'person_main p 
 	LEFT JOIN '.DB_PREFIX."org_main o ON p.org_id = o.org_id 
-  WHERE p.oid = '$personid'  LIMIT 1");
+    WHERE p.oid = '$personid'  LIMIT 1");
     $stmt_data->execute();
     $row_person = $stmt_data->fetch(PDO::FETCH_ASSOC);
 
     $sql_service = 'SELECT s.*,qts.qt_statusname FROM '.DB_PREFIX.'repair_main s 
 	LEFT JOIN '.DB_PREFIX.'person_main p ON s.person_id = p.oid 
-  LEFT JOIN '.DB_PREFIX."repair_quotation_status qts ON s.qt_status = qts.qt_statusid
-  WHERE s.repair_id = '$repairid' AND s.flag != '0'  LIMIT 1";
+    LEFT JOIN '.DB_PREFIX."repair_quotation_status qts ON s.qt_status = qts.qt_statusid
+    WHERE s.repair_id = '$repairid' AND s.flag != '0'  LIMIT 1";
     $stmt_service = $conn->prepare($sql_service);
     $stmt_service->execute();
     $row_service = $stmt_service->fetch(PDO::FETCH_ASSOC);
     $qt_status = $row_service['qt_status'];
 
     $stmt_qt = $conn->prepare('SELECT u.* FROM '.DB_PREFIX."repair_quotation u 
-                WHERE u.flag != '0' AND u.repair_id = '$repairid' 
-                ORDER BY u.oid DESC LIMIT 1");
+        WHERE u.flag != '0' AND u.repair_id = '$repairid' 
+        ORDER BY u.oid DESC LIMIT 1");
     $stmt_qt->execute();
 
     $row_qt = $stmt_qt->fetch(PDO::FETCH_ASSOC);
@@ -40,7 +40,6 @@ if ($action == 'edit') {
     $action = 'add';
 }
 ?>
-
 
 
 <!--begin::Card-->
@@ -386,7 +385,17 @@ if ($action == 'edit') {
                             <span class="form-text text-muted">.jpg .png เท่านั้น</span>
                         </div>
                     </div>
-
+                    
+                    <span class=""><i class="far fa-file-pdf"></i> อัพโหลดเอกสารเพิ่มเติม</span>
+                    <hr>
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            <label>เลือกไฟล์เอกสาร</label>
+                            <input type="file" name="doc[]" id="filer_example1" class="form-control "
+                                multiple="multiple">
+                            <span class="form-text text-muted">.jpg .png .pdf .doc .docx เท่านั้น</span>
+                        </div>
+                    </div>
 
 
 
@@ -488,6 +497,80 @@ if ($action == 'edit') {
                         </div>
 
                     </div>
+
+
+                   
+                    <span><i class="far fa-file-pdf"></i> เอกสารเพิ่มเติม </span>
+                    <hr>
+
+                    <div class="form-group row">
+
+<?php
+
+  $sql_files = 'SELECT * FROM '.DB_PREFIX."repair_document WHERE repair_id = '$repairid' AND file_status = '1' ORDER BY file_id ASC ";
+  $stmt_files = $conn->prepare($sql_files);
+  $stmt_files->execute();
+
+  while ($row_files = $stmt_files->fetch(PDO::FETCH_ASSOC)) {
+      $file_id = $row_files['file_id'];
+      $file_name = $row_files['file_name']; 
+      $file_oldname = $row_files['file_oldname']; 
+      ?>
+
+<div class="col-lg-12">
+
+<!--begin::Item-->
+<div class="mb-6">
+            <!--begin::Content-->
+            <div class="d-flex align-items-center flex-grow-1">
+                <!--begin::Checkbox-->
+                <label class="mr-4">
+                <a href="uploads/repair/<?php echo $file_name; ?>" target="_blank">
+                    <span class="label label-lg label-light-primary label-inline font-weight-bold py-2"><i class="fas fa-file-invoice"></i></span>
+                    </a>
+                    <span></span>
+                </label>
+                <!--end::Checkbox-->
+
+                <!--begin::Section-->
+                <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
+                    <!--begin::Info-->
+                    <div class="d-flex flex-column align-items-cente py-2 w-75">
+                        <!--begin::Title-->
+                        <a href="uploads/repair/<?php echo $file_name; ?>" target="_blank" class="text-dark-75 font-weight-bold text-hover-primary font-size-lg mb-1">
+                            <?php echo $file_oldname;?>
+                        </a>
+                        <!--end::Title-->
+
+                        <!--begin::Data-->
+                    
+                        <!--end::Data-->
+                    </div>
+                    <!--end::Info-->
+
+                    <!--begin::Label-->
+                    <a href="#" onclick='confirm_delete_file(<?php echo $file_id; ?>)' title="ลบไฟล์">
+                    <span class="label label-lg label-light-danger label-inline font-weight-bold py-4"><i class="fas fa-trash text-danger"></i></span>
+                    </a>
+                    <!--end::Label-->
+                </div>
+                <!--end::Section-->
+            </div>
+            <!--end::Content-->
+        </div>
+        <!--end::Item-->
+
+
+
+   
+</div>
+
+<?php
+  }
+  ?>
+
+
+</div>
 
 
                     <span><i class="fas fa-camera"></i> รูปถ่ายอุปกรณ์แจ้งซ่อม </span>
@@ -830,7 +913,89 @@ if ($action == 'edit') {
 </div>
 </form>
 <!--end::Modal-->
+<!--begin::Modal ขนส่ง-->
+<div class="modal fade" id="modalAddLogistic" tabindex="-1" role="dialog" aria-labelledby="modalAddLogistic" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="far fa-plus-square"></i> สถานะการขนส่ง</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" enctype="multipart/form-data" autocomplete="off">
+                    <input type="hidden" class="form-control" name="repairid" id="repairid"
+                        value="<?php echo $repairid; ?>" />
+                    <div class="form-group row">
+                        <div class="col-lg-2">
+                            <label>วันที่ทำรายการ</label>
+                            <input type="text" class="form-control" name="logisticdate" id="logisticdate" data-date-language="th-th" maxlength="10" placeholder="" value="<?php echo date('d').'/'.date('m').'/'.(date('Y')+543);?>" />
+                        </div>
 
+                        <div class="col-lg-4">
+                            <label>สถานะการขนส่ง</label>
+                            <select class="form-control " name="logisticstatus" id="logisticstatus">
+                                <option value="">ระบุ</option>
+                                <?php
+                                    $stmt_user_role = $conn->prepare('SELECT s.* FROM '.DB_PREFIX.'repair_logistic_type s ');
+                                    $stmt_user_role->execute();
+                                    while ($row = $stmt_user_role->fetch(PDO::FETCH_ASSOC)) {
+                                        $id_selected = $row['logistic_typeid'];
+                                        $title_selected = stripslashes($row['logistic_title']); ?>
+                                <option value="<?php echo $id_selected; ?>"><?php echo $title_selected; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <label>เลขที่ส่ง</label>
+                            <input type="text" class="form-control" name="logisticno" id="logisticno" placeholder=""
+                                value="" />
+                        </div>
+                        <div class="col-lg-4">
+                            <label>ขนส่งโดย</label>
+
+                            <select class="form-control " name="logisticby" id="logisticby">
+                                <option value="">ระบุ</option>
+                                <?php
+                                    $stmt_user_role = $conn->prepare('SELECT s.* FROM '.DB_PREFIX.'repair_logistic_transport s ');
+                                    $stmt_user_role->execute();
+                                    while ($row = $stmt_user_role->fetch(PDO::FETCH_ASSOC)) {
+                                        $id_selected = $row['logistic_transport_id'];
+                                        $title_selected = stripslashes($row['logistic_transport_title']); ?>
+                                <option value="<?php echo $id_selected; ?>"><?php echo $title_selected; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            <label>รายละเอียด</label>
+                            <textarea class="form-control editor" name="logistic_desc" id="logistic_desc"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <div class="col-lg-2">
+                            <button type="button" class="btn btn-success mr-2" id="btnAddLogistic"><i
+                                    class="far fa-save"></i> บันทึก</button>
+                        </div>
+
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal"><i
+                        class="far fa-times-circle"></i> ปิด</button>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+<!--end::Modal-->
 
 <script>
 $(document).ready(function() {
@@ -903,7 +1068,9 @@ $('#statusdate').datepicker({
 $('#returndate').datepicker({
     autoclose: true
 });
-
+$('#logisticdate').datepicker({
+    autoclose: true
+});
 
 $('#spare_id').change(function(e) {
     e.preventDefault();
@@ -1389,6 +1556,92 @@ function delStatusData(id) {
         }
     })
 }
+// add logistic
+$('#btnAddLogistic').click(function(e) {
+    e.preventDefault();
+    if ($('#repairid').val().length == "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'กรุณาทำรายการ',
+            showConfirmButton: false,
+            timer: 1000
+        });
+    } else if ($('#logisticdate').val().length == "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'กรุณาระบุวันที่',
+            showConfirmButton: false,
+            timer: 1000
+        });
+    } else if ($('#logisticstatus').val().length == "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'กรุณาระบุสถานะ',
+            showConfirmButton: false,
+            timer: 1000
+        });
+    } else if ($('#logisticno').val().length == "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'กรุณาระบุเลขส่ง',
+            showConfirmButton: false,
+            timer: 1000
+        });
+    } else if ($('#logisticby').val().length == "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'กรุณาระบุส่งโดย',
+            showConfirmButton: false,
+            timer: 1000
+        });
+    } else {
+
+        var data = new FormData(this.form);
+        $.ajax({
+            type: "POST",
+            url: "core/repairout/repairout-add-data-logistic.php",
+            dataType: "json",
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                if (data.code == "200") {
+                    Swal.fire({
+                            icon: 'success',
+                            title: 'บันทึกสำเร็จ',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        .then((value) => {
+                            $('#logisticstatus').val('');
+                            $('#logisticdate').val('');
+                            $('#logisticno').val('');
+                            $('#logisticby').val('');
+                            $('#logistic_desc').val('');
+                            loaddata_logistic_data();
+
+                        });
+                } else if (data.code == "404") {
+                    //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
+                    Swal.fire({
+                            icon: 'error',
+                            title: 'ไม่สามารถบันทึกข้อมูลได้',
+                            text: 'กรุณาลองใหม่อีกครั้ง'
+                        })
+                        .then((value) => {
+                            //liff.closeWindow();
+                        });
+                }
+            } // success
+        });
+
+    }
+
+}); //  click
+
+
+
+
 
 $('.editor').trumbowyg({
     removeformatPasted: true,

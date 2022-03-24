@@ -936,8 +936,6 @@ $qtapproveusers = $row_qt['qt_approveusers'];
 </form>
 <!--end::Modal-->
 
-
-
                         <!--begin::Modal-->
                         <div class="modal fade" id="modalAddCost" tabindex="-1" role="dialog" aria-labelledby="modalAddCost" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
