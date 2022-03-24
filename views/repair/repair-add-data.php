@@ -1270,7 +1270,6 @@ $('#btnAddStatus').click(function(e) {
                             $('#staff_id').val('');
                             $('#status_desc').val('');
                             loaddata_status_data();
-
                         });
                         check_data_repairout();
                 } else if (data.code == "404") {
@@ -1384,7 +1383,8 @@ function delStatusData(id) {
             $.post("core/repair/repair-del-data-status.php", {
                 id: id
             }, function(result) {
-                loaddata_status_data();
+                location.reload();
+                // loaddata_status_data();
             });
         }
     })
