@@ -28,14 +28,30 @@
 
         }
 
-    $numb_service = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' $conditions ")->fetchColumn();
+    $numb_service_today = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND u.repair_date = '$today_date' $conditions  ")->fetchColumn();//แจ้งซ่อมวันนี้
 
-    $numb_service_today = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND u.repair_date = '$today_date' $conditions  ")->fetchColumn();
+    $numb_service = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' $conditions ")->fetchColumn();//รายการซ่อมทั้งหมด
+
+    $numb_add_today = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '1' $conditions ")->fetchColumn();//รอซ่อม
+
+    $numb_bid = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '2' $conditions ")->fetchColumn();//เสนอราคา
+
+    $numb_begin_work = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '3' $conditions ")->fetchColumn();//กำลังซ่อม
+
+    $numb_pause = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '4' $conditions ")->fetchColumn();//พักการซ่อม
+
+    $numb_add_out = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_inout = 'O'  $conditions ")->fetchColumn();//ส่งซ่อมภายนอก
+
+    $numb_add_come = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '6' $conditions ")->fetchColumn();//ส่งกลับจากภายนอก
+
+    $numb_cancel = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '7' $conditions ")->fetchColumn();//ยกเลิกการซ่อม
+
+    $numb_finish_repair = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '8' $conditions ")->fetchColumn();//ซ่อมเสร็จ
+
+    $numb_close_work = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '9' $conditions ")->fetchColumn();//ปิดงานซ่อม
     
-    $numb_add_today = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '1' $conditions ")->fetchColumn();
-    $numb_begin_work = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '2' $conditions ")->fetchColumn();
-    $numb_finish_repair = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '3' $conditions ")->fetchColumn();
-    $numb_add_out = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_inout = 'O'  $conditions ")->fetchColumn();
+    // $numb_come_out = $conn->query("SELECT COUNT(1) FROM ".FB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '6' $conditions ")->fetchColumn();
+    // $numb_pause = $conn->query("SELECT COUNT(1) FROM ".FB_PREFIX."repair_main u WHERE u.flag != '0' AND repair_status = '4' $conditions ")->fetchColumn();
     if( $numb_service_today != '0'){$repair_today = "dashboard.php?act=&module=repair&page=main&startdate=".$today."&enddate=&status=&search=";}
     //$numb_equipment = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."equipment_main s WHERE s.flag != '0' $conditions  ")->fetchColumn();
     //$numb_donate = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."donate_main s WHERE s.flag != '0'  $conditions  ")->fetchColumn();
@@ -50,6 +66,7 @@
                                         <div class="card-body">
                                             <img src="./assets/images/event.png" alt="event" style="width:45x;height:45px;">
                                             <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bx-calendar bx-lg'></i></span> -->
+                                            <!-- แจ้งซ่อมวันนี้ -->
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_service_today;?></div>
                                             <a href="<?php echo $repair_today ?>" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">แจ้งซ่อมวันนี้</a>
                                         </div>
@@ -61,6 +78,7 @@
                                         <div class="card-body">
                                             <img src="./assets/images/checklist.png" alt="checklist" style="width:45x;height:45px;">
                                             <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-collection bx-lg'></i></span> -->
+                                            <!-- รายการซ่อมทั้งหมด -->
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_service;?></div>
                                             <a href="././dashboard.php?module=repair&page=main" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">รายการซ่อมทั้งหมด</a>
                                         </div>
@@ -72,6 +90,7 @@
                                         <div class="card-body">
                                         <img src="./assets/images/technical.png" alt="technical" style="width:45x;height:45px;">
                                             <!-- <span class="svg-icon svg-icon-3x svg-icon-success "><i class='bx bx-message-alt-check bx-lg'></i></span> -->
+                                            <!-- รอซ่อม -->
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_add_today;?></div>
                                             <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=1&search=" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">รอซ่อม</a>
                                         </div>
@@ -83,7 +102,8 @@
                                         <div class="card-body">
                                         <img src="./assets/images/money.png" alt="money" style="width:45x;height:45px;">
                                             <!-- <span class="svg-icon svg-icon-3x svg-icon-success "><i class='bx bx-message-alt-check bx-lg'></i></span> -->
-                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_add_today;?></div>
+                                            <!-- เสนอราคา -->
+                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_bid;?></div>
                                             <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=1&search=" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">เสนอราคา</a>
                                         </div>
                                     </div>
@@ -94,6 +114,7 @@
                                         <div class="card-body">
                                         <img src="./assets/images/tools.png" alt="tools" style="width:45x;height:45px;">
                                             <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-cog bx-lg'></i></span> -->
+                                            <!-- กำลังซ่อม -->
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_begin_work;?></div>
                                             <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=2&search=" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">กำลังซ่อม</a>
                                         </div>
@@ -105,7 +126,8 @@
                                         <div class="card-body">
                                         <img src="./assets/images/pause.png" alt="pause" style="width:45x;height:45px;">
                                             <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-cog bx-lg'></i></span> -->
-                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_begin_work;?></div>
+                                            <!-- พักการซ่อม -->
+                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_pause;?></div>
                                             <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=2&search=" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">พักการซ่อม</a>
                                         </div>
                                     </div>
@@ -116,6 +138,7 @@
                                         <div class="card-body">
                                         <img src="./assets/images/delivery-truck-go.png" alt="delivery-truck-go" style="width:50x;height:50px;">
                                             <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-car-mechanic bx-lg'></i></span> -->
+                                            <!-- ส่งซ่อมภายนอก -->
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_add_out;?></div>
                                             <a href="././dashboard.php?module=repairout&page=main" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">ส่งซ่อมภายนอก</a>
                                         </div>
@@ -127,7 +150,8 @@
                                         <div class="card-body">
                                         <img src="./assets/images/delivery-truck-come.png" alt="delivery-truck-come" style="width:50px;height:50px;">
                                             <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-car-mechanic bx-lg'></i></span> -->
-                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_add_out;?></div>
+                                            <!-- ส่งกลับจากภายนอก -->
+                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_add_come;?></div>
                                             <a href="././dashboard.php?module=repairout&page=main" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">ส่งกลับจากภายนอก</a>
                                         </div>
                                     </div>
@@ -138,7 +162,8 @@
                                         <div class="card-body">
                                         <img src="./assets/images/cross.png" alt="cross" style="width:45x;height:45px;">
                                             <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-select-multiple bx-lg'></i></span> -->
-                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_finish_repair;?></div>
+                                            <!-- ยกเลิกการซ่อม -->
+                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_cancel;?></div>
                                             <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=3&search=" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">ยกเลิกการซ่อม</a>
                                         </div>
                                     </div>
@@ -149,8 +174,9 @@
                                         <div class="card-body">
                                         <img src="./assets/images/checked.png" alt="checked" style="width:45x;height:45px;">
                                             <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-select-multiple bx-lg'></i></span> -->
+                                            <!-- ซ่อมเสร็จ -->
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_finish_repair;?></div>
-                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=3&search=" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">รายการซ่อมเสร็จ</a>
+                                            <a href="././dashboard.php?act=&module=repair&page=main&startdate=&enddate=&status=3&search=" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">ซ่อมเสร็จ</a>
                                         </div>
                                     </div>
                             </div>
@@ -160,7 +186,8 @@
                                         <div class="card-body">
                                             <img src="./assets/images/completed-task.png" alt="completed-task" style="width:50px;height:50px;">
                                             <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bx-calendar bx-lg'></i></span> -->
-                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_service_today;?></div>
+                                            <!-- ปิดงานซ่อม -->
+                                            <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_close_work;?></div>
                                             <a href="<?php echo $repair_today ?>" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">ปิดงานซ่อม</a>
                                         </div>
                                     </div>

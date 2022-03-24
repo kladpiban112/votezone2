@@ -137,10 +137,15 @@
 	                <!--begin::Toggle-->
 	                <div class="topbar-item" data-toggle="dropdown" data-offset="0px,0px">
 	                    <div class="btn btn-icon btn-hover-transparent-white d-flex align-items-center btn-lg px-md-2 w-md-auto">
-							<span class="text-white opacity-70 font-weight-bold font-size-base d-none d-md-inline mr-1">สวัสดี,</span>
+							<span class="text-white opacity-70 font-weight-bold font-size-base d-none d-md-inline mr-1">ยินดีต้อนรับ,</span>
 						   	<span class="text-white opacity-90 font-weight-bolder font-size-base d-none d-md-inline mr-4"><?php echo $logged_user_name;?></span>
 	                        <span class="symbol symbol-35">
-	                            <span class="symbol-label text-white font-size-h5 font-weight-bold bg-white-o-30">A</span>
+							<?php if($logged_user_avatar == ""){?>
+                    <img src="uploads/avatars/no_avatar.png" alt="image"/>
+                            <?php }else{?>
+                                <img src="uploads/avatars/<?php echo $logged_user_avatar;?>" alt="image"/>
+								<?php   } ?>
+	                            <!-- <span class="symbol-label text-white font-size-h5 font-weight-bold bg-white-o-30">A</span> -->
 	                        </span>
 	                    </div>
 	                </div>
