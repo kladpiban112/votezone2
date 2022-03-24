@@ -114,7 +114,7 @@
                             <div class="col-xl-2">
                                     <div class="card card-custom gutter-b bg-success" style="height: 150px">
                                         <div class="card-body">
-                                        <img src="./assets/images/delivery-truck.png" alt="delivery-truck" style="width:50x;height:50px;">
+                                        <img src="./assets/images/delivery-truck-go.png" alt="delivery-truck-go" style="width:50x;height:50px;">
                                             <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-car-mechanic bx-lg'></i></span> -->
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_add_out;?></div>
                                             <a href="././dashboard.php?module=repairout&page=main" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">ส่งซ่อมภายนอก</a>
@@ -125,7 +125,7 @@
                             <div class="col-xl-2">
                                     <div class="card card-custom gutter-b bg-success" style="height: 150px">
                                         <div class="card-body">
-                                        <img src="./assets/images/delivery-truck.png" alt="delivery-truck" style="width:50x;height:50px;">
+                                        <img src="./assets/images/delivery-truck-come.png" alt="delivery-truck-come" style="width:50px;height:50px;">
                                             <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-car-mechanic bx-lg'></i></span> -->
                                             <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo $numb_add_out;?></div>
                                             <a href="././dashboard.php?module=repairout&page=main" class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">ส่งกลับจากภายนอก</a>
