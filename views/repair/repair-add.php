@@ -66,7 +66,11 @@ if($action == "edit"){
 
     <div class="col-lg-2">
 				<label>วันที่แจ้งซ่อม</label>
-				<input type="text" class="form-control"  name="repairdate" id="repairdate" placeholder="วันที่แจ้งซ่อม" value="<?php echo date_db_2form($row_service['repair_date']);?>"  data-date-language="th-th" maxlength="10" />
+                <?php if($action == 'add'){?>
+                    <input type="text" class="form-control"  name="repairdate" id="repairdate" placeholder="วันที่แจ้งซ่อม"value="<?php echo date('d').'/'.date('m').'/'.(date('Y')+543);?>"  data-date-language="th-th" maxlength="10" />  
+                <?php } else { ?>  
+				    <input type="text" class="form-control"  name="repairdate" id="repairdate" placeholder="วันที่แจ้งซ่อม" value="<?php echo date_db_2form($row_service['repair_date']);?>"  data-date-language="th-th" maxlength="10" />
+                <?php } ?>
 				<span class="form-text text-muted"></span>
 				
 			</div>
@@ -159,7 +163,6 @@ if($action == "edit"){
                         </div>
             </div>
             
-
 			<div class="col-lg-4">
 				<label>เลขบัตรประชาชน/เลขผู้เสียภาษี</label>
 				<div class="input-group">
@@ -170,7 +173,6 @@ if($action == "edit"){
 						</div>
 			</div>
       
-
 		</div>
 
   <div class="form-group row">

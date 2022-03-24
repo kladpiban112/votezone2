@@ -123,3 +123,4 @@ $numb_rows = $stmt_data->rowCount();
         </tbody>
     </table>
 </div>
+<?php $msg123s = "dup"; ?>

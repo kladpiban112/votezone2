@@ -461,15 +461,17 @@ if ($action == 'edit') {
                     <hr>
                     <div id="status_detail"></div>
 
-
+                    <span id="logistic"><i class="fas fa-truck"></i> การขนส่ง <a href="#" class="btn btn-sm btn-primary"
+                            data-toggle="modal" data-target="#modalAddLogistic"><i class="far fa-plus-square"></i>
+                            บันทึกการขนส่ง</a></span>
+                    <hr id="logistic_detail_hr">
+                    <div id="logistic_detail"></div>                          
                     
-
 
                     <span><i class="fas fa-user-check"></i> ข้อมูลการรับคืน <a target="_blank" href="././pdfprint/return_in/rpt-return-pdf.php?personid=<?php echo $personid_enc; ?>&repairid=<?php echo $repairid_enc; ?>&act=<?php echo base64_encode('view'); ?>" class="btn btn-sm btn-primary"
                             ><i class="far fa-plus-square"></i>
                             พิมพ์ใบรับคืน</a></span>
                     <hr></span>
-                    <hr>
 
                     <div class="form-group row">
                         <div class="col-lg-4">
@@ -833,9 +835,11 @@ if ($action == 'edit') {
 <script>
 $(document).ready(function() {
     'use strict';
+    check_data_repairout();
     loaddata_spare_data();
     loaddata_status_data();
     loaddata_cost_data();
+    loaddata_logistic_data();
 
     $('#spare_oth').hide();
 
@@ -963,11 +967,29 @@ function loaddata_status_data() {
         success: function(data) {
             $("#status_detail").empty(); //add preload
             $("#status_detail").append(data);
-
         } // success
     });
 }
 
+function loaddata_logistic_data() {
+    var repairid = $("#repairid").val();
+    var personid = $("#personid").val();
+    
+    $.ajax({
+        type: "POST",
+        url: "views/repairout/repairout-add-data-logistic.php",
+        //dataType: "json",
+        data: {
+            repairid: repairid,
+            personid: personid
+        },
+        success: function(data) {
+            $("#logistic_detail").empty(); //add preload
+            $("#logistic_detail").append(data);
+
+        } // success
+    });
+}
 
 function loaddata_cost_data() {
     var repairid = $("#repairid").val();
@@ -983,10 +1005,33 @@ function loaddata_cost_data() {
         success: function(data) {
             $("#cost_detail").empty(); //add preload
             $("#cost_detail").append(data);
-
         } // success
     });
 }
+
+function check_data_repairout() {
+    var repairid = $("#repairid").val();
+    $.ajax({
+        type: "POST",
+        url: "core/repair/check_data_repairout.php",
+        //dataType: "json",
+        data: {
+            repairid: repairid
+        },
+        success: function(data) {
+            if(data == 0){
+                $("#logistic").hide();
+                $("#logistic_detail").hide();
+                $("#logistic_detail_hr").hide();
+            }else{
+                $("#logistic").show();
+                $("#logistic_detail").show();
+                $("#logistic_detail_hr").show();
+            }
+        } // success
+    });
+}
+
 </script>
 
 
@@ -1013,6 +1058,7 @@ function confirm_delete(id) {
         }
     })
 }
+
 
 
 $('#btnSave').click(function(e) {
@@ -1178,7 +1224,6 @@ function delSpareData(id) {
 
 
 
-
 $('#btnAddStatus').click(function(e) {
     e.preventDefault();
     if ($('#repairid').val().length == "") {
@@ -1227,6 +1272,7 @@ $('#btnAddStatus').click(function(e) {
                             loaddata_status_data();
 
                         });
+                        check_data_repairout();
                 } else if (data.code == "404") {
                     //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
                     Swal.fire({

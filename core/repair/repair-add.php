@@ -141,6 +141,24 @@ if($exist_person!=0){
 		$service_oid = $conn->lastInsertId(); // last inserted ID
 		$service_oid_enc = base64_encode($service_oid);
 
+		$flag_status = '1';
+		$now = date("Y-m-d H:i:s");
+		$status_out = 'I';
+		$status_id = '1';
+
+		
+		$query_s = "INSERT INTO ".DB_PREFIX."repair_status (oid,repair_id,status_date,status_id,flag,add_date,add_users,status_out) VALUES (NULL,?,?,?,?,?,?,?)"; 
+		$stmt_s = $conn->prepare($query_s);
+		$stmt_s->bindParam(1, $service_oid, PDO::PARAM_STR);
+		$stmt_s->bindParam(2, $now, PDO::PARAM_STR);
+		$stmt_s->bindParam(3, $status_id, PDO::PARAM_STR);
+		$stmt_s->bindParam(4, $flag_status, PDO::PARAM_STR);
+		$stmt_s->bindParam(5, $now, PDO::PARAM_STR);
+		$stmt_s->bindParam(6, $logged_user_id, PDO::PARAM_STR);
+		$stmt_s->bindParam(7, $status_out, PDO::PARAM_STR);
+		$stmt_s->execute();
+		addRepairStatus($service_oid);
+
         // line notify
 		//$txt_newjob = "มีงานซ่อมเข้าใหม่ ตรวจสอบที่ ".ADMIN_URL;
 		//line_text($txt_newjob,$line_token_key);
@@ -212,6 +230,22 @@ $query = "INSERT INTO ".DB_PREFIX."repair_main (repair_id,person_id,org_id, repa
 		$service_oid = $conn->lastInsertId(); // last inserted ID
 		$service_oid_enc = base64_encode($service_oid);
 
+		$flag_status = '1';
+		$now = date("Y-m-d H:i:s");
+		$status_out = 'I';
+		$status_id = '1';
+
+		
+		$query_s = "INSERT INTO ".DB_PREFIX."repair_status (oid,repair_id,status_date,status_id,flag,add_date,add_users,status_out) VALUES (NULL,?,?,?,?,?,?,?)"; 
+		$stmt_s = $conn->prepare($query_s);
+		$stmt_s->bindParam(1, $service_oid, PDO::PARAM_STR);
+		$stmt_s->bindParam(2, $now, PDO::PARAM_STR);
+		$stmt_s->bindParam(3, $status_id, PDO::PARAM_STR);
+		$stmt_s->bindParam(4, $flag_status, PDO::PARAM_STR);
+		$stmt_s->bindParam(5, $now, PDO::PARAM_STR);
+		$stmt_s->bindParam(6, $logged_user_id, PDO::PARAM_STR);
+		$stmt_s->bindParam(7, $status_out, PDO::PARAM_STR);
+		$stmt_s->execute();
     // line notify
 	//$txt_newjob = "มีงานซ่อมเข้าใหม่ ตรวจสอบที่ ".ADMIN_URL;
 	//line_text($txt_newjob,$line_token_key);
