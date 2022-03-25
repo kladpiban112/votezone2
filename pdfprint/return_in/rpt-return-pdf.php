@@ -71,7 +71,7 @@ if ($action == 'view') {
     <style>
 
     </style>
-    <title>ใบรับคืนสินค้า</title>
+    <title>ใบรับคืนสินค้า D-fixx</title>
     <style>
     body {
         font-family: 'angsana';

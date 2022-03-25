@@ -67,11 +67,13 @@ if ($action == 'view') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../print-style.css">
+    <link rel="shortcut icon" href="../pdfprint/assets/images/ThaiAkitechPro.ico"/>
 
     <style>
 
     </style>
-    <title>ใบแจ้งซ่อม</title>
+    <title>ใบแจ้งซ่อม D-Fixx</title>
+    
     <style>
     body {
         font-family: 'angsana';
