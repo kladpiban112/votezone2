@@ -68,7 +68,7 @@ $numb_rows = $stmt_data->rowCount();
                                                 <span class="navi-icon"><i class="fas fa-edit"></i></span>
                                                 <span class="navi-text">แก้ไข</span>
                                             </a>-->
-                                    <a href="dashboard.php?module=repairout&page=repairout-edit-data-logistic&repairid=<?php echo $repairid_enc; ?>&personid=<?php echo $personid_enc; ?>&statusid=<?php echo $oid_enc; ?>&act=<?php echo base64_encode('edit'); ?>"
+                                    <a href="dashboard.php?module=repairout&page=repairout-edit-data-jobout&repairid=<?php echo $repairid_enc; ?>&personid=<?php echo $personid_enc; ?>&statusid=<?php echo $oid_enc; ?>&act=<?php echo base64_encode('edit'); ?>"
                                         class="navi-link">
                                         <span class="navi-icon"><i class="fas fa-edit"></i></span>
                                         <span class="navi-text">แก้ไข</span>
@@ -76,7 +76,7 @@ $numb_rows = $stmt_data->rowCount();
                                 </li>
 
                                 <li class="navi-item">
-                                    <a href="#" class="navi-link" onclick='delLogisticData(<?php echo $oid; ?>)'>
+                                    <a href="#" class="navi-link" onclick='deljoboutData(<?php echo $oid; ?>)'>
                                         <span class="navi-icon"><i class="fas fa-trash"></i></span>
                                         <span class="navi-text">ยกเลิกรายการ</span>
                                     </a>

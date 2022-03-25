@@ -1271,10 +1271,16 @@ function check_data_repairout() {
                 $("#logistic").hide();
                 $("#logistic_detail").hide();
                 $("#logistic_detail_hr").hide();
+                $("#jobout").hide();
+                $("#job").hide();
+                $("#jobout_detail").hide();
             }else{
                 $("#logistic").show();
                 $("#logistic_detail").show();
                 $("#logistic_detail_hr").show();
+                $("#job").show();
+                $("#jobout").show();
+                $("#jobout_detail").show();
             }
         } // success
     });
@@ -1470,7 +1476,27 @@ function delSpareData(id) {
     })
 }
 
-
+// del jobout
+function deljoboutData(id) {
+    Swal.fire({
+        title: 'แน่ใจนะ?',
+        text: "ต้องการยกเลิกรายการ !",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'ยกเลิก',
+        confirmButtonText: 'ใช่, ต้องการยกเลิกรายการ!'
+    }).then((result) => {
+        if (result.value) { //Yes
+            $.post("core/repairout/repairout-del-jobout.php", {
+                id: id
+            }, function(result) {
+                loaddata_jobout();
+            });
+        }
+    })
+}
 
 $('#btnAddStatus').click(function(e) {
     e.preventDefault();
