@@ -473,8 +473,13 @@ if ($action == 'edit') {
                             data-toggle="modal" data-target="#modalAddLogistic"><i class="far fa-plus-square"></i>
                             บันทึกการขนส่ง</a></span>
                     <hr id="logistic_detail_hr">
-                    <div id="logistic_detail"></div>                          
-                    
+                    <div id="logistic_detail"></div>   
+
+                    <span id="jobout"><i class="fas fa-truck"></i> เลขที่ใบส่งซ่อมภายนอก <a href="#" class="btn btn-sm btn-primary"
+                            data-toggle="modal" data-target="#modalAddjobout"><i class="far fa-plus-square"></i>
+                            บันทึกเลขที่ส่งซ่อม</a></span>
+                    <hr id="่job">
+                    <div id="jobout_detail"></div>   
 
                     <span><i class="fas fa-user-check"></i> ข้อมูลการรับคืน <a target="_blank" href="././pdfprint/return_in/rpt-return-pdf.php?personid=<?php echo $personid_enc; ?>&repairid=<?php echo $repairid_enc; ?>&act=<?php echo base64_encode('view'); ?>" class="btn btn-sm btn-primary"
                             ><i class="far fa-plus-square"></i>
@@ -991,7 +996,65 @@ if ($action == 'edit') {
 </div>
 </form>
 <!--end::Modal-->
+<!--begin::Modal ส่งซ่อมภายนอก-->
+<div class="modal fade" id="modalAddjobout" tabindex="-1" role="dialog" aria-labelledby="modalAddjobout" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="far fa-plus-square"></i> เลขที่ส่งซ่อมภายนอก</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" enctype="multipart/form-data" autocomplete="off">
+                    <input type="hidden" class="form-control" name="repairid" id="repairid"
+                        value="<?php echo $repairid; ?>" />
+                    <div class="form-group row">
+                        <div class="col-lg-2">
+                            <label>วันที่ทำรายการ</label>
+                            <input type="text" class="form-control" name="job_date" id="job_date" data-date-language="th-th" maxlength="10" placeholder="" value="<?php echo date('d').'/'.date('m').'/'.(date('Y')+543);?>" />
+                        </div>
 
+                        <div class="col-lg-4">
+                            <label>สถานที่ส่งซ่อม</label>
+                            <input type="text" class="form-control" name="job_name" id="job_name" placeholder=""
+                                value="" />
+                        </div>
+                        <div class="col-lg-4">
+                            <label>เลขที่ส่งซ่อม</label>
+                            <input type="text" class="form-control" name="jobticket_id" id="jobticket_id" placeholder=""
+                                value="" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            <label>รายละเอียด</label>
+                            <textarea class="form-control editor" name="job_desc" id="job_desc"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <div class="col-lg-2">
+                            <button type="button" class="btn btn-success mr-2" id="btnAddjobout"><i
+                                    class="far fa-save"></i> บันทึก</button>
+                        </div>
+
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal"><i
+                        class="far fa-times-circle"></i> ปิด</button>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+<!--end::Modal-->
 <script>
 $(document).on('click', '[data-toggle="lightbox"]', function(event) {
   event.preventDefault();
@@ -1004,9 +1067,9 @@ $(document).ready(function() {
     loaddata_status_data();
     loaddata_cost_data();
     loaddata_logistic_data();
+    loaddata_jobout();
 
     $('#spare_oth').hide();
-
 
     var eq_id = $("#eq_id").val();
     if (eq_id == '0') {
@@ -1068,6 +1131,9 @@ $('#returndate').datepicker({
     autoclose: true
 });
 $('#logisticdate').datepicker({
+    autoclose: true
+});
+$('#joboutdate').datepicker({
     autoclose: true
 });
 
@@ -1174,7 +1240,23 @@ function loaddata_cost_data() {
         } // success
     });
 }
-
+function loaddata_jobout() {
+    var repairid = $("#repairid").val();
+    var personid = $("#personid").val();
+    $.ajax({
+        type: "POST",
+        url: "views/repair/repair-add-jobout.php",
+        //dataType: "json",
+        data: {
+            repairid: repairid,
+            personid: personid
+        },
+        success: function(data) {
+            $("#jobout_detail").empty(); //add preload
+            $("#jobout_detail").append(data);
+        } // success
+    });
+}
 function check_data_repairout() {
     var repairid = $("#repairid").val();
     $.ajax({
@@ -1638,6 +1720,77 @@ $('#btnAddLogistic').click(function(e) {
 
 }); //  click
 
+// add jobout
+$('#btnAddjobout').click(function(e) {
+    e.preventDefault();
+    if ($('#repairid').val().length == "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'กรุณาทำรายการ',
+            showConfirmButton: false,
+            timer: 1000
+        });
+    } else if ($('#jobticket_id').val().length == "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'กรุณาระบุเลขที่ส่งซ่อม',
+            showConfirmButton: false,
+            timer: 1000
+        });
+    } else if ($('#job_date').val().length == "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'กรุณาระบุวันที่',
+            showConfirmButton: false,
+            timer: 1000
+        });
+    } else if ($('#job_name').val().length == "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'กรุณาระบุสถานที่ส่งซ่อม',
+            showConfirmButton: false,
+            timer: 1000
+        });
+    } else {
+        var data = new FormData(this.form);
+        $.ajax({
+            type: "POST",
+            url: "core/repairout/repairout-add-jobout.php",
+            dataType: "json",
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                if (data.code == "200") {
+                    Swal.fire({
+                            icon: 'success',
+                            title: 'บันทึกสำเร็จ',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        .then((value) => {
+                            $('#job_name').val('');
+                            $('#jobticket_id').val('');
+                            $('#job_desc').val('');
+                            loaddata_jobout();
+                        });
+                } else if (data.code == "404") {
+                    //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
+                    Swal.fire({
+                            icon: 'error',
+                            title: 'ไม่สามารถบันทึกข้อมูลได้',
+                            text: 'กรุณาลองใหม่อีกครั้ง'
+                        })
+                        .then((value) => {
+                            //liff.closeWindow();
+                        });
+                }
+            } // success
+        });
+
+    }
+
+}); //  click
 
 function confirm_delete_file(id) {
     console.log(id);
