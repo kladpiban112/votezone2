@@ -10,11 +10,12 @@ if($eq_typeid != ""){
 }
 
 ?>
+<script src="https://kit.fontawesome.com/09f98e4a32.js" crossorigin="anonymous"></script>
 		<!--begin::Card-->
 		<div class="card card-custom gutter-b example example-compact">
 			<div class="card-header">
 				<h3 class="card-title">
-                <i class="fas fa-wheelchair"></i>&nbsp;คลังอุปกรณ์ 
+                <i class="fa-solid fa-box"></i>&nbsp;คลังอุปกรณ์ 
 				</h3>
 				<div class="card-toolbar">
 					<div class="example-tools justify-content-center">
