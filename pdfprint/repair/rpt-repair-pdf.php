@@ -70,7 +70,6 @@ if ($action == 'view') {
     <link rel="shortcut icon" href="../pdfprint/assets/images/ThaiAkitechPro.ico"/>
 
     <style>
-
     </style>
     <title>ใบแจ้งซ่อม D-Fixx</title>
     
@@ -403,12 +402,12 @@ mpdf-->
     <div>
            <br> </br>
     </div>
-    <table width="100%" style="font-size: 14pt; border-collapse: collapse;" cellpadding="3">
-        <tr>
+    <table width="100%" hight="10%" style="font-size: 14pt; border-collapse: collapse;" cellpadding="3">
+        <tr >
             <td width="50%" style="border: 0 mm solid #888888; ">
                 <span style="font-size: 14pt; color: black;">ผู้แจ้ง : <?php echo $fullname; ?></span>
-                <br>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</br>
-                <br>วันที่แจ้งซ่อม : <?php echo $repairdate; ?></br>
+                <!-- <br>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</br>
+                <br>วันที่แจ้งซ่อม : <?php echo $repairdate; ?></br> -->
             </td>
 
             <td width="20%" style="border: 0 mm solid #888888;">
@@ -417,7 +416,43 @@ mpdf-->
 
             <td width="30%" style="border: 0 mm solid #888888;">
                 <span style="font-size: 14pt; color:black;">ผู้รับแจ้ง : <?php echo getUsername($user_add); ?></span>
+                <!-- <br>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</br>
+                <br>วันที่อนุมัติแจ้งซ่อม : <?php echo $approve_date; ?> </br> -->
+            </td>
+
+        </tr>
+        <tr>
+            <td width="50%" style="border: 0 mm solid #888888; ">
+                <!-- <span style="font-size: 14pt; color: black;">ผู้แจ้ง : <?php echo $fullname; ?></span> -->
                 <br>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</br>
+                <!-- <br>วันที่แจ้งซ่อม : <?php echo $repairdate; ?></br> -->
+            </td>
+
+            <td width="20%" style="border: 0 mm solid #888888;">
+
+            </td>
+
+            <td width="30%" style="border: 0 mm solid #888888;">
+                <!-- <span style="font-size: 14pt; color:black;">ผู้รับแจ้ง : <?php echo getUsername($user_add); ?></span> -->
+                <br>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</br>
+                <!-- <br>วันที่อนุมัติแจ้งซ่อม : <?php echo $approve_date; ?> </br> -->
+            </td>
+
+        </tr>
+        <tr>
+            <td width="50%" style="border: 0 mm solid #888888; ">
+                <!-- <span style="font-size: 14pt; color: black;">ผู้แจ้ง : <?php echo $fullname; ?></span>
+                <br>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</br> -->
+                <br>วันที่แจ้งซ่อม : <?php echo $repairdate; ?></br>
+            </td>
+
+            <td width="20%" style="border: 0 mm solid #888888;">
+
+            </td>
+
+            <td width="30%" style="border: 0 mm solid #888888;">
+                <!-- <span style="font-size: 14pt; color:black;">ผู้รับแจ้ง : <?php echo getUsername($user_add); ?></span>
+                <br>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</br> -->
                 <br>วันที่อนุมัติแจ้งซ่อม : <?php echo $approve_date; ?> </br>
             </td>
 
