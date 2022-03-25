@@ -219,7 +219,7 @@ if ($status != '') {
                 $repair_inout = $row['repair_inout'];
                 $repair_inout_flag = $row['flag_out'];
                 
-                if ($repair_inout_flag == '0') {
+                if ($repair_status != '5') {
                     $repair_inout_show = "<i class='fas fa-tools text-success'></i>";
                 } else {
                     $repair_inout_show = "<i class='fas fa-truck text-danger'></i>";
@@ -227,7 +227,7 @@ if ($status != '') {
 
                 $return_date = date_db_2form($row['return_date']);
 
-                if (($repair_status == '3') and ($return_date != '')) {
+                if (($repair_status == '9')  && ($return_date != '')) {
                     $return_status = "<i class='fas fa-check-circle text-success'></i>";
                 } else {
                     $return_status = '';
