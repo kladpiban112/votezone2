@@ -30,7 +30,7 @@ $pagenum = filter_input(INPUT_GET, 'pagenum', FILTER_SANITIZE_NUMBER_INT);
     <!--end::Head-->
 
     <!--begin::Body-->
-    <body  id="kt_body" style="background-image: url(assets/media/bg/bg-dfix-2.jpg)"  class="quick-panel-right demo-panel-right offcanvas-right header-fixed subheader-enabled page-loading"  >
+    <body  id="kt_body" style="background-image: url(assets/media/bg/bg-10.jpg)"  class="quick-panel-right demo-panel-right offcanvas-right header-fixed subheader-enabled page-loading"  >
 
     	<!--begin::Main-->
 	<!--begin::Header Mobile-->
