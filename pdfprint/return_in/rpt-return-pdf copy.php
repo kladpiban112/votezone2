@@ -194,6 +194,17 @@ mpdf-->
                 <span style="font-size: 14pt; color: #555555;">ประเภทการแจ้ง</span>
                 <br><?php echo $repair_typetitle; ?></br>
             </td>
+
+            <td width="30%" style="border: 0 mm solid #888888;">
+                <span style="font-size: 14pt; color: #555555;">ผู้รับ:</span>
+
+                <br>ลงชื่อผู้รับ</br>
+                <br>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</br>
+                <br><?php echo $approve_username; ?></br>
+                <br>วันที่รับ : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ </br>
+                <br><?php echo $approve_date; ?></br>
+            </td>
+
         </tr>
     </table>
 
@@ -207,74 +218,148 @@ mpdf-->
 
     <!-- begin: Invoice body-->
 
+ <hr>
+
+ <?php
+                    //$repairid = filter_input(INPUT_POST, 'repairid', FILTER_SANITIZE_STRING);
+                    $conditions = " AND u.repair_id = '$repairid' ";
+                    $stmt_data = $conn->prepare('SELECT u.* FROM '.DB_PREFIX.'repair_main u WHERE u.flag != "0" AND u.repair_inout = "I"'.  $conditions .'ORDER BY u.repair_id ASC'. $max );
+                    $stmt_data->execute();
+                    $numb_rows = $stmt_data->rowCount();
+                    ?>
+    <br>
+    <span style="font-size: 14pt;">รายละเอียดอุปกรณ์</span>
+    <table class="items" width="100%" style="font-size: 14pt; border-collapse: collapse;" cellpadding="8">
+        <thead>
+            <tr>
+                <td>ลำดับ</td>
+                <td>ชื่ออุปกรณ์</td>
+                <td>รหัสอุปกรณ์</td>
+                <td>รายละเอียด</td>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            <?php
+    if ($numb_rows > 0) {
+        $i = 0;
+        while ($row = $stmt_data->fetch(PDO::FETCH_ASSOC)) {
+            ++$i;
+            $eq_name = $row['eq_name'];
+            $eq_code = $row['eq_code'];
+            $eq_desc = $row['eq_desc'];
+
+             ?>
+
+
+            <tr>
+                <td class="text-center" width="20px"><?php echo $i; ?></td>
+                <td><?php echo $eq_name; ?></td>
+                <td><?php echo $eq_code; ?></td>
+                <td><?php echo $eq_desc; ?></td>
+            </tr>
+
+            <?php
+        } // end while
+    } else {?>
+            <tr>
+                <td class="text-center" height="50px" colspan="4" >ไม่มีข้อมูล<?php echo $repairid; ?></td>
+            </tr>
+            <?php }
+            ?>
+
+        </tbody>
+    </table>
+
+    <br>
 
 
     <?php
                     //$repairid = filter_input(INPUT_POST, 'repairid', FILTER_SANITIZE_STRING);
 
-                    $conditions = " AND r.repair_id = '$repairid' ";
-                    $stmt_data = $conn->prepare('SELECT *
-                    FROM '.DB_PREFIX.'repair_main r
-                    LEFT JOIN '.DB_PREFIX.'repair_payment p ON r.repair_id = p.repair_id 
-                    WHERE r.flag != "0" '. $conditions .'
-                    ORDER BY r.repair_id ASC
-                    ');
+                    $conditions = " AND u.repair_id = '$repairid' ";
+                    $stmt_data = $conn->prepare('SELECT u.*,s.spare_name,s.spare_code,t.unit_title
+                    FROM '.DB_PREFIX.'repair_spare u 
+                    LEFT JOIN  '.DB_PREFIX.'spare_main s ON u.spare_id = s.spare_id
+                    LEFT JOIN '.DB_PREFIX."cunit t ON u.spare_unit = t.unit_id
+                    WHERE u.flag != '0' AND u.status_out = 'I' $conditions 
+                    ORDER BY u.oid ASC
+                    $max");
                     $stmt_data->execute();
                     $numb_rows = $stmt_data->rowCount();
-                    if ($numb_rows > 0) {
-                        $i = 0;
-                        while ($row = $stmt_data->fetch(PDO::FETCH_ASSOC)) {
-                            $repair_title = $row['repair_title'];
-                            $repair_desc = $row['repair_desc'];
-                            $eq_name = $row['eq_name'];
-                            $eq_others = $row['eq_others'];
-                            $cost = $row['cost'];
                     ?>
-
-    <hr>
+   
     <span style="font-size: 14pt;">
-        รายการแจ้งซ่อม
+        รายการอะไหล่ที่ใช้
     </span>
     <!-- <table width="100%" style="border:1px solid #000000; margin-top: 13px !important"> -->
-    <table class="items" width="100%" style="font-size: 14pt;border-collapse: collapse; " cellpadding="8">
-    <thead>
-                        </thead>
-    <tbody>
-            <tr >
-                <th width="20%" style="text-align: left;">อุปกรณ์</th>
-                <td  colspan="5" style="text-align: center;"><?php echo $eq_name; ?></td>
+    <table class="items" width="100%" style="font-size: 14pt; border-collapse: collapse;" cellpadding="8">
+        <thead>
+            <tr>
+                <td>ลำดับ</td>
+                <td>รหัส</td>
+                <td>อะไหล่/เครื่องมือ</td>
+                <td>จำนวน</td>
+                <td>หน่วย</td>
+                <td>ราคา(บาท)</td>
             </tr>
-            <tr>
-                <th style="text-align: left;">รายการแจ้งซ่อม</th>
-                <td colspan="5" style="text-align: center;"><?php echo $repair_title; ?></td>
-            </tr>
-            <tr>
-                <th style="text-align: left;">รายละเอียดการซ่อม</th>
-                <td colspan="5" style="text-align: center;"><?php echo $repair_desc; ?></td>
-            </tr>
-            <tr>
-                <th style="text-align: left;">อุปกรณ์ที่นำมาด้วย</th>
-                <td colspan="5" style="text-align: center;"><?php echo $eq_others; ?></td>
-            </tr>   
-            <tfooter>
-            <tr>
-                <td style="text-align: center;" class="blanktotal" colspan="5">
-                    ค่าใช้จ่าย</td>
+        </thead>
+        <tbody>
 
-                <td class="totals">
-                    <?php echo $cost; ?></td>
+            <?php
+    if ($numb_rows > 0) {
+        $i = 0;
+        while ($row = $stmt_data->fetch(PDO::FETCH_ASSOC)) {
+            ++$i;
+            $oid = $row['oid'];
+            $oid_enc = base64_encode($oid);
+            $spare_id = $row['spare_id'];
+            $spare_code = $row['spare_code'];
+            $spare_name = $row['spare_name'];
+            $spare_quantity = $row['spare_quantity'];
+            $unit_title = $row['unit_title'];
+            $spare_price = $row['spare_price'];
+            $sum_spare_price += $spare_price * $spare_quantity;
+
+            if ($spare_id == '0') {
+                $spare_name_show = $row['spare_other'];
+            } else {
+                $spare_name_show = $row['spare_name'];
+            } ?>
+            <tr>
+                <td style="text-align: center;">
+                    <?php echo $i; ?></td>
+                <td style="text-align: center;"><?php echo $spare_code; ?></td>
+                <td><?php echo $spare_name_show; ?>
+                </td>
+                <td style="text-align: center;">
+                    <?php echo $spare_quantity; ?></td>
+                <td style="text-align: center;">
+                    <?php echo $unit_title; ?></td>
+                <td class="cost">
+                    <?php echo number_format($spare_price, 2); ?></td>
             </tr>
-            </tbody>
-        </tfooter>
+
             <?php
         } // end while
     } else {?>
             <tr>
                 <td class="text-center" height="50px" colspan="6">ไม่มีข้อมูล</td>
             </tr>
-            <?php } 
+            <?php }
             ?>
 
+        </tbody>
+        <tfooter>
+            <tr>
+                <td style="text-align: center;" class="blanktotal" colspan="5">
+                    รวม</td>
+
+                <td class="totals">
+                    <?php echo number_format($sum_spare_price, 2); ?></td>
+            </tr>
+        </tfooter>
     </table>
 
     <?php
@@ -292,7 +377,7 @@ mpdf-->
                     $numb_rows = $stmt_data->rowCount();
                     ?>
     <br>
-    <!-- <span style="font-size: 14pt;">รายละเอียดการซ่อม</span>
+    <span style="font-size: 14pt;">รายละเอียดการซ่อม</span>
     <table class="items" width="100%" style="font-size: 14pt; border-collapse: collapse;" cellpadding="8">
         <thead>
             <tr>
@@ -328,9 +413,6 @@ mpdf-->
             $gstaff_id = $row_detail['gstaff_id'];
             $gstaff_id_exp = explode(',', $gstaff_id); ?>
 
-
-
-
             <tr>
                 <td class="text-center" width="20px"><?php echo $i; ?></td>
 
@@ -352,49 +434,36 @@ mpdf-->
             ?>
 
         </tbody>
-    </table> -->
+    </table>
+
+    <br>
+
+
+
+
+
 
     <!-- end: Invoice body-->
+
+
+
 
     <!-- begin: Invoice footer-->
     <div class="row justify-content-center bg-gray-100 py-8 px-8 py-md-10 px-md-0">
         <div class="col-md-9">
             หมายเหตุ :
             <?php
-                // if ($return_date != '') {
-                //     echo 'วันที่รับคืน : '.$return_date;
-                //     echo ' ผู้รับคืน : '.$return_username;
-                // }
+                if ($return_date != '') {
+                    echo 'วันที่รับคืน : '.$return_date;
+                    echo ' ผู้รับคืน : '.$return_username;
+                }
 
                 ?>
         </div>
     </div>
     <!-- end: Invoice footer-->
-    <div>
-           <br> </br>
-    </div>
-    <table width="100%" hight="10%" style="font-size: 14pt; border-collapse: collapse;" cellpadding="3">
-        <tr >
-            <td width="50%" style="border: 0 mm solid #888888; ">
-       
-            </td>
 
-            <td width="20%" style="border: 0 mm solid #888888;">
 
-            </td>
-
-            <td width="30%" style="border: 0 mm solid #888888;">
-                <span style="font-size: 14pt; color: #555555;">ผู้รับ:</span>
-
-                <br>ลงชื่อผู้รับ</br>
-                <br>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</br>
-                <br><?php echo $approve_username; ?></br>
-                <br>วันที่รับ : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ </br>
-                <br><?php echo $approve_date; ?></br>
-            </td>
-
-        </tr>
-    </table>
 
 
     <!-- end::Card-->
@@ -407,7 +476,6 @@ mpdf-->
 <?php
 
 $html = ob_get_contents();
-
 
 $mpdf = new \Mpdf\Mpdf([
     'mode' => 'utf-8',
@@ -422,11 +490,10 @@ $mpdf = new \Mpdf\Mpdf([
     'margin_header' => 10,
     'margin_footer' => 10,
      ]);
-     
      $mpdf->SetProtection(['print']);
      $mpdf->SetTitle('DFix Corp. - Repair invoices');
      $mpdf->SetAuthor('DFix Corp.');
-     $mpdf->SetWatermarkText('');
+     $mpdf->SetWatermarkText('Repair invoice');
      $mpdf->showWatermarkText = true;
      $mpdf->watermark_font = 'DejaVuSansCondensed';
      $mpdf->watermarkTextAlpha = 0.1;

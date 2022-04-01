@@ -94,6 +94,12 @@ if ($action == 'view') {
     .items td {
         border-left: 0.1mm solid #000000;
         border-right: 0.1mm solid #000000;
+        border-bottom: 0.1mm solid #000000;
+    }
+    .items th {
+        border-left: 0.1mm solid #000000;
+        border-right: 0.1mm solid #000000;
+        border-bottom: 0.1mm solid #000000;
     }
 
     table thead td {
@@ -222,88 +228,54 @@ mpdf-->
     <?php
                     //$repairid = filter_input(INPUT_POST, 'repairid', FILTER_SANITIZE_STRING);
 
-                    $conditions = " AND u.repair_id = '$repairid' ";
-                    $stmt_data = $conn->prepare('SELECT u.*,s.spare_name,s.spare_code,t.unit_title
-                    FROM '.DB_PREFIX.'repair_spare u 
-                    LEFT JOIN  '.DB_PREFIX.'spare_main s ON u.spare_id = s.spare_id
-                    LEFT JOIN '.DB_PREFIX."cunit t ON u.spare_unit = t.unit_id
-                    WHERE u.flag != '0' AND u.status_out = 'I' $conditions 
-                    ORDER BY u.oid ASC
-                    $max");
+                    $conditions = " AND repair_id = '$repairid' ";
+                    $stmt_data = $conn->prepare('SELECT *
+                    FROM '.DB_PREFIX.'repair_main 
+                    WHERE flag != "0" '. $conditions .'
+                    ORDER BY repair_id ASC
+                    ');
                     $stmt_data->execute();
                     $numb_rows = $stmt_data->rowCount();
+                    if ($numb_rows > 0) {
+                        $i = 0;
+                        while ($row = $stmt_data->fetch(PDO::FETCH_ASSOC)) {
+                            $repair_title = $row['repair_title'];
+                            $repair_desc = $row['repair_desc'];
+                            $eq_name = $row['eq_name'];
+                            $eq_others = $row['eq_others'];
                     ?>
+
     <hr>
     <span style="font-size: 14pt;">
-        รายการอะไหล่ที่ใช้
+        รายการแจ้งซ่อม
     </span>
     <!-- <table width="100%" style="border:1px solid #000000; margin-top: 13px !important"> -->
-    <table class="items" width="100%" style="font-size: 14pt; border-collapse: collapse;" cellpadding="8">
-        <thead>
-            <tr>
-                <td>ลำดับ</td>
-                <td>รหัส</td>
-                <td>อะไหล่/เครื่องมือ</td>
-                <td>จำนวน</td>
-                <td>หน่วย</td>
-                <td>ราคา(บาท)</td>
+    <table class="items" width="100%" style="font-size: 14pt;border-collapse: collapse; " cellpadding="8">
+            <tr >
+                <th width="20%" style="text-align: left;">อุปกรณ์</th>
+                <td style="text-align: center;"><?php echo $eq_name; ?></td>
             </tr>
-        </thead>
-        <tbody>
-
-            <?php
-    if ($numb_rows > 0) {
-        $i = 0;
-        while ($row = $stmt_data->fetch(PDO::FETCH_ASSOC)) {
-            ++$i;
-            $oid = $row['oid'];
-            $oid_enc = base64_encode($oid);
-            $spare_id = $row['spare_id'];
-            $spare_code = $row['spare_code'];
-            $spare_name = $row['spare_name'];
-            $spare_quantity = $row['spare_quantity'];
-            $unit_title = $row['unit_title'];
-            $spare_price = $row['spare_price'];
-            $sum_spare_price += $spare_price * $spare_quantity;
-
-            if ($spare_id == '0') {
-                $spare_name_show = $row['spare_other'];
-            } else {
-                $spare_name_show = $row['spare_name'];
-            } ?>
             <tr>
-                <td style="text-align: center;">
-                    <?php echo $i; ?></td>
-                <td style="text-align: center;"><?php echo $spare_code; ?></td>
-                <td><?php echo $spare_name_show; ?>
-                </td>
-                <td style="text-align: center;">
-                    <?php echo $spare_quantity; ?></td>
-                <td style="text-align: center;">
-                    <?php echo $unit_title; ?></td>
-                <td class="cost">
-                    <?php echo number_format($spare_price, 2); ?></td>
+                <th style="text-align: left;">รายการแจ้งซ่อม</th>
+                <td style="text-align: center;"><?php echo $repair_title; ?></td>
             </tr>
-
+            <tr>
+                <th style="text-align: left;">รายละเอียดการซ่อม</th>
+                <td style="text-align: center;"><?php echo $repair_desc; ?></td>
+            </tr>
+            <tr>
+                <th style="text-align: left;">อุปกรณ์ที่นำมาด้วย</th>
+                <td style="text-align: center;"><?php echo $eq_others; ?></td>
+            </tr>
             <?php
         } // end while
     } else {?>
             <tr>
                 <td class="text-center" height="50px" colspan="6">ไม่มีข้อมูล</td>
             </tr>
-            <?php }
+            <?php } 
             ?>
 
-        </tbody>
-        <tfooter>
-            <tr>
-                <td style="text-align: center;" class="blanktotal" colspan="5">
-                    รวม</td>
-
-                <td class="totals">
-                    <?php echo number_format($sum_spare_price, 2); ?></td>
-            </tr>
-        </tfooter>
     </table>
 
     <?php
@@ -321,7 +293,7 @@ mpdf-->
                     $numb_rows = $stmt_data->rowCount();
                     ?>
     <br>
-    <span style="font-size: 14pt;">รายละเอียดการซ่อม</span>
+    <!-- <span style="font-size: 14pt;">รายละเอียดการซ่อม</span>
     <table class="items" width="100%" style="font-size: 14pt; border-collapse: collapse;" cellpadding="8">
         <thead>
             <tr>
@@ -381,7 +353,7 @@ mpdf-->
             ?>
 
         </tbody>
-    </table>
+    </table> -->
 
     <!-- end: Invoice body-->
 
@@ -390,10 +362,10 @@ mpdf-->
         <div class="col-md-9">
             หมายเหตุ :
             <?php
-                if ($return_date != '') {
-                    echo 'วันที่รับคืน : '.$return_date;
-                    echo ' ผู้รับคืน : '.$return_username;
-                }
+                // if ($return_date != '') {
+                //     echo 'วันที่รับคืน : '.$return_date;
+                //     echo ' ผู้รับคืน : '.$return_username;
+                // }
 
                 ?>
         </div>
