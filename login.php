@@ -4,7 +4,7 @@
     <!--begin::Head-->
     <head><base href="">
         <meta charset="utf-8"/>
-        <title>DFIX | ศูนย์บริการแจ้งซ่อมออนไลน์</title>
+        <title>VOTEZONE | ระบบจัดการเขตเลือกตั้ง</title>
         <meta name="description" content="Login page example"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
@@ -50,8 +50,8 @@
 			<!--begin::Login Sign in form-->
 			<div class="login-signin">
 				<div class="mb-10">
-					<h2 style="color : #fff;">THAI AKITECH PRO</h2>
-					<div class="text-muted font-weight-bold">ศูนย์บริการแจ้งซ่อมออนไลน์</div>
+					<h2 style="color : #fff;">VOTEZONE</h2>
+					<div class="text-muted font-weight-bold">ระบบจัดการเขตเลือกตั้ง</div>
 				</div>
 				<form class="form" id="kt_login_signin_form">
                 <input class="" type="hidden" name="act" id="act"  value="login"/>
