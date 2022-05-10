@@ -372,7 +372,6 @@ if($personid_enc != ""){
 			</div>
 
 			
-
             <div class="col-lg-3">
 				<label>ถนน</label>
              <input type="text" class="form-control form-control-sm"  name="road_now" id="road_now" placeholder="ถนน" value="<?php echo $row_person['road_now'];?>"/>
@@ -382,18 +381,14 @@ if($personid_enc != ""){
             <div class="col-lg-2">
 				<label>หมู่ที่</label>
 				<select class="form-control form-control-sm" name="village_now" id="village_now">
-                    <option value=""  <?php if($row_person['village_now'] == "0"){ echo "selected";}?>>0</option>
-								
-								<?php for ($n_vil = 1; $n_vil <= 99; $n_vil++) { 
-									$n_vil_data = str_pad($n_vil,2,"0",STR_PAD_LEFT);
-									?>
-										<option value="<?php echo $n_vil_data;?>" <?php if($row_person['village_now'] == $n_vil_data){ echo "selected";}?>><?php echo $n_vil;?></option>
+                    <option value=""  <?php if($row_person['village_now'] == "0"){ echo "selected";}?>>0</option>	
+                        <?php for ($n_vil = 1; $n_vil <= 99; $n_vil++) { 
+                            $n_vil_data = str_pad($n_vil,2,"0",STR_PAD_LEFT);
+                            ?>
+                                <option value="<?php echo $n_vil_data;?>" <?php if($row_person['village_now'] == $n_vil_data){ echo "selected";}?>><?php echo $n_vil;?></option>
 								<?php } ?>
-								
-                    
 				</select>
 			</div>
-			
 		</div>
 
         <input type="hidden" class="form-control"  name="txt_ampur_now" id="txt_ampur_now" value="<?php echo $row_person['ampur_now'];?>"/>
