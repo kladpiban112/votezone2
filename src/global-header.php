@@ -47,7 +47,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.js"></script>
 <script type="text/javascript" src="https://unpkg.com/default-passive-events"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="/assets/scss/app.scss" />
+<link rel="stylesheet" href="assets/scss/app.scss" />
 
 <link href="assets/plugins/custom/datatables/datatables.bundle.css?v=7.0.6" rel="stylesheet" type="text/css"/>
  

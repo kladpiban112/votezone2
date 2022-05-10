@@ -61,7 +61,7 @@
      
             <ul >
                 <li class="w3-bar border-bottom  ">
-                    <img src="/uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
+                    <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
                     <div class="w3-bar-item">
                         <span class="w3-large">Mike</span><br>
                         <span>Web Designer</span>
@@ -69,7 +69,7 @@
                 </li>    
                 
                 <li class="w3-bar  border-bottom  ">
-                    <img src="/uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
+                    <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
                     <div class="w3-bar-item">
                         <span class="w3-large">Mike</span><br>
                         <span>Web Designer</span>
@@ -78,21 +78,21 @@
                 
 
                 <li class="w3-bar  border-bottom  ">
-                    <img src="/uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
+                    <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
                     <div class="w3-bar-item">
                         <span class="w3-large">Mike</span><br>
                         <span>Web Designer</span>
                     </div>
                 </li>   
                 <li class="w3-bar  border-bottom  ">
-                    <img src="/uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
+                    <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
                     <div class="w3-bar-item">
                         <span class="w3-large">Mike</span><br>
                         <span>Web Designer</span>
                     </div>
                 </li>
                 <li class="w3-bar  border-bottom  ">
-                    <img src="/uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
+                    <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
                     <div class="w3-bar-item">
                         <span class="w3-large">Mike</span><br>
                         <span>Web Designer</span>
@@ -115,7 +115,7 @@
         <div class="ex3 "  id="style-1">
             <ul>
                 <li class="w3-bar  border-bottom  ">
-                    <img src="/uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
+                    <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
                     <div class="w3-bar-item">
                         <span class="w3-large">Mike</span><br>
                         <span>Web Designer</span>
@@ -123,7 +123,7 @@
                 </li>    
                 
                 <li class="w3-bar  border-bottom ">
-                    <img src="/uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
+                    <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
                     <div class="w3-bar-item">
                         <span class="w3-large">Mike</span><br>
                         <span>Web Designer</span>
@@ -132,14 +132,14 @@
                 
 
                 <li class="w3-bar  border-bottom  ">
-                    <img src="/uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
+                    <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
                     <div class="w3-bar-item">
                         <span class="w3-large">Mike</span><br>
                         <span>Web Designer</span>
                     </div>
                 </li>   
                 <li class="w3-bar  border-bottom  ">
-                    <img src="/uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
+                    <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
                     <div class="w3-bar-item">
                         <span class="w3-large">Mike</span><br>
                         <span>Web Designer</span>
