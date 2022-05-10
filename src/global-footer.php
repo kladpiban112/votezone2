@@ -78,9 +78,29 @@
                 <!--end::Page Scripts-->
 
                 <!--begin::Page Vendors(used by this page)-->
-                <script src="assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.6"></script>
+                <!-- <script src="assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.6"></script> -->
                         <!--end::Page Vendors-->
 
-                        <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js" integrity="sha512-Y2IiVZeaBwXG1wSV7f13plqlmFOx8MdjuHyYFVoYzhyRr3nH/NMDjTBSswijzADdNzMyWNetbLMfOpIPl6Cv9g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" integrity="sha512-Velp0ebMKjcd9RiCoaHhLXkR1sFoCCWXNp6w4zj1hfMifYB5441C+sKeBl/T/Ka6NjBiRfBBQRaQq65ekYz3UQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js" integrity="sha512-YibiFIKqwi6sZFfPm5HNHQYemJwFbyyYHjrr3UT+VobMt/YBo1kBxgui5RWc4C3B4RJMYCdCAJkbXHt+irKfSA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                           <!-- Script Light box-->        
+			<script src="assets/plugins/lightbox2/js/lightbox-plus-jquery.min.js"></script>
+
+
+                                    <!--begin::Page Vendors(used by this page)-->
+                                    <script src="assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.6"></script>
+                        <!--end::Page Vendors-->
+
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<!-- table to excel -->
+<!-- <script src="assets/plugins/table2excel/src/jquery.table2excel.js"></script> -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+
+
+                
