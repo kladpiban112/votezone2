@@ -4,7 +4,7 @@
 		<!--begin::Copyright-->
 		<div class="text-dark order-2 order-md-1">
 			<span class="text-muted font-weight-bold mr-2">2022 &copy;</span>
-			<a href="#" target="_blank" class="text-dark-75 text-hover-primary">d-fixx.com</a>
+			<a href="#" target="_blank" class="text-dark-75 text-hover-primary">votezone</a>
 		</div>
 		<!--end::Copyright-->
 
