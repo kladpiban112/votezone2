@@ -4,9 +4,7 @@
 			<div class="card-header">
 				<h3 class="card-title">
                 DASHBOARD
-				</h3>   
 
-              
 
 				<div class="card-toolbar">
 					<!--<div class="example-tools justify-content-center">
