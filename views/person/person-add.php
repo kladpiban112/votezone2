@@ -42,7 +42,7 @@ if($personid_enc != ""){
 			<div class="card-header ribbon ribbon-right">
       <!-- <div class="ribbon-target bg-primary" style="top: 10px; right: -2px;"></div> -->
 				<h3 class="card-title">
-        <i class="far fa-user"></i>&nbsp;<?php echo $txt_title;?>ข้อมูลผู้พิการ 
+        <i class="far fa-user"></i>&nbsp;<?php echo $txt_title;?>ข้อมูลบุคคล
 				</h3>
 				<div class="card-toolbar">
 					<div class="example-tools justify-content-center">
@@ -480,7 +480,7 @@ if($personid_enc != ""){
 					</div>
 				</div>
 
-                <span><i class="fas fa-list"></i> ข้อมูลความพิการ
+                <!-- <span><i class="fas fa-list"></i> ข้อมูลความพิการ
                 <?php if($action == "edit"){?>
                 <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalAddDisab"><i class="far fa-plus-square"></i> บันทึกความพิการ</a>
                 <?php }else{?>
@@ -510,7 +510,7 @@ if($personid_enc != ""){
                 </span>
                 <hr>
                 <div id="relative_detail"></div>  
-
+ -->
 
 
 
@@ -795,14 +795,13 @@ if($personid_enc != ""){
 <script>
 $(document).ready(function () {
     'use strict';
-
     getoptselect_amphur();
 	getoptselect_tambon();
     getoptselect_amphur_now();
 	getoptselect_tambon_now();
-    loaddata_family_data();
-    loaddata_relative_data();
-    loaddata_disab_data();
+    // loaddata_family_data();
+    // loaddata_relative_data();
+    // loaddata_disab_data();
 						
 }); 
 
@@ -820,8 +819,6 @@ $('#birthdate').datepicker({
 $('#dischargedate').datepicker({
         autoclose: true
 });
-
-
 
 
 $("#changwat").change(function() {
@@ -861,7 +858,6 @@ function getoptselect_amphur(){
         //dataType: "json",
         data: {changwatcode:changwatcode,ampur:ampur},
         success: function(data) {
-        
             $("#ampur").empty();
             $("#ampur").append(data);
         } // success

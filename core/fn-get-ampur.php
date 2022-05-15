@@ -3,7 +3,7 @@
 // ini_set('display_errors', 1);
 // header('Content-Type: application/json');
 require_once "../core/config.php";
-//require_once ABSPATH."/checklogin.php";
+// require_once ABSPATH."/checklogin.php";
 require_once ABSPATH."/functions.php";
 
 $changwatcode = filter_input(INPUT_POST, 'changwatcode', FILTER_SANITIZE_STRING);  // รหัสจังหวัด 2 หลัก
