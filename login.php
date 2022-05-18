@@ -31,13 +31,13 @@
     <!--end::Head-->
 
     <!--begin::Body-->
-    <body  id="kt_body" style="background-image: url(assets/media/bg/bg-dfix-1.jpg)"  class="quick-panel-right demo-panel-right offcanvas-right header-fixed subheader-enabled page-loading"  >
+    <body  id="kt_body" style="background-image: url(assets/media/bg/bg-9.jpg)"  class="quick-panel-right demo-panel-right offcanvas-right header-fixed subheader-enabled page-loading"  >
 
     	<!--begin::Main-->
 	<div class="d-flex flex-column flex-root">
 		<!--begin::Login-->
 <div class="login login-4 login-signin-on d-flex flex-row-fluid" id="kt_login">
-	<div class="d-flex flex-center flex-row-fluid bgi-size-cover bgi-position-top bgi-no-repeat" style="background-image: url('assets/media/bg/bg-dfix-1.jpg');">
+	<div class="d-flex flex-center flex-row-fluid bgi-size-cover bgi-position-top bgi-no-repeat" style="background-image: url('assets/media/bg/bg-9.jpg');">
 		<div class="login-form text-center p-7 position-relative overflow-hidden">
 			<!--begin::Login Header-->
 			<div class="d-flex flex-center mb-8">
@@ -50,8 +50,8 @@
 			<!--begin::Login Sign in form-->
 			<div class="login-signin">
 				<div class="mb-10">
-					<h2 style="color : #fff;">VOTEZONE</h2>
-					<div class="text-muted font-weight-bold">ระบบจัดการเขตเลือกตั้ง</div>
+					<h2 style="color : #000; font-family: Kanit;">VOTEZONE</h2>
+					<div class="opacity-100 font-weight-bold" style="color : #000; font-family: Kanit;">ระบบจัดการเขตเลือกตั้ง</div>
 				</div>
 				<form class="form" id="kt_login_signin_form">
                 <input class="" type="hidden" name="act" id="act"  value="login"/>
