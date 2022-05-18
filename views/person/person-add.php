@@ -8,7 +8,6 @@ $personid = base64_decode($personid_enc);
 $serviceid = base64_decode($serviceid_enc);
 $action = base64_decode($act);
 
-
 if($action == "edit"){
 	$txt_title = "แก้ไข";
 	$action = $action;
@@ -18,9 +17,6 @@ if($action == "edit"){
     WHERE p.oid = '$personid'  LIMIT 1");
     $stmt_data->execute();	
     $row_person = $stmt_data->fetch(PDO::FETCH_ASSOC);
-
-
-  
 
 }else{
 	$txt_title = "เพิ่ม";
@@ -67,6 +63,7 @@ if($personid_enc != ""){
 <form class="form" enctype="multipart/form-data" >
 <input type="hidden" class="form-control"  name="act" id="act" value="<?php echo $action;?>"/>
 <input type="hidden" class="form-control"  name="personid" id="personid" value="<?php echo $personid;?>"/>
+<input type="hidden" class="form-control"  name="headid" id="headid" value="<?php echo $row_person['head'];?>"/>
 <input type="hidden" class="form-control"  name="serviceid" id="serviceid" value="<?php echo $serviceid;?>"/>
 <input type="hidden" class="form-control"  name="org_id" id="org_id" value="<?php echo $logged_org_id;?>"/>
 	<div class="card-body">
@@ -514,19 +511,10 @@ if($personid_enc != ""){
         </br>           
         <div class="col-lg-12" id="head_h">
 				<label>สังกัด</label>
-            <select class="selectpicker" data-live-search="true" name="head" id="head" >
-                        
-                <?php
-                    $stmt = $conn->prepare ("SELECT * FROM person_main l WHERE l.level != '4' ORDER BY l.level");
-                    $stmt->execute();
-                    echo "<option value=''>-ระบุ-</option>";
-                    while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
-                    $id = $row->oid;
-                    $name = $row->fname." ".$row->lname; ?>
-                    <option value="<?php echo $id;?>" <?php if($row_person['head'] == $id){ echo "selected";}?>><?php echo $name;?></option>
-                    <?php 
-                    }
-                ?>
+            <!-- </select> -->
+            <!-- <div id="hh" ></div> -->
+            <!-- <select class="selectpicker"  data-size="5" name="head_data" id="head_data" >  -->
+            <select class="js-example-basic-single col-lg-8" name="head_data" id="head_data" > 
             </select>
 				
 		</div>
@@ -561,14 +549,15 @@ if($personid_enc != ""){
 <script src="assets/js/bootstrap-datepicker-thai.js"></script>
 <script src="assets/js/locales/bootstrap-datepicker.th.js"></script>  
 
+
 <script>
 
 $(document).ready(function () {
     'use strict';
     getoptselect_amphur();
 	getoptselect_tambon();
-
-
+    getoptselect_level();
+    $('.js-example-basic-single').select2();
 }); 
 
 $(".add-more").click(function(){ 
@@ -600,14 +589,37 @@ $("#ampur").change(function() {
 
 
 $("#level").change(function() {
-    if($("#level").val() == 1 ){
-        $("#head_h").hide();
-    }else{
-        $("#head_h").show();
-    }
+    var level = $("#level").val();
+    var person =  $("#headid").val();
+    $.ajax({
+        type: "POST",
+        url: "core/fn-get-level-person.php",
+        //dataType: "json",
+        data: {level:level,person:person},
+        success: function(data) {
+            console.log(data);
+            $("#head_data").empty();
+            $("#head_data").append(data);
+        } // success
+    });
 });
 
+function getoptselect_level(){
+    var level = $("#level").val();
+    var person =  $("#headid").val();
+    $.ajax({
+        type: "POST",
+        url: "core/fn-get-level-person.php",
+        //dataType: "json",
+        data: {level:level,person:person},
+        success: function(data) {
+            console.log(data);
+            $("#head_data").empty();
+            $("#head_data").append(data);
+        } // success
+    });
 
+}
 
 function getoptselect_amphur(){
 

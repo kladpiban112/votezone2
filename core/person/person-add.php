@@ -62,7 +62,8 @@ if($exist_person!=0){
 
 	
 	$personid = $row['oid'];
-	
+	if($level == "1"){$head = "0";}
+
 	$query = "UPDATE ".DB_PREFIX."person_main SET cid = ?, org_id = ?, prename = ?, fname = ?, lname = ?, sex = ?,birthdate = ?,telephone = ?,house = ?,community = ?,road = ?,village = ?,tambon = ?,ampur = ?,changwat = ?,flag = ?,edit_date = ?,edit_users = ?,religion = ? , occupation = ? ,education = ?, abogroup = ?, level = ?, head = ? ,email = ? WHERE oid = ? LIMIT 1"; 
 	$stmt = $conn->prepare($query);
 	$stmt->bindParam(1, $cid, PDO::PARAM_STR);
@@ -146,7 +147,7 @@ if($exist_person!=0){
 
 }else{
 
-
+if($level == "1"){$head = "0";}
 $query = "INSERT INTO ".DB_PREFIX."person_main (oid, cid, org_id, prename, fname, lname, sex,birthdate,telephone,house,community,road,village,tambon,ampur,changwat,flag,add_date,add_users,religion,occupation,education,abogroup,level,head,email) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?,?,?,?,?,?,?,?)"; 
 $stmt = $conn->prepare($query);
 $stmt->bindParam(1, $cid, PDO::PARAM_STR);
@@ -235,7 +236,7 @@ if($_FILES['img_profile']['name'])
 $stmt = $conn->prepare("SELECT * FROM ".DB_PREFIX."person_main WHERE cid = ? AND org_id = ?   ");
 $stmt->execute([$cid,$org_id]);
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
+if($level == "1"){$head = "0";}
 	$query = "UPDATE ".DB_PREFIX."person_main SET cid = ?, org_id = ?, prename = ?, fname = ?, lname = ?, sex = ?,birthdate = ?,telephone = ?,house = ?,community = ?,road = ?,village = ?,tambon = ?,ampur = ?,changwat = ?,flag = ?,edit_date = ?,edit_users = ?,religion = ? , occupation = ? ,education = ?, abogroup = ?, level = ?, head = ? ,email = ? WHERE oid = ? LIMIT 1"; 
 	$stmt = $conn->prepare($query);
 	$stmt->bindParam(1, $cid, PDO::PARAM_STR);

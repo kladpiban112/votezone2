@@ -25,7 +25,6 @@ $pagenum = filter_input(INPUT_GET, 'pagenum', FILTER_SANITIZE_NUMBER_INT);
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 		<link rel="shortcut icon" href="assets/images/ThaiAkitechPro.ico"/>
         <?php require_once("src/global-header.php");?> 
-
             </head>
     <!--end::Head-->
 
