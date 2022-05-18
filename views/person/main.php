@@ -20,8 +20,9 @@ if($search != ""){
 				</h3>
 				<div class="card-toolbar">
 					<div class="example-tools justify-content-center">
-						<a href="dashboard.php?module=<?php echo $module;?>&page=person-add" class="btn btn-success btn-sm font-weight-bold mr-2" title="เพิ่มผู้พิการ"><i class="fa fa-plus-circle" title="เพิ่มบุคคล" data-toggle="tooltip"></i>เพิ่มบุคคล</a>
-					</div>
+						<a href="dashboard.php?module=<?php echo $module;?>&page=person-add" class="btn btn-success btn-sm font-weight-bold mr-2" title="เพิ่มบุคคล"><i class="fa fa-plus-circle" title="เพิ่มบุคคล" data-toggle="tooltip"></i>เพิ่มบุคคล</a>
+                        <a href="dashboard.php?module=<?php echo $module;?>&page=treeview" class="btn btn-success btn-sm font-weight-bold mr-2" title="โครงสร้าง"><i class="fa fa-plus-circle" title="โครงสร้าง" data-toggle="tooltip"></i>โครงสร้าง</a>
+                    </div>
 				</div>
 			</div>
 
@@ -110,6 +111,7 @@ if($search != ""){
     <tr>
                         <th class="text-center">ลำดับ</th>
                         <th>รูป</th>
+                        <th>เลขบัตรประชาชน</th>
                         <th>ชื่อ-สกุล</th>
                         <th>เพศ</th>
                         <th>อายุ</th>
@@ -168,6 +170,7 @@ if($search != ""){
                                 </div></a>
                                 <?php } ?>
                             </td>
+                            <td><?php echo $cid;?></td>
                             <td><?php echo $fullname;?></td>
                             <td><?php echo $sexname;?></td>
                             <td><?php echo $age_y;?></td>

@@ -1,11 +1,14 @@
 <?php
 error_reporting(0);
+
 $personid_enc = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
 $serviceid_enc = filter_input(INPUT_GET, 'serviceid', FILTER_SANITIZE_STRING);
 $act = filter_input(INPUT_GET, 'act', FILTER_SANITIZE_STRING);
 $personid = base64_decode($personid_enc);
 $serviceid = base64_decode($serviceid_enc);
 $action = base64_decode($act);
+
+
 if($action == "edit"){
 	$txt_title = "แก้ไข";
 	$action = $action;
@@ -234,28 +237,6 @@ if($personid_enc != ""){
                         
 			</div>
 
-            <div class="col-lg-2">
-				<label>สถานภาพ</label>
-                    <select class="form-control form-control-sm" name="mstatus" id="mstatus">
-                    <option value="" <?php if($row_person['mstatus'] == "" ){echo "selected";} ?>>ระบุ</option>
-                                <?php
-                          $stmt_user_role = $conn->prepare("SELECT * FROM ".DB_PREFIX."cmstatus  ");
-                          $stmt_user_role->execute();		
-                          while ($row = $stmt_user_role->fetch(PDO::FETCH_ASSOC))
-                            {
-                            $id_selected = $row['mstatus'];
-                            $title_selected = stripslashes($row['mstatusdesc']);
-                            ?>
-                            <option value="<?php echo $id_selected;?>" <?php if($row_person['mstatus'] == $id_selected ){echo "selected";} ?>><?php echo $title_selected;?></option>
-                            <?php
-                            }
-                          ?>
-                                
-                    </select>
-                        
-			</div>
-
-
 
             <div class="col-lg-4">
 				<label>โทรศัพท์</label>
@@ -277,7 +258,7 @@ if($personid_enc != ""){
 
 		</div>
 
-   <span><i class="fas fa-house-user"></i> ที่อยู่ตามทะเบียนบ้าน :</span>
+   <span><i class="fas fa-house-user"></i> ที่อยู่ :</span>
    <hr>
 		<div class="form-group row">
 			<div class="col-lg-3">
@@ -357,7 +338,7 @@ if($personid_enc != ""){
 
       </div>
 
-      <span><i class="fas fa-house-user"></i> ที่อยู่ปัจจุบัน :</span>
+      <!-- <span><i class="fas fa-house-user"></i> ที่อยู่ปัจจุบัน :</span>
    <hr>
 		<div class="form-group row">
 			<div class="col-lg-3">
@@ -389,9 +370,9 @@ if($personid_enc != ""){
 								<?php } ?>
 				</select>
 			</div>
-		</div>
+		</div> -->
 
-        <input type="hidden" class="form-control"  name="txt_ampur_now" id="txt_ampur_now" value="<?php echo $row_person['ampur_now'];?>"/>
+        <!-- <input type="hidden" class="form-control"  name="txt_ampur_now" id="txt_ampur_now" value="<?php echo $row_person['ampur_now'];?>"/>
         <input type="hidden" class="form-control"  name="txt_tambon_now" id="txt_tambon_now" value="<?php echo $row_person['tambon_now'];?>"/>
     <div class="form-group row">
 
@@ -430,7 +411,7 @@ if($personid_enc != ""){
 
 
 
-      </div>
+      </div> -->
 
 	
 
@@ -512,10 +493,45 @@ if($personid_enc != ""){
                 <div id="relative_detail"></div>  
  -->
 
-
-
+        <div class="col-lg-12">
+				<label>ระดับ</label>
+            <select class="form-control form-control-sm" name="level" id="level" >
+                        
+                <?php
+                    $stmt = $conn->prepare ("SELECT * FROM level_type l ");
+                    $stmt->execute();
+                    echo "<option value=''>-ระบุ-</option>";
+                    while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
+                    $id = $row->level_id;
+                    $name = $row->level; ?>
+                    <option value="<?php echo $id;?>" <?php if($row_person['level'] == $id){ echo "selected";}elseif($row_person['level'] == "" && $id == "4"){echo "selected";}?>><?php echo $name;?></option>
+                    <?php 
+                    }
+                ?>
+            </select>
+				
+		</div>
+        </br>           
+        <div class="col-lg-12" id="head_h">
+				<label>หัวหน้า</label>
+            <select class="selectpicker" data-live-search="true" name="head" id="head" >
+                        
+                <?php
+                    $stmt = $conn->prepare ("SELECT * FROM person_main l WHERE l.level != '4' ORDER BY l.level");
+                    $stmt->execute();
+                    echo "<option value=''>-ระบุ-</option>";
+                    while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
+                    $id = $row->oid;
+                    $name = $row->fname." ".$row->lname; ?>
+                    <option value="<?php echo $id;?>" <?php if($row_person['head'] == $id){ echo "selected";}?>><?php echo $name;?></option>
+                    <?php 
+                    }
+                ?>
+            </select>
+				
 		</div>
 
+		</div>
 
 		</div><!--col-->
 		</div><!--row-->
@@ -540,269 +556,19 @@ if($personid_enc != ""){
 <!--end::Card-->
 
 
-         <!--begin::Modal-->
-         <div class="modal fade" id="modalAddFamily" tabindex="-1" role="dialog" aria-labelledby="modalAddFamily" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel"><i class="far fa-plus-square"></i> บันทึกข้อมูลครอบครัว</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <i aria-hidden="true" class="ki ki-close"></i>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                       
-                                    <form class="form" enctype="multipart/form-data" autocomplete="off">
-                                    <input type="hidden" class="form-control"  name="act" id="act" value="<?php echo $action;?>"/>
-                                        <input type="hidden" class="form-control"  name="personid" id="personid" value="<?php echo $personid;?>"/>
-                                        
-                                        
-                                        <?php for ($x = 0; $x <= 3; $x++) {?>  
-                                        <div class="copy">
-                                        <div class="form-group row ">
-
-                                            <div class="col-lg-6">
-                                                <label>ชื่อ-สกุล</label>
-                                                <input type="text" class="form-control"  name="fname[]" id="fname[]" placeholder="ชื่อ-สกุล" value="" />
-                                                <span class="form-text text-muted"></span>
-                                                
-                                            </div>
-
-                                            <div class="col-lg-2">
-                                                <label>เลขบัตร</label>
-                                                <input type="text" class="form-control"  name="fcid[]" id="fcid[]" placeholder="เลขบัตร" value="" maxlength="13" />
-                                                <span class="form-text text-muted"></span>
-                                                
-                                            </div>
-
-                                            <div class="col-lg-2">
-                                                <label>โทรศัพท์</label>
-                                                <input type="text" class="form-control"  name="ftel[]" id="ftel[]" placeholder="โทรศัพท์" value="" maxlength="10" />
-                                                <span class="form-text text-muted"></span>
-                                                
-                                            </div>
-           
-
-                         
-                                            <div class="col-lg-2">
-                                            <label>เกี่ยวข้องเป็น</label>
-                                                <select class="form-control " name="ftype[]" id="ftype[]" >
-                                                            <option value="">ระบุ</option>
-                                                            <?php
-                                                            $stmt_user_role = $conn->prepare("SELECT * FROM ".DB_PREFIX."cfamily  ");
-                                                            $stmt_user_role->execute();		
-                                                            while ($row = $stmt_user_role->fetch(PDO::FETCH_ASSOC))
-                                                                {
-                                                                $id_selected = $row['f_id'];
-                                                                $title_selected = stripslashes($row['f_title']);
-                                                                ?>
-                                                                <option value="<?php echo $id_selected;?>" ><?php echo $title_selected;?></option>
-                                                                <?php
-                                                                }
-                                                            ?>
-                                                </select>
-                                            
-                                        </div>
-
-                                        </div>
-                                        </div>
-                                        <?php } ?>
-
-                                        <div class="after-add-more"></div>
-
-
-                
-                                          <div class="form-group row">
-                                            <div class="col-lg-4">
-                                            <button type="button" class="btn btn-success btn-sm mr-2" id="btnAddFamily"><i class="far fa-save"></i> บันทึก</button>
-                                            <button class="btn btn-info btn-sm add-more" type="button"><i class="fas fa-plus"></i> เพิ่มแถว</button>
-                                            </div>
-                                            
-                                          </div>
-                                   
-    
-    
-                                    </div>
-                                    <div class="modal-footer">
-                                    
-                                        <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal"><i class="far fa-times-circle"></i> ปิด</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        </form>
-                        <!--end::Modal-->
-
-
-                        <!--begin::Modal-->
-         <div class="modal fade" id="modalAddRelative" tabindex="-1" role="dialog" aria-labelledby="modalAddRelative" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel"><i class="far fa-plus-square"></i> บันทึกข้อมูลผู้ดูแลหรือญาติ</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <i aria-hidden="true" class="ki ki-close"></i>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                       
-                                    <form class="form" enctype="multipart/form-data" autocomplete="off">
-                                    <input type="hidden" class="form-control"  name="act" id="act" value="<?php echo $action;?>"/>
-                                        <input type="hidden" class="form-control"  name="personid" id="personid" value="<?php echo $personid;?>"/>
-                                        
-                                        
-                                        <?php for ($x = 0; $x <= 1; $x++) {?>  
-                                        <div class="copy">
-                                        <div class="form-group row ">
-
-                                            <div class="col-lg-6">
-                                                <label>ชื่อ-สกุล</label>
-                                                <input type="text" class="form-control"  name="fname[]" id="fname[]" placeholder="ชื่อ-สกุล" value="" />
-                                                <span class="form-text text-muted"></span>
-                                                
-                                            </div>
-
-                     
-                                            <div class="col-lg-3">
-                                                <label>โทรศัพท์</label>
-                                                <input type="text" class="form-control"  name="ftel[]" id="ftel[]" placeholder="โทรศัพท์" value="" maxlength="10" />
-                                                <span class="form-text text-muted"></span>
-                                                
-                                            </div>
-           
-
-                         
-                                            <div class="col-lg-3">
-                                            <label>เกี่ยวข้องเป็น</label>
-                                            <input type="text" class="form-control"  name="ftype[]" id="ftype[]" placeholder="เกี่ยวข้องเป็น" value="" />
-                                               
-                                        </div>
-
-                                        </div>
-                                        </div>
-                                        <?php } ?>
-
-                                        <div class="after-add-more-1"></div>
-
-
-                
-                                          <div class="form-group row">
-                                            <div class="col-lg-4">
-                                            <button type="button" class="btn btn-success btn-sm mr-2" id="btnAddRelative"><i class="far fa-save"></i> บันทึก</button>
-                                            <button class="btn btn-info btn-sm add-more-1" type="button"><i class="fas fa-plus"></i> เพิ่มแถว</button>
-                                            </div>
-                                            
-                                          </div>
-                                   
-    
-    
-                                    </div>
-                                    <div class="modal-footer">
-                                    
-                                        <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal"><i class="far fa-times-circle"></i> ปิด</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        </form>
-                        <!--end::Modal-->
-
-
-
-         <!--begin::Modal-->
-         <div class="modal fade" id="modalAddDisab" tabindex="-1" role="dialog" aria-labelledby="modalAddDisab" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel"><i class="far fa-plus-square"></i> บันทึกข้อมูลความพิการ</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <i aria-hidden="true" class="ki ki-close"></i>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                       
-                                    <form class="form" enctype="multipart/form-data" autocomplete="off">
-                                    <input type="hidden" class="form-control"  name="act" id="act" value="<?php echo $action;?>"/>
-                                    <input type="hidden" class="form-control"  name="personid" id="personid" value="<?php echo $personid;?>"/>
-                                        
-                                    <div class="form-group row">
-					<div class="col-lg-12">
-                    <!--<label>ประเภทความพิการ</label>-->
-
-                    <div class="row">
-                                              <?php
-                                                $stmt_user_role = $conn->prepare("SELECT * FROM ".DB_PREFIX."cdisabtype ");
-                                                $stmt_user_role->execute();
-                                                while ($row = $stmt_user_role->fetch(PDO::FETCH_ASSOC))
-                                                  {
-                                                  $role_id_selected = $row['disab_id'];
-                                                  $role_title_selected = stripslashes($row['disab_name_th']);
-
-                                                    $stmt_check = $conn->prepare ("SELECT t.* FROM ".DB_PREFIX."person_disability t WHERE person_id = '$personid'  AND flag = '1' AND  disabtype = '$role_id_selected' ");
-                                                    $stmt_check->execute();
-                                                    $rs_check = $stmt_check->fetch(PDO::FETCH_ASSOC);
-
-                                                    $disabtype_check = $rs_check['disabtype'];
-
-                                                    if($role_id_selected == $disabtype_check){
-                                                    $checked = " checked='checked' ";
-                                                    }else{
-                                                    $checked = "";
-                                                    }
-
-
-                                                  ?>
-                                                  
-                                                  <div class="col-lg-12">
-
-                                                 
-
-                                                  <br>
-                                                  </div>
-
-
-                                                  <?php
-                                                  }
-                                                ?>
-                                                </div>
-
-
-                    </div>
-		</div>     
-
-                
-                                          <div class="form-group row">
-                                            <div class="col-lg-4">
-                                            <button type="button" class="btn btn-success btn-sm mr-2" id="btnAddDisab"><i class="far fa-save"></i> บันทึก</button>
-                                           
-                                            </div>
-                                            
-                                          </div>
-                                   
-    
-    
-                                    </div>
-                                    <div class="modal-footer">
-                                    
-                                        <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal"><i class="far fa-times-circle"></i> ปิด</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        </form>
-                        <!--end::Modal-->
+<!-- Datepicker Thai -->
+<script src="assets/js/bootstrap-datepicker.js"></script>
+<script src="assets/js/bootstrap-datepicker-thai.js"></script>
+<script src="assets/js/locales/bootstrap-datepicker.th.js"></script>  
 
 <script>
+
 $(document).ready(function () {
     'use strict';
     getoptselect_amphur();
 	getoptselect_tambon();
-    getoptselect_amphur_now();
-	getoptselect_tambon_now();
-    // loaddata_family_data();
-    // loaddata_relative_data();
-    // loaddata_disab_data();
-						
+
+
 }); 
 
 $(".add-more").click(function(){ 
@@ -816,9 +582,6 @@ $('#birthdate').datepicker({
         autoclose: true
 });
 
-$('#dischargedate').datepicker({
-        autoclose: true
-});
 
 
 $("#changwat").change(function() {
@@ -828,12 +591,6 @@ $("#changwat").change(function() {
     getoptselect_tambon();
 });
 
-$("#changwat_now").change(function() {
-    $("#txt_ampur_now").val('');
-    $("#txt_tambon_now").val('');
-    getoptselect_amphur_now();
-    getoptselect_tambon_now();
-});
 
 
 $("#ampur").change(function() {
@@ -841,9 +598,13 @@ $("#ampur").change(function() {
     getoptselect_tambon();
 });
 
-$("#ampur_now").change(function() {
-    $("#txt_tambon_now").val('');
-    getoptselect_tambon_now();
+
+$("#level").change(function() {
+    if($("#level").val() == 1 ){
+        $("#head_h").hide();
+    }else{
+        $("#head_h").show();
+    }
 });
 
 
@@ -864,22 +625,7 @@ function getoptselect_amphur(){
     });
 }
 
-function getoptselect_amphur_now(){
 
-var changwatcode = $("#changwat_now").val();
-var ampur = $("#txt_ampur_now").val();
-$.ajax({
-    type: "POST",
-    url: "core/fn-get-ampur-now.php",
-    //dataType: "json",
-    data: {changwatcode:changwatcode,ampur:ampur},
-    success: function(data) {
-    
-        $("#ampur_now").empty();
-        $("#ampur_now").append(data);
-    } // success
-});
-}	
 
 function getoptselect_tambon(){
 
@@ -901,26 +647,6 @@ var tambon = $("#txt_tambon").val();
 
 }	
 
-
-function getoptselect_tambon_now(){
-
-var changwatcode = $("#changwat_now").val();
-var ampur = $("#txt_ampur_now").val();
-var ampurcode = $("#ampur_now").val();
-var tambon = $("#txt_tambon_now").val();
-    $.ajax({
-        type: "POST",
-        url: "core/fn-get-tambon-now.php",
-        //dataType: "json",
-        data: {changwatcode:changwatcode,ampurcode:ampurcode,ampur:ampur,tambon:tambon},
-        success: function(data) {
-        
-            $("#tambon_now").empty();
-            $("#tambon_now").append(data);
-        } // success
-    });
-
-}	
 
 
 
@@ -992,11 +718,6 @@ $('#btnSavePerson').click(function(e){
                     if(data.method == "add"){
                         window.location.replace("dashboard.php?module=person&page=person-add&personid="+ data.personid + "&act=" + data.act);
                     }else{
-                        // if(data.serviceid == ""){
-                        //     window.location.replace("dashboard.php?module=service&page=service-add&personid="+ data.personid);
-                        // }else{
-                        //     window.location.replace("dashboard.php?module=service&page=service-add&personid="+ data.personid+"&serviceid="+data.serviceid+"&act=" + data.act);
-                        // }
                         window.location.replace("dashboard.php?module=person&page=person-add&personid="+ data.personid + "&act=" + data.act);
                     }
                     
@@ -1012,220 +733,15 @@ $('#btnSavePerson').click(function(e){
                       //liff.closeWindow();
                   });
                 }
+            },error: function (jqXHR, exception) {
+                console.log(jqXHR);
+                // Your error handling logic here..
             } // success
         });
 
         }
     
       }); //  click
-
-
-      function loaddata_family_data() {
-            var personid = $("#personid").val();
-                $.ajax({
-                    type: "POST",
-                    url: "views/person/family-data.php",
-                    //dataType: "json",
-                    data: {personid:personid},
-                    success: function(data) {
-                        $("#family_detail").empty(); //add preload
-                        $("#family_detail").append(data);
-
-                    } // success
-                });
-}
-
-
-function loaddata_relative_data() {
-            var personid = $("#personid").val();
-                $.ajax({
-                    type: "POST",
-                    url: "views/person/relative-data.php",
-                    //dataType: "json",
-                    data: {personid:personid},
-                    success: function(data) {
-                        $("#relative_detail").empty(); //add preload
-                        $("#relative_detail").append(data);
-
-                    } // success
-                });
-}
-
-function loaddata_disab_data() {
-            var personid = $("#personid").val();
-                $.ajax({
-                    type: "POST",
-                    url: "views/person/disab-data.php",
-                    //dataType: "json",
-                    data: {personid:personid},
-                    success: function(data) {
-                        $("#disab_detail").empty(); //add preload
-                        $("#disab_detail").append(data);
-
-                    } // success
-                });
-}
-
-
-$('#btnAddDisab').click(function(e){
-        e.preventDefault();
-        if ($('#personid').val().length == ""){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'กรุณาทำรายการ',
-                    showConfirmButton: false,
-                    timer: 1000
-                    });
-        }else {
-
-		var data = new FormData(this.form);
-        $.ajax({
-            type: "POST",
-            url: "core/person/disab-add.php",
-            dataType: "json",
-			data: data,
-			processData: false,
-            contentType: false,
-            success: function(data) {  
-              if (data.code == "200") {
-                Swal.fire({
-                icon: 'success',
-                title: 'บันทึกสำเร็จ',
-                showConfirmButton: false,
-                timer: 1500
-                })
-                    .then((value) => {
-                    //   $('#modalAddFamily').modal('hide');
-                    //   loaddata_family_data();
-
-                    window.location.reload();
-                    
-                }); 
-                } else if (data.code == "404") {
-                  //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
-                   Swal.fire({
-                    icon: 'error',
-                    title: 'ไม่สามารถบันทึกข้อมูลได้',
-                    text: 'กรุณาลองใหม่อีกครั้ง'
-                    })
-                    .then((value) => {
-                      //liff.closeWindow();
-                  });
-                }
-            } // success
-        });
-
-        }
-    
-      }); //  click
-
-$('#btnAddFamily').click(function(e){
-        e.preventDefault();
-        if ($('#personid').val().length == ""){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'กรุณาทำรายการ',
-                    showConfirmButton: false,
-                    timer: 1000
-                    });
-        }else {
-
-		var data = new FormData(this.form);
-        $.ajax({
-            type: "POST",
-            url: "core/person/family-add.php",
-            dataType: "json",
-			data: data,
-			processData: false,
-            contentType: false,
-            success: function(data) {  
-              if (data.code == "200") {
-                Swal.fire({
-                icon: 'success',
-                title: 'บันทึกสำเร็จ',
-                showConfirmButton: false,
-                timer: 1500
-                })
-                    .then((value) => {
-                    //   $('#modalAddFamily').modal('hide');
-                    //   loaddata_family_data();
-
-                    window.location.reload();
-                    
-                }); 
-                } else if (data.code == "404") {
-                  //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
-                   Swal.fire({
-                    icon: 'error',
-                    title: 'ไม่สามารถบันทึกข้อมูลได้',
-                    text: 'กรุณาลองใหม่อีกครั้ง'
-                    })
-                    .then((value) => {
-                      //liff.closeWindow();
-                  });
-                }
-            } // success
-        });
-
-        }
-    
-      }); //  click
-
-
-
-      $('#btnAddRelative').click(function(e){
-        e.preventDefault();
-        if ($('#personid').val().length == ""){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'กรุณาทำรายการ',
-                    showConfirmButton: false,
-                    timer: 1000
-                    });
-        }else {
-
-		var data = new FormData(this.form);
-        $.ajax({
-            type: "POST",
-            url: "core/person/relative-add.php",
-            dataType: "json",
-			data: data,
-			processData: false,
-            contentType: false,
-            success: function(data) {  
-              if (data.code == "200") {
-                Swal.fire({
-                icon: 'success',
-                title: 'บันทึกสำเร็จ',
-                showConfirmButton: false,
-                timer: 1500
-                })
-                    .then((value) => {
-                    //   $('#modalAddRelative').modal('hide');
-                    //   loaddata_relative_data();
-                    window.location.reload();
-                    
-                }); 
-                } else if (data.code == "404") {
-                  //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
-                   Swal.fire({
-                    icon: 'error',
-                    title: 'ไม่สามารถบันทึกข้อมูลได้',
-                    text: 'กรุณาลองใหม่อีกครั้ง'
-                    })
-                    .then((value) => {
-                      //liff.closeWindow();
-                  });
-                }
-            } // success
-        });
-
-        }
-    
-      }); //  click
-
-
-
 
 
 $('#cidSearch').click(function(e){
