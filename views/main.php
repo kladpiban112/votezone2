@@ -46,18 +46,25 @@
     </div>
    
 <!-- Text Column1 --> 
-    <div class="col-md-4 ">
-        <div class="row-md-2 "> 
+<div class="col-md-4  " > 
+    <a href="#demo" data-bs-toggle="collapse" > 
+        <div class="row-sm-2 " > 
             <div class="card text-white">
-                   <div class="card-header bg-primary ">  <h4>สมาชิกในกลุ่ม B</h4>  </div>
-                    
+                   <div class="card-header bg-success ">
+                   <div class="d-flex justify-content-between mb-3">
+             <div class="p-2 "><h4>สมาชิกในกลุ่ม A</h4></div>
+             <div class="p-2 "> <i class='fas fa-angle-double-down text-white' style='font-size:35px;'> </i> </div>
+            </div>
+    
+  </div>              
                     
             </div>
-        </div>
+        </div></a>
+       
     <!-- ListItem1 -->
-        <div class="= ex3 " id="style-1" >
-     
-            <ul >
+    <div class=" ex3 collapse "  id="demo" >    
+       
+        <ul >
                 <li class="w3-bar border-bottom  ">
                     <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
                     <div class="w3-bar-item">
@@ -96,58 +103,124 @@
                         <span>Web Designer</span>
                     </div>
                 </li>
-            </ul>        
+            </ul>       
         </div>
-
       <br>
-
     
 <!-- Text Column2 --> 
     <div class="row-md-2  "> 
-        <div class="card text-white">
+         <a href="#demo2" data-bs-toggle="collapse" >
+             <div class="card text-white">
             <div class="card-header bg-warning" >
-                <h4>สมาชิกในกลุ่ม C </h4>
+
+            <div class="d-flex justify-content-between mb-3">
+             <div class="p-2 "><h4>สมาชิกในกลุ่ม B</h4></div>
+             <div class="p-2 "> <i class='fas fa-angle-double-down text-white' style='font-size:35px;'> </i> </div>
+            </div>
             </div>
         </div>
+    </a>
       <!-- ListItem2 -->
-        <div class="ex3 "  id="style-1">
-            <ul>
-                <li class="w3-bar  border-bottom  ">
-                    <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
-                    <div class="w3-bar-item">
-                        <span class="w3-large">Mike</span><br>
-                        <span>Web Designer</span>
-                    </div>
-                </li>    
-                
-                <li class="w3-bar  border-bottom ">
-                    <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
-                    <div class="w3-bar-item">
-                        <span class="w3-large">Mike</span><br>
-                        <span>Web Designer</span>
-                    </div>
-                </li>    
-                
+      <div class=" ex3 collapse "  id="demo2" >    
+       <ul >
+               <li class="w3-bar border-bottom  ">
+                   <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
+                   <div class="w3-bar-item">
+                       <span class="w3-large">Mike</span><br>
+                       <span>Web Designer</span>
+                   </div>
+               </li>    
+               
+               <li class="w3-bar  border-bottom  ">
+                   <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
+                   <div class="w3-bar-item">
+                       <span class="w3-large">Mike</span><br>
+                       <span>Web Designer</span>
+                   </div>
+               </li>    
+               
 
-                <li class="w3-bar  border-bottom  ">
-                    <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
-                    <div class="w3-bar-item">
-                        <span class="w3-large">Mike</span><br>
-                        <span>Web Designer</span>
-                    </div>
-                </li>   
-                <li class="w3-bar  border-bottom  ">
-                    <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
-                    <div class="w3-bar-item">
-                        <span class="w3-large">Mike</span><br>
-                        <span>Web Designer</span>
-                    </div>
-                </li>
-            </ul>        
-            
+               <li class="w3-bar  border-bottom  ">
+                   <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
+                   <div class="w3-bar-item">
+                       <span class="w3-large">Mike</span><br>
+                       <span>Web Designer</span>
+                   </div>
+               </li>   
+               <li class="w3-bar  border-bottom  ">
+                   <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
+                   <div class="w3-bar-item">
+                       <span class="w3-large">Mike</span><br>
+                       <span>Web Designer</span>
+                   </div>
+               </li>
+               <li class="w3-bar  border-bottom  ">
+                   <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
+                   <div class="w3-bar-item">
+                       <span class="w3-large">Mike</span><br>
+                       <span>Web Designer</span>
+                   </div>
+               </li>
+           </ul>       
+       </div>
+       <br>
+
+<!-- Text Column3 --> 
+        <div class="row-md-2">
+           <a href="#demo3" data-bs-toggle="collapse" >  
+               <div class="card text-white">
+             <div class="card-header bg-primary" >
+             <div class="d-flex justify-content-between mb-3">
+             <div class="p-2 "><h4>สมาชิกในกลุ่ม C</h4></div>
+             <div class="p-2 "> <i class='fas fa-angle-double-down text-white' style='font-size:35px;'> </i> </div>
+            </div>
+            </div>
         </div>
-    </div>
+    </a>
+      <!-- ListItem3 -->
+      <div class=" ex3 collapse "  id="demo3" >    
+       <ul >
+               <li class="w3-bar border-bottom  ">
+                   <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
+                   <div class="w3-bar-item">
+                       <span class="w3-large">Mike</span><br>
+                       <span>Web Designer</span>
+                   </div>
+               </li>    
+               
+               <li class="w3-bar  border-bottom  ">
+                   <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
+                   <div class="w3-bar-item">
+                       <span class="w3-large">Mike</span><br>
+                       <span>Web Designer</span>
+                   </div>
+               </li>    
+               
 
+               <li class="w3-bar  border-bottom  ">
+                   <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
+                   <div class="w3-bar-item">
+                       <span class="w3-large">Mike</span><br>
+                       <span>Web Designer</span>
+                   </div>
+               </li>   
+               <li class="w3-bar  border-bottom  ">
+                   <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
+                   <div class="w3-bar-item">
+                       <span class="w3-large">Mike</span><br>
+                       <span>Web Designer</span>
+                   </div>
+               </li>
+               <li class="w3-bar  border-bottom  ">
+                   <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
+                   <div class="w3-bar-item">
+                       <span class="w3-large">Mike</span><br>
+                       <span>Web Designer</span>
+                   </div>
+               </li>
+           </ul>       
+       </div>
+    
 <!--end::Body-->
     </div>
     </div>
