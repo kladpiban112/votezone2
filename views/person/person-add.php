@@ -513,7 +513,7 @@ if($personid_enc != ""){
 		</div>
         </br>           
         <div class="col-lg-12" id="head_h">
-				<label>หัวหน้า</label>
+				<label>สังกัด</label>
             <select class="selectpicker" data-live-search="true" name="head" id="head" >
                         
                 <?php

@@ -6,7 +6,7 @@ require_once ABSPATH."/PasswordHash.php";
 require_once ABSPATH."/resize-class.php";
 require_once ABSPATH."/BarcodeQR.php";
 
-$stmt_data = $conn->prepare ("SELECT * FROM ".DB_PREFIX."person_main");
+$stmt_data = $conn->prepare ("SELECT * FROM ".DB_PREFIX."person_main WHERE flag = 1");
 $stmt_data->execute();                
 ?>
 <?php
@@ -21,21 +21,21 @@ $stmt_data->execute();
             } 
             foreach($data as $key => &$value)
             {
-             $output[$value["id"]] = &$value;
+                $output[$value["id"]] = &$value;
             }
             foreach($data as $key => &$value)
             {
-             if($value["parent_id"] && isset($output[$value["parent_id"]]))
-             {
-              $output[$value["parent_id"]]["nodes"][] = &$value;
-             }
+                if($value["parent_id"] && isset($output[$value["parent_id"]]))
+                {
+                    $output[$value["parent_id"]]["nodes"][] = &$value;
+                }
             }
             foreach($data as $key => &$value)
             {
-             if($value["parent_id"] && isset($output[$value["parent_id"]]))
-             {
-              unset($data[$key]);
-             }
+                if($value["parent_id"] && isset($output[$value["parent_id"]]))
+                {
+                    unset($data[$key]);
+                }
             }
             echo json_encode($data);
             // echo '<pre>';
