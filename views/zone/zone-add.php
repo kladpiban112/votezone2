@@ -4,6 +4,7 @@ error_reporting(0);
 $personid_enc = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
 $serviceid_enc = filter_input(INPUT_GET, 'serviceid', FILTER_SANITIZE_STRING);
 $act = filter_input(INPUT_GET, 'act', FILTER_SANITIZE_STRING);
+$aid = filter_input(INPUT_GET, 'aid', FILTER_SANITIZE_STRING);
 $personid = base64_decode($personid_enc);
 $serviceid = base64_decode($serviceid_enc);
 $action = base64_decode($act);
@@ -12,45 +13,17 @@ $action = base64_decode($act);
 if($action == "edit"){
 	$txt_title = "แก้ไข";
 	$action = $action;
-
-	$stmt_data = $conn->prepare ("SELECT p.*,o.org_name FROM ".DB_PREFIX."person_main p 
-	LEFT JOIN ".DB_PREFIX."org_main o ON p.org_id = o.org_id 
-    WHERE p.oid = '$personid'  LIMIT 1");
+	$stmt_data = $conn->prepare ("SELECT * FROM ".DB_PREFIX."area p 
+    WHERE p.aid = '$aid'  LIMIT 1");
     $stmt_data->execute();	
     $row_person = $stmt_data->fetch(PDO::FETCH_ASSOC);
-
-
-  
 
 }else{
 	$txt_title = "เพิ่ม";
 	$action = "add";
 }
 
-if($personid_enc != ""){
-
-	$stmt_data = $conn->prepare ("SELECT p.*,o.org_name FROM ".DB_PREFIX."person_main p 
-	LEFT JOIN ".DB_PREFIX."org_main o ON p.org_id = o.org_id 
-    WHERE p.oid = '$personid'  LIMIT 1");
-    $stmt_data->execute();	
-    $row_person = $stmt_data->fetch(PDO::FETCH_ASSOC);
-
-}
 ?>
-<!-- Load Leaflet from CDN -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" crossorigin=""></script>
-    <!-- Load Esri Leaflet from CDN -->
-    <script src="https://unpkg.com/esri-leaflet@^3.0.8/dist/esri-leaflet.js"></script>
-    <script src="https://unpkg.com/esri-leaflet-vector@^3.0.0/dist/esri-leaflet-vector.js"></script>
-
-
-    <!-- Load Esri Leaflet Geocoder from CDN -->
-    <script src="https://unpkg.com/esri-leaflet-geocoder@3.1.3/dist/esri-leaflet-geocoder.js"></script>
-    
-
-
-
 		<!--begin::Card-->
 		<div class="card card-custom gutter-b example example-compact">
 			<div class="card-header ribbon ribbon-right">
@@ -80,19 +53,21 @@ if($personid_enc != ""){
 <input type="hidden" class="form-control"  name="personid" id="personid" value="<?php echo $personid;?>"/>
 <input type="hidden" class="form-control"  name="serviceid" id="serviceid" value="<?php echo $serviceid;?>"/>
 <input type="hidden" class="form-control"  name="org_id" id="org_id" value="<?php echo $logged_org_id;?>"/>
+<input type="hidden" class="form-control"  name="aid" id="aid" value="<?php echo $aid;?>"/>
+
 	<div class="card-body">
 
 	
 	<div class="row">
 	<div class="col-lg-12">
 
-        <div class="form-group row">
+        <!-- <div class="form-group row">
 
 		</div>
 
    <span><i class="fas fa-house-user"></i> ที่อยู่เขตเลือกตั้ง :</span>
    
-   <hr>
+   <hr> -->
 		
 
         <input type="hidden" class="form-control"  name="txt_ampur" id="txt_ampur" value="<?php echo $row_person['ampur'];?>"/>
@@ -104,22 +79,22 @@ if($personid_enc != ""){
 				<label>จังหวัด</label>
             <select class="form-control form-control-sm" name="changwat" id="changwat">    
                         <?php
-                                                            $stmt = $conn->prepare ("SELECT * FROM cchangwat c ");
-                                                            $stmt->execute();
-                                                            echo "<option value=''>-ระบุ-</option>";
-                                                            while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
-                                                            $id = $row->changwatcode;
-                                                            $name = $row->changwatname; ?>
-                                                            <option value="<?php echo $id;?>" <?php if($row_person['changwat'] == $id){ echo "selected";}?>><?php echo $name;?></option>
-                                                            <?php 
-                                                            }
-                                                        ?>
+                                $stmt = $conn->prepare ("SELECT * FROM cchangwat c ");
+                                $stmt->execute();
+                                echo "<option value=''>-ระบุ-</option>";
+                                while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
+                                $id = $row->changwatcode;
+                                $name = $row->changwatname; ?>
+                                <option value="<?php echo $id;?>" <?php if($row_person['changwat'] == $id){ echo "selected";}?>><?php echo $name;?></option>
+                                <?php 
+                                }
+                            ?>
             </select>
 			</div>
 
             <div class="col-lg-2">
 				<label>เขตการเลือกตั้ง</label>
-             <input type="text" class="form-control form-control-sm"  name="road" id="road" placeholder="เขตการเลือกตั้ง" value="<?php echo $row_person['road'];?>"/>
+             <input type="number" class="form-control form-control-sm"  name="area_number" id="area_number" placeholder="เขตการเลือกตั้ง" value="<?php echo $row_person['area_number'];?>"/>
 				
 			</div>
 
@@ -142,29 +117,19 @@ if($personid_enc != ""){
 
             <div class="col-lg-2">
 				<label>หมู่ที่</label>
-				<select class="form-control form-control-sm" name="village" id="village">
-                    <option value=""  <?php if($row_person['village'] == "0"){ echo "selected";}?>>0</option>
-								
-								<?php for ($n_vil = 1; $n_vil <= 20; $n_vil++) { 
-									$n_vil_data = str_pad($n_vil,2,"0",STR_PAD_LEFT);
-									?>
-										<option value="<?php echo $n_vil_data;?>" <?php if($row_person['village'] == $n_vil_data){ echo "selected";}?>><?php echo $n_vil;?></option>
-								<?php } ?>
- 
-				</select>
+                <input type="number" class="form-control form-control-sm"  name="village" id="village" placeholder="หมู่" value="<?php echo $row_person['village'];?>"/>
 			</div>
 			 
 			<div class="col-lg-2">
 				<label>หน่วยการเลือกตั้ง</label>
-                <input type="text" class="form-control form-control-sm"  name="road" id="road" placeholder="เขตการเลือกตั้ง" value="<?php echo $row_person['road'];?>"/>
-            </select>
+                <input type="number" class="form-control form-control-sm"  name="zone_number" id="zone_number" placeholder="เขตการเลือกตั้ง" value="<?php echo $row_person['zone_number'];?>"/>
 			</div>
 				
 			
 
             <div class="col-lg-3">
 				<label>ชื่อสถานที่เลือกตั้ง</label>
-             <input type="text" class="form-control form-control-sm"  name="road" id="road" placeholder="ชื่อสถานที่" value="<?php echo $row_person['road'];?>"/>
+             <input type="text" class="form-control form-control-sm"  name="zone_name" id="zone_name" placeholder="ชื่อสถานที่" value="<?php echo $row_person['zone_name'];?>"/>
 				
 			</div>
 
@@ -175,185 +140,74 @@ if($personid_enc != ""){
 
       <div class="col-lg-3">
 				<label>latitude</label>
-             <input type="text" class="form-control form-control-sm"  name="road" id="road" placeholder="ชื่อสถานที่" >
+             <input type="text" class="form-control form-control-sm"  name="latitude" id="latitude" placeholder="latitude" value="<?php echo $row_person['latitude'];?>"/>
                 
-          
-            
             </input>
-				
+		
 			</div>
 
             <div class="col-lg-3">
 				<label>longitude</label>
-             <input type="text" class="form-control form-control-sm"  name="road" id="road" placeholder="ชื่อสถานที่" value="<?php echo $row_person['road'];?>"/>
+             <input type="text" class="form-control form-control-sm"  name="longitude" id="longitude" placeholder="longitude" value="<?php echo $row_person['longitude'];?>"/>
 				
 			</div>
-           
- </div> 
-  <div class="class="col-lg-3">
-  <br>
-               <h3>กรุณากด Shift + Scoll Mouse เพื่อ  Zoom Map </h3> 
+        </div> 
+        </br>
+            <div class=" row">
+                <div class="col-lg-12">
+                    <label>รายละเอียด</label>
+                    <textarea class="form-control editor" name="details" id="details"><?php echo $row_person['details'];?></textarea>
+                </div>
             </div>
- <br>
-      <!-- <span><i class="fas fa-house-user"></i> ที่อยู่ปัจจุบัน :</span>
-   <hr>
-		<div class="form-group row">
-			<div class="col-lg-3">
-				<label>บ้านเลขที่</label>
-				<input type="text" class="form-control form-control-sm"  name="house_now" id="house_now" placeholder="บ้านเลขที่" value="<?php echo $row_person['house_now'];?>"/>
-				
-			</div>
-			<div class="col-lg-4">
-				<label>หมู่บ้าน/ชุมชน</label>
-        <input type="text" class="form-control form-control-sm"  name="community_now" id="community_now" placeholder="หมู่บ้าน/ชุมชน" value="<?php echo $row_person['community_now'];?>"/>
-				
-			</div>
-
-			
-            <div class="col-lg-3">
-				<label>ถนน</label>
-             <input type="text" class="form-control form-control-sm"  name="road_now" id="road_now" placeholder="ถนน" value="<?php echo $row_person['road_now'];?>"/>
-				
-			</div>
-
-            <div class="col-lg-2">
-				<label>หมู่ที่</label>
-				<select class="form-control form-control-sm" name="village_now" id="village_now">
-                    <option value=""  <?php if($row_person['village_now'] == "0"){ echo "selected";}?>>0</option>	
-                        <?php for ($n_vil = 1; $n_vil <= 99; $n_vil++) { 
-                            $n_vil_data = str_pad($n_vil,2,"0",STR_PAD_LEFT);
-                            ?>
-                                <option value="<?php echo $n_vil_data;?>" <?php if($row_person['village_now'] == $n_vil_data){ echo "selected";}?>><?php echo $n_vil;?></option>
-								<?php } ?>
-				</select>
-			</div>
-		</div> -->
-
-        <!-- <input type="hidden" class="form-control"  name="txt_ampur_now" id="txt_ampur_now" value="<?php echo $row_person['ampur_now'];?>"/>
-        <input type="hidden" class="form-control"  name="txt_tambon_now" id="txt_tambon_now" value="<?php echo $row_person['tambon_now'];?>"/>
-    <div class="form-group row">
-
-    <div class="col-lg-3">
-				<label>จังหวัด</label>
-            <select class="form-control form-control-sm" name="changwat_now" id="changwat_now">
-                        
-            <?php
-                    $stmt = $conn->prepare ("SELECT * FROM cchangwat c ");
-                    $stmt->execute();
-                    echo "<option value=''>-ระบุ-</option>";
-                    while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
-                    $id = $row->changwatcode;
-                    $name = $row->changwatname; ?>
-                    <option value="<?php echo $id;?>" <?php if($row_person['changwat_now'] == $id){ echo "selected";}?>><?php echo $name;?></option>
-                    <?php 
-                    }
-                    ?>
-            </select>
-				
-			</div>
-
-      <div class="col-lg-3">
-				<label>อำเภอ</label>
-            <select class="form-control form-control-sm" name="ampur_now" id="ampur_now">
-                        <option value="">ระบุ</option>
-            </select>
-			</div>
-
-      <div class="col-lg-3">
-				<label>ตำบล</label>
-            <select class="form-control form-control-sm" name="tambon_now" id="tambon_now">
-                        <option value="">ระบุ</option>
-            </select>
-			</div>
+        </div>    
+  <div class="row col-lg-12">
+               <h3>กรุณากด Shift + Scoll Mouse เพื่อ  Zoom Map </h3> 
 
 
-
-      </div> -->
+            </div>
+ <!-- <br> -->
      
-
-
 		</div><!--col-->
 
-		
-
-		
 		</div><!--col-->
 
 <div id="map" style="width: 100%; height:650px;" >
-    <script type="text/javascript">
-
-const apiKey = "AAPK2c46051a3469443eb9b301070f4e958a-Ckglf3c9zJNWi6O8g24f55AbJet4nBw3tZi-seb6K5VBtOyGgMzfS2gVKf4j65I";
-
-const basemapEnum = "ArcGIS:Navigation";
-
-const map = L.map("map", {
-  minZoom: 2
-
-}).setView([14.9674218,102.0682299], 13); // Paris
-
-L.esri.Vector.vectorBasemapLayer(basemapEnum, {
-  apiKey: apiKey
-}).addTo(map);
-
-
-const layerGroup = L.layerGroup().addTo(map);
-
-map.on("click", function (e) {
-  L.esri.Geocoding
-    .reverseGeocode({
-      apikey: apiKey
-    })
-    .latlng(e.latlng)
-    .run(function (error, result) {
-      if (error) {
-        return;
-      }
-
-      const lngLatString = `${Math.round(result.latlng.lng * 100000) / 100000}, ${Math.round(result.latlng.lat * 100000) / 100000}`;
-
-      layerGroup.clearLayers();
-      marker = L.marker(result.latlng)
-        .addTo(layerGroup)
-        .bindPopup(`<b>${lngLatString}</b><p>${result.address.Match_addr}</p>`)
-        .openPopup();
-    });
-});
-    </script>
 </div>
-<br>
-<div class="row">
-			<div class="col-lg-6">
-				<button type="button" class="btn btn-primary mr-2 btn-sm" id="btnSavePerson"><i class="fa fa-save" title="บันทึก" ></i> บันทึก</button>
+<!-- <br> -->
+<div class="card-footer">
+        <div class="row">
+            <div class="col-lg-6">
+                <button type="button" class="btn btn-primary mr-2 btn-sm" id="btnSaveArea"><i class="fa fa-save" title="บันทึก" ></i> บันทึก</button>
                 <button type="button" class="btn btn-warning btn-sm" onclick="javascript:history.back()" ><i class="fa fa-chevron-left" title="ย้อนกลับ" ></i> </button>
-               
-			</div>
-			<div class="col-lg-6 text-right">
-				<!--<button type="reset" class="btn btn-danger">Delete</button>-->
-			</div>
-		</div>
-
-</div>
-	<div class="card-footer">
-	
+            </div>
+        </div>
 	</div>
+</div>
 </form>
-
 </div>
 <!--end::Card-->
-
 
 <!-- Datepicker Thai -->
 <script src="assets/js/bootstrap-datepicker.js"></script>
 <script src="assets/js/bootstrap-datepicker-thai.js"></script>
 <script src="assets/js/locales/bootstrap-datepicker.th.js"></script>  
+<!-- Load Leaflet from CDN -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" crossorigin=""></script>
+<!-- Load Esri Leaflet from CDN -->
+<script src="https://unpkg.com/esri-leaflet@^3.0.8/dist/esri-leaflet.js"></script>
+<script src="https://unpkg.com/esri-leaflet-vector@^3.0.0/dist/esri-leaflet-vector.js"></script>
+<!-- Load Esri Leaflet Geocoder from CDN -->
+<script src="https://unpkg.com/esri-leaflet-geocoder@3.1.3/dist/esri-leaflet-geocoder.js"></script>
+
 
 <script>
+
 
 $(document).ready(function () {
     'use strict';
     getoptselect_amphur();
 	getoptselect_tambon();
-
 
 }); 
 
@@ -369,14 +223,12 @@ $('#birthdate').datepicker({
 });
 
 
-
 $("#changwat").change(function() {
     $("#txt_ampur").val('');
     $("#txt_tambon").val('');
     getoptselect_amphur();
     getoptselect_tambon();
 });
-
 
 
 $("#ampur").change(function() {
@@ -394,7 +246,6 @@ $("#level").change(function() {
 });
 
 
-
 function getoptselect_amphur(){
 
     var changwatcode = $("#changwat").val();
@@ -410,7 +261,6 @@ function getoptselect_amphur(){
         } // success
     });
 }
-
 
 
 function getoptselect_tambon(){
@@ -434,38 +284,62 @@ var tambon = $("#txt_tambon").val();
 }	
 
 
-
-
-
-$('#btnSavePerson').click(function(e){
+$('#btnSaveArea').click(function(e){
         e.preventDefault();
-        if ($('#cid').val().length == ""){
+        if ($('#area_number').val().length == ""){
                 Swal.fire({
                     icon: 'error',
-                    title: 'กรุณาระบุเลขบัตรประชาชน',
+                    title: 'กรุณาระบุเขตเลือกตั้ง',
                     showConfirmButton: false,
                     timer: 1000
                     });
-        }else if ($('#fname').val().length == ""){
+        }else if ($('#changwat').val().length == ""){
                 Swal.fire({
                     icon: 'error',
-                    title: 'กรุณาระบุชื่อ',
+                    title: 'กรุณาระบุจังหวัด',
                     showConfirmButton: false,
                     timer: 1000
                     });
-        }else if ($('#lname').val().length == ""){
+        }else if ($('#ampur').val().length == ""){
                 Swal.fire({
                     icon: 'error',
-                    title: 'กรุณาระบุนามสกุล',
+                    title: 'กรุณาระบุอำเภอ',
+                    showConfirmButton: false,
+                    timer: 1000
+                    });
+        }else if ($('#tambon').val().length == ""){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'กรุณาระบุตำบล',
+                    showConfirmButton: false,
+                    timer: 1000
+                    });
+        }else if ($('#village').val().length == ""){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'กรุณาระบุหมู่',
+                    showConfirmButton: false,
+                    timer: 1000
+                    });
+        }else if ($('#zone_number').val().length == ""){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'กรุณาระบุเลขหน่วยเลือกตั้ง',
+                    showConfirmButton: false,
+                    timer: 1000
+                    });
+        }else if ($('#zone_name').val().length == ""){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'กรุณาระบุชื่อหน่วยเลือกตั้ง',
                     showConfirmButton: false,
                     timer: 1000
                     });
         }else {
-
 		var data = new FormData(this.form);
         $.ajax({
             type: "POST",
-            url: "core/person/person-add.php",
+            url: "core/zone/zone-add.php",
             dataType: "json",
 			data: data,
 			processData: false,
@@ -478,13 +352,8 @@ $('#btnSavePerson').click(function(e){
                 showConfirmButton: false,
                 timer: 1500
                 })
-                    .then((value) => {
-                    if(data.method == "add"){
-                        window.location.replace("dashboard.php?module=person&page=person-add&personid="+ data.personid + "&act=" + data.act);
-                    }else{
-                        window.location.replace("dashboard.php?module=person&page=person-add&personid="+ data.personid + "&act=" + data.act);
-                    }
-                    
+                .then((value) => {
+                    window.location.replace("dashboard.php?module=zone&page=main");
                 }); 
                 } else if (data.code == "404") {
                   //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
@@ -502,74 +371,45 @@ $('#btnSavePerson').click(function(e){
                 // Your error handling logic here..
             } // success
         });
-
         }
-    
-      }); //  click
-
-
-$('#cidSearch').click(function(e){
-        e.preventDefault();
-        if ($('#cid').val().length == ""){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'กรุณาระบุเลขบัตรประชาชน',
-                    showConfirmButton: false,
-                    timer: 1000
-                    });
-        }else if ($('#org_id').val().length == ""){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'กรุณาระบุหน่วยงาน',
-                    showConfirmButton: false,
-                    timer: 1000
-                    });
-        }else {
-
-		var data = new FormData(this.form);
-        $.ajax({
-            type: "POST",
-            url: "core/healthcare/person-search.php",
-            dataType: "json",
-			data: data,
-			processData: false,
-            contentType: false,
-            success: function(data) {  
-              if (data.code == "200") {
-                Swal.fire({
-                icon: 'success',
-                title: 'ค้นหาข้อมูลสำเร็จ',
-                showConfirmButton: false,
-                timer: 1500
-                })
-                    .then((value) => {
-                     
-                        $('#prename').val(data.prename);
-                        $('#fname').val(data.fname);
-                        $('#lname').val(data.lname);
-                    //liff.closeWindow();
-                    //window.location.replace("dashboard.php?module=borrow");
-                    //window.location.replace("dashboard.php?module=borrow&page=borrow-add&personid="+data.personid+"&serviceid="+data.serviceid+"&act="+data.act);
-                }); 
-                } else if (data.code == "404") {
-                  //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
-                   Swal.fire({
-                    icon: 'error',
-                    title: 'ไม่พบข้อมูลที่ค้นหา',
-                    //text: 'กรุณาลองใหม่อีกครั้ง'
-                    })
-                    .then((value) => {
-                      //liff.closeWindow();
-                  });
-                }
-            } // success
-        });
-
-        }
-    
       }); //  click
 
 </script>
+<script>
+const apiKey = "AAPK2c46051a3469443eb9b301070f4e958a-Ckglf3c9zJNWi6O8g24f55AbJet4nBw3tZi-seb6K5VBtOyGgMzfS2gVKf4j65I";
 
+const basemapEnum = "ArcGIS:Navigation";
 
+const map = L.map("map", {
+  minZoom: 2
+
+}).setView([14.9674218,102.0682299], 13); // Paris
+
+L.esri.Vector.vectorBasemapLayer(basemapEnum, {
+  apiKey: apiKey
+}).addTo(map);
+
+const layerGroup = L.layerGroup().addTo(map);
+
+map.on("click", function (e) {
+  L.esri.Geocoding
+    .reverseGeocode({
+      apikey: apiKey
+    })
+    .latlng(e.latlng)
+    .run(function (error, result) {
+      if (error) {
+        return;
+      }
+
+      const lngLatString = `${Math.round(result.latlng.lng * 100000) / 100000}, ${Math.round(result.latlng.lat * 100000) / 100000}`;
+
+      layerGroup.clearLayers();
+      marker = L.marker(result.latlng)
+        .addTo(layerGroup)
+        .bindPopup(`<b>${lngLatString}</b><p>${result.address.Match_addr}</p>`)
+        .openPopup();
+    });
+});
+</script>
 

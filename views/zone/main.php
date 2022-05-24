@@ -3,11 +3,12 @@ error_reporting(0);
 $search = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING);
 $cid_search = filter_input(INPUT_GET, 'cid', FILTER_SANITIZE_STRING);
 $hn_search = filter_input(INPUT_GET, 'hn', FILTER_SANITIZE_STRING);
+$search_data = "";
 if($cid_search != ""){
-    $cid_data = " AND p.cid LIKE '%$cid_search%'  ";
+    // $cid_data = " AND p.cid LIKE '%$cid_search%'  ";
 }
 if($search != ""){
-    $search_data = " AND  p.fname LIKE '%$search%'  ";
+    // $search_data = " AND  p.fname LIKE '%$search%'  ";
 }
 error_reporting(0);
 
@@ -17,36 +18,6 @@ $act = filter_input(INPUT_GET, 'act', FILTER_SANITIZE_STRING);
 $personid = base64_decode($personid_enc);
 $serviceid = base64_decode($serviceid_enc);
 $action = base64_decode($act);
-
-
-if($action == "edit"){
-	$txt_title = "แก้ไข";
-	$action = $action;
-
-	$stmt_data = $conn->prepare ("SELECT p.*,o.org_name FROM ".DB_PREFIX."person_main p 
-	LEFT JOIN ".DB_PREFIX."org_main o ON p.org_id = o.org_id 
-    WHERE p.oid = '$personid'  LIMIT 1");
-    $stmt_data->execute();	
-    $row_person = $stmt_data->fetch(PDO::FETCH_ASSOC);
-
-
-  
-
-}else{
-	$txt_title = "เพิ่ม";
-	$action = "add";
-}
-
-if($personid_enc != ""){
-
-	$stmt_data = $conn->prepare ("SELECT p.*,o.org_name FROM ".DB_PREFIX."person_main p 
-	LEFT JOIN ".DB_PREFIX."org_main o ON p.org_id = o.org_id 
-    WHERE p.oid = '$personid'  LIMIT 1");
-    $stmt_data->execute();	
-    $row_person = $stmt_data->fetch(PDO::FETCH_ASSOC);
-
-}
-
 
 
 ?>
@@ -83,16 +54,16 @@ if($personid_enc != ""){
             <select class="form-control form-control-sm" name="changwat" id="changwat">
                         
                         <?php
-                                                            $stmt = $conn->prepare ("SELECT * FROM cchangwat c ");
-                                                            $stmt->execute();
-                                                            echo "<option value=''>-ระบุ-</option>";
-                                                            while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
-                                                            $id = $row->changwatcode;
-                                                            $name = $row->changwatname; ?>
-                                                            <option value="<?php echo $id;?>" <?php if($row_person['changwat'] == $id){ echo "selected";}?>><?php echo $name;?></option>
-                                                            <?php 
-                                                            }
-                                                        ?>
+                                $stmt = $conn->prepare ("SELECT * FROM cchangwat c ");
+                                $stmt->execute();
+                                echo "<option value=''>-ระบุ-</option>";
+                                while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
+                                $id = $row->changwatcode;
+                                $name = $row->changwatname; ?>
+                                <option value="<?php echo $id;?>" <?php if($row_person['changwat'] == $id){ echo "selected";}?>><?php echo $name;?></option>
+                                <?php 
+                                }
+                        ?>
             </select>
 				
 			</div>
@@ -201,7 +172,7 @@ if($personid_enc != ""){
         $conditions = " ";
     }
 
-    $numb_data = $conn->query("SELECT count(1) FROM ".DB_PREFIX."person_main p  WHERE p.flag != '0' $conditions  $search_data    $ampur_search ")->fetchColumn();
+    $numb_data = $conn->query("SELECT count(1) FROM ".DB_PREFIX."area ")->fetchColumn();
 
   
         if (!(isset($pagenum))) { $pagenum = 1; }
@@ -231,43 +202,31 @@ if($personid_enc != ""){
         }
         $Page_Start = ($pagenum - 1) * $page_rows; // สำหรับลำดับ
         $max = ' LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;		
-        $stmt_data = $conn->prepare ("SELECT p.*,pr.prename AS prename_title,c.changwatname,a.ampurname,t.tambonname,s.sexname
-        FROM ".DB_PREFIX."person_main p 
-        LEFT JOIN ".DB_PREFIX."cprename pr ON p.prename = pr.id_prename
-        LEFT JOIN ".DB_PREFIX."cchangwat c ON p.changwat = c.changwatcode
-		LEFT JOIN ".DB_PREFIX."campur a ON CONCAT(p.changwat,p.ampur) = a.ampurcodefull
-        LEFT JOIN ".DB_PREFIX."ctambon t ON CONCAT(p.changwat,p.ampur,p.tambon) = t.tamboncodefull
-        LEFT JOIN ".DB_PREFIX."csex s ON p.sex = s.sex
-        WHERE p.flag != '0' $conditions  $search_data  $cid_data  
-        ORDER BY p.oid DESC
-        $max");
+        $stmt_data = $conn->prepare ("SELECT * FROM ".DB_PREFIX." area p 
+        $conditions  $search_data  $cid_data  
+        ORDER BY p.aid DESC ");
         $stmt_data->execute();		
 
-        
     ?>
-
-
 
 <div class="table-responsive">
 	<table class="table table-bordered table-hover table-strip " id="tbData" style="margin-top: 13px !important; min-height: 300px;">
     <thead>
     <tr>
                         <th class="text-center">ลำดับ</th>
-                        <th>สถานที่</th>
-                        <th>จำนวนประชากร</th>
-                        <th>เขตการเลือกตั้ง</th>
+                        <th>เขตเลือกตั้ง</th>
                         <th>จังหวัด</th>
                         <th>อำเภอ</th>
                         <th>ตำบล</th>
-                        <th>หมู่บ้าน</th>
-                        <!--<th class="text-center">สถานะ</th>-->
+                        <th>หมู่</th>
+                        <th>หน่วยเลือกตั้งที่</th>
+                        <th>ชื่อหน่วยเลือกตั้ง</th>
                         <th class="text-center">จัดการ</th>	
     </tr>
     </thead>
     <tbody>
             
             <?php
-
             $i  = 0;
             $no = 1;
 	        $no = $no * $Page_Start;
@@ -275,50 +234,25 @@ if($personid_enc != ""){
             {
                 $i++;
                 $no++;
-                $oid = $row['oid'];
-                $personid = $oid;
-                $personid_enc = base64_encode($oid);
-                $service_id = $row['service_id'];
-                $serviceid_enc = base64_encode($service_id);
-                $prename = $row['prename_title'];
-                $fname = $row['fname'];
-                $lname = $row['lname'];
-                $fullname = $prename.$fname." ".$lname;
-                $cid = $row['cid'];
-                $telephone = $row['telephone'];
-                $birthdate = date_db_2form($row['birthdate']);
-                $img_profile = $row['img_profile'];
-                $today = date("Y-m-d");
-                $diff = date_diff(date_create($row['birthdate']), date_create($today));
-                $age_y = $diff->format('%y');
-                
-                $house = $row['house'];
+                $aid = $row['aid'];
+                $aid_enc = base64_encode($aid);
+                $area_number = $row['area_number'];
+                $changwat = $row['changwat'];
+                $ampur = $row['ampur'];
+                $tambon = $row['tambon'];
                 $village = $row['village'];
-                    $changwatname = $row['changwatname'];
-					$ampurname = $row['ampurname'];
-					$tambonname = $row['tambonname'];
-					$addr =  "บ้านเลขที่ ".$house." ม.".$village." ต.".$tambonname." อ.".$ampurname." จ.".$changwatname;
-                $sexname = $row['sexname'];
+                $zone_number = $row['zone_number'];
+                $zone_name = $row['zone_name'];
                 ?>
                 <tr>
                             <td class="text-center"><?php echo $no;?></td>
-                            <td class="text-center">
-                            <?php if($img_profile == ""){?>
-                                <a  href="uploads/no-image.jpg" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
-                                <img src="uploads/no-image.jpg" alt="image"/>
-                                </div></a>
-                            <?php }else{?>
-                                <a  href="uploads/person/<?php echo $img_profile;?>" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
-                                <img src="uploads/person/<?php echo $img_profile;?>" alt="image"/>
-                                </div></a>
-                                <?php } ?>
-                            </td>
-                            <td><?php echo $cid;?></td>
-                            <td><?php echo $fullname;?></td>
-                            <td><?php echo $sexname;?></td>
-                            <td><?php echo $age_y;?></td>
-                            <td><?php echo $telephone;?></td>
-                            <td><?php echo $addr;?></td>
+                            <td><?php echo $area_number;?></td>
+                            <td><?php echo $changwat;?></td>
+                            <td><?php echo $ampur;?></td>
+                            <td><?php echo $tambon;?></td>
+                            <td><?php echo $village;?></td>
+                            <td><?php echo $zone_number;?></td>
+                            <td><?php echo $zone_name;?></td>
                             <!--<td class="text-center"><span class="label label-lg label-light-<?php echo $status_color;?> label-inline"><?php echo $status_title;?></span></td>-->
                             <td class="text-center">
                             <!--begin::Dropdown-->
@@ -330,17 +264,10 @@ if($personid_enc != ""){
                                         <!--begin::Navigation-->
                                     <ul class="navi navi-hover py-1">
 
-                                    <li class="navi-item">
-                                            <a href="?module=person&page=person-detail&personid=<?php echo $personid_enc;?>" class="navi-link">
-                                                <span class="navi-icon"><i class="fas fa-clipboard-list"></i></span>
-                                                <span class="navi-text">ประวัติบุคคล</span>
-                                            </a>
-                                        </li>
-
                                         <li class="navi-item">
-                                            <a href="dashboard.php?module=person&page=person-add&personid=<?php echo $personid_enc;?>&act=<?php echo base64_encode('edit');?>" class="navi-link">
+                                            <a href="dashboard.php?module=zone&page=zone-add&aid=<?php echo $aid_enc;?>&act=<?php echo base64_encode('edit');?>" class="navi-link">
                                                 <span class="navi-icon"><i class="fas fa-user-edit"></i></span>
-                                                <span class="navi-text">แก้ไขข้อมูลบุคคล</span>
+                                                <span class="navi-text">แก้ไข</span>
                                             </a>
                                         </li>
 

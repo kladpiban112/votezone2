@@ -523,8 +523,6 @@ if($personid_enc != ""){
 		</div><!--col-->
 		</div><!--row-->
 
-
-
 	<div class="card-footer">
 		<div class="row">
 			<div class="col-lg-6">
