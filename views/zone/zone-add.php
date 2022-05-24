@@ -5,6 +5,7 @@ $personid_enc = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
 $serviceid_enc = filter_input(INPUT_GET, 'serviceid', FILTER_SANITIZE_STRING);
 $act = filter_input(INPUT_GET, 'act', FILTER_SANITIZE_STRING);
 $aid = filter_input(INPUT_GET, 'aid', FILTER_SANITIZE_STRING);
+$aid = base64_decode($aid);
 $personid = base64_decode($personid_enc);
 $serviceid = base64_decode($serviceid_enc);
 $action = base64_decode($act);
