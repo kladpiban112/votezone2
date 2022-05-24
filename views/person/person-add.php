@@ -493,7 +493,6 @@ if($personid_enc != ""){
         <div class="col-lg-12">
 				<label>ระดับ</label>
             <select class="form-control form-control-sm" name="level" id="level" >
-                        
                 <?php
                     $stmt = $conn->prepare ("SELECT * FROM level_type l ");
                     $stmt->execute();
