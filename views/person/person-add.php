@@ -66,6 +66,8 @@ if($personid_enc != ""){
 <input type="hidden" class="form-control"  name="headid" id="headid" value="<?php echo $row_person['head'];?>"/>
 <input type="hidden" class="form-control"  name="serviceid" id="serviceid" value="<?php echo $serviceid;?>"/>
 <input type="hidden" class="form-control"  name="org_id" id="org_id" value="<?php echo $logged_org_id;?>"/>
+<input type="hidden" class="form-control"  name="team_id" id="team_id" value="<?php echo $personid;?>"/>
+
 	<div class="card-body">
 
 	
@@ -489,7 +491,6 @@ if($personid_enc != ""){
                 <hr>
                 <div id="relative_detail"></div>  
  -->
-
         <div class="col-lg-12">
 				<label>ระดับ</label>
             <select class="form-control form-control-sm" name="level" id="level" >
@@ -505,17 +506,21 @@ if($personid_enc != ""){
                     }
                 ?>
             </select>
-				
 		</div>
         </br>           
         <div class="col-lg-12" id="head_h">
 				<label>สังกัด</label>
-            <!-- </select> -->
-            <!-- <div id="hh" ></div> -->
-            <!-- <select class="selectpicker"  data-size="5" name="head_data" id="head_data" >  -->
-            <select class="js-example-basic-single col-lg-8" name="head_data" id="head_data" > 
+            <select class="js-example-basic-single col-lg-12" name="head_data" id="head_data" >             
             </select>
-				
+		</div>
+        </br>
+        <div class="col-lg-12" id="parents_h">
+			<label>สังกัดใหญ่</label>
+            <!-- <input type="text" class="form-control"  name="parents" id="parents" placeholder="A" disabled /> -->
+            <select class="form-control form-control-sm" name="parents" id="parents" disabled >   
+                <option id="parents_val" value="" selected>A</option>          
+            </select>
+            </select>
 		</div>
 
 		</div>
@@ -554,8 +559,32 @@ $(document).ready(function () {
     getoptselect_amphur();
 	getoptselect_tambon();
     getoptselect_level();
-    $('.js-example-basic-single').select2();
+    getteam();
+    $('.js-example-basic-single').select2();   
+
+    $(".js-example-basic-single").on("change", function(e) {
+    var data_val = $(this).val();
+    $.ajax({
+        type: "POST",
+        url: "core/fn-get-parents.php",
+        data: {person:data_val},
+        success: function(data) {
+            var vals = $.parseJSON(data)
+            console.log(vals);
+            if(vals.id != "0"){
+                $('#parents_val').text(vals.name);
+                $('#parents_val').val(vals.id);
+            }else{
+                $('#parents_val').text("A");
+                $('#parents_val').val("");
+            }
+       }
+    });
+  });
+
+
 }); 
+
 
 $(".add-more").click(function(){ 
 		  //alert(99);
@@ -594,7 +623,6 @@ $("#level").change(function() {
         //dataType: "json",
         data: {level:level,person:person},
         success: function(data) {
-            console.log(data);
             $("#head_data").empty();
             $("#head_data").append(data);
         } // success
@@ -610,13 +638,28 @@ function getoptselect_level(){
         //dataType: "json",
         data: {level:level,person:person},
         success: function(data) {
-            console.log(data);
             $("#head_data").empty();
             $("#head_data").append(data);
         } // success
     });
 
 }
+
+
+$("#head_data").trigger('change', function (e) {
+    var head_data = $("#head_data").val();
+    $.ajax({
+        type: "POST",
+        url: "core/fn-get-parents.php",
+        data: {person:head_data},
+        success: function(data) {
+            console.log(data);
+            $("#parents").text();
+            $("#head_data").append(data);
+       }
+    });
+});
+
 
 function getoptselect_amphur(){
 
@@ -656,7 +699,27 @@ var tambon = $("#txt_tambon").val();
 
 }	
 
+function getteam(){
+    console.log("sdff")
+    var data_val = $("#team_id").val();
+    $.ajax({
+        type: "POST",
+        url: "core/fn-get-parents.php",
+        data: {person:data_val},
+        success: function(data) {
+            var vals = $.parseJSON(data)
+            console.log(vals);
+            if(vals.id != "0"){
+                $('#parents_val').text(vals.name);
+                $('#parents_val').val(vals.id);
+            }else{
+                $('#parents_val').text("A");
+                $('#parents_val').val("");
+            }
+       }
+    });
 
+}	
 
 
 function confirm_person_image(id) {

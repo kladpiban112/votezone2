@@ -19,24 +19,24 @@ $stmt_data->execute();
                 $sub_data["parent_id"] = $row["head"];
                 $data[] = $sub_data;
             } 
-            foreach($data as $key => &$value)
-            {
-                $output[$value["id"]] = &$value;
-            }
-            foreach($data as $key => &$value)
-            {
-                if($value["parent_id"] && isset($output[$value["parent_id"]]))
-                {
-                    $output[$value["parent_id"]]["nodes"][] = &$value;
-                }
-            }
-            foreach($data as $key => &$value)
-            {
-                if($value["parent_id"] && isset($output[$value["parent_id"]]))
-                {
-                    unset($data[$key]);
-                }
-            }
+            // foreach($data as $key => &$value)
+            // {
+            //     $output[$value["id"]] = &$value;
+            // }
+            // foreach($data as $key => &$value)
+            // {
+            //     if($value["parent_id"] && isset($output[$value["parent_id"]]))
+            //     {
+            //         $output[$value["parent_id"]]["nodes"][] = &$value;
+            //     }
+            // }
+            // foreach($data as $key => &$value)
+            // {
+            //     if($value["parent_id"] && isset($output[$value["parent_id"]]))
+            //     {
+            //         unset($data[$key]);
+            //     }
+            // }
             echo json_encode($data);
             // echo '<pre>';
             // print_r($data);

@@ -37,7 +37,8 @@ $occupation = filter_input(INPUT_POST, 'occupation', FILTER_SANITIZE_STRING);
 $education = filter_input(INPUT_POST, 'education', FILTER_SANITIZE_STRING);
 $abogroup = filter_input(INPUT_POST, 'abogroup', FILTER_SANITIZE_STRING);
 $level = filter_input(INPUT_POST, 'level', FILTER_SANITIZE_STRING);
-$head = filter_input(INPUT_POST, 'head', FILTER_SANITIZE_STRING);
+$head = filter_input(INPUT_POST, 'head_data', FILTER_SANITIZE_STRING);
+$team_id = filter_input(INPUT_POST, 'team_id', FILTER_SANITIZE_STRING);
 
 
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
@@ -62,9 +63,12 @@ if($exist_person!=0){
 
 	
 	$personid = $row['oid'];
-	if($level == "1"){$head = "0";}
+	if($level == "1"){
+		$head = "0";
+	    $team_id = $personid;
+	}
 
-	$query = "UPDATE ".DB_PREFIX."person_main SET cid = ?, org_id = ?, prename = ?, fname = ?, lname = ?, sex = ?,birthdate = ?,telephone = ?,house = ?,community = ?,road = ?,village = ?,tambon = ?,ampur = ?,changwat = ?,flag = ?,edit_date = ?,edit_users = ?,religion = ? , occupation = ? ,education = ?, abogroup = ?, level = ?, head = ? ,email = ? WHERE oid = ? LIMIT 1"; 
+	$query = "UPDATE ".DB_PREFIX."person_main SET cid = ?, org_id = ?, prename = ?, fname = ?, lname = ?, sex = ?,birthdate = ?,telephone = ?,house = ?,community = ?,road = ?,village = ?,tambon = ?,ampur = ?,changwat = ?,flag = ?,edit_date = ?,edit_users = ?,religion = ? , occupation = ? ,education = ?, abogroup = ?, level = ?, head = ? ,email = ?,team_id = ? WHERE oid = ? LIMIT 1"; 
 	$stmt = $conn->prepare($query);
 	$stmt->bindParam(1, $cid, PDO::PARAM_STR);
 	$stmt->bindParam(2, $org_id, PDO::PARAM_STR);
@@ -91,7 +95,8 @@ if($exist_person!=0){
 	$stmt->bindParam(23, $level, PDO::PARAM_STR);
 	$stmt->bindParam(24, $head, PDO::PARAM_STR);
 	$stmt->bindParam(25, $email, PDO::PARAM_STR);
-	$stmt->bindParam(26, $personid, PDO::PARAM_INT);
+	$stmt->bindParam(26, $team_id, PDO::PARAM_STR);
+	$stmt->bindParam(27, $personid, PDO::PARAM_INT);
 	$stmt->execute();
 
 	$service_oid = $conn->lastInsertId(); // last inserted ID
@@ -123,22 +128,19 @@ if($exist_person!=0){
 		}
 
 		$person_oid_enc = base64_encode($personid);
-		if($row['head']==""){
-			$query = "INSERT INTO ".DB_PREFIX."mapping_person (oid_head,oid) VALUES ( ?, ?)"; 
-			$stmt = $conn->prepare($query);
-			$stmt->bindParam(1, $personid, PDO::PARAM_STR);
-			$stmt->bindParam(2, $head, PDO::PARAM_STR);
-			$stmt->execute();
-		}else{
-			$query = "UPDATE ".DB_PREFIX."mapping_person SET oid_head = ? WHERE oid = ?"; 
-			$stmt = $conn->prepare($query);
-			$stmt->bindParam(1, $head, PDO::PARAM_STR);
-			$stmt->bindParam(2, $personid, PDO::PARAM_STR);
-			$stmt->execute();
-		}
-
-
-	
+		// if($row['head']==""){
+		// 	$query = "INSERT INTO ".DB_PREFIX."mapping_person (oid_head,oid) VALUES ( ?, ?)"; 
+		// 	$stmt = $conn->prepare($query);
+		// 	$stmt->bindParam(1, $personid, PDO::PARAM_STR);
+		// 	$stmt->bindParam(2, $head, PDO::PARAM_STR);
+		// 	$stmt->execute();
+		// }else{
+		// 	$query = "UPDATE ".DB_PREFIX."mapping_person SET oid_head = ? WHERE oid = ?"; 
+		// 	$stmt = $conn->prepare($query);
+		// 	$stmt->bindParam(1, $head, PDO::PARAM_STR);
+		// 	$stmt->bindParam(2, $personid, PDO::PARAM_STR);
+		// 	$stmt->execute();
+		// }
 
 	
 		$act_enc = base64_encode('edit');
@@ -181,19 +183,26 @@ $stmt->execute();
 $person_oid = $conn->lastInsertId(); // last inserted ID
 $person_oid_enc = base64_encode($person_oid);
 
-if($row['head'] == null){
-	$query = "INSERT INTO ".DB_PREFIX."mapping_person (oid_head,oid) VALUES ( ?, ?)"; 
-	$stmt = $conn->prepare($query);
-	$stmt->bindParam(1, $head, PDO::PARAM_STR);
-	$stmt->bindParam(2, $person_oid, PDO::PARAM_STR);
-	$stmt->execute();
-}else{
-	$query = "UPDATE ".DB_PREFIX."mapping_person SET oid_head = ? WHERE oid = ?"; 
-	$stmt = $conn->prepare($query);
-	$stmt->bindParam(1, $head, PDO::PARAM_STR);
-	$stmt->bindParam(2, $person_oid, PDO::PARAM_STR);
-	$stmt->execute();
-}
+$query1 = "UPDATE ".DB_PREFIX."person_main SET team_id = ? WHERE oid = ? LIMIT 1"; 
+$stmt1 = $conn->prepare($query);
+$stmt1->bindParam(1, $person_oid, PDO::PARAM_STR);
+$stmt1->bindParam(2, $person_oid, PDO::PARAM_STR);
+$stmt1->execute();
+
+
+// if($row['head'] == null){
+// 	$query = "INSERT INTO ".DB_PREFIX."mapping_person (oid_head,oid) VALUES ( ?, ?)"; 
+// 	$stmt = $conn->prepare($query);
+// 	$stmt->bindParam(1, $head, PDO::PARAM_STR);
+// 	$stmt->bindParam(2, $person_oid, PDO::PARAM_STR);
+// 	$stmt->execute();
+// }else{
+// 	$query = "UPDATE ".DB_PREFIX."mapping_person SET oid_head = ? WHERE oid = ?"; 
+// 	$stmt = $conn->prepare($query);
+// 	$stmt->bindParam(1, $head, PDO::PARAM_STR);
+// 	$stmt->bindParam(2, $person_oid, PDO::PARAM_STR);
+// 	$stmt->execute();
+// }
 
 
 // AVATAR
@@ -236,8 +245,11 @@ if($_FILES['img_profile']['name'])
 $stmt = $conn->prepare("SELECT * FROM ".DB_PREFIX."person_main WHERE cid = ? AND org_id = ?   ");
 $stmt->execute([$cid,$org_id]);
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-if($level == "1"){$head = "0";}
-	$query = "UPDATE ".DB_PREFIX."person_main SET cid = ?, org_id = ?, prename = ?, fname = ?, lname = ?, sex = ?,birthdate = ?,telephone = ?,house = ?,community = ?,road = ?,village = ?,tambon = ?,ampur = ?,changwat = ?,flag = ?,edit_date = ?,edit_users = ?,religion = ? , occupation = ? ,education = ?, abogroup = ?, level = ?, head = ? ,email = ? WHERE oid = ? LIMIT 1"; 
+if($level == "1"){
+	$head = "0";
+	$team_id = $personid;
+}
+	$query = "UPDATE ".DB_PREFIX."person_main SET cid = ?, org_id = ?, prename = ?, fname = ?, lname = ?, sex = ?,birthdate = ?,telephone = ?,house = ?,community = ?,road = ?,village = ?,tambon = ?,ampur = ?,changwat = ?,flag = ?,edit_date = ?,edit_users = ?,religion = ? , occupation = ? ,education = ?, abogroup = ?, level = ?, head = ? ,email = ?,team_id = ? WHERE oid = ? LIMIT 1"; 
 	$stmt = $conn->prepare($query);
 	$stmt->bindParam(1, $cid, PDO::PARAM_STR);
 	$stmt->bindParam(2, $org_id, PDO::PARAM_STR);
@@ -264,7 +276,8 @@ if($level == "1"){$head = "0";}
 	$stmt->bindParam(23, $level, PDO::PARAM_STR);
 	$stmt->bindParam(24, $head, PDO::PARAM_STR);
 	$stmt->bindParam(25, $email, PDO::PARAM_STR);
-	$stmt->bindParam(26, $personid, PDO::PARAM_INT);
+	$stmt->bindParam(26, $team_id, PDO::PARAM_STR);
+	$stmt->bindParam(27, $personid, PDO::PARAM_INT);
 	$stmt->execute();
 
 	// AVATAR
@@ -296,19 +309,19 @@ if($level == "1"){$head = "0";}
 
 		$person_oid_enc = base64_encode($personid);
 
-		if($row['head'] == null){
-			$query = "INSERT INTO ".DB_PREFIX."mapping_person (oid_head,oid) VALUES ( ?, ?)"; 
-			$stmt = $conn->prepare($query);
-			$stmt->bindParam(1, $head, PDO::PARAM_STR);
-			$stmt->bindParam(2, $personid, PDO::PARAM_STR);
-			$stmt->execute();
-		}else{
-			$query = "UPDATE ".DB_PREFIX."mapping_person SET oid_head = ? WHERE oid = ?"; 
-			$stmt = $conn->prepare($query);
-			$stmt->bindParam(1, $head, PDO::PARAM_STR);
-			$stmt->bindParam(2, $personid, PDO::PARAM_STR);
-			$stmt->execute();
-		}
+		// if($row['head'] == null){
+		// 	$query = "INSERT INTO ".DB_PREFIX."mapping_person (oid_head,oid) VALUES ( ?, ?)"; 
+		// 	$stmt = $conn->prepare($query);
+		// 	$stmt->bindParam(1, $head, PDO::PARAM_STR);
+		// 	$stmt->bindParam(2, $personid, PDO::PARAM_STR);
+		// 	$stmt->execute();
+		// }else{
+		// 	$query = "UPDATE ".DB_PREFIX."mapping_person SET oid_head = ? WHERE oid = ?"; 
+		// 	$stmt = $conn->prepare($query);
+		// 	$stmt->bindParam(1, $head, PDO::PARAM_STR);
+		// 	$stmt->bindParam(2, $personid, PDO::PARAM_STR);
+		// 	$stmt->execute();
+		// }
 	
 	$person_oid_enc = base64_encode($personid);
 

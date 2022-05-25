@@ -33,9 +33,15 @@
         dataType: "json",       
         success: function(data)  
         {
-            console.log(data);
+            var dataArray = [];
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    dataArray.push(data[key]);
+                }
+            };
+            console.log(dataArray);
             $('#treeview').treeview({
-                data: data,
+                data: dataArray,
                 collapseIcon:'fas fa-minus',
                 expandIcon:'fas fa-plus'
             });
