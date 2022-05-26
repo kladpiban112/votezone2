@@ -3,7 +3,7 @@
 	<div class="card card-custom gutter-b example example-compact">
 			<div class="card-header">
 				<h3 class="card-title">
-                DASHBOARD
+                DASHBOARD 
 
 
 				<div class="card-toolbar">
@@ -18,29 +18,25 @@
 
     <script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script>
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+   
+
 
     
+    
+
  <div class="row">
       <!-- Map --> 
     <div class="col-md-8" >
+
+
         <div id="map" style="width: 100%; height:750px;">
-            <script type="text/javascript">
 
-                var tileLayer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    'attribution': 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-                    });
+                    
+            <script  >
+                
+                
 
-                var map = new L.Map('map', {
-                    'center': [14.9674218,102.0682299],
-                    'zoom': 12,
-                    'layers': [tileLayer]
-                    });
-
-                map.on('popupopen', function(openEvent){
-                        $(function () {
-                        $('#marker-popover').popover();
-                    });
-                    });
+                
             </script>
         </div>
     </div>
@@ -65,44 +61,13 @@
     <div class=" ex3 collapse "  id="demo" >    
        
         <ul >
-                <li class="w3-bar border-bottom  ">
-                    <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
-                    <div class="w3-bar-item">
-                        <span class="w3-large">Mike</span><br>
-                        <span>Web Designer</span>
-                    </div>
-                </li>    
-                
-                <li class="w3-bar  border-bottom  ">
-                    <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
-                    <div class="w3-bar-item">
-                        <span class="w3-large">Mike</span><br>
-                        <span>Web Designer</span>
-                    </div>
-                </li>    
-                
-
-                <li class="w3-bar  border-bottom  ">
-                    <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
-                    <div class="w3-bar-item">
-                        <span class="w3-large">Mike</span><br>
-                        <span>Web Designer</span>
-                    </div>
-                </li>   
-                <li class="w3-bar  border-bottom  ">
-                    <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
-                    <div class="w3-bar-item">
-                        <span class="w3-large">Mike</span><br>
-                        <span>Web Designer</span>
-                    </div>
-                </li>
-                <li class="w3-bar  border-bottom  ">
-                    <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
-                    <div class="w3-bar-item">
-                        <span class="w3-large">Mike</span><br>
-                        <span>Web Designer</span>
-                    </div>
-                </li>
+        <li class="w3-bar border-bottom  ">
+                   <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
+                   <div class="w3-bar-item">
+                  
+                 
+                   </div>
+               </li>
             </ul>       
         </div>
       <br>
@@ -233,6 +198,43 @@
 
 <script>
 
+$(document).ready(function () {
+    'use strict';
+ 
+    var tileLayer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    'attribution': 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+                    });
+
+                var map = new L.Map('map', {
+                    'center': [14.9674218,102.0682299],
+                    'zoom': 12,
+                    'layers': [tileLayer]
+                    });
+            
+                 
+                $.ajax({
+                    type: "POST",
+                    url: "core/zone/getlocation.php",
+                    //dataType: "json",
+                    data:{ },
+                    success: function(data) {
+
+                        var data = JSON.parse(data);
+                        console.log(data);
+                        for (var i = 0; i < data.length; i++) {
+                           
+                            var marker = new L.Marker([data[i].lat,data[i].lon]).addTo(map);
+                            marker.bindPopup(data[i].id);
+                        }
+
+                      
+                    } //success 
+                    
+                        });
+
+
+
+}); 
     function delRepairMain(id) {
                         Swal.fire({
                             title: 'แน่ใจนะ?',
@@ -253,5 +255,7 @@
                             }
                         })
                 }
+
+
 
 </script>

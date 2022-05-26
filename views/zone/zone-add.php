@@ -186,6 +186,7 @@ if($action == "edit"){
 </div>
 </form>
 </div>
+
 <!--end::Card-->
 
 <!-- Datepicker Thai -->
@@ -264,6 +265,8 @@ function getoptselect_amphur(){
 }
 
 
+
+
 function getoptselect_tambon(){
 
 var changwatcode = $("#changwat").val();
@@ -285,57 +288,37 @@ var tambon = $("#txt_tambon").val();
 }	
 
 
+
 $('#btnSaveArea').click(function(e){
         e.preventDefault();
         if ($('#area_number').val().length == ""){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'กรุณาระบุเขตเลือกตั้ง',
-                    showConfirmButton: false,
-                    timer: 1000
-                    });
+            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+            $('#area_number').focus();
+            return false;
         }else if ($('#changwat').val().length == ""){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'กรุณาระบุจังหวัด',
-                    showConfirmButton: false,
-                    timer: 1000
-                    });
+            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+            $('#changwat').focus();
+            return false;
         }else if ($('#ampur').val().length == ""){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'กรุณาระบุอำเภอ',
-                    showConfirmButton: false,
-                    timer: 1000
-                    });
+            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+            $('#ampur').focus();
+            return false;
         }else if ($('#tambon').val().length == ""){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'กรุณาระบุตำบล',
-                    showConfirmButton: false,
-                    timer: 1000
-                    });
+            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+            $('#tambon').focus();
+            return false;
         }else if ($('#village').val().length == ""){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'กรุณาระบุหมู่',
-                    showConfirmButton: false,
-                    timer: 1000
-                    });
+            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+            $('#village').focus();
+            return false;
         }else if ($('#zone_number').val().length == ""){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'กรุณาระบุเลขหน่วยเลือกตั้ง',
-                    showConfirmButton: false,
-                    timer: 1000
-                    });
+            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+            $('#zone_number').focus();
+            return false;
         }else if ($('#zone_name').val().length == ""){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'กรุณาระบุชื่อหน่วยเลือกตั้ง',
-                    showConfirmButton: false,
-                    timer: 1000
-                    });
+            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+            $('#zone_name').focus();
+            return false;
         }else {
 		var data = new FormData(this.form);
         $.ajax({
@@ -347,22 +330,13 @@ $('#btnSaveArea').click(function(e){
             contentType: false,
             success: function(data) {  
               if (data.code == "200") {
-                Swal.fire({
-                icon: 'success',
-                title: 'บันทึกสำเร็จ',
-                showConfirmButton: false,
-                timer: 1500
-                })
+                alert('บันทึกข้อมูลเรียบร้อยแล้ว')
                 .then((value) => {
                     window.location.replace("dashboard.php?module=zone&page=main");
                 }); 
                 } else if (data.code == "404") {
                   //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
-                   Swal.fire({
-                    icon: 'error',
-                    title: 'ไม่สามารถบันทึกข้อมูลได้',
-                    text: 'กรุณาลองใหม่อีกครั้ง'
-                    })
+                  alert('ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง')
                     .then((value) => {
                       //liff.closeWindow();
                   });
@@ -403,7 +377,7 @@ map.on("click", function (e) {
         return;
       }
 
-      const lngLatString = `${Math.round(result.latlng.lng * 100000) / 100000}, ${Math.round(result.latlng.lat * 100000) / 100000}`;
+      const lngLatString = ` ${Math.round(result.latlng.lat * 100000) / 100000},${Math.round(result.latlng.lng * 100000) / 100000}`;
 
       layerGroup.clearLayers();
       marker = L.marker(result.latlng)
