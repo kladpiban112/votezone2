@@ -162,7 +162,7 @@ $action = base64_decode($act);
         <h3 class="text-left">หัวคะแนน</h3>
     </div>
     <div class="col-3 text-right ">
-        <h3><a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalAddPerson"><i class="far fa-plus-square"></i>เพิ่มหัวคะแนน</a></h3>
+        <h3><a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalPerson"><i class="far fa-plus-square"></i>เพิ่มหัวคะแนน</a></h3>
     </div>
   </div>
  <!-- <br> -->
@@ -193,13 +193,13 @@ $action = base64_decode($act);
 
 <!--end::Card-->
 <!--begin::Modal-->
-<div class="modal fade" id="modalAddPerson" tabindex="-1" role="dialog" aria-labelledby="modalAddPerson"
+<div class="modal fade" id="modalPerson" tabindex="-1" role="dialog" aria-labelledby="modalPerson"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"><i class="far fa-plus-square"></i> สถานะการซ่อม</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="far fa-plus-square"></i> เลือกหัวคะแนน</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
@@ -207,33 +207,39 @@ $action = base64_decode($act);
 
                 <form class="form" enctype="multipart/form-data" autocomplete="off">
                     <input type="hidden" class="form-control" name="repairid" id="repairid"
-                        value="<?php echo $repairid; ?>" />
-                    <div class="form-group row">
-                        <div class="col-lg-2">
-                            <label>วันที่ทำรายการ</label>
-                            <input type="text" class="form-control" name="statusdate" id="statusdate"
-                                data-date-language="th-th" maxlength="10" placeholder="" value="<?php echo date('d').'/'.date('m').'/'.(date('Y')+543);?>" />
+                        value="" />
+                    <div class="form-group row ">
+                    <input type="hidden" class="form-control"  name="aid" id="aid" value="<?php echo $aid;?>"/>
+                        <div class="col">
+                            <label>หัวคะแนน</label>
+                            <select class="js-example-basic-single " style="width: 50%" name="level_a" id="level_a" >
+                                <?php
+                                    $stmt = $conn->prepare ("SELECT * FROM person_main WHERE level = 1 ");
+                                    $stmt->execute();
+                                    echo "<option value=''>-ระบุ-</option>";
+                                    while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
+                                        $id = $row->oid;
+                                        $name = $row->fname." ".$row->lname; ?>
+                                        <option value="<?php echo $id;?>" ><?php echo $name;?></option>
+                                    <?php 
+                                    }
+                                ?>
+                            </select>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-lg-12">
                             <label>รายละเอียด</label>
-                            <textarea class="form-control editor" name="status_desc" id="status_desc"></textarea>
+                            <textarea class="form-control editor" name="details" id="details"></textarea>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-lg-2">
-                            <button type="button" class="btn btn-success mr-2" id="btnAddStatus"><i
-                                    class="far fa-save"></i> บันทึก</button>
+                        <div class="col-lg-12 text-right">
+                            <button type="button" class="btn btn-success mr-2 " id="btnAddPerson"><i
+                                class="far fa-save"></i> บันทึก</button>
                         </div>
-
                     </div>
-            </div>
-            <div class="modal-footer">
-
-                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal"><i
-                        class="far fa-times-circle"></i> ปิด</button>
             </div>
         </div>
     </div>
@@ -261,7 +267,11 @@ $(document).ready(function () {
     'use strict';
     getoptselect_amphur();
 	getoptselect_tambon();
-
+    // $('.js-example-basic-single').select2();   
+    $('#level_a').select2({
+        dropdownParent: $('#modalPerson')
+    });
+    load_person_area_data();
 }); 
 
 $(".add-more").click(function(){ 
@@ -439,7 +449,7 @@ map.on("click", function (e) {
 
 
 function load_person_area_data() {
-    var aid = $("#repairid").val();
+    var aid = $("#aid").val();
     $.ajax({
         type: "POST",
         url: "views/zone/zone-data-person-area.php",
@@ -453,6 +463,43 @@ function load_person_area_data() {
         } // success
     });
 }
+
+
+$('#btnAddPerson').click(function(e) {
+    e.preventDefault();
+    if ($('#level_a').val().length == "") {
+       alert("กรุณาระบุข้อมูล")
+    } else {
+        var data = new FormData(this.form);
+        console.log(data);
+        $.ajax({
+            type: "POST",
+            url: "core/zone/zone-add-person.php",
+            dataType: "json",
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                if (data.code == "200") {
+                    load_person_area_data();
+                } else if (data.code == "404") {
+                    //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
+                    Swal.fire({
+                            icon: 'error',
+                            title: 'ไม่สามารถบันทึกข้อมูลได้',
+                            text: 'กรุณาลองใหม่อีกครั้ง'
+                        })
+                        .then((value) => {
+                            //liff.closeWindow();
+                        });
+                }
+            } // success
+        });
+
+     }
+
+}); //  click
+
 
 </script>
 
