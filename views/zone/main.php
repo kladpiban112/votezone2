@@ -203,6 +203,9 @@ $action = base64_decode($act);
         $Page_Start = ($pagenum - 1) * $page_rows; // สำหรับลำดับ
         $max = ' LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;		
         $stmt_data = $conn->prepare ("SELECT * FROM ".DB_PREFIX." area p 
+        LEFT JOIN cchangwat c ON p.changwat = c.changwatcode
+        LEFT JOIN campur a ON CONCAT(p.changwat,p.ampur) = a.ampurcodefull
+        LEFT JOIN ctambon t ON CONCAT(p.changwat,p.ampur,p.tambon) = t.tamboncodefull
         $conditions  $search_data  $cid_data  
         ORDER BY p.aid DESC ");
         $stmt_data->execute();		
@@ -225,7 +228,6 @@ $action = base64_decode($act);
     </tr>
     </thead>
     <tbody>
-            
             <?php
             $i  = 0;
             $no = 1;
@@ -237,9 +239,9 @@ $action = base64_decode($act);
                 $aid = $row['aid'];
                 $aid_enc = base64_encode($aid);
                 $area_number = $row['area_number'];
-                $changwat = $row['changwat'];
-                $ampur = $row['ampur'];
-                $tambon = $row['tambon'];
+                $changwat = $row['changwatname'];
+                $ampur = $row['ampurname'];
+                $tambon = $row['tambonname'];
                 $village = $row['village'];
                 $zone_number = $row['zone_number'];
                 $zone_name = $row['zone_name'];
@@ -263,7 +265,12 @@ $action = base64_decode($act);
                                     <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
                                         <!--begin::Navigation-->
                                     <ul class="navi navi-hover py-1">
-
+                                        <li class="navi-item">
+                                            <a href="dashboard.php?module=zone&page=zone-add-person&aid=<?php echo $aid_enc;?>" class="navi-link">
+                                                <span class="navi-icon"><i class="fas fa-user-edit"></i></span>
+                                                <span class="navi-text">จัดการหน่วยเลือกตั้ง</span>
+                                            </a>
+                                        </li>
                                         <li class="navi-item">
                                             <a href="dashboard.php?module=zone&page=zone-add&aid=<?php echo $aid_enc;?>&act=<?php echo base64_encode('edit');?>" class="navi-link">
                                                 <span class="navi-icon"><i class="fas fa-user-edit"></i></span>
