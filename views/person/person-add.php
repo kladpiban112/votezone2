@@ -413,8 +413,6 @@ if($personid_enc != ""){
       </div> -->
 
 	
-
-
 		</div><!--col-->
 
 		
@@ -445,8 +443,6 @@ if($personid_enc != ""){
                                     <a href="#" onclick="confirm_person_image('<?php echo $personid; ?>');"><i class="ki ki-bold-close icon-xs text-muted"></i></a>
                                 </span>
                                 
-                                
-								
                     
 					</div>
 				</div>
@@ -545,12 +541,10 @@ if($personid_enc != ""){
 </div>
 <!--end::Card-->
 
-
 <!-- Datepicker Thai -->
 <script src="assets/js/bootstrap-datepicker.js"></script>
 <script src="assets/js/bootstrap-datepicker-thai.js"></script>
 <script src="assets/js/locales/bootstrap-datepicker.th.js"></script>  
-
 
 <script>
 
