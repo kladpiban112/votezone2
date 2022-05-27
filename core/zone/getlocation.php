@@ -12,6 +12,10 @@ while ($row = $stmt_data->fetch(PDO::FETCH_ASSOC))
     $sub_data["id"] = $row["aid"];
     $sub_data["lat"] = $row["latitude"];
     $sub_data["lon"] = $row["longitude"];
+    $sub_data["name"] = $row["zone_name"];
+    $sub_data["zone_number"] = $row["zone_number"];
+    $sub_data["area_number"] = $row["area_number"];
+
     $data[] = $sub_data;
 }   
 

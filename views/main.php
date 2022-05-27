@@ -64,7 +64,8 @@
         <li class="w3-bar border-bottom  ">
                    <img src="uploads/avatars/36b4e770-images.png" class="w3-bar-item w3-circle" style="width:85px">
                    <div class="w3-bar-item">
-                  
+                   <span class="w3-large">Mike</span><br>
+                       <span>Web Designer</span>
                  
                    </div>
                </li>
@@ -223,8 +224,9 @@ $(document).ready(function () {
                         console.log(data);
                         for (var i = 0; i < data.length; i++) {
                            
-                            var marker = new L.Marker([data[i].lat,data[i].lon]).addTo(map);
-                            marker.bindPopup(data[i].id);
+                            var marker = L.marker([data[i].lat,data[i].lon]).addTo(map)
+                                marker.bindPopup('เขตการเลือกตั้งที่: '+data[i].area_number+'<br>'+'หน่วยเลือกตั้งที่: '+data[i].area_number+'<br>'+data[i].name );
+                                marker.openPopup();
                         }
 
                       
