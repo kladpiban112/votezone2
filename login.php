@@ -50,7 +50,7 @@
 			<!--begin::Login Sign in form-->
 			<div class="login-signin">
 				<div class="mb-10">
-					<h2 style="color : #000; font-family: Kanit;">VOTEZONE</h2>
+					<h2 style="color : #000; font-family: Kanit;">POPWIN</h2>
 					<div class="opacity-100 font-weight-bold" style="color : #000; font-family: Kanit;">ระบบจัดการเขตเลือกตั้ง</div>
 				</div>
 				<form class="form" id="kt_login_signin_form">
