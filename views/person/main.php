@@ -187,12 +187,12 @@ if($search != ""){
                                         <!--begin::Navigation-->
                                     <ul class="navi navi-hover py-1">
 
-                                    <li class="navi-item">
+                                    <!-- <li class="navi-item">
                                             <a href="?module=person&page=person-detail&personid=<?php echo $personid_enc;?>" class="navi-link">
                                                 <span class="navi-icon"><i class="fas fa-clipboard-list"></i></span>
                                                 <span class="navi-text">ประวัติบุคคล</span>
                                             </a>
-                                        </li>
+                                        </li> -->
 
                                         <li class="navi-item">
                                             <a href="dashboard.php?module=person&page=person-add&personid=<?php echo $personid_enc;?>&act=<?php echo base64_encode('edit');?>" class="navi-link">

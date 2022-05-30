@@ -6,22 +6,19 @@ require_once ABSPATH."/PasswordHash.php";
 require_once ABSPATH."/resize-class.php";
 require_once ABSPATH."/BarcodeQR.php";
 
+$oid = filter_input(INPUT_POST, 'oid', FILTER_SANITIZE_STRING);
 
-$oid = filter_input(INPUT_GET, 'oid', FILTER_SANITIZE_STRING);
-$stmt_data = $conn->prepare ("SELECT * FROM ".DB_PREFIX."person_main WHERE flag = 1 && team_id = '.$oid.' ORDER BY oid");
+$stmt_data = $conn->prepare ("SELECT * FROM ".DB_PREFIX."person_main p LEFT JOIN level_type l ON p.level = l.level_id LEFT JOIN cprename cp ON p.prename = cp.id_prename  WHERE flag = 1 AND team_id = '$oid' ORDER BY oid");
 $stmt_data->execute();      
-?>
-<?php
-            
-            while ($row = $stmt_data->fetch(PDO::FETCH_ASSOC))
-            {
-                echo "ssssssssss".$oid;
+    
+            while ($row = $stmt_data->fetch(PDO::FETCH_ASSOC)){
                 $sub_data["id"] = $row["oid"];
-                $sub_data["name"] = $row["fname"].' '.$row["lname"];
-                $sub_data["text"] = $row["fname"].' '.$row["lname"];
+                $sub_data["name"] = 'ระดับ '.$row["level"].' '.$row["prename"].' '. $row["fname"].' '.$row["lname"];
+                $sub_data["text"] = 'ระดับ '.$row["level"].' '.$row["prename"].' '. $row["fname"].' '.$row["lname"];
                 $sub_data["parent_id"] = $row["head"];
                 $data[] = $sub_data;
             } 
+            
             foreach($data as $key => &$value)
             {
                 $output[$value["id"]] = &$value;

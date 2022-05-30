@@ -79,7 +79,7 @@ $action = base64_decode($act);
 
     <div class="col-lg-3">
 				<label>จังหวัด</label>
-            <select class="form-control form-control-sm" name="changwat" id="changwat">    
+            <select class="form-control form-control-sm" name="changwat" id="changwat"disabled>    
                         <?php
                                 $stmt = $conn->prepare ("SELECT * FROM cchangwat c ");
                                 $stmt->execute();
@@ -96,20 +96,20 @@ $action = base64_decode($act);
 
             <div class="col-lg-2">
 				<label>เขตการเลือกตั้ง</label>
-             <input type="number" class="form-control form-control-sm"  name="area_number" id="area_number" placeholder="เขตการเลือกตั้ง" value="<?php echo $row_person['area_number'];?>"/>
+             <input type="number" class="form-control form-control-sm"  name="area_number" id="area_number" placeholder="เขตการเลือกตั้ง" value="<?php echo $row_person['area_number']; ?>"disabled />
 				
 			</div>
 
       <div class="col-lg-3">
 				<label>อำเภอ</label>
-            <select class="form-control form-control-sm" name="ampur" id="ampur">
+            <select class="form-control form-control-sm" name="ampur" id="ampur"disabled>
                         <option value="">ระบุ</option>
             </select>
 			</div>
 
       <div class="col-lg-3">
 				<label>ตำบล</label>
-            <select class="form-control form-control-sm" name="tambon" id="tambon">
+            <select class="form-control form-control-sm" name="tambon" id="tambon"disabled>
                         <option value="">ระบุ</option>
             </select>
 			</div>
@@ -119,19 +119,19 @@ $action = base64_decode($act);
 
             <div class="col-lg-2">
 				<label>หมู่ที่</label>
-                <input type="number" class="form-control form-control-sm"  name="village" id="village" placeholder="หมู่" value="<?php echo $row_person['village'];?>"/>
+                <input type="number" class="form-control form-control-sm"  name="village" id="village" placeholder="หมู่" value="<?php echo $row_person['village'];?>" disabled/>
 			</div>
 			 
 			<div class="col-lg-2">
 				<label>หน่วยการเลือกตั้ง</label>
-                <input type="number" class="form-control form-control-sm"  name="zone_number" id="zone_number" placeholder="เขตการเลือกตั้ง" value="<?php echo $row_person['zone_number'];?>"/>
+                <input type="number" class="form-control form-control-sm"  name="zone_number" id="zone_number" placeholder="เขตการเลือกตั้ง" value="<?php echo $row_person['zone_number'];?>" disabled/>
 			</div>
 				
 			
 
             <div class="col-lg-3">
 				<label>ชื่อสถานที่เลือกตั้ง</label>
-             <input type="text" class="form-control form-control-sm"  name="zone_name" id="zone_name" placeholder="ชื่อสถานที่" value="<?php echo $row_person['zone_name'];?>"/>
+             <input type="text" class="form-control form-control-sm"  name="zone_name" id="zone_name" placeholder="ชื่อสถานที่" value="<?php echo $row_person['zone_name'];?>" disabled/>
 				
 			</div>
 
@@ -142,7 +142,7 @@ $action = base64_decode($act);
 
       <div class="col-lg-3">
 				<label>latitude</label>
-             <input type="text" class="form-control form-control-sm"  name="latitude" id="latitude" placeholder="latitude" value="<?php echo $row_person['latitude'];?>"/>
+             <input type="text" class="form-control form-control-sm"  name="latitude" id="latitude" placeholder="latitude" value="<?php echo $row_person['latitude'];?>"disabled/>
                 
             </input>
 		
@@ -150,7 +150,7 @@ $action = base64_decode($act);
 
             <div class="col-lg-3">
 				<label>longitude</label>
-             <input type="text" class="form-control form-control-sm"  name="longitude" id="longitude" placeholder="longitude" value="<?php echo $row_person['longitude'];?>"/>
+             <input type="text" class="form-control form-control-sm"  name="longitude" id="longitude" placeholder="longitude" value="<?php echo $row_person['longitude'];?>"disabled/>
 				
 			</div>
         </div> 
@@ -158,7 +158,7 @@ $action = base64_decode($act);
             <div class=" row">
                 <div class="col-lg-12">
                     <label>รายละเอียด</label>
-                    <textarea class="form-control editor" name="details" id="details"><?php echo $row_person['details'];?></textarea>
+                    <textarea class="form-control editor" name="details" id="details" disabled><?php echo $row_person['details'];?> </textarea>
                 </div>
             </div>
         </div>    
@@ -167,7 +167,7 @@ $action = base64_decode($act);
     <h3>กรุณากด Shift + Scoll Mouse เพื่อ  Zoom Map </h3> 
     </div>
     <div class="col-3" >
-        <h3 class="text-left">หัวคะแนน <?php echo $person_num; ?></h3>
+        <h3 class="text-left">หัวคะแนน    คะแนนรวม <?php echo $person_num; ?> คะแนน</h3>
     </div>
     <div class="col-3 text-right ">
         <h3><a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalPerson"><i class="far fa-plus-square"></i>เพิ่มหัวคะแนน</a></h3>
@@ -466,7 +466,6 @@ function load_person_area_data() {
             aid: aid
         },
         success: function(data) {
-            console.log(data);
             $("#person_area").empty(); //add preload
             $("#person_area").append(data);
         } // success
@@ -489,8 +488,10 @@ $('#btnAddPerson').click(function(e) {
             processData: false,
             contentType: false,
             success: function(data) {
-                if (data.code == "200") {
+                if (data.code == "200") {  
+                    alert("บันทึกสำเร็จ");
                     load_person_area_data();
+                    location.reload();
                 } else if (data.code == "404") {
                     //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
                     Swal.fire({
@@ -501,6 +502,9 @@ $('#btnAddPerson').click(function(e) {
                         .then((value) => {
                             //liff.closeWindow();
                         });
+                } else if (data.code == "300") {
+                    //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
+                    alert("มีหัวคะแนนรายนี้แล้ว กรุณากรอกข้อมมูลใหม่");
                 }
             } // success
         });
@@ -509,6 +513,56 @@ $('#btnAddPerson').click(function(e) {
 
 }); //  click
 
+function delPersonAera(id) {
+    // Swal.fire({
+    //     title: 'แน่ใจนะ?',
+    //     text: "ต้องการยกเลิกรายการ !",
+    //     type: 'warning',
+    //     showCancelButton: true,
+    //     confirmButtonColor: '#3085d6',
+    //     cancelButtonColor: '#d33',
+    //     cancelButtonText: 'ยกเลิก',
+    //     confirmButtonText: 'ใช่, ต้องการยกเลิกรายการ!'
+    // }).then((result) => {
+    //     if (result.value) { //Yes
+    //         $.post("core/zone/zone-del-person-area.php", {
+    //             id: id
+    //         }, function(result) {
+    //             loaddata_status_data();
+    //         });
+    //     }
+    // })
+    var oid = String(id);
+    var aid = $('#aid').val();
+
+    $.ajax({
+            type: "POST",
+            url: "core/zone/zone-del-person-area.php",
+            dataType: "json",
+            data: {oid:oid,aid:aid},
+            success: function(data) {
+                if (data.code == "200") {  
+                    alert("ลบข้อมูลสำเร็จ");
+                    location.reload();
+                } else if (data.code == "404") {
+                    //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
+                    Swal.fire({
+                            icon: 'error',
+                            title: 'ไม่สามารถบันทึกข้อมูลได้',
+                            text: 'กรุณาลองใหม่อีกครั้ง'
+                        })
+                        .then((value) => {
+                            //liff.closeWindow();
+                        });
+                } else if (data.code == "300") {
+                    //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
+                    alert("มีหัวคะแนนรายนี้แล้ว กรุณากรอกข้อมมูลใหม่");
+                }
+            } // success
+        });
+
+}
 
 </script>
+
 

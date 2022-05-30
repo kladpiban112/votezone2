@@ -1,6 +1,6 @@
 <?php
 error_reporting(0);
-session_start();
+
 $oid = filter_input(INPUT_GET, 'oid', FILTER_SANITIZE_STRING);
 
 ?>
@@ -10,7 +10,7 @@ $oid = filter_input(INPUT_GET, 'oid', FILTER_SANITIZE_STRING);
 <div class="card card-custom gutter-b example example-compact">
 			<div class="card-header">
 				<h3 class="card-title">
-                TREEVIEW
+                สมาชิก
 				<div class="card-toolbar">
 				</div>
 			</div>
@@ -26,7 +26,13 @@ $oid = filter_input(INPUT_GET, 'oid', FILTER_SANITIZE_STRING);
     </div>
     </div>
 <!--end::Advance Table Widget 1-->			
-
+<div class="card-footer">
+		<div class="row">
+			<div class="col-lg-6">
+                <button type="button" class="btn btn-warning btn-sm" onclick="javascript:history.back()" ><i class="fa fa-chevron-left" title="ย้อนกลับ" ></i> </button>
+			</div>
+		</div>
+</div>
 </div>
 </div>
 		<!--end::Card-->
@@ -34,12 +40,12 @@ $oid = filter_input(INPUT_GET, 'oid', FILTER_SANITIZE_STRING);
 
     $(document).ready(function(){
 
-        var oid_page = $("#oid").val();
+        var oid = $("#oid").val();
         $.ajax({ 
         url: "core/treeview/treeview.php",
-        method:"POST",
+        type:"POST",
         dataType: "json",
-        data: {oid:oid_page},      
+        data: {oid:oid},      
         success: function(data)  
         {
             var dataArray = [];
@@ -49,11 +55,11 @@ $oid = filter_input(INPUT_GET, 'oid', FILTER_SANITIZE_STRING);
                 }
             };
             console.log(dataArray);
-            // $('#treeview').treeview({
-            //     data: dataArray,
-            //     collapseIcon:'fas fa-minus',
-            //     expandIcon:'fas fa-plus'
-            // });
+            $('#treeview').treeview({
+                data: dataArray,
+                collapseIcon:'fas fa-minus',
+                expandIcon:'fas fa-plus'
+            });
         }   
         });
         

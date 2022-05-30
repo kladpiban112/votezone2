@@ -21,7 +21,7 @@ $numb_rows = $stmt_data->rowCount();
 ?>
 
 
-<div class="table-responsive" style="max-height:650px;">
+<div class="table-responsive" style="height:650px;">
     <table class="table table-bordered table-hover table-strip" id="tbData" style="">
         <thead style="position: sticky; top: 0; z-index: 1;background:#eee;">
             <tr>
@@ -73,7 +73,7 @@ $numb_rows = $stmt_data->rowCount();
                                 </li>
 
                                 <li class="navi-item">
-                                    <a href="#" class="navi-link" onclick='delperson(<?php echo $row["oid"]; ?>)'>
+                                    <a href="#" class="navi-link" onclick='delPersonAera(<?php echo $row["oid"]; ?>)'>
                                         <span class="navi-icon"><i class="fas fa-trash"></i></span>
                                         <span class="navi-text">ลบ</span>
                                     </a>
