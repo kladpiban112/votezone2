@@ -45,9 +45,9 @@ $action = base64_decode($act);
     <div class="form-group row">
     <div class="col-lg-2">
 				<label>เขตการเลือกตั้ง</label>
-            <select class="form-control form-control-sm" >
-                        <option value="">ระบุ</option>
-            </select>
+                <input type="text" class="form-control form-control-sm"   placeholder="เขตการเลือกตั้ง" />
+                        
+            
 			</div>
     <div class="col-lg-2">
     <label>จังหวัด</label>
