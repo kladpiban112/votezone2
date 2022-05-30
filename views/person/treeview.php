@@ -1,5 +1,12 @@
+<?php
+error_reporting(0);
+session_start();
+$oid = filter_input(INPUT_GET, 'oid', FILTER_SANITIZE_STRING);
 
+?>
 <!--begin::Card-->
+<input type="hidden" class="form-control"  name="oid" id="oid" value="<?php echo $oid;?>"/>
+
 <div class="card card-custom gutter-b example example-compact">
 			<div class="card-header">
 				<h3 class="card-title">
@@ -26,10 +33,13 @@
 <script>
 
     $(document).ready(function(){
+
+        var oid_page = $("#oid").val();
         $.ajax({ 
         url: "core/treeview/treeview.php",
         method:"POST",
-        dataType: "json",       
+        dataType: "json",
+        data: {oid:oid_page},      
         success: function(data)  
         {
             var dataArray = [];
@@ -39,11 +49,11 @@
                 }
             };
             console.log(dataArray);
-            $('#treeview').treeview({
-                data: dataArray,
-                collapseIcon:'fas fa-minus',
-                expandIcon:'fas fa-plus'
-            });
+            // $('#treeview').treeview({
+            //     data: dataArray,
+            //     collapseIcon:'fas fa-minus',
+            //     expandIcon:'fas fa-plus'
+            // });
         }   
         });
         

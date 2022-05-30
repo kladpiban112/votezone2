@@ -7,12 +7,14 @@ require_once ABSPATH.'/functions.php';
 
 $aid = filter_input(INPUT_POST, 'aid', FILTER_SANITIZE_STRING);
 $aid_enc = base64_encode($aid);
-
+$person_num = 0;
 $personid = filter_input(INPUT_POST, 'personid', FILTER_SANITIZE_STRING);
 $personid_enc = base64_encode($personid);
 
-$stmt_data = $conn->prepare('SELECT * FROM '.DB_PREFIX.'mapping_person m
-LEFT JOIN  '.DB_PREFIX.'person_main p ON m.oid = p.oid');
+$stmt_data = $conn->prepare('SELECT *,COUNT(pm.team_id) AS count_num FROM mapping_person mp 
+LEFT JOIN area a ON a.aid = mp.aid
+LEFT JOIN person_main pm ON mp.oid = pm.team_id
+WHERE mp.aid = '.$aid.' GROUP BY pm.team_id');
 $stmt_data->execute();
 $numb_rows = $stmt_data->rowCount();
 
@@ -26,6 +28,7 @@ $numb_rows = $stmt_data->rowCount();
                 <th class="text-center">ลำดับ</th>
                 <th>ชื่อ-สกุล</th>
                 <th>รายละเอียด</th>
+                <th>จำนวนสมาชิก(รวมตนเอง)</th>
                 <th class="text-center">จัดการ</th>
             </tr>
         </thead>
@@ -36,32 +39,17 @@ $numb_rows = $stmt_data->rowCount();
         $i = 0;
         while ($row = $stmt_data->fetch(PDO::FETCH_ASSOC)) {
             ++$i;
-            // $oid = $row['oid'];
-            // $oid_enc = base64_encode($oid);
-            // $status_date = date_db_2form($row['status_date']);
-            // $status_title = $row['status_title'];
-            // $status_id = $row['status_id'];
-            // $status_desc = $row['status_desc'];
-            // $staff_name = $row['prename_title'].$row['fname'].' '.$row['lname'].' ('.$row['nickname'].')';
-
-            // $stmt_detail = $conn->prepare("SELECT GROUP_CONCAT(s.fname,' ',s.lname) AS gstaff_name,GROUP_CONCAT(s.oid) AS gstaff_id
-            //     FROM ".DB_PREFIX.'repair_staff u 
-            //     LEFT JOIN  '.DB_PREFIX."staff_main s ON u.staff_id = s.oid
-            //     WHERE u.status_id = '$oid' ");
-            // $stmt_detail->execute();
-            // $row_detail = $stmt_detail->fetch(PDO::FETCH_ASSOC);
-            // $gstaff_name = str_replace(',', '</br>', $row_detail['gstaff_name']);
-            // $gstaff_id = $row_detail['gstaff_id'];
-            // $gstaff_id_exp = explode(',', $gstaff_id);
             $name =  $row['fname'].' '. $row['lname'];
             $de =  $row['datail'];
-            
+            $count_num =  $row['count_num'];
+            $person_num = $person_num + $conut_num ;
             ?>
 
             <tr>
                 <td class="text-center" width="20px"><?php echo $i; ?></td>
                 <td><?php echo $name; ?></td>
                 <td><?php echo $de; ?></td>
+                <td><?php echo $count_num; ?></td>
                 <td class="text-center">
                     <!--begin::Dropdown-->
                     <div class="dropdown">
@@ -77,19 +65,19 @@ $numb_rows = $stmt_data->rowCount();
                                                 <span class="navi-icon"><i class="fas fa-edit"></i></span>
                                                 <span class="navi-text">แก้ไข</span>
                                             </a>-->
-                                    <a href="dashboard.php?module=repair&page=repair-edit-data-status&repairid=<?php echo $repairid_enc; ?>&personid=<?php echo $personid_enc; ?>&statusid=<?php echo $oid_enc; ?>&act=<?php echo base64_encode('edit'); ?>"
+                                    <a href="dashboard.php?module=person&page=treeview&oid=<?php echo $row['oid']; ?>"
                                         class="navi-link">
                                         <span class="navi-icon"><i class="fas fa-edit"></i></span>
-                                        <span class="navi-text">ลบ</span>
+                                        <span class="navi-text">สมาชิก</span>
                                     </a>
                                 </li>
 
-                                <!-- <li class="navi-item">
-                                    <a href="#" class="navi-link" onclick='delStatusData(<?php echo $oid; ?>)'>
+                                <li class="navi-item">
+                                    <a href="#" class="navi-link" onclick='delperson(<?php echo $row["oid"]; ?>)'>
                                         <span class="navi-icon"><i class="fas fa-trash"></i></span>
                                         <span class="navi-text">ลบ</span>
                                     </a>
-                                </li> -->
+                                </li>
                             </ul>
                             <!--end::Navigation-->
                         </div>

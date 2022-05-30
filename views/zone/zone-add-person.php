@@ -17,6 +17,14 @@ $action = base64_decode($act);
     $stmt_data->execute();	
     $row_person = $stmt_data->fetch(PDO::FETCH_ASSOC);
 
+    $stmt = $conn->prepare("SELECT COUNT(pm.team_id) FROM ".DB_PREFIX."mapping_person mp LEFT JOIN area a ON a.aid = mp.aid
+    LEFT JOIN person_main pm ON mp.oid = pm.team_id
+    WHERE mp.aid = ? ");
+    $stmt->execute([$aid]);
+    // $person_num = $stmt->fetch(PDO::FETCH_ASSOC);
+    $person_num = $stmt->fetchColumn();
+
+
 ?>
 		<!--begin::Card-->
 		<div class="card card-custom gutter-b example example-compact">
@@ -159,7 +167,7 @@ $action = base64_decode($act);
     <h3>กรุณากด Shift + Scoll Mouse เพื่อ  Zoom Map </h3> 
     </div>
     <div class="col-3" >
-        <h3 class="text-left">หัวคะแนน</h3>
+        <h3 class="text-left">หัวคะแนน <?php echo $person_num; ?></h3>
     </div>
     <div class="col-3 text-right ">
         <h3><a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalPerson"><i class="far fa-plus-square"></i>เพิ่มหัวคะแนน</a></h3>
@@ -458,6 +466,7 @@ function load_person_area_data() {
             aid: aid
         },
         success: function(data) {
+            console.log(data);
             $("#person_area").empty(); //add preload
             $("#person_area").append(data);
         } // success
