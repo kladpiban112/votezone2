@@ -3,6 +3,9 @@ error_reporting(0);
 $search = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING);
 $cid_search = filter_input(INPUT_GET, 'cid', FILTER_SANITIZE_STRING);
 $hn_search = filter_input(INPUT_GET, 'hn', FILTER_SANITIZE_STRING);
+$cid_search = filter_input(INPUT_GET, 'cid', FILTER_SANITIZE_STRING);
+$slevel = filter_input(INPUT_GET, 'slevel', FILTER_SANITIZE_STRING);
+
 if($cid_search != ""){
     $cid_data = " AND p.cid LIKE '%$cid_search%'  ";
 }
@@ -10,7 +13,9 @@ if($search != ""){
     $search_data = " AND  p.fname LIKE '%$search%'  ";
 }
 
-
+if($slevel != ""){
+    $slevel_data = " AND  p.level = '$slevel' ";
+}
 ?>
 		<!--begin::Card-->
 		<div class="card card-custom gutter-b example example-compact">
@@ -21,7 +26,6 @@ if($search != ""){
 				<div class="card-toolbar">
 					<div class="example-tools justify-content-center">
 						<a href="dashboard.php?module=<?php echo $module;?>&page=person-add" class="btn btn-success btn-sm font-weight-bold mr-2" title="เพิ่มบุคคล"><i class="fa fa-plus-circle" title="เพิ่มบุคคล" data-toggle="tooltip"></i>เพิ่มบุคคล</a>
-                        <a href="dashboard.php?module=<?php echo $module;?>&page=treeview" class="btn btn-success btn-sm font-weight-bold mr-2" title="โครงสร้าง"><i class="fa fa-plus-circle" title="โครงสร้าง" data-toggle="tooltip"></i>โครงสร้าง</a>
                     </div>
 				</div>
 			</div>
@@ -32,6 +36,22 @@ if($search != ""){
     <input type="hidden" class="form-control"  name="module"  value="<?php echo $module;?>"/>
     <input type="hidden" class="form-control"  name="page"  value="main"/>
     <div class="form-group row">
+            <div class="col-lg-3">
+				<label>ระดับ</label>
+                <select class="form-control form-control-sm" name="slevel" id="slevel">
+                        
+                        <?php
+                                $stmt = $conn->prepare ("SELECT * FROM level_type ");
+                                $stmt->execute();
+                                echo "<option value=''>-ระบุ-</option>";
+                                while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
+                                $id = $row->level_id;
+                                $name = $row->level; ?>
+                                <option value="<?php echo $id;?>" <?php if($slevel_data == $slevel){ echo "selected";}?>><?php echo $name;?></option>
+                                <?php 
+                                }
+                        ?>
+            </select>			</div>
             <div class="col-lg-3">
 				<label>เลขบัตรประชาชน</label>
 					<input type="text" class="form-control form-control-sm" placeholder="เลขบัตรประชาชน"  name="cid" id="cid"  value="<?php echo $cid;?>"/>
@@ -88,37 +108,35 @@ if($search != ""){
         }
         $Page_Start = ($pagenum - 1) * $page_rows; // สำหรับลำดับ
         $max = ' LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;		
-        $stmt_data = $conn->prepare ("SELECT p.*,pr.prename AS prename_title,c.changwatname,a.ampurname,t.tambonname,s.sexname
+        $stmt_data = $conn->prepare ("SELECT p.*,pr.prename AS prename_title,c.changwatname,a.ampurname,t.tambonname,s.sexname,lt.level AS name_level
         FROM ".DB_PREFIX."person_main p 
         LEFT JOIN ".DB_PREFIX."cprename pr ON p.prename = pr.id_prename
         LEFT JOIN ".DB_PREFIX."cchangwat c ON p.changwat = c.changwatcode
 		LEFT JOIN ".DB_PREFIX."campur a ON CONCAT(p.changwat,p.ampur) = a.ampurcodefull
         LEFT JOIN ".DB_PREFIX."ctambon t ON CONCAT(p.changwat,p.ampur,p.tambon) = t.tamboncodefull
         LEFT JOIN ".DB_PREFIX."csex s ON p.sex = s.sex
-        WHERE p.flag != '0' $conditions  $search_data  $cid_data  
-        ORDER BY p.oid DESC
+        LEFT JOIN ".DB_PREFIX."level_type lt ON p.level = lt.level_id
+        WHERE p.flag != '0' $conditions  $search_data  $cid_data  $slevel_data
+        ORDER BY lt.level_id ASC
         $max");
         $stmt_data->execute();		
-
-        
     ?>
-
-
 
 <div class="table-responsive">
 	<table class="table table-bordered table-hover table-strip " id="tbData" style="margin-top: 13px !important; min-height: 300px;">
     <thead>
     <tr>
-                        <th class="text-center">ลำดับ</th>
-                        <th>รูป</th>
-                        <th>เลขบัตรประชาชน</th>
-                        <th>ชื่อ-สกุล</th>
-                        <th>เพศ</th>
-                        <th>อายุ</th>
-                        <th>โทรศัพท์</th>
-                        <th>ที่อยู่</th>
-                        <!--<th class="text-center">สถานะ</th>-->
-                        <th class="text-center">จัดการ</th>	
+        <th class="text-center">ลำดับ</th>
+        <th>ระดับ</th>
+        <th>รูป</th>
+        <th>เลขบัตรประชาชน</th>
+        <th>ชื่อ-สกุล</th>
+        <th>เพศ</th>
+        <th>อายุ</th>
+        <th>โทรศัพท์</th>
+        <th>ที่อยู่</th>
+        <!--<th class="text-center">สถานะ</th>-->
+        <th class="text-center">จัดการ</th>	
     </tr>
     </thead>
     <tbody>
@@ -140,7 +158,7 @@ if($search != ""){
                 $prename = $row['prename_title'];
                 $fname = $row['fname'];
                 $lname = $row['lname'];
-                $fullname = $prename.$fname." ".$lname;
+                $fullname = $prename." ".$fname." ".$lname;
                 $cid = $row['cid'];
                 $telephone = $row['telephone'];
                 $birthdate = date_db_2form($row['birthdate']);
@@ -156,9 +174,11 @@ if($search != ""){
 					$tambonname = $row['tambonname'];
 					$addr =  "บ้านเลขที่ ".$house." ม.".$village." ต.".$tambonname." อ.".$ampurname." จ.".$changwatname;
                 $sexname = $row['sexname'];
+                $level = $row['name_level'];
                 ?>
                 <tr>
                             <td class="text-center"><?php echo $no;?></td>
+                            <td><?php echo $level;?></td>
                             <td class="text-center">
                             <?php if($img_profile == ""){?>
                                 <a  href="uploads/no-image.jpg" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
@@ -305,7 +325,6 @@ else if($Num_Pages!=1 && $Num_Pages!=2)	//	กรณีไม่ได้เล�
     </div>
 </div>
 
-            
 <?php
 					} // end if
 					?>
@@ -320,8 +339,6 @@ else if($Num_Pages!=1 && $Num_Pages!=2)	//	กรณีไม่ได้เล�
 
 </div>
 		<!--end::Card-->
-
-
 
         <script type="text/javascript">
 

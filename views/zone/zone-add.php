@@ -112,7 +112,7 @@ if($action == "edit"){
                         <option value="">ระบุ</option>
             </select>
 			</div>
-   </div>
+      </div>
 
             <div class="form-group row">
 
@@ -126,15 +126,12 @@ if($action == "edit"){
                 <input type="number" class="form-control form-control-sm"  name="zone_number" id="zone_number" placeholder="เขตการเลือกตั้ง" value="<?php echo $row_person['zone_number'];?>"/>
 			</div>
 				
-			
-
             <div class="col-lg-3">
 				<label>ชื่อสถานที่เลือกตั้ง</label>
              <input type="text" class="form-control form-control-sm"  name="zone_name" id="zone_name" placeholder="ชื่อสถานที่" value="<?php echo $row_person['zone_name'];?>"/>
 				
 			</div>
 
-            
 		</div>
 
       <div class="row">
@@ -163,7 +160,6 @@ if($action == "edit"){
         </div>    
   <div class="row col-lg-12">
                <h3>กรุณากด Shift + Scoll Mouse เพื่อ  Zoom Map </h3> 
-
 
             </div>
  <!-- <br> -->
