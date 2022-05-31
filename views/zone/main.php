@@ -1,16 +1,30 @@
 <?php
 error_reporting(0);
-$search = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING);
-$cid_search = filter_input(INPUT_GET, 'cid', FILTER_SANITIZE_STRING);
-$hn_search = filter_input(INPUT_GET, 'hn', FILTER_SANITIZE_STRING);
-$search_data = "";
-if($cid_search != ""){
-    // $cid_data = " AND p.cid LIKE '%$cid_search%'  ";
-}
+$search = filter_input(INPUT_GET, 'szone_name', FILTER_SANITIZE_STRING);
+$schangwat = filter_input(INPUT_GET, 'changwat', FILTER_SANITIZE_STRING);
+$sampur = filter_input(INPUT_GET, 'ampur', FILTER_SANITIZE_STRING);
+$stambon = filter_input(INPUT_GET, 'tambon', FILTER_SANITIZE_STRING);
+$szone_num = filter_input(INPUT_GET, 'szone_num', FILTER_SANITIZE_STRING);
+$sarea = filter_input(INPUT_GET, 'sarea', FILTER_SANITIZE_STRING);
+
 if($search != ""){
-    // $search_data = " AND  p.fname LIKE '%$search%'  ";
+    $search_data = " AND  p.zone_name LIKE '%$search%'  ";
 }
-error_reporting(0);
+if($schangwat != ""){
+    $schangwat_data = " AND  p.changwat = '$schangwat'  ";
+}
+if($sampur != ""){
+    $sampur_data = " AND  p.ampur = '$sampur' ";
+}
+if($stambon != ""){
+    $stambon_data = " AND  p.tambon  = '$stambon'  ";
+}
+if($szone_num != ""){
+    $szone_data = " AND  p.zone_number = '$szone_num'  ";
+}
+if($sarea != ""){
+    $sarea_data = " AND  p.area_number = '$sarea' ";
+}
 
 $personid_enc = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
 $serviceid_enc = filter_input(INPUT_GET, 'serviceid', FILTER_SANITIZE_STRING);
@@ -18,7 +32,6 @@ $act = filter_input(INPUT_GET, 'act', FILTER_SANITIZE_STRING);
 $personid = base64_decode($personid_enc);
 $serviceid = base64_decode($serviceid_enc);
 $action = base64_decode($act);
-
 
 ?>
 		<!--begin::Card-->
@@ -43,11 +56,10 @@ $action = base64_decode($act);
     <input type="hidden" class="form-control"  name="txt_ampur" id="txt_ampur" value="<?php echo $row_person['ampur'];?>"/>
     <input type="hidden" class="form-control"  name="txt_tambon" id="txt_tambon" value="<?php echo $row_person['tambon'];?>"/>
     <div class="form-group row">
-    <div class="col-lg-2">
-				<label>เขตการเลือกตั้ง</label>
-                <input type="text" class="form-control form-control-sm"   placeholder="เขตการเลือกตั้ง" />
+    <div class="col-lg-1">
+				<label>เขตเลือกตั้ง</label>
+                <input type="number" class="form-control form-control-sm" id="sarea" name="sarea"   placeholder="เขตเลือกตั้ง" />
                         
-            
 			</div>
     <div class="col-lg-2">
     <label>จังหวัด</label>
@@ -82,86 +94,24 @@ $action = base64_decode($act);
             </select> 
            
            </div>
-           <div class="row-lg-2 mt-8" >
- <button class="btn btn-primary btn-sm" type="submit" ><i class="fas fa-search"></i></button>
-             <!-- <span><i class="fas fa-house-user"></i> ที่อยู่ปัจจุบัน :</span>
-   <hr>
-		<div class="form-group row">
-			<div class="col-lg-3">
-				<label>บ้านเลขที่</label>
-				<input type="text" class="form-control form-control-sm"  name="house_now" id="house_now" placeholder="บ้านเลขที่" value="<?php echo $row_person['house_now'];?>"/>
-				
-			</div>
-			<div class="col-lg-4">
-				<label>หมู่บ้าน/ชุมชน</label>
-        <input type="text" class="form-control form-control-sm"  name="community_now" id="community_now" placeholder="หมู่บ้าน/ชุมชน" value="<?php echo $row_person['community_now'];?>"/>
-				
-			</div>
-
-			
-            <div class="col-lg-3">
-				<label>ถนน</label>
-             <input type="text" class="form-control form-control-sm"  name="road_now" id="road_now" placeholder="ถนน" value="<?php echo $row_person['road_now'];?>"/>
-				
-			</div>
-
-            <div class="col-lg-2">
-				<label>หมู่ที่</label>
-				<select class="form-control form-control-sm" name="village_now" id="village_now">
-                    <option value=""  <?php if($row_person['village_now'] == "0"){ echo "selected";}?>>0</option>	
-                    <?php for ($n_vil = 1; $n_vil <= 99; $n_vil++) { 
-                            $n_vil_data = str_pad($n_vil,2,"0",STR_PAD_LEFT);
-                            ?>
-                                <option value="<?php echo $n_vil_data;?>" <?php if($row_person['village_now'] == $n_vil_data){ echo "selected";}?>><?php echo $n_vil;?></option>
-								<?php } ?>
-				</select>
-			</div>
-		</div> -->
-
-        <!-- <input type="hidden" class="form-control"  name="txt_ampur_now" id="txt_ampur_now" value="<?php echo $row_person['ampur_now'];?>"/>
-        <input type="hidden" class="form-control"  name="txt_tambon_now" id="txt_tambon_now" value="<?php echo $row_person['tambon_now'];?>"/>
-    <div class="form-group row">
-
-    <div class="col-lg-3">
-				<label>จังหวัด</label>
-            <select class="form-control form-control-sm" name="changwat_now" id="changwat_now">
+           
+           <div class="col-lg-2">
+				<label>หน่วยเลือกตั้ง</label>
+                <input type="number" class="form-control form-control-sm"  id="szone_num" name="szone_num" placeholder="หน่วยเลือกตั้ง" />
                         
-            <?php
-                    $stmt = $conn->prepare ("SELECT * FROM cchangwat c ");
-                    $stmt->execute();
-                    echo "<option value=''>-ระบุ-</option>";
-                    while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
-                    $id = $row->changwatcode;
-                    $name = $row->changwatname; ?>
-                    <option value="<?php echo $id;?>" <?php if($row_person['changwat_now'] == $id){ echo "selected";}?>><?php echo $name;?></option>
-                    <?php 
-                    }
-                    ?>
-            </select>
-				
 			</div>
-
-      <div class="col-lg-3">
-				<label>อำเภอ</label>
-            <select class="form-control form-control-sm" name="ampur_now" id="ampur_now">
-                        <option value="">ระบุ</option>
-            </select>
+           <div class="col-lg-2">
+				<label>ชื่อหน่วยเลือกตั้ง</label>
+                <div class="input-group">
+                <input type="text" class="form-control form-control-sm" id="szone_name" name="szone_name"  placeholder="ชื่อหน่วยเลือกตั้ง" />
+                <div class="input-group-append">
+                    <button class="btn btn-primary btn-sm" type="submit" ><i class="fas fa-search"></i></button>  
+                </div>       
+                </div>
 			</div>
-
-      <div class="col-lg-3">
-				<label>ตำบล</label>
-            <select class="form-control form-control-sm" name="tambon_now" id="tambon_now">
-                        <option value="">ระบุ</option>
-            </select>
+            <div class="row-lg-2 mt-8" >
 			</div>
-
-
-
-      </div> -->
-			</div>
-
             </div>
-
     </form> 
 
     <?php
@@ -205,12 +155,12 @@ $action = base64_decode($act);
         $stmt_data = $conn->prepare ("SELECT * FROM ".DB_PREFIX." area p 
         LEFT JOIN cchangwat c ON p.changwat = c.changwatcode
         LEFT JOIN campur a ON CONCAT(p.changwat,p.ampur) = a.ampurcodefull
-        LEFT JOIN ctambon t ON CONCAT(p.changwat,p.ampur,p.tambon) = t.tamboncodefull
-        $conditions  $search_data  $cid_data  
+        LEFT JOIN ctambon t ON CONCAT(p.changwat,p.ampur,p.tambon) = t.tamboncodefull WHERE p.aid != '0'
+        $search_data  $schangwat_data  $sampur_data  $stambon_data $szone_data $sarea_data 
         ORDER BY p.aid DESC ");
         $stmt_data->execute();		
-
     ?>
+
 
 <div class="table-responsive">
 	<table class="table table-bordered table-hover table-strip " id="tbData" style="margin-top: 13px !important; min-height: 300px;">

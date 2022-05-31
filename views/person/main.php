@@ -47,7 +47,7 @@ if($slevel != ""){
                                 while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
                                 $id = $row->level_id;
                                 $name = $row->level; ?>
-                                <option value="<?php echo $id;?>" <?php if($slevel_data == $slevel){ echo "selected";}?>><?php echo $name;?></option>
+                                <option value="<?php echo $id;?>" ><?php echo $name;?></option>
                                 <?php 
                                 }
                         ?>

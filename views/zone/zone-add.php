@@ -79,17 +79,17 @@ if($action == "edit"){
     <div class="col-lg-3">
 				<label>จังหวัด</label>
             <select class="form-control form-control-sm" name="changwat" id="changwat">    
-                        <?php
-                                $stmt = $conn->prepare ("SELECT * FROM cchangwat c ");
-                                $stmt->execute();
-                                echo "<option value=''>-ระบุ-</option>";
-                                while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
-                                $id = $row->changwatcode;
-                                $name = $row->changwatname; ?>
-                                <option value="<?php echo $id;?>" <?php if($row_person['changwat'] == $id){ echo "selected";}?>><?php echo $name;?></option>
-                                <?php 
-                                }
-                            ?>
+                <?php
+                        $stmt = $conn->prepare ("SELECT * FROM cchangwat c ");
+                        $stmt->execute();
+                        echo "<option value=''>-ระบุ-</option>";
+                        while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
+                        $id = $row->changwatcode;
+                        $name = $row->changwatname; ?>
+                        <option value="<?php echo $id;?>" <?php if($row_person['changwat'] == $id){ echo "selected";}?>><?php echo $name;?></option>
+                        <?php 
+                        }
+                    ?>
             </select>
 			</div>
 
@@ -201,7 +201,6 @@ if($action == "edit"){
 
 <script>
 
-
 $(document).ready(function () {
     'use strict';
     getoptselect_amphur();
@@ -261,8 +260,6 @@ function getoptselect_amphur(){
 }
 
 
-
-
 function getoptselect_tambon(){
 
 var changwatcode = $("#changwat").val();
@@ -282,7 +279,6 @@ var tambon = $("#txt_tambon").val();
     });
 
 }	
-
 
 
 $('#btnSaveArea').click(function(e){
