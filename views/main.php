@@ -103,35 +103,43 @@
                 $addr =  "บ้านเลขที่ ".$house." ม.".$village." ต.".$tambonname." อ.".$ampurname." จ.".$changwatname;
             ?>
 
-            <ul >
-                <li class="w3-bar border-bottom  ">
-
-                <div class="row-xs-4">
-            <?php if($img_profile == ""){?>
-                        <a  href="uploads/no-image.jpg" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
-                        <img src="uploads/no-image.jpg" alt="image"/>
-                        </div></a>
-                    <?php }else{?>
-                        <a  href="uploads/person/<?php echo $img_profile;?>" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
-                        <img src="uploads/person/<?php echo $img_profile;?>" alt="image"/>
-                        </div></a>
-                        <?php } ?>
-</div>
-<div class="row-sx-2">
-                    <div class="w3-bar-item">
-                    <span class="w3-large"><?php echo $fullname;?></span><br>
-                    <span><?php echo $telephone;?></span><br>
-                        <span><?php echo $addr;?></span>
-                    </div>
-                    </div>
-                    </li>
-            </ul>      
-
-    <?php 
-    } // end while
-    ?>
-
-         
+<table class="table">
+       <tbody>   
+        
+            <tr>
+                <td> 
+                    <ul >
+                        <li class="w3-bar border-bottom  ">
+                            <div class="row-xs-4">
+                                <?php if($img_profile == ""){?>
+                                    <a  href="uploads/no-image.jpg" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
+                                    <img src="uploads/no-image.jpg" alt="image"/>
+                                    </div></a>
+                                    <?php }else{?>
+                                    <a  href="uploads/person/<?php echo $img_profile;?>" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
+                                    <img src="uploads/person/<?php echo $img_profile;?>" alt="image"/>
+                                    </div></a>
+                                    <?php } ?>
+                            </div> 
+                </td>
+                <td>
+                    <div class="row-sx-2">
+                            <div class="w3-bar-item">
+                            <span class="w3-large"><?php echo $fullname;?></span><br>
+                            <span><?php echo $telephone;?></span><br>
+                                <span><?php echo $addr;?></span>
+                            </div>
+                            </div>
+                        </li>
+                     </ul> 
+                </td>
+            </tr>
+                            <?php 
+                            } // end while
+                            ?>
+        </div>  
+    </tbody>
+</table>
         </div>
       <br>
     
@@ -197,35 +205,42 @@ $stmt_data->execute();
             $addr =  "บ้านเลขที่ ".$house." ม.".$village." ต.".$tambonname." อ.".$ampurname." จ.".$changwatname;
         ?>
 
-        <ul >
-            <li class="w3-bar border-bottom  ">
-          <div class="row-xs-4">
-            <?php if($img_profile == ""){?>
-                        <a  href="uploads/no-image.jpg" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
-                        <img src="uploads/no-image.jpg" alt="image"/>
-                        </div></a>
-                    <?php }else{?>
-                        <a  href="uploads/person/<?php echo $img_profile;?>" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
-                        <img src="uploads/person/<?php echo $img_profile;?>" alt="image"/>
-                        </div></a>
-                        <?php } ?>
-</div>
-<div class="row-sx-2">
-                    <div class="w3-bar-item">
-                    <span class="w3-large"><?php echo $fullname;?></span><br>
-                    <span><?php echo $telephone;?></span><br>
-                        <span><?php echo $addr;?></span>
-                    </div>
-                    </div>
-                </li>
-        </ul>      
-
-<?php 
-} // end while
-?>
-
-
-
+<table class="table">
+       <tbody>   
+        
+            <tr>
+                <td> 
+                    <ul >
+                        <li class="w3-bar border-bottom  ">
+                             <div class="row-xs-4"><?php if($img_profile == ""){?>
+                                <a  href="uploads/no-image.jpg" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
+                                <img src="uploads/no-image.jpg" alt="image"/>
+                                </div></a>
+                                <?php }else{?>
+                                <a  href="uploads/person/<?php echo $img_profile;?>" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
+                                <img src="uploads/person/<?php echo $img_profile;?>" alt="image"/>
+                                </div></a>
+                                <?php } ?>
+                    </div> 
+                </td>
+                <td>
+                    <div class="row-sx-2">
+                            <div class="w3-bar-item">
+                            <span class="w3-large"><?php echo $fullname;?></span><br>
+                            <span><?php echo $telephone;?></span><br>
+                                <span><?php echo $addr;?></span>
+                            </div>
+                            </div>
+                        </li>
+                     </ul> 
+                     </td>
+             </tr>
+                            <?php 
+                            } // end while
+                            ?>
+        </div>  
+    </tbody>
+</table>
 
        </div>
        <br>
@@ -291,36 +306,42 @@ $stmt_data->execute();
             $tambonname = $row['tambonname'];
             $addr =  "บ้านเลขที่ ".$house." ม.".$village." ต.".$tambonname." อ.".$ampurname." จ.".$changwatname;
         ?>
-
-        <ul >
-            <li class="w3-bar border-bottom  ">
-
-            <div class="row-xs-4">
-            <?php if($img_profile == ""){?>
-                        <a  href="uploads/no-image.jpg" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
-                        <img src="uploads/no-image.jpg" alt="image"/>
-                        </div></a>
-                    <?php }else{?>
-                        <a  href="uploads/person/<?php echo $img_profile;?>" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
-                        <img src="uploads/person/<?php echo $img_profile;?>" alt="image"/>
-                        </div></a>
-                        <?php } ?>
-</div>
-<div class="row-sx-2">
-                    <div class="w3-bar-item">
-                    <span class="w3-large"><?php echo $fullname;?></span><br>
-                    <span><?php echo $telephone;?></span><br>
-                        <span><?php echo $addr;?></span>
-                    </div>
-                    </div>
-                </li>
-        </ul>      
-
-<?php 
-} // end while
-?>
-
-</div>
+<table class="table">
+       <tbody>   
+        
+            <tr>
+                <td> 
+                    <ul >
+                        <li class="w3-bar border-bottom  ">
+                             <div class="row-xs-4"><?php if($img_profile == ""){?>
+                                <a  href="uploads/no-image.jpg" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
+                                <img src="uploads/no-image.jpg" alt="image"/>
+                                </div></a>
+                                <?php }else{?>
+                                <a  href="uploads/person/<?php echo $img_profile;?>" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
+                                <img src="uploads/person/<?php echo $img_profile;?>" alt="image"/>
+                                </div></a>
+                                <?php } ?>
+                    </div> 
+                </td>
+                <td>
+                    <div class="row-sx-2">
+                            <div class="w3-bar-item">
+                            <span class="w3-large"><?php echo $fullname;?></span><br>
+                            <span><?php echo $telephone;?></span><br>
+                                <span><?php echo $addr;?></span>
+                            </div>
+                            </div>
+                        </li>
+                     </ul> 
+                     </td>
+             </tr>
+                            <?php 
+                            } // end while
+                            ?>
+        </div>  
+    </tbody>
+</table>
        </div>
 
     
@@ -352,7 +373,7 @@ $(document).ready(function () {
                  
                 $.ajax({
                     type: "POST",
-                    url: "core/zone/getlocation.php",
+                    url: "core/treeview/treeview_test.php",
                     //dataType: "json",
                     data:{ },
                     success: function(data) {
@@ -360,9 +381,14 @@ $(document).ready(function () {
                         var data = JSON.parse(data);
                         console.log(data);
                         for (var i = 0; i < data.length; i++) {
+                            
                            
                             var marker = L.marker([data[i].lat,data[i].lon]).addTo(map)
-                                marker.bindPopup('เขตการเลือกตั้งที่: '+data[i].area_number+'<br>'+'หน่วยเลือกตั้งที่: '+data[i].area_number+'<br>'+data[i].name );
+                                marker.bindPopup(
+                                    '<div class="container-fluid"  ><span class="w2-md p-2">เขตการเลือกตั้งที่ : '+data[i].zone_number  +'</span><br><span> หน่วยเลือกตั้งที่ : '+data[i].area_number+'</span><br><span>ชื่อสถานที่ : '
+                                     +data[i].zone_name+'</span></div><p></p>'
+                                
+                                );
                                 marker.openPopup();
                         }
 
