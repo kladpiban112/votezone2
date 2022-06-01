@@ -344,7 +344,7 @@ $stmt_data->execute();
     </tbody>
 </table>
        </div>
-
+                        </div>
     
 <!--end::Body-->
     </div>
