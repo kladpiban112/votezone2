@@ -1,7 +1,7 @@
 <div id="kt_header_mobile" class="header-mobile " >
 	<!--begin::Logo-->
 	<a href="index.php">
-		<img alt="Logo" src="assets/images/ThaiAkitechPro.png" class="logo-default max-h-30px"/>
+		<img alt="Logo" src="assets/images/Popwin.png" class="logo-default max-h-30px"/>
 	</a>
 	<!--end::Logo-->
 

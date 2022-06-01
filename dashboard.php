@@ -23,7 +23,7 @@ $pagenum = filter_input(INPUT_GET, 'pagenum', FILTER_SANITIZE_NUMBER_INT);
         <title><?php echo $cfg_site_title;?></title>
         <meta name="description" content="Updates and statistics"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-		<link rel="shortcut icon" href="assets/images/ThaiAkitechPro.ico"/>
+		<link rel="shortcut icon" href="assets/images/Popwin.png"/>
         <?php require_once("src/global-header.php");?> 
             </head>
     <!--end::Head-->
