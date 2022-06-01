@@ -114,14 +114,14 @@ if($exist_person!=0){
 			$image_code = random_code();
 			$image = $image_code."-".$_FILES['img_profile']['name'];
 			$image = RewriteFile($image);
-			move_uploaded_file($_FILES["img_profile"]["tmp_name"], "../../uploads/temp/".$image);
+			move_uploaded_file($_FILES["img_profile"]["tmp_name"], "../../uploads/person/".$image);
 
 			// create avatar image
-			$resizeObj = new resize("../../uploads/temp/".$image); 
-			$resizeObj -> resizeImage(200, 200, 'crop'); // (options: exact, portrait, landscape, auto, crop) 
-			$resizeObj -> saveImage("../../uploads/person/".$image);
+			// $resizeObj = new resize("../../uploads/temp/".$image); 
+			// $resizeObj -> resizeImage(200, 200, 'crop'); // (options: exact, portrait, landscape, auto, crop) 
+			// $resizeObj -> saveImage("../../uploads/person/".$image);
 			
-			@unlink ("../../uploads/temp/".$image);
+			// @unlink ("../../uploads/temp/".$image);
 			$sql = "UPDATE ".DB_PREFIX."person_main SET img_profile = ? WHERE oid = ? LIMIT 1"; 
 			$conn->prepare($sql)->execute([$image, $personid]);
 			}
@@ -219,14 +219,14 @@ if($_FILES['img_profile']['name'])
 		$image_code = random_code();
 		$image = $image_code."-".$_FILES['img_profile']['name'];
 		$image = RewriteFile($image);
-		move_uploaded_file($_FILES["img_profile"]["tmp_name"], "../../uploads/temp/".$image);
+		move_uploaded_file($_FILES["img_profile"]["tmp_name"], "../../uploads/person/".$image);
 
 		// create avatar image
-		$resizeObj = new resize("../../uploads/temp/".$image); 
-		$resizeObj -> resizeImage(200, 200, 'crop'); // (options: exact, portrait, landscape, auto, crop) 
-		$resizeObj -> saveImage("../../uploads/person/".$image);
+		// $resizeObj = new resize("../../uploads/temp/".$image); 
+		// $resizeObj -> resizeImage(200, 200, 'crop'); // (options: exact, portrait, landscape, auto, crop) 
+		// $resizeObj -> saveImage("../../uploads/person/".$image);
 		
-		@unlink ("../../uploads/temp/".$image);
+		// @unlink ("../../uploads/temp/".$image);
 		$sql = "UPDATE ".DB_PREFIX."person_main SET img_profile = ? WHERE oid = ? LIMIT 1"; 
 		$conn->prepare($sql)->execute([$image, $person_oid]);
 		}
@@ -294,14 +294,14 @@ if($level == "1"){
 			$image_code = random_code();
 			$image = $image_code."-".$_FILES['img_profile']['name'];
 			$image = RewriteFile($image);
-			move_uploaded_file($_FILES["img_profile"]["tmp_name"], "../../uploads/temp/".$image);
+			move_uploaded_file($_FILES["img_profile"]["tmp_name"], "../../uploads/person/".$image);
 
 			// create avatar image
-			$resizeObj = new resize("../../uploads/temp/".$image); 
-			$resizeObj -> resizeImage(200, 200, 'crop'); // (options: exact, portrait, landscape, auto, crop) 
-			$resizeObj -> saveImage("../../uploads/person/".$image);
+			// $resizeObj = new resize("../../uploads/temp/".$image); 
+			// $resizeObj -> resizeImage(200, 200, 'crop'); // (options: exact, portrait, landscape, auto, crop) 
+			// $resizeObj -> saveImage("../../uploads/person/".$image);
 			
-			@unlink ("../../uploads/temp/".$image);
+			// @unlink ("../../uploads/temp/".$image);
 			$sql = "UPDATE ".DB_PREFIX."person_main SET img_profile = ? WHERE oid = ? LIMIT 1"; 
 			$conn->prepare($sql)->execute([$image, $personid]);
 			}
