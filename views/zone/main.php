@@ -217,17 +217,16 @@ $action = base64_decode($act);
                                     <ul class="navi navi-hover py-1">
                                         <li class="navi-item">
                                             <a href="dashboard.php?module=zone&page=zone-add-person&aid=<?php echo $aid_enc;?>" class="navi-link">
-                                                <span class="navi-icon"><i class="fas fa-user-edit"></i></span>
+                                                <span class="navi-icon"><i class="fas fa-edit"></i></span>
                                                 <span class="navi-text">จัดการหน่วยเลือกตั้ง</span>
                                             </a>
                                         </li>
                                         <li class="navi-item">
                                             <a href="dashboard.php?module=zone&page=zone-add&aid=<?php echo $aid_enc;?>&act=<?php echo base64_encode('edit');?>" class="navi-link">
-                                                <span class="navi-icon"><i class="fas fa-user-edit"></i></span>
+                                                <span class="navi-icon"><i class="fas fa-edit"></i></span>
                                                 <span class="navi-text">แก้ไข</span>
                                             </a>
                                         </li>
-
                                     </ul>
                                     <!--end::Navigation-->
                                     </div>

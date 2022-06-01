@@ -798,6 +798,16 @@ $('#btnSavePerson').click(function(e){
                     .then((value) => {
                       //liff.closeWindow();
                   });
+                } else if (data.code == "300") {
+                  //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
+                   Swal.fire({
+                    icon: 'error',
+                    title: 'มีข้อมูลบุคคลนี้แล้ว',
+                    text: 'กรุณาลองใหม่อีกครั้ง'
+                    })
+                    .then((value) => {
+                      //liff.closeWindow();
+                  });
                 }
             },error: function (jqXHR, exception) {
                 console.log(jqXHR);
