@@ -11,8 +11,9 @@ $area = "0";
 $i = -1;
 $stmt_data = $conn->prepare ("SELECT * FROM mapping_person mp
 LEFT JOIN area a ON mp.aid = a.aid
-LEFT JOIN person_main pm ON mp.oid = pm.oid
-LEFT JOIN person_main pp ON mp.oid = pp.team_id ORDER BY a.aid ASC");
+LEFT JOIN person_main pm ON mp.oid = pm.oid  
+LEFT JOIN person_main pp ON mp.oid = pp.team_id ORDER BY a.aid ASC"
+);
 $stmt_data->execute();      
     
             while ($row = $stmt_data->fetch(PDO::FETCH_ASSOC)){

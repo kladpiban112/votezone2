@@ -110,16 +110,17 @@
                 <td> 
                     <ul >
                         <li class="w3-bar border-bottom  ">
-                            <div class="row-xs-4">
+                            <div class="row-xs-2">
                                 <?php if($img_profile == ""){?>
                                     <a  href="uploads/no-image.jpg" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
                                     <img src="uploads/no-image.jpg" alt="image"/>
                                     </div></a>
                                     <?php }else{?>
                                     <a  href="uploads/person/<?php echo $img_profile;?>" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
-                                    <img src="uploads/person/<?php echo $img_profile;?>" alt="image"/>
+                                    <img src="uploads/person/<?php echo $img_profile;?>"  width="200"  height="300" alt="image"/>
                                     </div></a>
                                     <?php } ?>
+                                
                             </div> 
                 </td>
                 <td>
@@ -212,7 +213,7 @@ $stmt_data->execute();
                 <td> 
                     <ul >
                         <li class="w3-bar border-bottom  ">
-                             <div class="row-xs-4"><?php if($img_profile == ""){?>
+                             <div class="row-xs-2"><?php if($img_profile == ""){?>
                                 <a  href="uploads/no-image.jpg" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
                                 <img src="uploads/no-image.jpg" alt="image"/>
                                 </div></a>
@@ -313,7 +314,7 @@ $stmt_data->execute();
                 <td> 
                     <ul >
                         <li class="w3-bar border-bottom  ">
-                             <div class="row-xs-4"><?php if($img_profile == ""){?>
+                             <div class="row-xs-2"><?php if($img_profile == ""){?>
                                 <a  href="uploads/no-image.jpg" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
                                 <img src="uploads/no-image.jpg" alt="image"/>
                                 </div></a>
@@ -381,15 +382,22 @@ $(document).ready(function () {
                         var data = JSON.parse(data);
                         console.log(data);
                         for (var i = 0; i < data.length; i++) {
-                            
-                           
+
                             var marker = L.marker([data[i].lat,data[i].lon]).addTo(map)
+
+                              for(var j = 0; j < data[i].person.length; j++){
+                             
+                                {   
+                            
                                 marker.bindPopup(
                                     '<div class="container-fluid"  ><span class="w2-md p-2">เขตการเลือกตั้งที่ : '+data[i].zone_number  +'</span><br><span> หน่วยเลือกตั้งที่ : '+data[i].area_number+'</span><br><span>ชื่อสถานที่ : '
-                                     +data[i].zone_name+'</span></div><p></p>'
-                                
+                                     +data[i].zone_name+'</span></div><p></p>'+data[i].person[j] 
+                                                                      
                                 );
+                            }
+                        }
                                 marker.openPopup();
+                            
                         }
 
                       
