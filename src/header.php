@@ -38,8 +38,8 @@
 			<!--begin::Header Logo-->
 			<div class="header-logo">
 				<a href="dashboard.php">
-					<img alt="Logo" src="assets/images/ThaiAkitechPro.png" class="logo-default max-h-60px"/>
-					<img alt="Logo" src="assets/images/ThaiAkitechPro.png" class="logo-sticky max-h-60px"/>
+					<img alt="Logo" src="assets/images/Popwin.png" class="logo-default max-h-60px"/>
+					<img alt="Logo" src="assets/images/Popwin.png" class="logo-sticky max-h-60px"/>
 				</a>
 			</div>
 			<!--end::Header Logo-->

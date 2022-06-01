@@ -42,7 +42,7 @@
 			<!--begin::Login Header-->
 			<div class="d-flex flex-center mb-8">
 				<a href="#">
-					<img src="assets/images/ThaiAkitechPro.png" class="max-h-200px" alt=""/>
+					<img src="assets/images/Popwin.png" class="max-h-300px" alt=""/>
 				</a>
 			</div>
 			<!--end::Login Header-->
@@ -50,8 +50,6 @@
 			<!--begin::Login Sign in form-->
 			<div class="login-signin">
 				<div class="mb-10">
-					<h2 style="color : #000; font-family: Kanit;">POPWIN</h2>
-					<div class="opacity-100 font-weight-bold" style="color : #000; font-family: Kanit;">ระบบจัดการเขตเลือกตั้ง</div>
 				</div>
 				<form class="form" id="kt_login_signin_form">
                 <input class="" type="hidden" name="act" id="act"  value="login"/>
