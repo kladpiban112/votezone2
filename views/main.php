@@ -124,7 +124,7 @@
                 </td>
                 <td>
                     <div class="row-sx-2">
-                            <div class="w3-bar-item">
+                            <div class="w3-bar-item"></br>
                             <span class="w3-large"><?php echo $fullname;?></span><br>
                             <span><?php echo $telephone;?></span><br>
                                 <span><?php echo $addr;?></span>
@@ -225,7 +225,7 @@ $stmt_data->execute();
                 </td>
                 <td>
                     <div class="row-sx-2">
-                            <div class="w3-bar-item">
+                            <div class="w3-bar-item"></br>
                             <span class="w3-large"><?php echo $fullname;?></span><br>
                             <span><?php echo $telephone;?></span><br>
                                 <span><?php echo $addr;?></span>
@@ -326,7 +326,7 @@ $stmt_data->execute();
                 </td>
                 <td>
                     <div class="row-sx-2">
-                            <div class="w3-bar-item">
+                            <div class="w3-bar-item"></br>
                             <span class="w3-large"><?php echo $fullname;?></span><br>
                             <span><?php echo $telephone;?></span><br>
                                 <span><?php echo $addr;?></span>
