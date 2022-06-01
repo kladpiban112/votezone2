@@ -355,7 +355,6 @@ var tambon = $("#txt_tambon").val();
 }	
 
 
-
 $('#btnSaveArea').click(function(e){
         e.preventDefault();
         if ($('#area_number').val().length == ""){
@@ -514,24 +513,7 @@ $('#btnAddPerson').click(function(e) {
 }); //  click
 
 function delPersonAera(id) {
-    // Swal.fire({
-    //     title: 'แน่ใจนะ?',
-    //     text: "ต้องการยกเลิกรายการ !",
-    //     type: 'warning',
-    //     showCancelButton: true,
-    //     confirmButtonColor: '#3085d6',
-    //     cancelButtonColor: '#d33',
-    //     cancelButtonText: 'ยกเลิก',
-    //     confirmButtonText: 'ใช่, ต้องการยกเลิกรายการ!'
-    // }).then((result) => {
-    //     if (result.value) { //Yes
-    //         $.post("core/zone/zone-del-person-area.php", {
-    //             id: id
-    //         }, function(result) {
-    //             loaddata_status_data();
-    //         });
-    //     }
-    // })
+
     var oid = String(id);
     var aid = $('#aid').val();
 
