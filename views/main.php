@@ -391,7 +391,7 @@ $(document).ready(function () {
                             
                                 marker.bindPopup(
                                     '<div class="container-fluid"  ><span class="w2-md p-2">เขตการเลือกตั้งที่ : '+data[i].zone_number  +'</span><br><span> หน่วยเลือกตั้งที่ : '+data[i].area_number+'</span><br><span>ชื่อสถานที่ : '
-                                     +data[i].zone_name+'</span></div><p></p>'+data[i].person[j] 
+                                     +data[i].zone_name+'</span></div><p></p>จำนวน : '+data[i].person.length+' คน</div>' 
                                                                       
                                 );
                             }
