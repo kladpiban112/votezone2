@@ -159,7 +159,7 @@ if($action == "edit"){
             </div>
         </div>    
   <div class="row col-lg-12">
-               <h3>กรุณากด Shift + Scoll Mouse เพื่อ  Zoom Map </h3> 
+               <h4>กรุณากด เลื่อนแผนที่ เพื่อขยับแผนที่  </h4> 
 
             </div>
  <!-- <br> -->
@@ -168,7 +168,11 @@ if($action == "edit"){
 
 		</div><!--col-->
 
-<div id="map" style="width: 100%; height:650px;" >
+<div  >
+<iframe
+  src="https://map.longdo.com/snippet/iframe.php?locale=th&zoom=12&mode=political&map=epsg4326&lat=14.97269980670208&long=102.09930002689362&zoombar=auto&toolbar=no&mapselector=no&scalebar=no&centermark=no"
+  style="border: none; width: 100%; height: 750px;"
+></iframe>
 </div>
 <!-- <br> -->
 <div class="card-footer">
@@ -342,41 +346,5 @@ $('#btnSaveArea').click(function(e){
       }); //  click
 
 </script>
-<script>
-const apiKey = "AAPK2c46051a3469443eb9b301070f4e958a-Ckglf3c9zJNWi6O8g24f55AbJet4nBw3tZi-seb6K5VBtOyGgMzfS2gVKf4j65I";
 
-const basemapEnum = "ArcGIS:Navigation";
-
-const map = L.map("map", {
-  minZoom: 2
-
-}).setView([14.9674218,102.0682299], 13); // Paris
-
-L.esri.Vector.vectorBasemapLayer(basemapEnum, {
-  apiKey: apiKey
-}).addTo(map);
-
-const layerGroup = L.layerGroup().addTo(map);
-
-map.on("click", function (e) {
-  L.esri.Geocoding
-    .reverseGeocode({
-      apikey: apiKey
-    })
-    .latlng(e.latlng)
-    .run(function (error, result) {
-      if (error) {
-        return;
-      }
-
-      const lngLatString = ` ${Math.round(result.latlng.lat * 100000) / 100000},${Math.round(result.latlng.lng * 100000) / 100000}`;
-
-      layerGroup.clearLayers();
-      marker = L.marker(result.latlng)
-        .addTo(layerGroup)
-        .bindPopup(`<b>${lngLatString}</b><p>${result.address.Match_addr}</p>`)
-        .openPopup();
-    });
-});
-</script>
 

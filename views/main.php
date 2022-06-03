@@ -360,9 +360,9 @@ $stmt_data->execute();
 
 $(document).ready(function () {
     'use strict';
- 
-    var tileLayer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    'attribution': 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+ var longdomapserver = 'http://ms.longdo.com/mmmap/tile.php?zoom={z}&x={x}&y={y}&key=5e785cb06a872f9662a93d93ad733eed&proj=epsg3857&HD=1';
+    var tileLayer = new L.TileLayer(longdomapserver, {
+                    'attribution': "© Longdo Map"
                     });
 
                 var map = new L.Map('map', {
@@ -370,7 +370,7 @@ $(document).ready(function () {
                     'zoom': 12,
                     'layers': [tileLayer]
                     });
-            
+                   
                  
                 $.ajax({
                     type: "POST",
