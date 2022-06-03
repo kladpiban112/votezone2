@@ -513,8 +513,8 @@ if($personid_enc != ""){
         <div class="col-lg-12" id="parents_h">
 			<label>สังกัดใหญ่</label>
             <!-- <input type="text" class="form-control"  name="parents" id="parents" placeholder="A" disabled /> -->
-            <select class="form-control form-control-sm" name="parents" id="parents" disabled >   
-                <option id="parents_val" value="" selected>A</option>          
+            <select class="form-control form-control-sm" name="parents" id="parents"  >   
+                <option id="parents_val" value="" selected>--ระบุ--</option>          
             </select>
             </select>
 		</div>
@@ -563,7 +563,7 @@ $(document).ready(function () {
         url: "core/fn-get-parents.php",
         data: {person:data_val},
         success: function(data) {
-            var vals = $.parseJSON(data)
+            var vals = $.parseJSON(data);
             console.log(vals);
             if(vals.id != "0"){
                 $('#parents_val').text(vals.name);
@@ -575,8 +575,6 @@ $(document).ready(function () {
        }
     });
   });
-
-
 }); 
 
 
@@ -694,14 +692,14 @@ var tambon = $("#txt_tambon").val();
 }	
 
 function getteam(){
-    console.log("sdff")
+    console.log("test")
     var data_val = $("#team_id").val();
     $.ajax({
         type: "POST",
         url: "core/fn-get-parents.php",
         data: {person:data_val},
         success: function(data) {
-            var vals = $.parseJSON(data)
+            var vals = $.parseJSON(data);
             console.log(vals);
             if(vals.id != "0"){
                 $('#parents_val').text(vals.name);
@@ -781,6 +779,7 @@ $('#btnSavePerson').click(function(e){
                 timer: 1500
                 })
                     .then((value) => {
+
                     if(data.method == "add"){
                         window.location.replace("dashboard.php?module=person&page=person-add&personid="+ data.personid + "&act=" + data.act);
                     }else{

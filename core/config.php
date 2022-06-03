@@ -3,7 +3,7 @@
 date_default_timezone_set("Asia/Bangkok");
 
 // URL where admin is inslatted. Without ending slash
-define('ADMIN_URL', 'https://www.d-fixx.com');
+define('ADMIN_URL', 'https://www.demo1.Thaiakitech.com');
 
 // DATABASE CONNECT SETTINGS (REQUIRED)
 define('DB_HOST', 'localhost'); // Database host ## Datenbank Server
@@ -63,7 +63,6 @@ if (version_compare(phpversion(), '5.5', '<')) {
 	exit('Error! Your version of PHP ('.$php_version.') is very old. You need at least PHP 5.5.1 to be installed on your server!');
 }
 
-
 // get settings
 $stmt = $conn->prepare("SELECT name, value FROM ".DB_PREFIX."settings");
 $stmt->execute();
@@ -83,8 +82,6 @@ if($cfg_site_title == ""){
     //$$name = $value;
 //};
 //$stmt->closeCursor();
-
-
 
 
 //require_once "_config-version.php";

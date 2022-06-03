@@ -56,6 +56,9 @@ $action = base64_decode($act);
 <input type="hidden" class="form-control"  name="serviceid" id="serviceid" value="<?php echo $serviceid;?>"/>
 <input type="hidden" class="form-control"  name="org_id" id="org_id" value="<?php echo $logged_org_id;?>"/>
 <input type="hidden" class="form-control"  name="aid" id="aid" value="<?php echo $aid;?>"/>
+<input type="hidden" class="form-control"  name="la" id="la" value="<?php echo $row_person['latitude'];?>"/>
+<input type="hidden" class="form-control"  name="long" id="long" value="<?php echo $row_person['longitude'];?>"/>
+
 
 	<div class="card-body">
 
@@ -417,6 +420,8 @@ $('#btnSaveArea').click(function(e){
 
 </script>
 <script>
+    var la = $("#la").val();
+    var long = $("#long").val();
 const apiKey = "AAPK2c46051a3469443eb9b301070f4e958a-Ckglf3c9zJNWi6O8g24f55AbJet4nBw3tZi-seb6K5VBtOyGgMzfS2gVKf4j65I";
 
 const basemapEnum = "ArcGIS:Navigation";

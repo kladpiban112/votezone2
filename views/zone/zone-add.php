@@ -323,9 +323,8 @@ $('#btnSaveArea').click(function(e){
             success: function(data) {  
               if (data.code == "200") {
                 alert('บันทึกข้อมูลเรียบร้อยแล้ว')
-                .then((value) => {
-                    window.location.replace("dashboard.php?module=zone&page=main");
-                }); 
+                // window.location.replace("dashboard.php?module=zone&page=main");
+                location.reload();
                 } else if (data.code == "404") {
                   //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
                   alert('ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง')

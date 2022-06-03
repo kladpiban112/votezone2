@@ -9,7 +9,7 @@ require_once ABSPATH."/PasswordHash.php";
 require_once ABSPATH."/resize-class.php";
 
 $act = filter_input(INPUT_POST, 'act', FILTER_SANITIZE_STRING);
-$aid = filter_input(INPUT_POST, 'acaid', FILTER_SANITIZE_STRING);
+$aid = filter_input(INPUT_POST, 'aid', FILTER_SANITIZE_STRING);
 $area_number = filter_input(INPUT_POST, 'area_number', FILTER_SANITIZE_STRING);
 $changwat = filter_input(INPUT_POST, 'changwat', FILTER_SANITIZE_STRING);
 $ampur = filter_input(INPUT_POST, 'ampur', FILTER_SANITIZE_STRING);

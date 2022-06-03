@@ -9,18 +9,30 @@ require_once ABSPATH."/functions.php";
 $level = filter_input(INPUT_POST, 'level', FILTER_SANITIZE_STRING);  
 $person = filter_input(INPUT_POST, 'person', FILTER_SANITIZE_STRING);  
 
-$level_type = "l.level != 4";
-if($level == 2){$level_type = "l.level = 1";}
-elseif($level == 3){$level_type = "l.level = 1 OR l.level = 2";}
-elseif($level == 1){$level_type = "l.level != 1 AND l.level != 2 AND l.level != 3 AND l.level != 4";}
-$stmt = $conn->prepare ("SELECT * FROM person_main l WHERE ".$level_type." ORDER BY l.level");
+$sql = "SELECT *,lt.level AS levelname FROM person_main l LEFT JOIN level_type lt ON l.level = lt.level_id WHERE  l.level != 4 ORDER BY l.level ";
+
+if($level == 2){
+        $sql = "SELECT *,lt.level AS levelname FROM person_main l LEFT JOIN level_type lt ON l.level = lt.level_id WHERE  l.level = 1 ORDER BY l.level ";
+}
+else if($level == 3){
+        $sql = "SELECT *,lt.level AS levelname FROM person_main l LEFT JOIN level_type lt ON l.level = lt.level_id WHERE  l.level = 1 OR l.level = 2 ORDER BY l.level ";
+}
+else if($level == 1){
+        $sql = "SELECT *,lt.level AS levelname FROM person_main l LEFT JOIN level_type lt ON l.level = lt.level_id WHERE  l.level != 1 AND l.level != 2 AND l.level != 3 AND l.level != 4 ORDER BY l.level ";
+}else{
+        $sql = "SELECT *,lt.level AS levelname FROM person_main l LEFT JOIN level_type lt ON l.level = lt.level_id WHERE  l.level != 4 ORDER BY l.level ";
+}
+
+
+
+$stmt = $conn->prepare ($sql);
 $stmt->execute();              
 ?>
 <option value="">--ระบุ--</option>
 <?php
         while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
         $id = $row->oid;
-        $name = $row->fname." ".$row->lname; ?>
+        $name = "ระดับ ".$row->levelname.' '. $row->fname." ".$row->lname; ?>
         <option value="<?php echo $id;?>" <?php if($person == $id){ echo "selected";}?>><?php echo $name;?></option>
         <?php 
             }
