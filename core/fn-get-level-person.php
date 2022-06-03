@@ -28,7 +28,7 @@ else if($level == 1){
 $stmt = $conn->prepare ($sql);
 $stmt->execute();              
 ?>
-<option value="">--ระบุ--</option>
+<option value="0">--ระบุ--</option>
 <?php
         while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
         $id = $row->oid;

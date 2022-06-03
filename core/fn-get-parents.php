@@ -20,7 +20,7 @@ $stmt1->execute();
         $id = $row1->oid;
         $name = "ระดับ ".$row1->levelname." ". $row1->fname." ".$row1->lname;
     }
-    echo json_encode(['code' => "200", 'id' => $person,'name' => $name]);
+    echo json_encode(['code' => "200", 'id' => $id,'name' => $name]);
 }else if($id_h == 0){
     echo json_encode(['code' => "200", 'id' => 0,'name' => 0,'ide'=>$person]);
 }

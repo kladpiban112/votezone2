@@ -506,7 +506,7 @@ if($personid_enc != ""){
         </br>           
         <div class="col-lg-12" id="head_h">
 				<label>สังกัด</label>
-            <select class="js-example-basic-single col-lg-12" name="head_data" id="head_data" >             
+            <select class="js-example-basic-single col-lg-12" name="head_data" id="head_data" >
             </select>
 		</div>
         </br>
@@ -569,7 +569,7 @@ $(document).ready(function () {
                 $('#parents_val').text(vals.name);
                 $('#parents_val').val(vals.id);
             }else{
-                $('#parents_val').text("A");
+                $('#parents_val').text("--ระบุ--");
                 $('#parents_val').val("");
             }
        }
@@ -607,6 +607,8 @@ $("#ampur").change(function() {
 
 
 $("#level").change(function() {
+    $('#parents_val').text("--ระบุ--");
+    $('#parents_val').val("");
     var level = $("#level").val();
     var person =  $("#headid").val();
     $.ajax({
@@ -615,6 +617,7 @@ $("#level").change(function() {
         //dataType: "json",
         data: {level:level,person:person},
         success: function(data) {
+            console.log(data);
             $("#head_data").empty();
             $("#head_data").append(data);
         } // success
@@ -705,13 +708,15 @@ function getteam(){
                 $('#parents_val').text(vals.name);
                 $('#parents_val').val(vals.id);
             }else{
-                $('#parents_val').text("A");
+                $('#parents_val').text("--ระบุ--");
                 $('#parents_val').val("");
             }
        }
     });
 
 }	
+
+	
 
 
 function confirm_person_image(id) {
@@ -779,7 +784,6 @@ $('#btnSavePerson').click(function(e){
                 timer: 1500
                 })
                     .then((value) => {
-
                     if(data.method == "add"){
                         window.location.replace("dashboard.php?module=person&page=person-add&personid="+ data.personid + "&act=" + data.act);
                     }else{
