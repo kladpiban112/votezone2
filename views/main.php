@@ -360,9 +360,9 @@ $stmt_data->execute();
 
 $(document).ready(function () {
     'use strict';
- 
-    var tileLayer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    'attribution': 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+ var longdomapserver = 'http://ms.longdo.com/mmmap/tile.php?zoom={z}&x={x}&y={y}&key=5e785cb06a872f9662a93d93ad733eed&proj=epsg3857&HD=1';
+    var tileLayer = new L.TileLayer(longdomapserver, {
+                    'attribution': "© Longdo Map"
                     });
 
                 var map = new L.Map('map', {
@@ -370,7 +370,7 @@ $(document).ready(function () {
                     'zoom': 12,
                     'layers': [tileLayer]
                     });
-            
+                   
                  
                 $.ajax({
                     type: "POST",
@@ -391,7 +391,7 @@ $(document).ready(function () {
                             
                                 marker.bindPopup(
                                     '<div class="container-fluid"  ><span class="w2-md p-2">เขตการเลือกตั้งที่ : '+data[i].zone_number  +'</span><br><span> หน่วยเลือกตั้งที่ : '+data[i].area_number+'</span><br><span>ชื่อสถานที่ : '
-                                     +data[i].zone_name+'</span></div><p></p>'+data[i].person[j] 
+                                     +data[i].zone_name+'</span></div><p></p>จำนวน : '+data[i].person.length+' คน</div>' 
                                                                       
                                 );
                             }
