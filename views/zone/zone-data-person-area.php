@@ -24,11 +24,7 @@ LEFT JOIN person_main pm ON mp.oid = pm.team_id
 WHERE mp.aid = '.$aid.' AND pm.level = 1 ORDER BY mp.oid');
 $stmt_data->execute();
 $numb_rows = $stmt_data->rowCount();
-
-
-
 ?>
-
 
 <div class="table-responsive" style="height:650px;">
     <table class="table table-bordered table-hover table-strip" id="tbData" style="">
@@ -55,7 +51,6 @@ $numb_rows = $stmt_data->rowCount();
             $sql->execute();
             $count_num = $sql->fetchColumn();
             ?>
-
             <tr>
                 <td class="text-center" width="20px"><?php echo $i; ?></td>
                 <td><?php echo $name; ?></td>
@@ -94,9 +89,7 @@ $numb_rows = $stmt_data->rowCount();
                         </div>
                     </div>
                     <!--end::Dropdown-->
-
                 </td>
-
             </tr>
             <?php include 'modal-repair-edit-status.php'; ?>
 
@@ -108,7 +101,6 @@ $numb_rows = $stmt_data->rowCount();
             </tr>
             <?php }
             ?>
-
         </tbody>
     </table>
 </div>
