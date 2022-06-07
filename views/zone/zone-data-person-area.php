@@ -7,16 +7,25 @@ require_once ABSPATH.'/functions.php';
 
 $aid = filter_input(INPUT_POST, 'aid', FILTER_SANITIZE_STRING);
 $aid_enc = base64_encode($aid);
-$person_num = 0;
 $personid = filter_input(INPUT_POST, 'personid', FILTER_SANITIZE_STRING);
 $personid_enc = base64_encode($personid);
 
-$stmt_data = $conn->prepare('SELECT *,COUNT(pm.team_id) AS count_num FROM mapping_person mp 
+// $stmt_data = $conn->prepare('SELECT *,COUNT(pm.team_id) AS count_num FROM mapping_person mp 
+// LEFT JOIN area a ON a.aid = mp.aid
+// LEFT JOIN person_main pm ON mp.oid = pm.team_id
+// WHERE mp.aid = '.$aid.' GROUP BY pm.team_id');
+// $stmt_data->execute();
+// $numb_rows = $stmt_data->rowCount();
+
+
+$stmt_data = $conn->prepare('SELECT *FROM mapping_person mp 
 LEFT JOIN area a ON a.aid = mp.aid
 LEFT JOIN person_main pm ON mp.oid = pm.team_id
-WHERE mp.aid = '.$aid.' GROUP BY pm.team_id');
+WHERE mp.aid = '.$aid.' AND pm.level = 1 ORDER BY mp.oid');
 $stmt_data->execute();
 $numb_rows = $stmt_data->rowCount();
+
+
 
 ?>
 
@@ -41,8 +50,10 @@ $numb_rows = $stmt_data->rowCount();
             ++$i;
             $name =  $row['fname'].' '. $row['lname'];
             $de =  $row['datail'];
-            $count_num =  $row['count_num'];
-            $person_num = $person_num + $conut_num ;
+            $oid = $row['oid'];
+            $sql = $conn->prepare("SELECT COUNT(team_id) AS num FROM person_main WHERE team_id = ".$oid);
+            $sql->execute();
+            $count_num = $sql->fetchColumn();
             ?>
 
             <tr>
