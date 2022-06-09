@@ -15,7 +15,7 @@ if($level == 2){
         $sql = "SELECT *,lt.level AS levelname FROM person_main l LEFT JOIN level_type lt ON l.level = lt.level_id WHERE  l.level = 1 ORDER BY l.level ";
 }
 else if($level == 3){
-        $sql = "SELECT *,lt.level AS levelname FROM person_main l LEFT JOIN level_type lt ON l.level = lt.level_id WHERE  l.level = 1 OR l.level = 2 ORDER BY l.level ";
+        $sql = "SELECT *,lt.level AS levelname FROM person_main l LEFT JOIN level_type lt ON l.level = lt.level_id WHERE   l.level = 2 ORDER BY l.level ";
 }
 else if($level == 1){
         $sql = "SELECT *,lt.level AS levelname FROM person_main l LEFT JOIN level_type lt ON l.level = lt.level_id WHERE  l.level != 1 AND l.level != 2 AND l.level != 3 AND l.level != 4 ORDER BY l.level ";
@@ -33,7 +33,7 @@ $stmt->execute();
         while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
         $id = $row->oid;
         $name = "ระดับ ".$row->levelname.' '. $row->fname." ".$row->lname; ?>
-        <option value="<?php echo $id;?>" <?php if($person == $id){ echo "selected";}?>><?php echo $name;?></option>
+        <option value="<?php echo $id;?>"><?php echo $name;?></option>
         <?php 
             }
     ?>

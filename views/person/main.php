@@ -25,7 +25,7 @@ if($slevel != ""){
 				</h3>
 				<div class="card-toolbar">
 					<div class="example-tools justify-content-center">
-						<a href="dashboard.php?module=<?php echo $module;?>&page=person-add" class="btn btn-success btn-sm font-weight-bold mr-2" title="เพิ่มบุคคล"><i class="fa fa-plus-circle" title="เพิ่มบุคคล" data-toggle="tooltip"></i>เพิ่มบุคคล</a>
+						<a href="dashboard.php?module=<?php echo $module;?>&page=person-add-1" class="btn btn-success btn-sm font-weight-bold mr-2" title="เพิ่มบุคคล"><i class="fa fa-plus-circle" title="เพิ่มบุคคล" data-toggle="tooltip"></i>เพิ่มบุคคล</a>
                     </div>
 				</div>
 			</div>
@@ -215,12 +215,17 @@ if($slevel != ""){
                                         </li> -->
 
                                         <li class="navi-item">
-                                            <a href="dashboard.php?module=person&page=person-add&personid=<?php echo $personid_enc;?>&act=<?php echo base64_encode('edit');?>" class="navi-link">
+                                            <a href="dashboard.php?module=person&page=person-add-1&personid=<?php echo $personid_enc;?>&act=<?php echo base64_encode('edit');?>" class="navi-link">
                                                 <span class="navi-icon"><i class="fas fa-user-edit"></i></span>
                                                 <span class="navi-text">แก้ไขข้อมูลบุคคล</span>
                                             </a>
                                         </li>
-
+                                        <li class="navi-item">
+                                            <a href="dashboard.php?module=person&page=person-add-2&personid=<?php echo $personid_enc;?>&act=<?php echo base64_encode('edit');?>" class="navi-link">
+                                                <span class="navi-icon"><i class="fas fa-user-edit"></i></span>
+                                                <span class="navi-text">แก้ไขข้อมูลสังกัด</span>
+                                            </a>
+                                        </li>
                                     </ul>
                                     <!--end::Navigation-->
                                     </div>
