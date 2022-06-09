@@ -69,7 +69,7 @@ if($action == "edit"){
 			<div class="card-header ribbon ribbon-right">
       <div class="ribbon-target bg-primary" style="top: 10px; right: -2px;">2</div>
 				<h3 class="card-title">
-        <i class="far fa-user"></i>&nbsp;<?php echo $txt_title;?>ข้อมูลบุคคล
+        <i class="far fa-user"></i>&nbsp;<?php echo $txt_title;?>ข้อมูลสังกัด
 				</h3>
 				<div class="card-toolbar">
 					<div class="example-tools justify-content-center">
