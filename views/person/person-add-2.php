@@ -64,16 +64,16 @@ if($action == "edit"){
 
 
 
-		<!--begin::Card-->
-		<div class="card card-custom gutter-b example example-compact">
-			<div class="card-header ribbon ribbon-right">
-      <div class="ribbon-target bg-primary" style="top: 10px; right: -2px;">2</div>
-				<h3 class="card-title">
-        <i class="far fa-user"></i>&nbsp;<?php echo $txt_title;?>ข้อมูลสังกัด
-				</h3>
-				<div class="card-toolbar">
-					<div class="example-tools justify-content-center">
-                    <!-- <?php if($action == "edit"){?>
+<!--begin::Card-->
+<div class="card card-custom gutter-b example example-compact">
+    <div class="card-header ribbon ribbon-right">
+        <div class="ribbon-target bg-primary" style="top: 10px; right: -2px;">2</div>
+        <h3 class="card-title">
+            <i class="far fa-user"></i>&nbsp;<?php echo $txt_title;?>ข้อมูลสังกัด
+        </h3>
+        <div class="card-toolbar">
+            <div class="example-tools justify-content-center">
+                <!-- <?php if($action == "edit"){?>
 
                         <a href="dashboard.php?module=service&page=service-add&personid=<?php echo $personid_enc;?>" class="btn btn-info btn-sm font-weight-bold mr-2" title="บันทึกรับบริการ"><i class="fas fa-plus" title="บันทึกรับบริการ" ></i> บันทึกรับบริการ</a>
 
@@ -82,39 +82,40 @@ if($action == "edit"){
                         <a href="#" class="btn btn-default btn-sm font-weight-bold mr-2" title="บันทึกรับบริการ" disabled><i class="fas fa-plus" title="บันทึกรับบริการ" ></i> บันทึกรับบริการ</a>
 
                     <?php } ?> -->
-						<!-- <a href="dashboard.php?module=<?php echo $module;?>&page=main" class="btn btn-defalse btn-sm font-weight-bold mr-2" title="ย้อนกลับ"><i class="fa fa-chevron-left" title="ย้อนกลับ" ></i></a> -->
-					</div>
-				</div>
-			</div>
+                <!-- <a href="dashboard.php?module=<?php echo $module;?>&page=main" class="btn btn-defalse btn-sm font-weight-bold mr-2" title="ย้อนกลับ"><i class="fa fa-chevron-left" title="ย้อนกลับ" ></i></a> -->
+            </div>
+        </div>
+    </div>
 
-<form class="form" enctype="multipart/form-data" >
-<input type="hidden" class="form-control"  name="act" id="act" value="<?php echo $action;?>"/>
-<input type="hidden" class="form-control"  name="personid" id="personid" value="<?php echo $personid;?>"/>
-<input type="hidden" class="form-control"  name="headid" id="headid" value="<?php echo $row_person['head'];?>"/>
-<input type="hidden" class="form-control"  name="serviceid" id="serviceid" value="<?php echo $serviceid;?>"/>
-<input type="hidden" class="form-control"  name="org_id" id="org_id" value="<?php echo $logged_org_id;?>"/>
-<input type="hidden" class="form-control"  name="team_id" id="team_id" value="<?php echo $personid;?>"/>
+    <form class="form" enctype="multipart/form-data">
+        <input type="hidden" class="form-control" name="act" id="act" value="<?php echo $action;?>" />
+        <input type="hidden" class="form-control" name="personid" id="personid" value="<?php echo $personid;?>" />
+        <input type="hidden" class="form-control" name="headid" id="headid" value="<?php echo $row_person['head'];?>" />
+        <input type="hidden" class="form-control" name="serviceid" id="serviceid" value="<?php echo $serviceid;?>" />
+        <input type="hidden" class="form-control" name="org_id" id="org_id" value="<?php echo $logged_org_id;?>" />
+        <input type="hidden" class="form-control" name="team_id" id="team_id" value="<?php echo $personid;?>" />
 
-	<div class="card-body">
+        <div class="card-body">
 
-	<div class="row">
-	<div class="col-lg-8">
+            <div class="row">
+                <div class="col-lg-8">
 
 
-<span><i class="far fa-user"></i> ข้อมูลบุคคล </span>
-  <hr>      
+                    <span><i class="far fa-user"></i> ข้อมูลบุคคล </span>
+                    <hr>
 
-  <div class="form-group row">
-			<div class="col-lg-3">
-				<label>เลขบัตรประชาชน</label>
-							<input type="text" class="form-control form-control-sm" placeholder="เลขบัตรประชาชน 13 หลัก"  name="cid" id="cid" maxlength="13" value="<?php echo $row_person['CID'];?>" disabled/>
-			</div>
+                    <div class="form-group row">
+                        <div class="col-lg-3">
+                            <label>เลขบัตรประชาชน</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="เลขบัตรประชาชน 13 หลัก"
+                                name="cid" id="cid" maxlength="13" value="<?php echo $row_person['CID'];?>" disabled />
+                        </div>
 
-            <div class="col-lg-2">
-				<label>คำนำหน้า</label>
-            <select class="form-control form-control-sm" name="prename" id="prename" disabled>
-                        <option value="">ระบุ</option>
-                        <?php
+                        <div class="col-lg-2">
+                            <label>คำนำหน้า</label>
+                            <select class="form-control form-control-sm" name="prename" id="prename" disabled>
+                                <option value="">ระบุ</option>
+                                <?php
                           $stmt_user_role = $conn->prepare("SELECT * FROM ".DB_PREFIX."cprename  ORDER BY id_prename ASC");
                           $stmt_user_role->execute();		
                           while ($row = $stmt_user_role->fetch(PDO::FETCH_ASSOC))
@@ -122,36 +123,40 @@ if($action == "edit"){
                             $id_selected = $row['id_prename'];
                             $title_selected = stripslashes($row['prename']);
                             ?>
-                            <option value="<?php echo $id_selected;?>" <?php if($row_person['pre'] == $id_selected ){echo "selected";} ?>><?php echo $title_selected;?></option>
-                            <?php
+                                <option value="<?php echo $id_selected;?>"
+                                    <?php if($row_person['pre'] == $id_selected ){echo "selected";} ?>>
+                                    <?php echo $title_selected;?></option>
+                                <?php
                             }
                           ?>
-            </select>
-				
-			</div>
-			<div class="col-lg-3">
-				<label>ชื่อ</label>
-				<input type="text" class="form-control form-control-sm"  name="fname" id="fname" placeholder="ชื่อ" value="<?php echo $row_person['Fname'];?>" disabled/>
-				
-			</div>
-			<div class="col-lg-4">
-				<label>สกุล</label>
-				<input type="text" class="form-control form-control-sm"  name="lname" id="lname" placeholder="สกุล" value="<?php echo $row_person['Lname'];?>" disabled/>
-				
-			</div>
-           
-      
+                            </select>
 
-		</div>
+                        </div>
+                        <div class="col-lg-3">
+                            <label>ชื่อ</label>
+                            <input type="text" class="form-control form-control-sm" name="fname" id="fname"
+                                placeholder="ชื่อ" value="<?php echo $row_person['Fname'];?>" disabled />
+
+                        </div>
+                        <div class="col-lg-4">
+                            <label>สกุล</label>
+                            <input type="text" class="form-control form-control-sm" name="lname" id="lname"
+                                placeholder="สกุล" value="<?php echo $row_person['Lname'];?>" disabled />
+
+                        </div>
 
 
-		<div class="form-group row">
 
-             <div class="col-lg-2">
-				<label>เพศ</label>
-            <select class="form-control form-control-sm" name="sex" id="sex" disabled>
-                        <option value="">ระบุ</option>
-                        <?php
+                    </div>
+
+
+                    <div class="form-group row">
+
+                        <div class="col-lg-2">
+                            <label>เพศ</label>
+                            <select class="form-control form-control-sm" name="sex" id="sex" disabled>
+                                <option value="">ระบุ</option>
+                                <?php
                           $stmt_user_role = $conn->prepare("SELECT * FROM ".DB_PREFIX."csex  ORDER BY sex ASC");
                           $stmt_user_role->execute();		
                           while ($row = $stmt_user_role->fetch(PDO::FETCH_ASSOC))
@@ -159,224 +164,206 @@ if($action == "edit"){
                             $id_selected = $row['sex'];
                             $title_selected = stripslashes($row['sexname']);
                             ?>
-                            <option value="<?php echo $id_selected;?>" <?php if($row_person['Sex'] == $id_selected ){echo "selected";} ?>><?php echo $title_selected;?></option>
-                            <?php
+                                <option value="<?php echo $id_selected;?>"
+                                    <?php if($row_person['Sex'] == $id_selected ){echo "selected";} ?>>
+                                    <?php echo $title_selected;?></option>
+                                <?php
                             }
                           ?>
-            </select>
-				
-			</div>
+                            </select>
 
-            <div class="col-lg-2">
-				<label>วันเดือนปีเกิด</label>
-				<input type="text" class="form-control form-control-sm"  name="birthdate" id="birthdate" placeholder="วันเดือนปีเกิด" value="<?php echo date_db_2form($row_person['Birthdate']);?>"  data-date-language="th-th" maxlength="10" disabled/>
-				<span class="form-text text-muted"></span>
-				
-			</div>
+                        </div>
 
-            <div class="col-lg-2">
-				<label>ศาสนา</label>
-                    <select class="form-control form-control-sm" name="religion" id="religion" disabled>
-                                <option value="" <?php if($row_person['religion'] == "" ){echo "selected";} ?>>ระบุ</option>
+                        <div class="col-lg-2">
+                            <label>วันเดือนปีเกิด</label>
+                            <input type="text" class="form-control form-control-sm" name="birthdate" id="birthdate"
+                                placeholder="วันเดือนปีเกิด"
+                                value="<?php echo date_db_2form($row_person['Birthdate']);?>" data-date-language="th-th"
+                                maxlength="10" disabled />
+                            <span class="form-text text-muted"></span>
+
+                        </div>
+
+
+                        <div class="col-lg-3">
+                            <label>ตำแหน่ง 1 </label>
+                            <select class="form-control form-control-sm" name="cposition1" id="cposition1" disabled>
+                                <option value="">ระบุ</option>
                                 <?php
-                          $stmt_user_role = $conn->prepare("SELECT * FROM ".DB_PREFIX."creligion  ORDER BY id_religion ASC");
+                          $stmt_user_role = $conn->prepare("SELECT * FROM  cposition c ");
                           $stmt_user_role->execute();		
                           while ($row = $stmt_user_role->fetch(PDO::FETCH_ASSOC))
                             {
-                            $id_selected = $row['id_religion'];
-                            $title_selected = stripslashes($row['religion']);
+                            $id = $row['id'];
+                            $title_selected = stripslashes($row['name']);
                             ?>
-                            <option value="<?php echo $id_selected;?>" <?php if($row_person['Religion'] == $id_selected ){echo "selected";} ?>><?php echo $title_selected;?></option>
-                            <?php
+                                <option value="<?php echo $id;?>"
+                                    <?php if($row_person['cposition1'] == $id ){echo "selected";} ?>>
+                                    <?php echo $title_selected;?></option>
+                                <?php
                             }
                           ?>
-                                
-                    </select>
+                            </select>
 
-                        
-			</div>
-
-            <div class="col-lg-3">
-				<label>อาชีพ</label>
-                    <select class="form-control form-control-sm" name="occupation" id="occupation" disabled>
-                    <option value="" <?php if($row_person['Occupation'] == "" ){echo "selected";} ?>>ระบุ</option>
+                        </div>
+                        <div class="col-lg-3">
+                            <label>ตำแหน่ง 2</label>
+                            <select class="form-control form-control-sm" name="cposition2" id="cposition2" disabled>
+                                <option value="">ระบุ</option>
                                 <?php
-                          $stmt_user_role = $conn->prepare("SELECT * FROM ".DB_PREFIX."coccupation_group  ORDER BY occupation_group_id ASC");
+                          $stmt_user_role = $conn->prepare("SELECT * FROM  cposition c ");
                           $stmt_user_role->execute();		
                           while ($row = $stmt_user_role->fetch(PDO::FETCH_ASSOC))
                             {
-                            $id_selected = $row['occupation_group_id'];
-                            $title_selected = stripslashes($row['occupation_group_name']);
+                            $id = $row['id'];
+                            $title_selected = stripslashes($row['name']);
                             ?>
-                            <option value="<?php echo $id_selected;?>" <?php if($row_person['Occupation'] == $id_selected ){echo "selected";} ?>><?php echo $title_selected;?></option>
-                            <?php
-                            }
-                          ?>
-                    </select>
-                        
-			</div>
-            <div class="col-lg-3">
-				<label>การศึกษา</label>
-                    <select class="form-control form-control-sm" name="education" id="education" disabled>
-                    <option value="" <?php if($row_person['Education'] == "" ){echo "selected";} ?>>ระบุ</option>
+                                <option value="<?php echo $id;?>"
+                                    <?php if($row_person['cposition2'] == $id ){echo "selected";} ?>>
+                                    <?php echo $title_selected;?></option>
                                 <?php
-                          $stmt_user_role = $conn->prepare("SELECT * FROM ".DB_PREFIX."ceducation  ORDER BY educationcode ASC");
-                          $stmt_user_role->execute();		
-                          while ($row = $stmt_user_role->fetch(PDO::FETCH_ASSOC))
-                            {
-                            $id_selected = $row['educationcode'];
-                            $title_selected = stripslashes($row['educationname']);
-                            ?>
-                            <option value="<?php echo $id_selected;?>" <?php if($row_person['Education'] == $id_selected ){echo "selected";} ?>><?php echo $title_selected;?></option>
-                            <?php
                             }
                           ?>
-                                
-                    </select>
-                        
-			</div>
-            </div>
+                            </select>
 
-     <div class="form-group row">
-            <div class="col-lg-2">
-				<label>กรุ๊ปเลือด</label>
-                    <select class="form-control form-control-sm" name="abogroup" id="abogroup" disabled>
-                    <option value="" <?php if($row_person['Abogroup'] == "" ){echo "selected";} ?>>ระบุ</option>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+
+                        <div class="col-lg-4">
+                            <label>โทรศัพท์</label>
+                            <input type="text" class="form-control form-control-sm" name="telephone" id="telephone"
+                                placeholder="โทรศัพท์" value="<?php echo $row_person['Telephone'];?>" maxlength="10"
+                                disabled />
+                            <!-- <span class="form-text text-muted">หมายเลขโทรศัพท์ 10 หลัก</span> -->
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="form-group row">
+                        <div class="col-lg-4">
+                            <label>ระดับ</label>
+                            <select class="form-control form-control-sm" name="level" id="level" disabled>
                                 <?php
-                          $stmt_user_role = $conn->prepare("SELECT * FROM ".DB_PREFIX."cabogroup  ORDER BY aboname ASC");
-                          $stmt_user_role->execute();		
-                          while ($row = $stmt_user_role->fetch(PDO::FETCH_ASSOC))
-                            {
-                            $id_selected = $row['abocode'];
-                            $title_selected = stripslashes($row['aboname']);
-                            ?>
-                            <option value="<?php echo $id_selected;?>" <?php if($row_person['Abogroup'] == $id_selected ){echo "selected";} ?>><?php echo $title_selected;?></option>
-                            <?php
-                            }
-                          ?>
-                                
-                    </select>
-                        
-			</div>
-
-
-            <div class="col-lg-4">
-				<label>โทรศัพท์</label>
-				<input type="text" class="form-control form-control-sm"  name="telephone" id="telephone" placeholder="โทรศัพท์" value="<?php echo $row_person['Telephone'];?>" maxlength="10" disabled/>
-				<!-- <span class="form-text text-muted">หมายเลขโทรศัพท์ 10 หลัก</span> -->
-				
-			</div>
-			
-
-		</div>
-
-
-        <div class="form-group row">
-            <div class="col-lg-4">
-                    <label>ระดับ</label>
-                <select class="form-control form-control-sm" name="level" id="level" disabled >
-                    <?php
                         $stmt = $conn->prepare ("SELECT * FROM level_type l ");
                         $stmt->execute();
                         echo "<option value=''>-ระบุ-</option>";
                         while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
                         $id = $row->level_id;
                         $name = $row->level; ?>
-                        <option value="<?php echo $id;?>" <?php if($row_person['pmlevel'] == $id){ echo "selected";}elseif($row_person['pmlevel'] == "" && $id == "4"){echo "selected";}?>><?php echo $name;?></option>
-                        <?php 
+                                <option value="<?php echo $id;?>"
+                                    <?php if($row_person['pmlevel'] == $id){ echo "selected";}elseif($row_person['pmlevel'] == "" && $id == "4"){echo "selected";}?>>
+                                    <?php echo $name;?></option>
+                                <?php 
                         }
                     ?>
-                </select>
-            </div>   
-            <div class="col-lg-4">
-				<label>สังกัด</label>
-				<input type="text" class="form-control form-control-sm"  name="name_head" id="name_head" placeholder="" value="<?php echo $sethead;?>" disabled/>
-				
-			</div>
-			<div class="col-lg-4">
-				<label>สังกัดใหญ่</label>
-				<input type="text" class="form-control form-control-sm"  name="name_team" id="name_team" placeholder="" value="<?php echo $setteam;?>" disabled/>
+                            </select>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>สังกัด</label>
+                            <input type="text" class="form-control form-control-sm" name="name_head" id="name_head"
+                                placeholder="" value="<?php echo $sethead;?>" disabled />
 
-			</div>                   
-		</div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>สังกัดใหญ่</label>
+                            <input type="text" class="form-control form-control-sm" name="name_team" id="name_team"
+                                placeholder="" value="<?php echo $setteam;?>" disabled />
 
-   <span><i class="fas fa-house-user"></i> ที่อยู่ :</span>
-   <hr>
-		<div class="form-group row">
-			<div class="col-lg-3">
-				<label>บ้านเลขที่</label>
-				<input type="text" class="form-control form-control-sm"  name="house" id="house" placeholder="บ้านเลขที่" value="<?php echo $row_person['House'];?>" disabled/>
-				
-			</div>
-			<div class="col-lg-4">
-				<label>หมู่บ้าน/ชุมชน</label>
-        <input type="text" class="form-control form-control-sm"  name="community" id="community" placeholder="หมู่บ้าน/ชุมชน" value="<?php echo $row_person['Community'];?>" disabled/>
-				
-			</div>
+                        </div>
+                    </div>
 
-			
+                    <span><i class="fas fa-house-user"></i> ที่อยู่ :</span>
+                    <hr>
+                    <div class="form-group row">
+                        <div class="col-lg-3">
+                            <label>บ้านเลขที่</label>
+                            <input type="text" class="form-control form-control-sm" name="house" id="house"
+                                placeholder="บ้านเลขที่" value="<?php echo $row_person['House'];?>" disabled />
 
-            <div class="col-lg-3">
-				<label>ถนน</label>
-             <input type="text" class="form-control form-control-sm"  name="road" id="road" placeholder="ถนน" value="<?php echo $row_person['Road'];?>" disabled/>
-			</div>
-            <div class="col-lg-2">
-				<label>หมู่ที่</label>
-				<select class="form-control form-control-sm" name="village" id="village" disabled>
-                    <option value=""  <?php if($row_person['Village'] == "0"){ echo "selected";}?>>0</option>
-								
-								<?php for ($n_vil = 1; $n_vil <= 99; $n_vil++) { 
+                        </div>
+                        <div class="col-lg-4">
+                            <label>หมู่บ้าน/ชุมชน</label>
+                            <input type="text" class="form-control form-control-sm" name="community" id="community"
+                                placeholder="หมู่บ้าน/ชุมชน" value="<?php echo $row_person['Community'];?>" disabled />
+
+                        </div>
+
+
+
+                        <div class="col-lg-3">
+                            <label>ถนน</label>
+                            <input type="text" class="form-control form-control-sm" name="road" id="road"
+                                placeholder="ถนน" value="<?php echo $row_person['Road'];?>" disabled />
+                        </div>
+                        <div class="col-lg-2">
+                            <label>หมู่ที่</label>
+                            <select class="form-control form-control-sm" name="village" id="village" disabled>
+                                <option value="" <?php if($row_person['Village'] == "0"){ echo "selected";}?>>0</option>
+
+                                <?php for ($n_vil = 1; $n_vil <= 99; $n_vil++) { 
 									$n_vil_data = str_pad($n_vil,2,"0",STR_PAD_LEFT);
 									?>
-										<option value="<?php echo $n_vil_data;?>" <?php if($row_person['Village'] == $n_vil_data){ echo "selected";}?>><?php echo $n_vil;?></option>
-								<?php } ?>
-				</select>
-			</div>
-			
-		</div>
+                                <option value="<?php echo $n_vil_data;?>"
+                                    <?php if($row_person['Village'] == $n_vil_data){ echo "selected";}?>>
+                                    <?php echo $n_vil;?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
 
-        <input type="hidden" class="form-control"  name="txt_ampur" id="txt_ampur" value="<?php echo $row_person['Ampur'];?>"/>
-        <input type="hidden" class="form-control"  name="txt_tambon" id="txt_tambon" value="<?php echo $row_person['Tambon'];?>"/>
-    <div class="form-group row">
+                    </div>
 
-    <div class="col-lg-3">
-				<label>จังหวัด</label>
-            <select class="form-control form-control-sm" name="changwat" id="changwat" disabled>
-                        
-                        <?php
+                    <input type="hidden" class="form-control" name="txt_ampur" id="txt_ampur"
+                        value="<?php echo $row_person['Ampur'];?>" />
+                    <input type="hidden" class="form-control" name="txt_tambon" id="txt_tambon"
+                        value="<?php echo $row_person['Tambon'];?>" />
+                    <div class="form-group row">
+
+                        <div class="col-lg-3">
+                            <label>จังหวัด</label>
+                            <select class="form-control form-control-sm" name="changwat" id="changwat" disabled>
+
+                                <?php
                                 $stmt = $conn->prepare ("SELECT * FROM cchangwat c ");
                                 $stmt->execute();
                                 echo "<option value=''>-ระบุ-</option>";
                                 while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
                                 $id = $row->changwatcode;
                                 $name = $row->changwatname; ?>
-                                <option value="<?php echo $id;?>" <?php if($row_person['Changwat'] == $id){ echo "selected";}?>><?php echo $name;?></option>
+                                <option value="<?php echo $id;?>"
+                                    <?php if($row_person['Changwat'] == $id){ echo "selected";}?>><?php echo $name;?>
+                                </option>
                                 <?php 
                                 }
                             ?>
-            </select>
-				
-			</div>
+                            </select>
 
-      <div class="col-lg-3">
-				<label>อำเภอ</label>
-            <select class="form-control form-control-sm" name="ampur" id="ampur" disabled>
-                        <option value="">ระบุ</option>
-            </select>
-			</div>
+                        </div>
 
-      <div class="col-lg-3">
-				<label>ตำบล</label>
-            <select class="form-control form-control-sm" name="tambon" id="tambon" disabled>
-                        <option value="">ระบุ</option>
-            </select>
-			</div>
+                        <div class="col-lg-3">
+                            <label>อำเภอ</label>
+                            <select class="form-control form-control-sm" name="ampur" id="ampur" disabled>
+                                <option value="">ระบุ</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>ตำบล</label>
+                            <select class="form-control form-control-sm" name="tambon" id="tambon" disabled>
+                                <option value="">ระบุ</option>
+                            </select>
+                        </div>
 
 
 
-      </div>
+                    </div>
 
-      <!-- <span><i class="fas fa-house-user"></i> ที่อยู่ปัจจุบัน :</span>
+                    <!-- <span><i class="fas fa-house-user"></i> ที่อยู่ปัจจุบัน :</span>
    <hr>
 		<div class="form-group row">
 			<div class="col-lg-3">
@@ -410,7 +397,7 @@ if($action == "edit"){
 			</div>
 		</div> -->
 
-        <!-- <input type="hidden" class="form-control"  name="txt_ampur_now" id="txt_ampur_now" value="<?php echo $row_person['ampur_now'];?>"/>
+                    <!-- <input type="hidden" class="form-control"  name="txt_ampur_now" id="txt_ampur_now" value="<?php echo $row_person['ampur_now'];?>"/>
         <input type="hidden" class="form-control"  name="txt_tambon_now" id="txt_tambon_now" value="<?php echo $row_person['tambon_now'];?>"/>
     <div class="form-group row">
 
@@ -451,50 +438,53 @@ if($action == "edit"){
 
       </div> -->
 
-	
-		</div><!--col-->
 
-		
-		<div class="col-lg-4 border-x-0 border-x-md border-y border-y-md-0">
-
-		        <div class="form-group row">
-					<div class="col-lg-12">
-					
-								
-					
-                                    <?php if($row_person['Img_profile'] == ""){?>
-                                        <div class="symbol symbol-50 symbol-lg-150 ">
-                                            <img src="uploads/no-image.jpg" alt="image"/>
-                                        </div>
-                                        <?php }else{?>
-                                            <a  href="uploads/person/<?php echo $row_person['Img_profile'];?>" class="" data-lightbox="example-set" data-title="">
-                                            <div class="symbol symbol-50 symbol-lg-150 ">
-                                            
-                                            <img src="uploads/person/<?php echo $row_person['Img_profile'];?>" alt="image"/>
-                                            
-                                            </div>	
-                                            </a>
-                                        <?php   } ?>
+                </div>
+                <!--col-->
 
 
-									<!-- <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove"  title="Remove"> -->
-                                    <!-- <a href="#" onclick="confirm_person_image('<?php echo $personid; ?>');"><i class="ki ki-bold-close icon-xs text-muted"></i></a> -->
-                                </span>
-                                
-                    
-					</div>
-				</div>
+                <div class="col-lg-4 border-x-0 border-x-md border-y border-y-md-0">
+
+                    <div class="form-group row">
+                        <div class="col-lg-12">
 
 
-				<div class="form-group row">
-					<div class="col-lg-12">
-						<label>รูปถ่าย</label>
-						<input type="file" class="form-control"  name="img_profile" id="img_profile" placeholder="รูปถ่ายผู้พิการ" disabled/>
-						<span class="form-text text-muted">.jpg .png เท่านั้น</span>
-					</div>
-				</div>
 
-                <!-- <span><i class="fas fa-list"></i> ข้อมูลความพิการ
+                            <?php if($row_person['Img_profile'] == ""){?>
+                            <div class="symbol symbol-50 symbol-lg-150 ">
+                                <img src="uploads/no-image.jpg" alt="image" />
+                            </div>
+                            <?php }else{?>
+                            <a href="uploads/person/<?php echo $row_person['Img_profile'];?>" class=""
+                                data-lightbox="example-set" data-title="">
+                                <div class="symbol symbol-50 symbol-lg-150 ">
+
+                                    <img src="uploads/person/<?php echo $row_person['Img_profile'];?>" alt="image" />
+
+                                </div>
+                            </a>
+                            <?php   } ?>
+
+
+                            <!-- <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove"  title="Remove"> -->
+                            <!-- <a href="#" onclick="confirm_person_image('<?php echo $personid; ?>');"><i class="ki ki-bold-close icon-xs text-muted"></i></a> -->
+                            </span>
+
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            <label>รูปถ่าย</label>
+                            <input type="file" class="form-control" name="img_profile" id="img_profile"
+                                placeholder="รูปถ่ายผู้พิการ" disabled />
+                            <span class="form-text text-muted">.jpg .png เท่านั้น</span>
+                        </div>
+                    </div>
+
+                    <!-- <span><i class="fas fa-list"></i> ข้อมูลความพิการ
                 <?php if($action == "edit"){?>
                 <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalAddDisab"><i class="far fa-plus-square"></i> บันทึกความพิการ</a>
                 <?php }else{?>
@@ -525,42 +515,46 @@ if($action == "edit"){
                 <hr>
                 <div id="relative_detail"></div>  
  -->
-        <div class="col-lg-12">
-	
-		</div>
-        </br>           
-        <div class="col-lg-12" id="head_h">
-				<label>สังกัด</label>
-            <select class="js-example-basic-single col-lg-12" name="head_data" id="head_data" >
-            </select>
-		</div>
-        </br>
-        <div class="col-lg-12" id="parents_h">
-			<label>สังกัดใหญ่</label>
-            <select class="form-control form-control-sm" name="parents" id="parents"  >   
-                <option id="parents_val" value="" selected>--ระบุ--</option>          
-            </select>
-            </select>
-		</div>
+                    <div class="col-lg-12">
 
-		</div>
+                    </div>
+                    </br>
+                    <div class="col-lg-12" id="head_h">
+                        <label>สังกัด</label>
+                        <select class="js-example-basic-single col-lg-12" name="head_data" id="head_data">
+                        </select>
+                    </div>
+                    </br>
+                    <div class="col-lg-12" id="parents_h">
+                        <label>สังกัดใหญ่</label>
+                        <select class="form-control form-control-sm" name="parents" id="parents">
+                            <option id="parents_val" value="" selected>--ระบุ--</option>
+                        </select>
+                        </select>
+                    </div>
 
-		</div><!--col-->
-		</div><!--row-->
+                </div>
 
-	<div class="card-footer">
-		<div class="row">
-			<div class="col-lg-6">
-				<button type="button" class="btn btn-primary mr-2 btn-sm" id="btnSavePerson"><i class="fa fa-save" title="บันทึก" ></i> บันทึก</button>
-                <button type="button" class="btn btn-warning btn-sm" onclick="javascript:history.back()" ><i class="fa fa-chevron-left" title="ย้อนกลับ" ></i> </button>
-               
-			</div>
-			<div class="col-lg-6 text-right">
-				<!--<button type="reset" class="btn btn-danger">Delete</button>-->
-			</div>
-		</div>
-	</div>
-</form>
+            </div>
+            <!--col-->
+        </div>
+        <!--row-->
+
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-lg-6">
+                    <button type="button" class="btn btn-primary mr-2 btn-sm" id="btnSavePerson"><i class="fa fa-save"
+                            title="บันทึก"></i> บันทึก</button>
+                    <button type="button" class="btn btn-warning btn-sm" onclick="javascript:history.back()"><i
+                            class="fa fa-chevron-left" title="ย้อนกลับ"></i> </button>
+
+                </div>
+                <div class="col-lg-6 text-right">
+                    <!--<button type="reset" class="btn btn-danger">Delete</button>-->
+                </div>
+            </div>
+        </div>
+    </form>
 
 </div>
 <!--end::Card-->
@@ -568,49 +562,50 @@ if($action == "edit"){
 <!-- Datepicker Thai -->
 <script src="assets/js/bootstrap-datepicker.js"></script>
 <script src="assets/js/bootstrap-datepicker-thai.js"></script>
-<script src="assets/js/locales/bootstrap-datepicker.th.js"></script>  
+<script src="assets/js/locales/bootstrap-datepicker.th.js"></script>
 
 <script>
-
-$(document).ready(function () {
+$(document).ready(function() {
     'use strict';
     getoptselect_amphur();
-	getoptselect_tambon();
+    getoptselect_tambon();
     getoptselect_level();
     getteam();
-    $('.js-example-basic-single').select2();   
+    $('.js-example-basic-single').select2();
 
     $(".js-example-basic-single").on("change", function(e) {
-    var data_val = $(this).val();
-    $.ajax({
-        type: "POST",
-        url: "core/fn-get-parents.php",
-        data: {person:data_val},
-        success: function(data) {
-            var vals = $.parseJSON(data);
-            console.log(vals);
-            if(vals.id != "0"){
-                $('#parents_val').text(vals.name);
-                $('#parents_val').val(vals.id);
-            }else{
-                $('#parents_val').text("--ระบุ--");
-                $('#parents_val').val("");
+        var data_val = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: "core/fn-get-parents.php",
+            data: {
+                person: data_val
+            },
+            success: function(data) {
+                var vals = $.parseJSON(data);
+                console.log(vals);
+                if (vals.id != "0") {
+                    $('#parents_val').text(vals.name);
+                    $('#parents_val').val(vals.id);
+                } else {
+                    $('#parents_val').text("--ระบุ--");
+                    $('#parents_val').val("");
+                }
             }
-       }
+        });
     });
-  });
-}); 
+});
 
 
-$(".add-more").click(function(){ 
-		  //alert(99);
-          var html = $(".copy").html();
-          $(".after-add-more").after(html);
-      });
+$(".add-more").click(function() {
+    //alert(99);
+    var html = $(".copy").html();
+    $(".after-add-more").after(html);
+});
 
 
 $('#birthdate').datepicker({
-        autoclose: true
+    autoclose: true
 });
 
 
@@ -634,12 +629,15 @@ $("#level").change(function() {
     $('#parents_val').text("--ระบุ--");
     $('#parents_val').val("");
     var level = $("#level").val();
-    var person =  $("#headid").val();
+    var person = $("#headid").val();
     $.ajax({
         type: "POST",
         url: "core/fn-get-level-person.php",
         //dataType: "json",
-        data: {level:level,person:person},
+        data: {
+            level: level,
+            person: person
+        },
         success: function(data) {
             console.log(data);
             $("#head_data").empty();
@@ -648,14 +646,17 @@ $("#level").change(function() {
     });
 });
 
-function getoptselect_level(){
+function getoptselect_level() {
     var level = $("#level").val();
-    var person =  $("#headid").val();
+    var person = $("#headid").val();
     $.ajax({
         type: "POST",
         url: "core/fn-get-level-person.php",
         //dataType: "json",
-        data: {level:level,person:person},
+        data: {
+            level: level,
+            person: person
+        },
         success: function(data) {
             $("#head_data").empty();
             $("#head_data").append(data);
@@ -665,22 +666,24 @@ function getoptselect_level(){
 }
 
 
-$("#head_data").trigger('change', function (e) {
+$("#head_data").trigger('change', function(e) {
     var head_data = $("#head_data").val();
     $.ajax({
         type: "POST",
         url: "core/fn-get-parents.php",
-        data: {person:head_data},
+        data: {
+            person: head_data
+        },
         success: function(data) {
             console.log(data);
             $("#parents").text();
             $("#head_data").append(data);
-       }
+        }
     });
 });
 
 
-function getoptselect_amphur(){
+function getoptselect_amphur() {
 
     var changwatcode = $("#changwat").val();
     var ampur = $("#txt_ampur").val();
@@ -688,7 +691,10 @@ function getoptselect_amphur(){
         type: "POST",
         url: "core/fn-get-ampur.php",
         //dataType: "json",
-        data: {changwatcode:changwatcode,ampur:ampur},
+        data: {
+            changwatcode: changwatcode,
+            ampur: ampur
+        },
         success: function(data) {
             $("#ampur").empty();
             $("#ampur").append(data);
@@ -698,203 +704,213 @@ function getoptselect_amphur(){
 
 
 
-function getoptselect_tambon(){
+function getoptselect_tambon() {
 
-var changwatcode = $("#changwat").val();
-var ampur = $("#txt_ampur").val();
-var ampurcode = $("#ampur").val();
-var tambon = $("#txt_tambon").val();
+    var changwatcode = $("#changwat").val();
+    var ampur = $("#txt_ampur").val();
+    var ampurcode = $("#ampur").val();
+    var tambon = $("#txt_tambon").val();
     $.ajax({
         type: "POST",
         url: "core/fn-get-tambon.php",
         //dataType: "json",
-        data: {changwatcode:changwatcode,ampurcode:ampurcode,ampur:ampur,tambon:tambon},
+        data: {
+            changwatcode: changwatcode,
+            ampurcode: ampurcode,
+            ampur: ampur,
+            tambon: tambon
+        },
         success: function(data) {
-        
+
             $("#tambon").empty();
             $("#tambon").append(data);
         } // success
     });
 
-}	
+}
 
-function getteam(){
+function getteam() {
     console.log("test")
     var data_val = $("#team_id").val();
     $.ajax({
         type: "POST",
         url: "core/fn-get-parents.php",
-        data: {person:data_val},
+        data: {
+            person: data_val
+        },
         success: function(data) {
             var vals = $.parseJSON(data);
             console.log(vals);
-            if(vals.id != "0"){
+            if (vals.id != "0") {
                 // $('#parents_val').text(vals.name);
                 // $('#parents_val').val(vals.id);
-            }else{
+            } else {
                 $('#parents_val').text("--ระบุ--");
                 $('#parents_val').val("");
             }
-       }
+        }
     });
 
-}	
+}
 
-	
+
 
 
 function confirm_person_image(id) {
     //console.log(id);
-                    Swal.fire({
-                        title: 'แน่ใจนะ?',
-                        text: "ต้องการยกเลิกรายการ",
-                        //type: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        cancelButtonText: 'ยกเลิก',
-                        confirmButtonText: 'ใช่, ต้องการยกเลิกรายการ !'
-                    }).then((result) => {
-                        if (result.value) { //Yes
-                            $.post("core/person/person-image-del.php", {id: id}, function(result){
-                                //  $("test").html(result);
-                                 console.log(result.oid);
-                                location.reload();
-                            });
-                        }
-                    })
-            }
+    Swal.fire({
+        title: 'แน่ใจนะ?',
+        text: "ต้องการยกเลิกรายการ",
+        //type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'ยกเลิก',
+        confirmButtonText: 'ใช่, ต้องการยกเลิกรายการ !'
+    }).then((result) => {
+        if (result.value) { //Yes
+            $.post("core/person/person-image-del.php", {
+                id: id
+            }, function(result) {
+                //  $("test").html(result);
+                console.log(result.oid);
+                location.reload();
+            });
+        }
+    })
+}
 
 
-$('#btnSavePerson').click(function(e){
-        e.preventDefault();
-        console.log()
-        if ($('#head_data').val() == "0"){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'กรุณาระบุสังกัด',
-                    showConfirmButton: false,
-                    timer: 1000
-                    });
-        }else{
-		var data = new FormData(this.form);
+$('#btnSavePerson').click(function(e) {
+    e.preventDefault();
+    console.log()
+    if ($('#head_data').val() == "0") {
+        Swal.fire({
+            icon: 'error',
+            title: 'กรุณาระบุสังกัด',
+            showConfirmButton: false,
+            timer: 1000
+        });
+    } else {
+        var data = new FormData(this.form);
         $.ajax({
             type: "POST",
             url: "core/person/person-add-2.php",
             dataType: "json",
-			data: data,
-			processData: false,
+            data: data,
+            processData: false,
             contentType: false,
-            success: function(data) {  
-              if (data.code == "200") {
-                Swal.fire({
-                icon: 'success',
-                title: 'บันทึกสำเร็จ',
-                showConfirmButton: false,
-                timer: 1500
-                })
-                    .then((value) => {
-                    if(data.method == "add"){
-                        window.location.replace("dashboard.php?module=person&page=person-add-2&personid="+ data.personid + "&act=" + data.act);
-                    }else{
-                        window.location.replace("dashboard.php?module=person&page=person-add-2&personid="+ data.personid + "&act=" + data.act);
-                    }
-                    
-                }); 
+            success: function(data) {
+                if (data.code == "200") {
+                    Swal.fire({
+                            icon: 'success',
+                            title: 'บันทึกสำเร็จ',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        .then((value) => {
+                            if (data.method == "add") {
+                                window.location.replace(
+                                    "dashboard.php?module=person&page=person-add-2&personid=" +
+                                    data.personid + "&act=" + data.act);
+                            } else {
+                                window.location.replace(
+                                    "dashboard.php?module=person&page=person-add-2&personid=" +
+                                    data.personid + "&act=" + data.act);
+                            }
+
+                        });
                 } else if (data.code == "404") {
-                  //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
-                   Swal.fire({
-                    icon: 'error',
-                    title: 'ไม่สามารถบันทึกข้อมูลได้',
-                    text: 'กรุณาลองใหม่อีกครั้ง'
-                    })
-                    .then((value) => {
-                      //liff.closeWindow();
-                  });
+                    //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
+                    Swal.fire({
+                            icon: 'error',
+                            title: 'ไม่สามารถบันทึกข้อมูลได้',
+                            text: 'กรุณาลองใหม่อีกครั้ง'
+                        })
+                        .then((value) => {
+                            //liff.closeWindow();
+                        });
                 } else if (data.code == "300") {
-                  //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
-                   Swal.fire({
-                    icon: 'error',
-                    title: 'มีข้อมูลบุคคลนี้แล้ว',
-                    text: 'กรุณาลองใหม่อีกครั้ง'
-                    })
-                    .then((value) => {
-                      //liff.closeWindow();
-                  });
+                    //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
+                    Swal.fire({
+                            icon: 'error',
+                            title: 'มีข้อมูลบุคคลนี้แล้ว',
+                            text: 'กรุณาลองใหม่อีกครั้ง'
+                        })
+                        .then((value) => {
+                            //liff.closeWindow();
+                        });
                 }
-            },error: function (jqXHR, exception) {
+            },
+            error: function(jqXHR, exception) {
                 console.log(jqXHR);
                 // Your error handling logic here..
             } // success
         });
 
-        }
-    
-    }); //  click
+    }
+
+}); //  click
 
 
-$('#cidSearch').click(function(e){
-        e.preventDefault();
-        if ($('#cid').val().length == ""){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'กรุณาระบุเลขบัตรประชาชน',
-                    showConfirmButton: false,
-                    timer: 1000
-                    });
-        }else if ($('#org_id').val().length == ""){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'กรุณาระบุหน่วยงาน',
-                    showConfirmButton: false,
-                    timer: 1000
-                    });
-        }else {
+$('#cidSearch').click(function(e) {
+    e.preventDefault();
+    if ($('#cid').val().length == "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'กรุณาระบุเลขบัตรประชาชน',
+            showConfirmButton: false,
+            timer: 1000
+        });
+    } else if ($('#org_id').val().length == "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'กรุณาระบุหน่วยงาน',
+            showConfirmButton: false,
+            timer: 1000
+        });
+    } else {
 
-		var data = new FormData(this.form);
+        var data = new FormData(this.form);
         $.ajax({
             type: "POST",
             url: "core/healthcare/person-search.php",
             dataType: "json",
-			data: data,
-			processData: false,
+            data: data,
+            processData: false,
             contentType: false,
-            success: function(data) {  
-              if (data.code == "200") {
-                Swal.fire({
-                icon: 'success',
-                title: 'ค้นหาข้อมูลสำเร็จ',
-                showConfirmButton: false,
-                timer: 1500
-                })
-                    .then((value) => {
-                     
-                        $('#prename').val(data.prename);
-                        $('#fname').val(data.fname);
-                        $('#lname').val(data.lname);
-                    //liff.closeWindow();
-                    //window.location.replace("dashboard.php?module=borrow");
-                    //window.location.replace("dashboard.php?module=borrow&page=borrow-add&personid="+data.personid+"&serviceid="+data.serviceid+"&act="+data.act);
-                }); 
+            success: function(data) {
+                if (data.code == "200") {
+                    Swal.fire({
+                            icon: 'success',
+                            title: 'ค้นหาข้อมูลสำเร็จ',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        .then((value) => {
+
+                            $('#prename').val(data.prename);
+                            $('#fname').val(data.fname);
+                            $('#lname').val(data.lname);
+                            //liff.closeWindow();
+                            //window.location.replace("dashboard.php?module=borrow");
+                            //window.location.replace("dashboard.php?module=borrow&page=borrow-add&personid="+data.personid+"&serviceid="+data.serviceid+"&act="+data.act);
+                        });
                 } else if (data.code == "404") {
-                  //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
-                   Swal.fire({
-                    icon: 'error',
-                    title: 'ไม่พบข้อมูลที่ค้นหา',
-                    //text: 'กรุณาลองใหม่อีกครั้ง'
-                    })
-                    .then((value) => {
-                      //liff.closeWindow();
-                  });
+                    //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
+                    Swal.fire({
+                            icon: 'error',
+                            title: 'ไม่พบข้อมูลที่ค้นหา',
+                            //text: 'กรุณาลองใหม่อีกครั้ง'
+                        })
+                        .then((value) => {
+                            //liff.closeWindow();
+                        });
                 }
             } // success
         });
 
-        }
-    
-      }); //  click
+    }
 
+}); //  click
 </script>
-
-
-

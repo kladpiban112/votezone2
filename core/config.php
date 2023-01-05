@@ -8,8 +8,8 @@ define('ADMIN_URL', 'https://www.demo1.Thaiakitech.com');
 // DATABASE CONNECT SETTINGS (REQUIRED)
 define('DB_HOST', 'localhost'); // Database host ## Datenbank Server
 define('DB_PORT', 3306); // Enter the database port for your mysql server
-define('DB_USER', 'thaiakitec_demo1'); // Database user ## Datenbank Benutzername
-define('DB_PASS', 'demo12022**'); // Database password ## Datenbank Passwort
+define('DB_USER', 'root'); // Database user ## Datenbank Benutzername
+define('DB_PASS', ''); // Database password ## Datenbank Passwort
 define('DB_NAME', 'thaiakitec_demo1'); // Database name ## Datenbank Name
 
 // OTHER SETTINGS (YOU DON'T NEED TO CHANGE THIS IF YOU ARE NOT SURE)
@@ -88,4 +88,3 @@ if($cfg_site_title == ""){
 
 
 //require_once "_config-version.php";
-
