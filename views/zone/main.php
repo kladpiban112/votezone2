@@ -122,7 +122,7 @@ $action = base64_decode($act);
         $conditions = " ";
     }
 
-    $numb_data = $conn->query("SELECT count(1) FROM ".DB_PREFIX."area ")->fetchColumn();
+    $numb_data = $conn->query("SELECT count(1) FROM ".DB_PREFIX."area AS p  WHERE p.flag != '0'  $search_data  $schangwat_data  $sampur_data  $stambon_data $szone_data $sarea_data ")->fetchColumn();
 
   
         if (!(isset($pagenum))) { $pagenum = 1; }

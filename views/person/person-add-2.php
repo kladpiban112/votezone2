@@ -730,7 +730,6 @@ function getoptselect_tambon() {
 }
 
 function getteam() {
-    console.log("test")
     var data_val = $("#team_id").val();
     $.ajax({
         type: "POST",
@@ -740,7 +739,6 @@ function getteam() {
         },
         success: function(data) {
             var vals = $.parseJSON(data);
-            console.log(vals);
             if (vals.id != "0") {
                 // $('#parents_val').text(vals.name);
                 // $('#parents_val').val(vals.id);

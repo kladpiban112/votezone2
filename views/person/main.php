@@ -5,6 +5,10 @@ $cid_search = filter_input(INPUT_GET, 'cid', FILTER_SANITIZE_STRING);
 $hn_search = filter_input(INPUT_GET, 'hn', FILTER_SANITIZE_STRING);
 $cid_search = filter_input(INPUT_GET, 'cid', FILTER_SANITIZE_STRING);
 $slevel = filter_input(INPUT_GET, 'slevel', FILTER_SANITIZE_STRING);
+$cchangwat = filter_input(INPUT_GET, 'changwat', FILTER_SANITIZE_STRING);
+$campur = filter_input(INPUT_GET, 'ampur', FILTER_SANITIZE_STRING);
+$ctambon = filter_input(INPUT_GET, 'tambon', FILTER_SANITIZE_STRING);
+
 
 if($cid_search != ""){
     $cid_data = " AND p.cid LIKE '%$cid_search%'  ";
@@ -12,9 +16,17 @@ if($cid_search != ""){
 if($search != ""){
     $search_data = " AND  p.fname LIKE '%$search%'  ";
 }
-
 if($slevel != ""){
     $slevel_data = " AND  p.level = '$slevel' ";
+}
+if($cchangwat != ""){
+    $cchangwat_data = " AND  p.changwat = '$cchangwat' ";
+}
+if($campur != ""){
+    $campur_data = " AND  p.ampur = '$campur' ";
+}
+if($ctambon != ""){
+    $ctambon_data = " AND  p.tambon = '$ctambon' ";
 }
 ?>
 		<!--begin::Card-->
@@ -36,7 +48,7 @@ if($slevel != ""){
     <input type="hidden" class="form-control"  name="module"  value="<?php echo $module;?>"/>
     <input type="hidden" class="form-control"  name="page"  value="main"/>
     <div class="form-group row">
-            <div class="col-lg-3">
+            <div class="col-lg-2">
 				<label>ระดับ</label>
                 <select class="form-control form-control-sm" name="slevel" id="slevel">
                         
@@ -51,12 +63,48 @@ if($slevel != ""){
                                 <?php 
                                 }
                         ?>
-            </select>			</div>
-            <div class="col-lg-3">
+                </select>			
+            </div>
+            <div class="col-lg-2">
+                <label>จังหวัด</label>
+                <select class="form-control form-control-sm" name="changwat" id="changwat" disabled>
+
+                    <?php
+                        $stmt = $conn->prepare ("SELECT * FROM cchangwat c   WHERE c.changwatcode = '30'");
+                        $stmt->execute();
+                        
+                        while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
+                        $id = $row->changwatcode;
+                        $name = $row->changwatname; ?>
+                    <option value="<?php echo $id;?>"
+                        <?php if($row_person['changwat'] == $id){ echo "selected";}?>><?php echo $name;?>
+                    </option>
+                    <?php 
+                                                }
+                                            ?>
+                </select>
+
+            </div>
+
+            <div class="col-lg-2">
+                <label>อำเภอ</label>
+                <select class="form-control form-control-sm" name="ampur" id="ampur">
+                    <option value="">ระบุ</option>
+                </select>
+            </div>
+
+            <div class="col-lg-2">
+                <label>ตำบล</label>
+                <select class="form-control form-control-sm" name="tambon" id="tambon">
+                    <option value="">ระบุ</option>
+                </select>
+            </div>
+
+            <div class="col-lg-2">
 				<label>เลขบัตรประชาชน</label>
 					<input type="text" class="form-control form-control-sm" placeholder="เลขบัตรประชาชน"  name="cid" id="cid"  value="<?php echo $cid;?>"/>
 			</div>
-             <div class="col-lg-3">
+             <div class="col-lg-2">
 				<label>ชื่อ-สกุล</label>
 				<div class="input-group">
 							<input type="text" class="form-control form-control-sm" placeholder="ชื่อ-สกุล"  name="search" id="search"  value="<?php echo $search;?>"/>
@@ -78,7 +126,7 @@ if($slevel != ""){
         $conditions = " ";
     }
 
-    $numb_data = $conn->query("SELECT count(1) FROM ".DB_PREFIX."person_main p  WHERE p.flag != '0' $conditions  $search_data    $ampur_search ")->fetchColumn();
+    $numb_data = $conn->query("SELECT count(1) FROM ".DB_PREFIX."person_main p  WHERE p.flag != '0' $conditions  $search_data    $cid_data  $slevel_data $cchangwat_data $campur_data $ctambon_data ")->fetchColumn();
 
   
         if (!(isset($pagenum))) { $pagenum = 1; }
@@ -116,7 +164,7 @@ if($slevel != ""){
         LEFT JOIN ".DB_PREFIX."ctambon t ON CONCAT(p.changwat,p.ampur,p.tambon) = t.tamboncodefull
         LEFT JOIN ".DB_PREFIX."csex s ON p.sex = s.sex
         LEFT JOIN ".DB_PREFIX."level_type lt ON p.level = lt.level_id
-        WHERE p.flag != '0' $conditions  $search_data  $cid_data  $slevel_data
+        WHERE p.flag != '0' $conditions  $search_data  $cid_data  $slevel_data $cchangwat_data $campur_data $ctambon_data
         ORDER BY lt.level_id ASC
         $max");
         $stmt_data->execute();		
@@ -345,8 +393,61 @@ else if($Num_Pages!=1 && $Num_Pages!=2)	//	กรณีไม่ได้เล�
 </div>
 		<!--end::Card-->
 
-        <script type="text/javascript">
+<script type="text/javascript">
 
+$(document).ready(function() {
+    getoptselect_amphur();
+});
+
+$("#ampur").change(function() {
+    $("#txt_tambon").val('');
+    getoptselect_tambon();
+});
+
+function getoptselect_amphur() {
+    
+var changwatcode = 30;
+var ampur = $("#txt_ampur").val();
+$.ajax({
+    type: "POST",
+    url: "core/fn-get-ampur.php",
+    //dataType: "json",
+    data: {
+        changwatcode: changwatcode,
+        ampur: ampur
+    },
+    success: function(data) {
+        $("#ampur").empty();
+        $("#ampur").append(data);
+    } // success
+});
+}
+
+
+function getoptselect_tambon() {
+
+var changwatcode = $("#changwat").val();
+var ampur = $("#txt_ampur").val();
+var ampurcode = $("#ampur").val();
+var tambon = $("#txt_tambon").val();
+$.ajax({
+    type: "POST",
+    url: "core/fn-get-tambon.php",
+    //dataType: "json",
+    data: {
+        changwatcode: changwatcode,
+        ampurcode: ampurcode,
+        ampur: ampur,
+        tambon: tambon
+    },
+    success: function(data) {
+
+        $("#tambon").empty();
+        $("#tambon").append(data);
+    } // success
+});
+
+}
 function confirm_borrow_delete(id) {
                     Swal.fire({
                         title: 'แน่ใจนะ?',

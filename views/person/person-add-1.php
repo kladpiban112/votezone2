@@ -236,7 +236,7 @@ if($personid_enc != ""){
                         $id = $row->level_id;
                         $name = $row->level; ?>
                                 <option value="<?php echo $id;?>"
-                                    <?php if($row_person['level'] == $id){ echo "selected";}elseif($row_person['level'] == "" && $id == "4"){echo "selected";}?>>
+                                    <?php if($row_person['level'] == $id){ echo "selected";}elseif($row_person['level'] == "" && $id == "5"){echo "selected";}?>>
                                     <?php echo $name;?></option>
                                 <?php 
                         }
@@ -352,6 +352,7 @@ if($personid_enc != ""){
 
                         </div>
                     </div>
+
                     <br />
                     <div class="row col-lg-12">
                         <h4>กรุณากด เลื่อนแผนที่ เพื่อขยับแผนที่ คลิกขวาเพื่อแสดงข้อมูล </h4>
@@ -580,13 +581,14 @@ if($personid_enc != ""){
 <script src="assets/js/bootstrap-datepicker-thai.js"></script>
 <script src="assets/js/locales/bootstrap-datepicker.th.js"></script>
 
-<script>
+<script >
+
 $(document).ready(function() {
     'use strict';
     getoptselect_amphur();
     getoptselect_tambon();
     getoptselect_level();
-    getteam();
+    // getteam();
     $('.js-example-basic-single').select2();
 
     $(".js-example-basic-single").on("change", function(e) {
@@ -748,6 +750,7 @@ function getoptselect_tambon() {
 function getteam() {
     console.log("test")
     var data_val = $("#team_id").val();
+    console.log(data_val)
     $.ajax({
         type: "POST",
         url: "core/fn-get-parents.php",
@@ -943,4 +946,5 @@ $('#cidSearch').click(function(e) {
     }
 
 }); //  click
+
 </script>

@@ -7,7 +7,7 @@ require_once ABSPATH."/checklogin.php";
 require_once ABSPATH."/functions.php";
 
 $level = filter_input(INPUT_POST, 'level', FILTER_SANITIZE_STRING);  
-$person = filter_input(INPUT_POST, 'person', FILTER_SANITIZE_STRING);  
+// $person = filter_input(INPUT_POST, 'person', FILTER_SANITIZE_STRING);  
 
 $sql = "SELECT *,lt.level AS levelname FROM person_main l LEFT JOIN level_type lt ON l.level = lt.level_id WHERE  l.level != 4 ORDER BY l.level ";
 
@@ -17,10 +17,13 @@ if($level == 2){
 else if($level == 3){
         $sql = "SELECT *,lt.level AS levelname FROM person_main l LEFT JOIN level_type lt ON l.level = lt.level_id WHERE   l.level = 2 ORDER BY l.level ";
 }
+else if($level == 4){
+        $sql = "SELECT *,lt.level AS levelname FROM person_main l LEFT JOIN level_type lt ON l.level = lt.level_id WHERE   l.level = 3 ORDER BY l.level ";
+}
 else if($level == 1){
-        $sql = "SELECT *,lt.level AS levelname FROM person_main l LEFT JOIN level_type lt ON l.level = lt.level_id WHERE  l.level != 1 AND l.level != 2 AND l.level != 3 AND l.level != 4 ORDER BY l.level ";
+        $sql = "SELECT *,lt.level AS levelname FROM person_main l LEFT JOIN level_type lt ON l.level = lt.level_id WHERE  l.level != 1 AND l.level != 2 AND l.level != 3 AND l.level != 4 AND l.level != 5 ORDER BY l.level ";
 }else{
-        $sql = "SELECT *,lt.level AS levelname FROM person_main l LEFT JOIN level_type lt ON l.level = lt.level_id WHERE  l.level != 4 ORDER BY l.level ";
+        $sql = "SELECT *,lt.level AS levelname FROM person_main l LEFT JOIN level_type lt ON l.level = lt.level_id WHERE  l.level != 5 ORDER BY l.level ";
 }
 
 

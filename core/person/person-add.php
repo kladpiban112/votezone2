@@ -64,7 +64,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 //$exist_person = $stmt->fetchColumn();
 $exist_person = $stmt->rowCount();
 
-if($exist_person!=0){
+if($exist_person != '0'){
 
 	
 	// $personid = $row['oid'];
@@ -152,7 +152,7 @@ if($exist_person!=0){
 	// 	$msg = "success";
 		// echo json_encode(['code'=>200, 'msg'=>$exist_person,'personid'=>$person_oid_enc,'act'=>$act_enc,'action'=>$act]);
 		
-		echo json_encode(['code'=>300]);
+	echo json_encode(['code'=>300]);
 
 }else{
 if($level == "1"){$head = "0";}

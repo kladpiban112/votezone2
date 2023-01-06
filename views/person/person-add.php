@@ -776,6 +776,7 @@ $('#btnSavePerson').click(function(e){
 			processData: false,
             contentType: false,
             success: function(data) {  
+                console.log(data.code);
               if (data.code == "200") {
                 Swal.fire({
                 icon: 'success',

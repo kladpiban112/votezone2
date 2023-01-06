@@ -3,7 +3,7 @@
 date_default_timezone_set("Asia/Bangkok");
 
 // URL where admin is inslatted. Without ending slash
-define('ADMIN_URL', 'https://www.demo1.Thaiakitech.com');
+define('ADMIN_URL', 'https://popwin.Thaiakitech.com');
 
 // DATABASE CONNECT SETTINGS (REQUIRED)
 define('DB_HOST', 'localhost'); // Database host ## Datenbank Server
