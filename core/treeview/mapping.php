@@ -19,9 +19,7 @@ $stmt_data->execute();
                
                     $latitude = $row["latitude"];
                     $longitude = $row["longitude"];
-        
 
-                
                        
             } 
 			echo json_encode(['code'=>200, 'latitude'=>$latitude,'longitude'=>$longitude]);

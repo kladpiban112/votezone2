@@ -305,7 +305,40 @@ $(document).ready(function() {
     load_person_area_data_C();
     load_person_area_data_D();
 
+    var longdomapserver =
+        'http://ms.longdo.com/mmmap/tile.php?zoom={z}&x={x}&y={y}&key=5e785cb06a872f9662a93d93ad733eed&proj=epsg3857&HD=1';
+    var tileLayer = new L.TileLayer(longdomapserver, {
+        'attribution': "© Longdo Map"
+    });
 
+    var map = new L.Map('map', {
+        'center': [14.9674218, 102.0682299],
+        'zoom': 12,
+        'layers': [tileLayer]
+    });
+
+    var aids = $("#aid").val();
+    $.ajax({
+        type: "POST",
+        url: "core/treeview/mapping.php",
+        //dataType: "json",
+
+        data: {
+            aid: aids
+        },
+
+        success: function(data) {
+
+            var data = JSON.parse(data);
+            var marker = L.marker([data.latitude, data.longitude]).addTo(map)
+        } //success 
+
+      layerGroup.clearLayers();
+      marker = L.marker(result.latlng)
+        .addTo(layerGroup)
+        .bindPopup(`<b>${lngLatString}</b><p>${result.address.Match_addr}</p>`)
+        .openPopup();
+    });
 }); 
 
 $(".add-more").click(function() {
@@ -451,49 +484,49 @@ $('#btnSaveArea').click(function(e) {
 }); //  click
 </script>
 <script>
-$(document).ready(function() {
-    'use strict';
-    var longdomapserver =
-        'http://ms.longdo.com/mmmap/tile.php?zoom={z}&x={x}&y={y}&key=5e785cb06a872f9662a93d93ad733eed&proj=epsg3857&HD=1';
-    var tileLayer = new L.TileLayer(longdomapserver, {
-        'attribution': "© Longdo Map"
-    });
+// $(document).ready(function() {
+//     'use strict';
+//     var longdomapserver =
+//         'http://ms.longdo.com/mmmap/tile.php?zoom={z}&x={x}&y={y}&key=5e785cb06a872f9662a93d93ad733eed&proj=epsg3857&HD=1';
+//     var tileLayer = new L.TileLayer(longdomapserver, {
+//         'attribution': "© Longdo Map"
+//     });
 
-    var map = new L.Map('map', {
-        'center': [14.9674218, 102.0682299],
-        'zoom': 12,
-        'layers': [tileLayer]
-    });
+//     var map = new L.Map('map', {
+//         'center': [14.9674218, 102.0682299],
+//         'zoom': 12,
+//         'layers': [tileLayer]
+//     });
 
-    var aids = $("#aid").val();
-    $.ajax({
-        type: "POST",
-        url: "core/treeview/mapping.php",
-        //dataType: "json",
+//     var aids = $("#aid").val();
+//     $.ajax({
+//         type: "POST",
+//         url: "core/treeview/mapping.php",
+//         //dataType: "json",
 
-        data: {
-            aid: aids
-        },
+//         data: {
+//             aid: aids
+//         },
 
-        success: function(data) {
+//         success: function(data) {
 
-            var data = JSON.parse(data);
-
-
-            var marker = L.marker([data.latitude, data.longitude]).addTo(map)
+//             var data = JSON.parse(data);
 
 
+//             var marker = L.marker([data.latitude, data.longitude]).addTo(map)
 
 
-        } //success 
 
-      layerGroup.clearLayers();
-      marker = L.marker(result.latlng)
-        .addTo(layerGroup)
-        .bindPopup(`<b>${lngLatString}</b><p>${result.address.Match_addr}</p>`)
-        .openPopup();
-    });
-});
+
+//         } //success 
+
+//       layerGroup.clearLayers();
+//       marker = L.marker(result.latlng)
+//         .addTo(layerGroup)
+//         .bindPopup(`<b>${lngLatString}</b><p>${result.address.Match_addr}</p>`)
+//         .openPopup();
+//     });
+// });
 
 
 function load_person_area_data_A() {
