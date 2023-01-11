@@ -26,16 +26,16 @@ $action = base64_decode($act);
 
 
 ?>
-		<!--begin::Card-->
-		<div class="card card-custom gutter-b example example-compact">
-			<div class="card-header ribbon ribbon-right">
-      <!-- <div class="ribbon-target bg-primary" style="top: 10px; right: -2px;"></div> -->
-				<h3 class="card-title">
-        <i class="far fa-user"></i>&nbsp;สรุปข้อมูลเขตการเลือกตั้ง
-				</h3>
-				<div class="card-toolbar">
-					<div class="example-tools justify-content-center">
-                    <!-- <?php if($action == "edit"){?>
+<!--begin::Card-->
+<div class="card card-custom gutter-b example example-compact">
+    <div class="card-header ribbon ribbon-right">
+        <!-- <div class="ribbon-target bg-primary" style="top: 10px; right: -2px;"></div> -->
+        <h3 class="card-title">
+            <i class="far fa-user"></i>&nbsp;สรุปข้อมูลเขตการเลือกตั้ง
+        </h3>
+        <div class="card-toolbar">
+            <div class="example-tools justify-content-center">
+                <!-- <?php if($action == "edit"){?>
 
                         <a href="dashboard.php?module=service&page=service-add&personid=<?php echo $personid_enc;?>" class="btn btn-info btn-sm font-weight-bold mr-2" title="บันทึกรับบริการ"><i class="fas fa-plus" title="บันทึกรับบริการ" ></i> บันทึกรับบริการ</a>
 
@@ -44,141 +44,157 @@ $action = base64_decode($act);
                         <a href="#" class="btn btn-default btn-sm font-weight-bold mr-2" title="บันทึกรับบริการ" disabled><i class="fas fa-plus" title="บันทึกรับบริการ" ></i> บันทึกรับบริการ</a>
 
                     <?php } ?> -->
-						<!-- <a href="dashboard.php?module=<?php echo $module;?>&page=main" class="btn btn-defalse btn-sm font-weight-bold mr-2" title="ย้อนกลับ"><i class="fa fa-chevron-left" title="ย้อนกลับ" ></i></a> -->
-					</div>
-				</div>
-			</div>
+                <!-- <a href="dashboard.php?module=<?php echo $module;?>&page=main" class="btn btn-defalse btn-sm font-weight-bold mr-2" title="ย้อนกลับ"><i class="fa fa-chevron-left" title="ย้อนกลับ" ></i></a> -->
+            </div>
+        </div>
+    </div>
 
 
-<form class="form" enctype="multipart/form-data" >
-<input type="hidden" class="form-control"  name="act" id="act" value="<?php echo $action;?>"/>
-<input type="hidden" class="form-control"  name="personid" id="personid" value="<?php echo $personid;?>"/>
-<input type="hidden" class="form-control"  name="serviceid" id="serviceid" value="<?php echo $serviceid;?>"/>
-<input type="hidden" class="form-control"  name="org_id" id="org_id" value="<?php echo $logged_org_id;?>"/>
-<input type="hidden" class="form-control"  name="aid" id="aid" value="<?php echo $aid;?>"/>
-<input type="hidden" class="form-control"  name="la" id="la" value="<?php echo $row_person['latitude'];?>"/>
-<input type="hidden" class="form-control"  name="long" id="long" value="<?php echo $row_person['longitude'];?>"/>
+    <form class="form" enctype="multipart/form-data">
+        <input type="hidden" class="form-control" name="act" id="act" value="<?php echo $action;?>" />
+        <input type="hidden" class="form-control" name="personid" id="personid" value="<?php echo $personid;?>" />
+        <input type="hidden" class="form-control" name="serviceid" id="serviceid" value="<?php echo $serviceid;?>" />
+        <input type="hidden" class="form-control" name="org_id" id="org_id" value="<?php echo $logged_org_id;?>" />
+        <input type="hidden" class="form-control" name="aid" id="aid" value="<?php echo $aid;?>" />
+        <input type="hidden" class="form-control" name="la" id="la" value="<?php echo $row_person['latitude'];?>" />
+        <input type="hidden" class="form-control" name="long" id="long"
+            value="<?php echo $row_person['longitude'];?>" />
 
 
-	<div class="card-body">
+        <div class="card-body">
 
-	
-	<div class="row">
-	<div class="col-lg-12">
 
-        <!-- <div class="form-group row">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <!-- <div class="form-group row">
 
 		</div>
 
    <span><i class="fas fa-house-user"></i> ที่อยู่เขตเลือกตั้ง :</span>
    
    <hr> -->
-		
 
-        <input type="hidden" class="form-control"  name="txt_ampur" id="txt_ampur" value="<?php echo $row_person['ampur'];?>"/>
 
-        <input type="hidden" class="form-control"  name="txt_tambon" id="txt_tambon" value="<?php echo $row_person['tambon'];?>"/>
-    <div class="form-group row">
+                    <input type="hidden" class="form-control" name="txt_ampur" id="txt_ampur"
+                        value="<?php echo $row_person['ampur'];?>" />
 
-    <div class="col-lg-3">
-				<label>จังหวัด</label>
-            <select class="form-control form-control-sm" name="changwat" id="changwat"disabled>    
-                        <?php
+                    <input type="hidden" class="form-control" name="txt_tambon" id="txt_tambon"
+                        value="<?php echo $row_person['tambon'];?>" />
+                    <div class="form-group row">
+
+                        <div class="col-lg-3">
+                            <label>จังหวัด</label>
+                            <select class="form-control form-control-sm" name="changwat" id="changwat" disabled>
+                                <?php
                                 $stmt = $conn->prepare ("SELECT * FROM cchangwat c ");
                                 $stmt->execute();
                                 echo "<option value=''>-ระบุ-</option>";
                                 while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
                                 $id = $row->changwatcode;
                                 $name = $row->changwatname; ?>
-                                <option value="<?php echo $id;?>" <?php if($row_person['changwat'] == $id){ echo "selected";}?>><?php echo $name;?></option>
+                                <option value="<?php echo $id;?>"
+                                    <?php if($row_person['changwat'] == $id){ echo "selected";}?>><?php echo $name;?>
+                                </option>
                                 <?php 
                                 }
                             ?>
-            </select>
-			</div>
+                            </select>
+                        </div>
 
-            <div class="col-lg-2">
-				<label>เขตการเลือกตั้ง</label>
-             <input type="number" class="form-control form-control-sm"  name="area_number" id="area_number" placeholder="เขตการเลือกตั้ง" value="<?php echo $row_person['area_number']; ?>"disabled />
-				
-			</div>
+                        <div class="col-lg-2">
+                            <label>เขตการเลือกตั้ง</label>
+                            <input type="number" class="form-control form-control-sm" name="area_number"
+                                id="area_number" placeholder="เขตการเลือกตั้ง"
+                                value="<?php echo $row_person['area_number']; ?>" disabled />
 
-      <div class="col-lg-3">
-				<label>อำเภอ</label>
-            <select class="form-control form-control-sm" name="ampur" id="ampur"disabled>
-                        <option value="">ระบุ</option>
-            </select>
-			</div>
+                        </div>
 
-      <div class="col-lg-3">
-				<label>ตำบล</label>
-            <select class="form-control form-control-sm" name="tambon" id="tambon"disabled>
-                        <option value="">ระบุ</option>
-            </select>
-			</div>
-   </div>
+                        <div class="col-lg-3">
+                            <label>อำเภอ</label>
+                            <select class="form-control form-control-sm" name="ampur" id="ampur" disabled>
+                                <option value="">ระบุ</option>
+                            </select>
+                        </div>
 
-            <div class="form-group row">
+                        <div class="col-lg-3">
+                            <label>ตำบล</label>
+                            <select class="form-control form-control-sm" name="tambon" id="tambon" disabled>
+                                <option value="">ระบุ</option>
+                            </select>
+                        </div>
+                    </div>
 
-            <div class="col-lg-2">
-				<label>หมู่ที่</label>
-                <input type="number" class="form-control form-control-sm"  name="village" id="village" placeholder="หมู่" value="<?php echo $row_person['village'];?>" disabled/>
-			</div>
-			 
-			<div class="col-lg-2">
-				<label>หน่วยการเลือกตั้ง</label>
-                <input type="number" class="form-control form-control-sm"  name="zone_number" id="zone_number" placeholder="เขตการเลือกตั้ง" value="<?php echo $row_person['zone_number'];?>" disabled/>
-			</div>
-				
-			
+                    <div class="form-group row">
 
-            <div class="col-lg-3">
-				<label>ชื่อสถานที่เลือกตั้ง</label>
-             <input type="text" class="form-control form-control-sm"  name="zone_name" id="zone_name" placeholder="ชื่อสถานที่" value="<?php echo $row_person['zone_name'];?>" disabled/>
-				
-			</div>
+                        <div class="col-lg-2">
+                            <label>หมู่ที่</label>
+                            <input type="number" class="form-control form-control-sm" name="village" id="village"
+                                placeholder="หมู่" value="<?php echo $row_person['village'];?>" disabled />
+                        </div>
 
-            
-		</div>
+                        <div class="col-lg-2">
+                            <label>หน่วยการเลือกตั้ง</label>
+                            <input type="number" class="form-control form-control-sm" name="zone_number"
+                                id="zone_number" placeholder="เขตการเลือกตั้ง"
+                                value="<?php echo $row_person['zone_number'];?>" disabled />
+                        </div>
 
-      <div class="row">
 
-      <div class="col-lg-3">
-				<label>latitude</label>
-             <input type="text" class="form-control form-control-sm"  name="latitude" id="latitude" placeholder="latitude" value="<?php echo $row_person['latitude'];?>"disabled/>
-                
-            </input>
-		
-			</div>
 
-            <div class="col-lg-3">
-				<label>longitude</label>
-             <input type="text" class="form-control form-control-sm"  name="longitude" id="longitude" placeholder="longitude" value="<?php echo $row_person['longitude'];?>"disabled/>
-				
-			</div>
-        </div> 
-        </br>
-            <div class=" row">
-                <div class="col-lg-12">
-                    <label>รายละเอียด</label>
-                    <textarea class="form-control editor" name="details" id="details" disabled><?php echo $row_person['details'];?> </textarea>
+                        <div class="col-lg-3">
+                            <label>ชื่อสถานที่เลือกตั้ง</label>
+                            <input type="text" class="form-control form-control-sm" name="zone_name" id="zone_name"
+                                placeholder="ชื่อสถานที่" value="<?php echo $row_person['zone_name'];?>" disabled />
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-lg-3">
+                            <label>latitude</label>
+                            <input type="text" class="form-control form-control-sm" name="latitude" id="latitude"
+                                placeholder="latitude" value="<?php echo $row_person['latitude'];?>" disabled />
+
+                            </input>
+
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>longitude</label>
+                            <input type="text" class="form-control form-control-sm" name="longitude" id="longitude"
+                                placeholder="longitude" value="<?php echo $row_person['longitude'];?>" disabled />
+
+                        </div>
+                    </div>
+                    </br>
+                    <div class=" row">
+                        <div class="col-lg-12">
+                            <label>รายละเอียด</label>
+                            <textarea class="form-control editor" name="details" id="details"
+                                disabled><?php echo $row_person['details'];?> </textarea>
+                        </div>
+                    </div>
                 </div>
+                <div class="row col-lg-12">
+                    <div class="col-6">
+                        <h3>กรุณากด Shift + Scoll Mouse เพื่อ Zoom Map </h3>
+                    </div>
+                    <div class="col-3">
+                        <h3 class="text-left">สรุปจำนวนคะแนน <?php echo $person_num; ?> คน</h3>
+                    </div>
+                    <div class="col-3 text-right ">
+                        <h3><a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#modalPerson"><i class="far fa-plus-square"></i>เพิ่มหัวคะแนน</a></h3>
+                    </div>
+                </div>
+                <!-- <br> -->
+
             </div>
-        </div>    
-  <div class="row col-lg-12">
-    <div class="col-6" >
-    <h3>กรุณากด Shift + Scoll Mouse เพื่อ  Zoom Map </h3> 
-    </div>
-    <div class="col-3" >
-        <h3 class="text-left">สรุปจำนวนคะแนน <?php echo $person_num; ?> คน</h3>
-    </div>
-    <div class="col-3 text-right ">
-        <h3><a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalPerson"><i class="far fa-plus-square"></i>เพิ่มหัวคะแนน</a></h3>
-    </div>
-  </div>
- <!-- <br> -->
-     
-		</div><!--col-->
+            <!--col-->
 
 		</div><!--col-->
 <div class="row col-lg-12">
@@ -196,23 +212,22 @@ $action = base64_decode($act);
 </div>
 </div>
 
-<!-- <br> -->
-<div class="card-footer">
-        <div class="row">
-            <!-- <div class="col-lg-6">
+        <!-- <br> -->
+        <div class="card-footer">
+            <div class="row">
+                <!-- <div class="col-lg-6">
                 <button type="button" class="btn btn-primary mr-2 btn-sm" id="btnSaveArea"><i class="fa fa-save" title="บันทึก" ></i> บันทึก</button>
                 <button type="button" class="btn btn-warning btn-sm" onclick="javascript:history.back()" ><i class="fa fa-chevron-left" title="ย้อนกลับ" ></i> </button>
             </div> -->
+            </div>
         </div>
-	</div>
 </div>
 </form>
 </div>
 
 <!--end::Card-->
 <!--begin::Modal-->
-<div class="modal fade" id="modalPerson" tabindex="-1" role="dialog" aria-labelledby="modalPerson"
-    aria-hidden="true">
+<div class="modal fade" id="modalPerson" tabindex="-1" role="dialog" aria-labelledby="modalPerson" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -224,13 +239,12 @@ $action = base64_decode($act);
             <div class="modal-body">
 
                 <form class="form" enctype="multipart/form-data" autocomplete="off">
-                    <input type="hidden" class="form-control" name="repairid" id="repairid"
-                        value="" />
+                    <input type="hidden" class="form-control" name="repairid" id="repairid" value="" />
                     <div class="form-group row ">
-                    <input type="hidden" class="form-control"  name="aid" id="aid" value="<?php echo $aid;?>"/>
+                        <input type="hidden" class="form-control" name="aid" id="aid" value="<?php echo $aid;?>" />
                         <div class="col">
                             <label>หัวคะแนน</label>
-                            <select class="js-example-basic-single " style="width: 50%" name="level_a" id="level_a" >
+                            <select class="js-example-basic-single " style="width: 50%" name="level_a" id="level_a">
                                 <?php
                                     $stmt = $conn->prepare ("SELECT * FROM person_main WHERE level = 1 ");
                                     $stmt->execute();
@@ -238,8 +252,8 @@ $action = base64_decode($act);
                                     while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
                                         $id = $row->oid;
                                         $name = $row->fname." ".$row->lname; ?>
-                                        <option value="<?php echo $id;?>" ><?php echo $name;?></option>
-                                    <?php 
+                                <option value="<?php echo $id;?>"><?php echo $name;?></option>
+                                <?php 
                                     }
                                 ?>
                             </select>
@@ -255,7 +269,7 @@ $action = base64_decode($act);
                     <div class="form-group row">
                         <div class="col-lg-12 text-right">
                             <button type="button" class="btn btn-success mr-2 " id="btnAddPerson"><i
-                                class="far fa-save"></i> บันทึก</button>
+                                    class="far fa-save"></i> บันทึก</button>
                         </div>
                     </div>
             </div>
@@ -268,7 +282,7 @@ $action = base64_decode($act);
 <!-- Datepicker Thai -->
 <script src="assets/js/bootstrap-datepicker.js"></script>
 <script src="assets/js/bootstrap-datepicker-thai.js"></script>
-<script src="assets/js/locales/bootstrap-datepicker.th.js"></script>  
+<script src="assets/js/locales/bootstrap-datepicker.th.js"></script>
 <!-- Load Leaflet from CDN -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" crossorigin="" />
 <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" crossorigin=""></script>
@@ -280,11 +294,10 @@ $action = base64_decode($act);
 
 
 <script>
-
-$(document).ready(function () {
+$(document).ready(function() {
     'use strict';
     getoptselect_amphur();
-	getoptselect_tambon();
+    getoptselect_tambon();
     // $('.js-example-basic-single').select2();   
     $('#level_a').select2({
         dropdownParent: $('#modalPerson')
@@ -297,15 +310,15 @@ $(document).ready(function () {
 
 }); 
 
-$(".add-more").click(function(){ 
-		  //alert(99);
-          var html = $(".copy").html();
-          $(".after-add-more").after(html);
-      });
+$(".add-more").click(function() {
+    //alert(99);
+    var html = $(".copy").html();
+    $(".after-add-more").after(html);
+});
 
 
 $('#birthdate').datepicker({
-        autoclose: true
+    autoclose: true
 });
 
 
@@ -324,15 +337,15 @@ $("#ampur").change(function() {
 
 
 $("#level").change(function() {
-    if($("#level").val() == 1 ){
+    if ($("#level").val() == 1) {
         $("#head_h").hide();
-    }else{
+    } else {
         $("#head_h").show();
     }
 });
 
 
-function getoptselect_amphur(){
+function getoptselect_amphur() {
 
     var changwatcode = $("#changwat").val();
     var ampur = $("#txt_ampur").val();
@@ -340,7 +353,10 @@ function getoptselect_amphur(){
         type: "POST",
         url: "core/fn-get-ampur.php",
         //dataType: "json",
-        data: {changwatcode:changwatcode,ampur:ampur},
+        data: {
+            changwatcode: changwatcode,
+            ampur: ampur
+        },
         success: function(data) {
             $("#ampur").empty();
             $("#ampur").append(data);
@@ -349,118 +365,129 @@ function getoptselect_amphur(){
 }
 
 
-function getoptselect_tambon(){
+function getoptselect_tambon() {
 
-var changwatcode = $("#changwat").val();
-var ampur = $("#txt_ampur").val();
-var ampurcode = $("#ampur").val();
-var tambon = $("#txt_tambon").val();
+    var changwatcode = $("#changwat").val();
+    var ampur = $("#txt_ampur").val();
+    var ampurcode = $("#ampur").val();
+    var tambon = $("#txt_tambon").val();
     $.ajax({
         type: "POST",
         url: "core/fn-get-tambon.php",
         //dataType: "json",
-        data: {changwatcode:changwatcode,ampurcode:ampurcode,ampur:ampur,tambon:tambon},
+        data: {
+            changwatcode: changwatcode,
+            ampurcode: ampurcode,
+            ampur: ampur,
+            tambon: tambon
+        },
         success: function(data) {
-        
+
             $("#tambon").empty();
             $("#tambon").append(data);
         } // success
     });
 
-}	
+}
 
 
-$('#btnSaveArea').click(function(e){
-        e.preventDefault();
-        if ($('#area_number').val().length == ""){
-            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
-            $('#area_number').focus();
-            return false;
-        }else if ($('#changwat').val().length == ""){
-            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
-            $('#changwat').focus();
-            return false;
-        }else if ($('#ampur').val().length == ""){
-            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
-            $('#ampur').focus();
-            return false;
-        }else if ($('#tambon').val().length == ""){
-            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
-            $('#tambon').focus();
-            return false;
-        }else if ($('#village').val().length == ""){
-            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
-            $('#village').focus();
-            return false;
-        }else if ($('#zone_number').val().length == ""){
-            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
-            $('#zone_number').focus();
-            return false;
-        }else if ($('#zone_name').val().length == ""){
-            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
-            $('#zone_name').focus();
-            return false;
-        }else {
-		var data = new FormData(this.form);
+$('#btnSaveArea').click(function(e) {
+    e.preventDefault();
+    if ($('#area_number').val().length == "") {
+        alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+        $('#area_number').focus();
+        return false;
+    } else if ($('#changwat').val().length == "") {
+        alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+        $('#changwat').focus();
+        return false;
+    } else if ($('#ampur').val().length == "") {
+        alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+        $('#ampur').focus();
+        return false;
+    } else if ($('#tambon').val().length == "") {
+        alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+        $('#tambon').focus();
+        return false;
+    } else if ($('#village').val().length == "") {
+        alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+        $('#village').focus();
+        return false;
+    } else if ($('#zone_number').val().length == "") {
+        alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+        $('#zone_number').focus();
+        return false;
+    } else if ($('#zone_name').val().length == "") {
+        alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+        $('#zone_name').focus();
+        return false;
+    } else {
+        var data = new FormData(this.form);
         $.ajax({
             type: "POST",
             url: "core/zone/zone-add.php",
             dataType: "json",
-			data: data,
-			processData: false,
+            data: data,
+            processData: false,
             contentType: false,
-            success: function(data) {  
-              if (data.code == "200") {
-                alert('บันทึกข้อมูลเรียบร้อยแล้ว')
-                .then((value) => {
-                    window.location.replace("dashboard.php?module=zone&page=main");
-                }); 
+            success: function(data) {
+                if (data.code == "200") {
+                    alert('บันทึกข้อมูลเรียบร้อยแล้ว')
+                        .then((value) => {
+                            window.location.replace("dashboard.php?module=zone&page=main");
+                        });
                 } else if (data.code == "404") {
-                  //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
-                  alert('ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง')
-                    .then((value) => {
-                      //liff.closeWindow();
-                  });
+                    //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
+                    alert('ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง')
+                        .then((value) => {
+                            //liff.closeWindow();
+                        });
                 }
-            },error: function (jqXHR, exception) {
+            },
+            error: function(jqXHR, exception) {
                 console.log(jqXHR);
                 // Your error handling logic here..
             } // success
         });
-        }
-      }); //  click
-
+    }
+}); //  click
 </script>
 <script>
-    var la = $("#la").val();
-    var long = $("#long").val();
-const apiKey = "AAPK2c46051a3469443eb9b301070f4e958a-Ckglf3c9zJNWi6O8g24f55AbJet4nBw3tZi-seb6K5VBtOyGgMzfS2gVKf4j65I";
+$(document).ready(function() {
+    'use strict';
+    var longdomapserver =
+        'http://ms.longdo.com/mmmap/tile.php?zoom={z}&x={x}&y={y}&key=5e785cb06a872f9662a93d93ad733eed&proj=epsg3857&HD=1';
+    var tileLayer = new L.TileLayer(longdomapserver, {
+        'attribution': "© Longdo Map"
+    });
 
-const basemapEnum = "ArcGIS:Navigation";
+    var map = new L.Map('map', {
+        'center': [14.9674218, 102.0682299],
+        'zoom': 12,
+        'layers': [tileLayer]
+    });
 
-const map = L.map("map", {
-  minZoom: 2
+    var aids = $("#aid").val();
+    $.ajax({
+        type: "POST",
+        url: "core/treeview/mapping.php",
+        //dataType: "json",
 
-}).setView([14.9674218,102.0682299], 13); // Paris
+        data: {
+            aid: aids
+        },
 
-L.esri.Vector.vectorBasemapLayer(basemapEnum, {
-  apiKey: apiKey
-}).addTo(map);
+        success: function(data) {
 
-const layerGroup = L.layerGroup().addTo(map);
+            var data = JSON.parse(data);
 
-map.on("click", function (e) {
-  L.esri.Geocoding
-    .reverseGeocode({
-      apikey: apiKey
-    })
-    .latlng(e.latlng)
-    .run(function (error, result) {
-      if (error) {
-        return;
-      }
 
-      const lngLatString = ` ${Math.round(result.latlng.lat * 100000) / 100000},${Math.round(result.latlng.lng * 100000) / 100000}`;
+            var marker = L.marker([data.latitude, data.longitude]).addTo(map)
+
+
+
+
+        } //success 
 
       layerGroup.clearLayers();
       marker = L.marker(result.latlng)
@@ -470,6 +497,7 @@ map.on("click", function (e) {
     });
 });
 
+<<<<<<< HEAD
 
 
 function load_person_area_data_A() {
@@ -537,7 +565,7 @@ function load_person_area_data_D() {
 $('#btnAddPerson').click(function(e) {
     e.preventDefault();
     if ($('#level_a').val().length == "") {
-       alert("กรุณาระบุข้อมูล")
+        alert("กรุณาระบุข้อมูล")
     } else {
         var data = new FormData(this.form);
         console.log(data);
@@ -549,7 +577,7 @@ $('#btnAddPerson').click(function(e) {
             processData: false,
             contentType: false,
             success: function(data) {
-                if (data.code == "200") {  
+                if (data.code == "200") {
                     alert("บันทึกสำเร็จ");
                     load_person_area_data_A();
                     load_person_area_data_B();
@@ -573,7 +601,7 @@ $('#btnAddPerson').click(function(e) {
             } // success
         });
 
-     }
+    }
 
 }); //  click
 
@@ -583,33 +611,33 @@ function delPersonAera(id) {
     var aid = $('#aid').val();
 
     $.ajax({
-            type: "POST",
-            url: "core/zone/zone-del-person-area.php",
-            dataType: "json",
-            data: {oid:oid,aid:aid},
-            success: function(data) {
-                if (data.code == "200") {  
-                    alert("ลบข้อมูลสำเร็จ");
-                    location.reload();
-                } else if (data.code == "404") {
-                    //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
-                    Swal.fire({
-                            icon: 'error',
-                            title: 'ไม่สามารถบันทึกข้อมูลได้',
-                            text: 'กรุณาลองใหม่อีกครั้ง'
-                        })
-                        .then((value) => {
-                            //liff.closeWindow();
-                        });
-                } else if (data.code == "300") {
-                    //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
-                    alert("มีหัวคะแนนรายนี้แล้ว กรุณากรอกข้อมมูลใหม่");
-                }
-            } // success
-        });
+        type: "POST",
+        url: "core/zone/zone-del-person-area.php",
+        dataType: "json",
+        data: {
+            oid: oid,
+            aid: aid
+        },
+        success: function(data) {
+            if (data.code == "200") {
+                alert("ลบข้อมูลสำเร็จ");
+                location.reload();
+            } else if (data.code == "404") {
+                //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
+                Swal.fire({
+                        icon: 'error',
+                        title: 'ไม่สามารถบันทึกข้อมูลได้',
+                        text: 'กรุณาลองใหม่อีกครั้ง'
+                    })
+                    .then((value) => {
+                        //liff.closeWindow();
+                    });
+            } else if (data.code == "300") {
+                //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
+                alert("มีหัวคะแนนรายนี้แล้ว กรุณากรอกข้อมมูลใหม่");
+            }
+        } // success
+    });
 
 }
-
 </script>
-
-

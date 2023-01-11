@@ -491,6 +491,116 @@ $stmt_data->execute();
             </div>
             <br>
 
+            <!-- Text Column3 -->
+            <div class="row-md-2">
+                <a href="#demo5" data-bs-toggle="collapse">
+                    <div class="card text-white">
+                        <div class="card-header bg-primary">
+                            <div class="d-flex justify-content-between mb-3">
+                                <div class="p-2 ">
+                                    <h4>สมาชิกกลุ่ม N</h4>
+                                </div>
+                                <div class="p-2 "> <i class='fas fa-angle-double-down text-white'
+                                        style='font-size:35px;'> </i> </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- ListItem3 -->
+                <div class=" ex3 collapse " id="demo5">
+
+
+                    <?php
+
+
+$stmt_data = $conn->prepare ("SELECT p.*,pr.prename AS prename_title,c.changwatname,a.ampurname,t.tambonname,s.sexname
+FROM ".DB_PREFIX."person_main p 
+LEFT JOIN ".DB_PREFIX."cprename pr ON p.prename = pr.id_prename
+LEFT JOIN ".DB_PREFIX."cchangwat c ON p.changwat = c.changwatcode
+LEFT JOIN ".DB_PREFIX."campur a ON CONCAT(p.changwat,p.ampur) = a.ampurcodefull
+LEFT JOIN ".DB_PREFIX."ctambon t ON CONCAT(p.changwat,p.ampur,p.tambon) = t.tamboncodefull
+LEFT JOIN ".DB_PREFIX."csex s ON p.sex = s.sex WHERE p.level =5
+ORDER BY p.oid DESC
+");
+$stmt_data->execute();		
+
+
+?>
+
+                    <?php
+
+    $i  = 0;
+    $no = 1;
+    while ($row = $stmt_data->fetch(PDO::FETCH_ASSOC))
+    {
+        $i++;
+        $no++;
+        $oid = $row['oid'];
+        $personid = $oid;
+        $personid_enc = base64_encode($oid);
+        $prename = $row['prename_title'];
+        $fname = $row['fname'];
+        $lname = $row['lname'];
+        $fullname = $prename.$fname." ".$lname;
+        $cid = $row['cid'];
+        $telephone = $row['telephone'];
+        $img_profile = $row['img_profile'];
+        $today = date("Y-m-d");
+        $level = $row['level'];
+        
+        $house = $row['house'];
+        $village = $row['village'];
+            $changwatname = $row['changwatname'];
+            $ampurname = $row['ampurname'];
+            $tambonname = $row['tambonname'];
+            $addr =  "บ้านเลขที่ ".$house." ม.".$village." ต.".$tambonname." อ.".$ampurname." จ.".$changwatname;
+        ?>
+                    <table class="table">
+                        <tbody>
+
+                            <tr>
+                                <td>
+                                    <ul>
+                                        <li class="w3-bar border-bottom  ">
+                                            <div class="row-xs-2"><?php if($img_profile == ""){?>
+                                                <a href="uploads/no-image.jpg" class="example-image-link"
+                                                    data-lightbox="example-set" data-title="">
+                                                    <div class="symbol symbol-50 symbol-lg-60">
+                                                        <img src="uploads/no-image.jpg" alt="image" />
+                                                    </div>
+                                                </a>
+                                                <?php }else{?>
+                                                <a href="uploads/person/<?php echo $img_profile;?>"
+                                                    class="example-image-link" data-lightbox="example-set"
+                                                    data-title="">
+                                                    <div class="symbol symbol-50 symbol-lg-60">
+                                                        <img src="uploads/person/<?php echo $img_profile;?>"
+                                                            alt="image" />
+                                                    </div>
+                                                </a>
+                                                <?php } ?>
+                                            </div>
+                                </td>
+                                <td>
+                                    <div class="row-sx-2">
+                                        <div class="w3-bar-item"></br>
+                                            <span class="w3-large"><?php echo $fullname;?></span><br>
+                                            <span><?php echo $telephone;?></span><br>
+                                            <span><?php echo $addr;?></span>
+                                        </div>
+                                    </div>
+                                    </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <?php 
+                            } // end while
+                            ?>
+                </div>
+                </tbody>
+                </table>
+            </div>
+
         </div>
 
         <!--end::Body-->
@@ -514,7 +624,7 @@ $(document).ready(function() {
 
     var map = new L.Map('map', {
         'center': [14.9674218, 102.0682299],
-        'zoom': 12,
+        'zoom': 10,
         'layers': [tileLayer]
     });
 
