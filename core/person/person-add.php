@@ -28,7 +28,8 @@ $house = filter_input(INPUT_POST, 'house', FILTER_SANITIZE_STRING);
 $community = filter_input(INPUT_POST, 'community', FILTER_SANITIZE_STRING);
 $village = filter_input(INPUT_POST, 'village', FILTER_SANITIZE_STRING);
 $road = filter_input(INPUT_POST, 'road', FILTER_SANITIZE_STRING);
-$changwat = filter_input(INPUT_POST, 'changwat', FILTER_SANITIZE_STRING);
+// $changwat = filter_input(INPUT_POST, 'changwat', FILTER_SANITIZE_STRING);
+$changwat = "30";
 $ampur = filter_input(INPUT_POST, 'ampur', FILTER_SANITIZE_STRING);
 $tambon = filter_input(INPUT_POST, 'tambon', FILTER_SANITIZE_STRING);
 

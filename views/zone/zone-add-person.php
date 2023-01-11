@@ -31,7 +31,7 @@ $action = base64_decode($act);
 			<div class="card-header ribbon ribbon-right">
       <!-- <div class="ribbon-target bg-primary" style="top: 10px; right: -2px;"></div> -->
 				<h3 class="card-title">
-        <i class="far fa-user"></i>&nbsp;เขตการเลือกตั้ง
+        <i class="far fa-user"></i>&nbsp;สรุปข้อมูลเขตการเลือกตั้ง
 				</h3>
 				<div class="card-toolbar">
 					<div class="example-tools justify-content-center">
@@ -170,7 +170,7 @@ $action = base64_decode($act);
     <h3>กรุณากด Shift + Scoll Mouse เพื่อ  Zoom Map </h3> 
     </div>
     <div class="col-3" >
-        <h3 class="text-left">หัวคะแนน    คะแนนรวม <?php echo $person_num; ?> คะแนน</h3>
+        <h3 class="text-left">สรุปจำนวนคะแนน <?php echo $person_num; ?> คน</h3>
     </div>
     <div class="col-3 text-right ">
         <h3><a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalPerson"><i class="far fa-plus-square"></i>เพิ่มหัวคะแนน</a></h3>
