@@ -30,14 +30,14 @@ $numb_rows = $stmt_data->rowCount();
 ?>
 
 
-<div class="table-responsive" style="height:650px;">
+<div class="table-responsive" >
     <table class="table table-bordered table-hover table-strip" id="tbData" style="">
         <thead style="position: sticky; top: 0; z-index: 1;background:#eee;">
             <tr>
                 <th class="text-center">ลำดับ</th>
-                <th>ชื่อ-สกุล</th>
-                <th>รายละเอียด</th>
-                <th>จำนวนสมาชิก(รวมตนเอง)</th>
+                <th style="width:30%">ชื่อ-สกุล</th>
+                <th style="width:20%">รายละเอียด</th>
+                <th >จำนวนสมาชิก(N-ผู้มีสิทธิ)</th>
                 <th class="text-center">จัดการ</th>
             </tr>
         </thead>
@@ -51,7 +51,7 @@ $numb_rows = $stmt_data->rowCount();
             $name =  $row['fname'].' '. $row['lname'];
             $de =  $row['datail'];
             $oid = $row['oid'];
-            $sql = $conn->prepare("SELECT COUNT(team_id) AS num FROM person_main WHERE team_id = ".$oid);
+            $sql = $conn->prepare("SELECT COUNT(team_id) AS num FROM person_main WHERE level = 5 AND head = ".$oid." AND team_id = ".$oid);
             $sql->execute();
             $count_num = $sql->fetchColumn();
             ?>
@@ -61,21 +61,16 @@ $numb_rows = $stmt_data->rowCount();
                 <td><?php echo $name; ?></td>
                 <td><?php echo $de; ?></td>
                 <td><?php echo $count_num; ?></td>
-                <td class="text-center">
-                    <!--begin::Dropdown-->
+                <td class="text-center text-nowrap">
+<!--                     
                     <div class="dropdown">
                         <a href="#" class="btn btn-clean btn-icon" data-bs-toggle="dropdown">
                             <i class="ki ki-bold-more-hor font-size-md"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
-                            <!--begin::Navigation-->
                             <ul class="navi navi-hover py-1">
 
                                 <li class="navi-item">
-                                    <!--<a href="#" class="navi-link"  data-toggle="modal" data-target="#modal_edit_status_<?php echo $oid; ?>">
-                                                <span class="navi-icon"><i class="fas fa-edit"></i></span>
-                                                <span class="navi-text">แก้ไข</span>
-                                            </a>-->
                                     <a href="dashboard.php?module=person&page=treeview&oid=<?php echo $row['oid']; ?>"
                                         class="navi-link">
                                         <span class="navi-icon"><i class="fas fa-edit"></i></span>
@@ -90,11 +85,18 @@ $numb_rows = $stmt_data->rowCount();
                                     </a>
                                 </li>
                             </ul>
-                            <!--end::Navigation-->
                         </div>
-                    </div>
-                    <!--end::Dropdown-->
-
+                    </div> -->
+                    <!-- <a href="dashboard.php?module=person&page=treeview&oid=<?php echo $row['oid']; ?>" class="navi-link" title="ประวัติการทำรายการ">
+                        <span class="navi-icon"><i class="fas fa-user-alt text-primary"></i></span>
+                    </a> -->
+                    <a href="dashboard.php?module=person&page=person-N&oid=<?php echo $row['oid']; ?>&team_id=<?php echo $row['oid']; ?>" class="navi-link" title="ประวัติการทำรายการ">
+                        <span class="navi-icon"><i class="fas fa-user-alt text-primary"></i></span>
+                    </a>
+                    <a href="#" class="navi-link" onclick='delPersonAera(<?php echo $row["oid"]; ?>)' title="ยกเลิกโครงการ">
+                        <span class="navi-icon"><i class="fas fa-trash text-danger"></i></span>
+                    </a>
+      
                 </td>
 
             </tr>

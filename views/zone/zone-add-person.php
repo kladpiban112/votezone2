@@ -184,8 +184,15 @@ $action = base64_decode($act);
 <div class="row col-lg-12">
 <div class="col-6" id="map" style="width: 100%; height:650px;" >
 </div>
-<div class="col-6" id="map1" style="width: 100%; height:650px;" >
-    <div id="person_area"></div>
+<div class="col-6" id="map1" style="width: 100%;" >
+    <div><h4>ระดับ A - เขตเลือกตั้ง</h4></div>
+        <div id="person_area_A"></div>
+    <div><h4>ระดับ B - ระดับอำเภอ</h4></div>
+        <div id="person_area_B"></div>
+    <div><h4>ระดับ C - ระดับตำบล</h4></div>
+        <div id="person_area_C"></div>
+    <div><h4>ระดับ D - ระดับหมูบ้าน</h4></div>
+        <div id="person_area_D"></div>
 </div>
 </div>
 
@@ -282,7 +289,12 @@ $(document).ready(function () {
     $('#level_a').select2({
         dropdownParent: $('#modalPerson')
     });
-    load_person_area_data();
+    load_person_area_data_A();
+    load_person_area_data_B();
+    load_person_area_data_C();
+    load_person_area_data_D();
+
+
 }); 
 
 $(".add-more").click(function(){ 
@@ -460,18 +472,63 @@ map.on("click", function (e) {
 
 
 
-function load_person_area_data() {
+function load_person_area_data_A() {
     var aid = $("#aid").val();
     $.ajax({
         type: "POST",
-        url: "views/zone/zone-data-person-area.php",
+        url: "views/zone/zone-data-person-area-A.php",
         //dataType: "json",
         data: {
             aid: aid
         },
         success: function(data) {
-            $("#person_area").empty(); //add preload
-            $("#person_area").append(data);
+            $("#person_area_A").empty(); //add preload
+            $("#person_area_A").append(data);
+        } // success
+    });
+}
+function load_person_area_data_B() {
+    var aid = $("#aid").val();
+    $.ajax({
+        type: "POST",
+        url: "views/zone/zone-data-person-area-B.php",
+        //dataType: "json",
+        data: {
+            aid: aid
+        },
+        success: function(data) {
+            $("#person_area_B").empty(); //add preload
+            $("#person_area_B").append(data);
+        } // success
+    });
+}
+function load_person_area_data_C() {
+    var aid = $("#aid").val();
+    $.ajax({
+        type: "POST",
+        url: "views/zone/zone-data-person-area-C.php",
+        //dataType: "json",
+        data: {
+            aid: aid
+        },
+        success: function(data) {
+            $("#person_area_C").empty(); //add preload
+            $("#person_area_C").append(data);
+        } // success
+    });
+}
+function load_person_area_data_D() {
+    var aid = $("#aid").val();
+    $.ajax({
+        type: "POST",
+        url: "views/zone/zone-data-person-area-D.php",
+        //dataType: "json",
+        data: {
+            aid: aid
+        },
+        success: function(data) {
+            $("#person_area_D").empty(); //add preload
+            $("#person_area_D").append(data);
         } // success
     });
 }
@@ -494,7 +551,10 @@ $('#btnAddPerson').click(function(e) {
             success: function(data) {
                 if (data.code == "200") {  
                     alert("บันทึกสำเร็จ");
-                    load_person_area_data();
+                    load_person_area_data_A();
+                    load_person_area_data_B();
+                    load_person_area_data_C();
+                    load_person_area_data_D();
                     location.reload();
                 } else if (data.code == "404") {
                     //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
