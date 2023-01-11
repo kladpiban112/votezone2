@@ -17,9 +17,7 @@ $action = base64_decode($act);
     $stmt_data->execute();	
     $row_person = $stmt_data->fetch(PDO::FETCH_ASSOC);
 
-    $stmt = $conn->prepare("SELECT COUNT(pm.team_id) FROM ".DB_PREFIX."mapping_person mp LEFT JOIN area a ON a.aid = mp.aid
-    LEFT JOIN person_main pm ON mp.oid = pm.team_id
-    WHERE mp.aid = ? ");
+    $stmt = $conn->prepare("SELECT COUNT(pm.team_id) FROM ".DB_PREFIX."mapping_person mp LEFT JOIN area a ON a.aid = mp.aid LEFT JOIN person_main pm ON mp.oid = pm.team_id WHERE mp.aid = ? ");
     $stmt->execute([$aid]);
     // $person_num = $stmt->fetch(PDO::FETCH_ASSOC);
     $person_num = $stmt->fetchColumn();
@@ -496,8 +494,6 @@ $(document).ready(function() {
         .openPopup();
     });
 });
-
-<<<<<<< HEAD
 
 
 function load_person_area_data_A() {

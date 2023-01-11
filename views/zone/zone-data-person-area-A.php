@@ -18,7 +18,7 @@ $personid_enc = base64_encode($personid);
 // $numb_rows = $stmt_data->rowCount();
 
 
-$stmt_data = $conn->prepare('SELECT *FROM mapping_person mp 
+$stmt_data = $conn->prepare('SELECT * FROM mapping_person mp 
 LEFT JOIN area a ON a.aid = mp.aid
 LEFT JOIN person_main pm ON mp.oid = pm.team_id
 WHERE mp.aid = '.$aid.' AND pm.level = 1 ORDER BY mp.oid');
