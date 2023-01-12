@@ -20,9 +20,9 @@ if($cid_search != ""){
 if($search != ""){
     $search_data = " AND  p.fname LIKE '%$search%'  ";
 }
-if($slevel != ""){
-    $slevel_data = " AND  p.level = '$slevel' ";
-}
+// if($slevel != ""){
+//     $slevel_data = " AND  p.level = '$slevel' ";
+// }
 if($cchangwat != ""){
     $cchangwat_data = " AND  p.changwat = '$cchangwat' ";
 }
@@ -51,9 +51,11 @@ $person_N = " AND p.level = 5 AND  p.head = '$oid_team' AND p.team_id = '$team_i
     <form class="form" enctype="multipart/form-data" id="frmSearch" method="GET">
     <input type="hidden" class="form-control"  name="act" id="act" value="search"/>
     <input type="hidden" class="form-control"  name="module"  value="<?php echo $module;?>"/>
-    <input type="hidden" class="form-control"  name="page"  value="main"/>
+    <input type="hidden" class="form-control"  name="page"  value="person-N"/>
+    <input type="hidden" class="form-control"  name="oid"  value="<?php echo $oid_team;?>"/>
+    <input type="hidden" class="form-control"  name="team_id"  value="<?php echo $team_id;?>"/>
     <div class="form-group row">
-            <div class="col-lg-2">
+            <!-- <div class="col-lg-2">
 				<label>ระดับ</label>
                 <select class="form-control form-control-sm" name="slevel" id="slevel">
                         
@@ -69,7 +71,7 @@ $person_N = " AND p.level = 5 AND  p.head = '$oid_team' AND p.team_id = '$team_i
                                 }
                         ?>
                 </select>			
-            </div>
+            </div> -->
             <div class="col-lg-2">
                 <label>จังหวัด</label>
                 <select class="form-control form-control-sm" name="changwat" id="changwat" disabled>
@@ -300,7 +302,7 @@ $person_N = " AND p.level = 5 AND  p.head = '$oid_team' AND p.team_id = '$team_i
 $p = 4;	//	กำหนดช่วงตัวเลขทางซ้าย และ ขวา ของหน้าที่ถูกเลือก
 $Prev_Page = $pagenum-1;
 $Next_Page = $pagenum+1;
-$page_link = "dashboard.php?module=$module&page=main&search=$search&cid=$cid_search&hn=$hn_search&pagenum";
+$page_link = "dashboard.php?module=$module&page=person-N&search=$search&cid=$cid_search&oid=$oid_team&team_id=$team_id&hn=$hn_search&pagenum";
 
 if($pagenum==1)		//	กรณีอยู่หน้า 1 หรือยังไม่เลือกหน้า
 {
