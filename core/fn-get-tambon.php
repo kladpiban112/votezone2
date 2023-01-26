@@ -26,7 +26,7 @@ $stmt_data->execute();
                 $tamboncode = $row['tamboncode']; // 2 หลัก
                 $tambonname = $row['tambonname'];
                  ?>
-                <option value="<?php echo $tamboncode;?>" <?php if($tamboncodefull == $changwatcode.$ampurcode.$tambon){echo "selected";}?>><?php echo $tambonname;?></option>     
+                <option value="<?php echo $tamboncodefull;?>" <?php if($tamboncodefull == $changwatcode.$ampurcode.$tambon){echo "selected";}?>><?php echo $tambonname;?></option>     
             <?php 
         $r++;
         } ?>
