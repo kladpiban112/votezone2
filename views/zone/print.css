@@ -1,0 +1,25 @@
+@media print {
+	body {
+		-webkit-print-color-adjust: exact;
+	} 
+    div {
+		-webkit-print-color-adjust: exact;
+		} 
+	.hideWhenPrint { 
+	  display: none;
+	}
+	th.l {
+		text-align: left;
+	}  
+	td.l {
+		text-align: right;
+		width: 20%;
+	}  
+	td.r {
+		width: 10%;
+	}  
+	td {
+		text-align: center;
+	  }
+
+}

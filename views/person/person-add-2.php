@@ -547,7 +547,6 @@ if($action == "edit"){
                             title="บันทึก"></i> บันทึก</button>
                     <button type="button" class="btn btn-warning btn-sm" onclick="javascript:history.back()"><i
                             class="fa fa-chevron-left" title="ย้อนกลับ"></i> </button>
-
                 </div>
                 <div class="col-lg-6 text-right">
                     <!--<button type="reset" class="btn btn-danger">Delete</button>-->

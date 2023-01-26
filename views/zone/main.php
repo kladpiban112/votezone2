@@ -222,6 +222,12 @@ $action = base64_decode($act);
                                             </a>
                                         </li>
                                         <li class="navi-item">
+                                            <a href="dashboard.php?module=zone&page=zone-add-person-excel&aid=<?php echo $aid_enc;?>" class="navi-link">
+                                                <span class="navi-icon"><i class="fas fa-print"></i></span>
+                                                <span class="navi-text">พิมพ์รายงาน</span>
+                                            </a>
+                                        </li>
+                                        <li class="navi-item">
                                             <a href="dashboard.php?module=zone&page=zone-add&aid=<?php echo $aid_enc;?>&act=<?php echo base64_encode('edit');?>" class="navi-link">
                                                 <span class="navi-icon"><i class="fas fa-edit"></i></span>
                                                 <span class="navi-text">แก้ไข</span>
