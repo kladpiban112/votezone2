@@ -25,6 +25,8 @@ if($action == "edit"){
 }
 
 ?>
+
+
 <!--begin::Card-->
 <div class="card card-custom gutter-b example example-compact">
     <div class="card-header ribbon ribbon-right">
@@ -114,10 +116,14 @@ if($action == "edit"){
 
                         <div class="col-lg-3">
                             <label>ตำบล</label>
-                            <select class="form-control form-control-sm" name="tambon" id="tambon">
-                                <option value="">ระบุ</option>
+                            <select class=" form-control form-control-sm  " multiple name="tambon[]" id="tambon">
+                                <option value="" id="tambon">ระบุ</option>
                             </select>
+
+
                         </div>
+
+
                     </div>
 
                     <div class="form-group row">
@@ -170,6 +176,8 @@ if($action == "edit"){
                                 id="details"><?php echo $row_person['details'];?></textarea>
                         </div>
                     </div>
+
+
                 </div>
                 <div class="row col-lg-12">
                     <h4>กรุณากด เลื่อนแผนที่ เพื่อขยับแผนที่ คลิกขวาเพื่อแสดงข้อมูล </h4>
@@ -209,21 +217,37 @@ if($action == "edit"){
 <script src="assets/js/bootstrap-datepicker.js"></script>
 <script src="assets/js/bootstrap-datepicker-thai.js"></script>
 <script src="assets/js/locales/bootstrap-datepicker.th.js"></script>
-<!-- Load Leaflet from CDN -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" crossorigin="" />
-<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" crossorigin=""></script>
-<!-- Load Esri Leaflet from CDN -->
-<script src="https://unpkg.com/esri-leaflet@^3.0.8/dist/esri-leaflet.js"></script>
-<script src="https://unpkg.com/esri-leaflet-vector@^3.0.0/dist/esri-leaflet-vector.js"></script>
-<!-- Load Esri Leaflet Geocoder from CDN -->
-<script src="https://unpkg.com/esri-leaflet-geocoder@3.1.3/dist/esri-leaflet-geocoder.js"></script>
 
+<script src="js/jquery.min.js"></script>
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-multiselect.js"></script>
+<link rel="stylesheet" href="css/bootstrap-multiselect.css" />
+
+
+
+
+<!-- <script type="text/javascript">
+$(document).ready(function() {
+    $('#tambon').multiselect({
+        includeSelectAllOption: true,
+        selectAllValue: 'select-all-value'
+    });
+});
+</script> -->
 
 <script>
 $(document).ready(function() {
     'use strict';
     getoptselect_amphur();
     getoptselect_tambon();
+
+    $('#tambon').multiselect({
+        nonSelectedText: 'Select Your Skills',
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true,
+        buttonWidth: '400px'
+    });
 
 });
 
@@ -234,9 +258,6 @@ $(".add-more").click(function() {
 });
 
 
-$('#birthdate').datepicker({
-    autoclose: true
-});
 
 
 $("#changwat").change(function() {

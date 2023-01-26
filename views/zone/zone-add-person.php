@@ -24,6 +24,40 @@ $action = base64_decode($act);
 
 
 ?>
+
+
+
+<style type="text/css">
+.ldmap_lock_button {
+    width: 100% !important;
+    height: 100% !important;
+    top: 50%;
+    left: 50%;
+    bottom: unset;
+    right: unset;
+    transform: translate(-50%, -50%);
+    border: none;
+    outline: none;
+    background-color: rgba(0, 0, 0, .5);
+    color: #fff;
+    border-radius: 0;
+    font-size: 16px;
+}
+
+.ldmap_lock_button.active {
+    background-color: #fff;
+    box-shadow: 0 0 2px 2px rgb(0 0 0 / 20%);
+    border-radius: 3px;
+    width: unset !important;
+    height: 20px !important;
+    top: 5px;
+    left: unset;
+    right: 36px;
+    transform: translate(0);
+    color: #323232;
+    padding: 10px;
+}
+</style>
 <!--begin::Card-->
 <div class="card card-custom gutter-b example example-compact">
     <div class="card-header ribbon ribbon-right">
@@ -176,10 +210,11 @@ $action = base64_decode($act);
                                 disabled><?php echo $row_person['details'];?> </textarea>
                         </div>
                     </div>
-                </div>
+                </div></br>
+
                 <div class="row col-lg-12">
                     <div class="col-6">
-                        <h3>กรุณากด Shift + Scoll Mouse เพื่อ Zoom Map </h3>
+
                     </div>
                     <div class="col-3">
                         <h3 class="text-left">สรุปจำนวนคะแนน <?php echo $person_num; ?> คน</h3>
@@ -194,21 +229,30 @@ $action = base64_decode($act);
             </div>
             <!--col-->
 
-		</div><!--col-->
-<div class="row col-lg-12">
-<div class="col-6" id="map" style="width: 100%; height:650px;" >
-</div>
-<div class="col-6" id="map1" style="width: 100%;" >
-    <div><h4>ระดับ A - เขตเลือกตั้ง</h4></div>
-        <div id="person_area_A"></div>
-    <div><h4>ระดับ B - ระดับอำเภอ</h4></div>
-        <div id="person_area_B"></div>
-    <div><h4>ระดับ C - ระดับตำบล</h4></div>
-        <div id="person_area_C"></div>
-    <div><h4>ระดับ D - ระดับหมูบ้าน</h4></div>
-        <div id="person_area_D"></div>
-</div>
-</div>
+        </div>
+        <!--col-->
+        <div class="row col-lg-12">
+            <div class=" col-6" id="map" style="width: 100%; height:650px;">
+            </div>
+            <div class="col-6" id="map1" style="width: 100%;">
+                <div>
+                    <h4>ระดับ A - เขตเลือกตั้ง</h4>
+                </div>
+                <div id="person_area_A"></div>
+                <div>
+                    <h4>ระดับ B - ระดับอำเภอ</h4>
+                </div>
+                <div id="person_area_B"></div>
+                <div>
+                    <h4>ระดับ C - ระดับตำบล</h4>
+                </div>
+                <div id="person_area_C"></div>
+                <div>
+                    <h4>ระดับ D - ระดับหมูบ้าน</h4>
+                </div>
+                <div id="person_area_D"></div>
+            </div>
+        </div>
 
         <!-- <br> -->
         <div class="card-footer">
@@ -281,22 +325,73 @@ $action = base64_decode($act);
 <script src="assets/js/bootstrap-datepicker.js"></script>
 <script src="assets/js/bootstrap-datepicker-thai.js"></script>
 <script src="assets/js/locales/bootstrap-datepicker.th.js"></script>
-<!-- Load Leaflet from CDN -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" crossorigin="" />
-<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" crossorigin=""></script>
-<!-- Load Esri Leaflet from CDN -->
-<script src="https://unpkg.com/esri-leaflet@^3.0.8/dist/esri-leaflet.js"></script>
-<script src="https://unpkg.com/esri-leaflet-vector@^3.0.0/dist/esri-leaflet-vector.js"></script>
-<!-- Load Esri Leaflet Geocoder from CDN -->
-<script src="https://unpkg.com/esri-leaflet-geocoder@3.1.3/dist/esri-leaflet-geocoder.js"></script>
+
+<script type="text/javascript" src="https://api.longdo.com/map/?key=5e785cb06a872f9662a93d93ad733eed"></script>
+<script type="text/javascript">
+function init() {
+    var map = new longdo.Map({
+        placeholder: document.getElementById('map')
+    });
+    map.Layers.setBase(longdo.Layers.POLITICAL);
+    map.location({
+        lon: 102.065279,
+        lat: 14.973517
+    }, true);
+
+    var aid = $("#aid").val();
+    $.ajax({
+        type: "POST",
+        url: "core/treeview/map_test.php",
+        //dataType: "json",
+        data: {
+            aid: aid
+        },
+        success: function(data) {
+
+            var data = JSON.parse(data);
+            console.log(data);
 
 
+            var object4 = new longdo.Overlays.Object(data[0].zone_code, 'IG', {
+                combine: true,
+                simplify: 0.00005,
+                ignorefragment: false,
+                lineColor: '#888',
+                lineStyle: longdo.LineStyle.Dashed,
+                fillColor: data[0].area_color,
+                label: data[0].zone_name,
+            });
+            map.Overlays.load(object4);
+
+
+
+        } //success 
+
+    });
+
+
+
+
+
+    map.zoom(10, true);
+    map.Ui.Mouse.enableWheel(false);
+    map.Ui.Toolbar.visible(false);
+    map.Ui.LayerSelector.visible(false);
+    map.Ui.DPad.visible(false);
+    map.Ui.Crosshair.visible(false);
+    map.Ui.LayerSelector.visible(false);
+
+
+
+
+}
+</script>
 <script>
 $(document).ready(function() {
     'use strict';
     getoptselect_amphur();
     getoptselect_tambon();
-    // $('.js-example-basic-single').select2();   
+    // $('.js-example-basic-single').select2();
     $('#level_a').select2({
         dropdownParent: $('#modalPerson')
     });
@@ -304,38 +399,14 @@ $(document).ready(function() {
     load_person_area_data_B();
     load_person_area_data_C();
     load_person_area_data_D();
-
-    var longdomapserver =
-        'http://ms.longdo.com/mmmap/tile.php?zoom={z}&x={x}&y={y}&key=5e785cb06a872f9662a93d93ad733eed&proj=epsg3857&HD=1';
-    var tileLayer = new L.TileLayer(longdomapserver, {
-        'attribution': "© Longdo Map"
-    });
-
-    var map = new L.Map('map', {
-        'center': [14.9674218, 102.0682299],
-        'zoom': 12,
-        'layers': [tileLayer]
-    });
-
-    var aids = $("#aid").val();
-    $.ajax({
-        type: "POST",
-        url: "core/treeview/mapping.php",
-        //dataType: "json",
-
-        data: {
-            aid: aids
-        },
-
-        success: function(data) {
-
-            var data = JSON.parse(data);
-            var marker = L.marker([data.latitude, data.longitude]).addTo(map)
-        } //success 
+    init();
 
 
-    });
-}); 
+
+});
+
+
+
 
 $(".add-more").click(function() {
     //alert(99);
@@ -477,7 +548,7 @@ $('#btnSaveArea').click(function(e) {
             } // success
         });
     }
-}); //  click
+}); // click
 
 
 function load_person_area_data_A() {
@@ -495,6 +566,7 @@ function load_person_area_data_A() {
         } // success
     });
 }
+
 function load_person_area_data_B() {
     var aid = $("#aid").val();
     $.ajax({
@@ -510,6 +582,7 @@ function load_person_area_data_B() {
         } // success
     });
 }
+
 function load_person_area_data_C() {
     var aid = $("#aid").val();
     $.ajax({
@@ -525,6 +598,7 @@ function load_person_area_data_C() {
         } // success
     });
 }
+
 function load_person_area_data_D() {
     var aid = $("#aid").val();
     $.ajax({
@@ -583,7 +657,7 @@ $('#btnAddPerson').click(function(e) {
 
     }
 
-}); //  click
+}); // click
 
 function delPersonAera(id) {
 

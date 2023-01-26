@@ -36,6 +36,8 @@ $tambon = filter_input(INPUT_POST, 'tambon', FILTER_SANITIZE_STRING);
 $religion = filter_input(INPUT_POST, 'religion', FILTER_SANITIZE_STRING);
 $cposition1 = filter_input(INPUT_POST, 'cposition1', FILTER_SANITIZE_STRING);
 $cposition2 = filter_input(INPUT_POST, 'cposition2', FILTER_SANITIZE_STRING);
+$cposition3 = filter_input(INPUT_POST, 'cposition3', FILTER_SANITIZE_STRING);
+$cposition4 = filter_input(INPUT_POST, 'cposition4', FILTER_SANITIZE_STRING);
 
 $education = filter_input(INPUT_POST, 'education', FILTER_SANITIZE_STRING);
 $abogroup = filter_input(INPUT_POST, 'abogroup', FILTER_SANITIZE_STRING);
@@ -157,7 +159,7 @@ if($exist_person != '0'){
 
 }else{
 if($level == "1"){$head = "0";}
-$query = "INSERT INTO ".DB_PREFIX."person_main ( cid, org_id, prename, fname, lname, sex,birthdate,telephone,house,community,road,village,tambon,ampur,changwat,flag,add_date,add_users,religion,cposition1,cposition2,abogroup,level,head,latitude,longitude) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?,?,?,?,?,?,?)"; 
+$query = "INSERT INTO ".DB_PREFIX."person_main ( cid, org_id, prename, fname, lname, sex,birthdate,telephone,house,community,road,village,tambon,ampur,changwat,flag,add_date,add_users,religion,cposition1,cposition2,cposition3,cposition4,abogroup,level,head,latitude,longitude) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?,?,?,?,?,?,?)"; 
 $stmt = $conn->prepare($query);
 $stmt->bindParam(1, $cid, PDO::PARAM_STR);
 $stmt->bindParam(2, $org_id, PDO::PARAM_STR);
@@ -180,11 +182,13 @@ $stmt->bindParam(18, $logged_user_id, PDO::PARAM_STR);
 $stmt->bindParam(19, $religion, PDO::PARAM_STR);
 $stmt->bindParam(20, $cposition1, PDO::PARAM_STR);
 $stmt->bindParam(21, $cposition2, PDO::PARAM_STR);
-$stmt->bindParam(22, $abogroup, PDO::PARAM_STR);
-$stmt->bindParam(23, $level, PDO::PARAM_STR);
-$stmt->bindParam(24, $head, PDO::PARAM_STR);
-$stmt->bindParam(25, $latitude, PDO::PARAM_STR);
-$stmt->bindParam(26, $longitude, PDO::PARAM_STR);
+$stmt->bindParam(22, $cposition3, PDO::PARAM_STR);
+$stmt->bindParam(23, $cposition4, PDO::PARAM_STR);
+$stmt->bindParam(24, $abogroup, PDO::PARAM_STR);
+$stmt->bindParam(25, $level, PDO::PARAM_STR);
+$stmt->bindParam(26, $head, PDO::PARAM_STR);
+$stmt->bindParam(27, $latitude, PDO::PARAM_STR);
+$stmt->bindParam(28, $longitude, PDO::PARAM_STR);
 $stmt->execute();
 
 $person_oid = $conn->lastInsertId(); // last inserted ID
@@ -259,7 +263,7 @@ if($level == "1"){
 	$head = "0";
 	$parents = $personid;
 }
-	$query = "UPDATE ".DB_PREFIX."person_main SET cid = ?, org_id = ?, prename = ?, fname = ?, lname = ?, sex = ?,birthdate = ?,telephone = ?,house = ?,community = ?,road = ?,village = ?,tambon = ?,ampur = ?,changwat = ?,flag = ?,edit_date = ?,edit_users = ?,religion = ? , cposition1 = ? ,cposition2 = ?, abogroup = ?, level = ?, head = ? ,team_id = ? ,latitude = ? ,longitude = ? WHERE oid = ? LIMIT 1"; 
+	$query = "UPDATE ".DB_PREFIX."person_main SET cid = ?, org_id = ?, prename = ?, fname = ?, lname = ?, sex = ?,birthdate = ?,telephone = ?,house = ?,community = ?,road = ?,village = ?,tambon = ?,ampur = ?,changwat = ?,flag = ?,edit_date = ?,edit_users = ?,religion = ? , cposition1 = ? ,cposition2 = ?,cposition3 = ? ,cposition4 = ?, abogroup = ?, level = ?, head = ? ,team_id = ? ,latitude = ? ,longitude = ? WHERE oid = ? LIMIT 1"; 
 	$stmt = $conn->prepare($query);
 	$stmt->bindParam(1, $cid, PDO::PARAM_STR);
 	$stmt->bindParam(2, $org_id, PDO::PARAM_STR);
@@ -282,13 +286,15 @@ if($level == "1"){
 	$stmt->bindParam(19, $religion, PDO::PARAM_STR);
 	$stmt->bindParam(20, $cposition1, PDO::PARAM_STR);
 	$stmt->bindParam(21, $cposition2, PDO::PARAM_STR);
-	$stmt->bindParam(22, $abogroup, PDO::PARAM_STR);
-	$stmt->bindParam(23, $level, PDO::PARAM_STR);
-	$stmt->bindParam(24, $head, PDO::PARAM_STR);
-	$stmt->bindParam(25, $parents, PDO::PARAM_STR);
-	$stmt->bindParam(26, $latitude, PDO::PARAM_STR);
-	$stmt->bindParam(27, $longitude, PDO::PARAM_STR);
-	$stmt->bindParam(28, $personid, PDO::PARAM_INT);
+	$stmt->bindParam(22, $cposition3, PDO::PARAM_STR);
+	$stmt->bindParam(23, $cposition4, PDO::PARAM_STR);
+	$stmt->bindParam(24, $abogroup, PDO::PARAM_STR);
+	$stmt->bindParam(25, $level, PDO::PARAM_STR);
+	$stmt->bindParam(26, $head, PDO::PARAM_STR);
+	$stmt->bindParam(27, $parents, PDO::PARAM_STR);
+	$stmt->bindParam(28, $latitude, PDO::PARAM_STR);
+	$stmt->bindParam(29, $longitude, PDO::PARAM_STR);
+	$stmt->bindParam(30, $personid, PDO::PARAM_INT);
 
 	$stmt->execute();
 

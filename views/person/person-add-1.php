@@ -205,6 +205,49 @@ if($personid_enc != ""){
                             </select>
 
                         </div>
+                        <div class="col-lg-3">
+                            <label>ตำแหน่ง 3</label>
+                            <select class="form-control form-control-sm" name="cposition3" id="cposition3">
+                                <option value="">ระบุ</option>
+                                <?php
+                          $stmt_user_role = $conn->prepare("SELECT * FROM  cposition c ");
+                          $stmt_user_role->execute();		
+                          while ($row = $stmt_user_role->fetch(PDO::FETCH_ASSOC))
+                            {
+                            $id = $row['id'];
+                            $title_selected = stripslashes($row['name']);
+                            ?>
+                                <option value="<?php echo $id;?>"
+                                    <?php if($row_person['cposition3'] == $id ){echo "selected";} ?>>
+                                    <?php echo $title_selected;?></option>
+                                <?php
+                            }
+                          ?>
+                            </select>
+
+                        </div>
+                        <div class="col-lg-3">
+                            <label>ตำแหน่ง 4</label>
+                            <select class="form-control form-control-sm" name="cposition4" id="cposition4">
+                                <option value="">ระบุ</option>
+                                <?php
+                          $stmt_user_role = $conn->prepare("SELECT * FROM  cposition c ");
+                          $stmt_user_role->execute();		
+                          while ($row = $stmt_user_role->fetch(PDO::FETCH_ASSOC))
+                            {
+                            $id = $row['id'];
+                            $title_selected = stripslashes($row['name']);
+                            ?>
+                                <option value="<?php echo $id;?>"
+                                    <?php if($row_person['cposition4'] == $id ){echo "selected";} ?>>
+                                    <?php echo $title_selected;?></option>
+                                <?php
+                            }
+                          ?>
+                            </select>
+
+                        </div>
+
 
                     </div>
 
@@ -581,8 +624,7 @@ if($personid_enc != ""){
 <script src="assets/js/bootstrap-datepicker-thai.js"></script>
 <script src="assets/js/locales/bootstrap-datepicker.th.js"></script>
 
-<script >
-
+<script>
 $(document).ready(function() {
     'use strict';
     getoptselect_amphur();
@@ -800,12 +842,40 @@ function confirm_person_image(id) {
 }
 
 
+function Script_checkID(id) {
+    if (!IsNumeric(id)) return false;
+    if (id.substring(0, 1) == 0) return false;
+    if (id.length != 13) return false;
+    for (i = 0, sum = 0; i < 12; i++)
+        sum += parseFloat(id.charAt(i)) * (13 - i);
+    if ((11 - sum % 11) % 10 != parseFloat(id.charAt(12))) return false;
+    return true;
+}
+
+
+function IsNumeric(input) {
+    var RE = /^-?(0|INF|(0[1-7][0-7]*)|(0x[0-9a-fA-F]+)|((0|[1-9][0-9]*|(?=[\.,]))([\.,][0-9]+)?([eE]-?\d+)?))$/;
+    return (RE.test(input));
+}
+
+
 $('#btnSavePerson').click(function(e) {
     e.preventDefault();
+    var cid = $('#cid').val();
+    var result_cid = Script_checkID(cid);
+
     if ($('#cid').val().length == "") {
         Swal.fire({
             icon: 'error',
             title: 'กรุณาระบุเลขบัตรประชาชน',
+            showConfirmButton: false,
+            timer: 1000
+
+        });
+    } else if (result_cid === false) {
+        Swal.fire({
+            icon: 'error',
+            title: 'เลขบัตรประชาชนไม่ถูกต้อง',
             showConfirmButton: false,
             timer: 1000
         });
@@ -946,5 +1016,4 @@ $('#cidSearch').click(function(e) {
     }
 
 }); //  click
-
 </script>
