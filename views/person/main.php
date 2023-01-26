@@ -29,29 +29,31 @@ if($ctambon != ""){
     $ctambon_data = " AND  p.tambon = '$ctambon' ";
 }
 ?>
-		<!--begin::Card-->
-		<div class="card card-custom gutter-b example example-compact">
-			<div class="card-header">
-				<h3 class="card-title">
-                <i class="far fa-user"></i>&nbsp;ข้อมูลบุคคล
-				</h3>
-				<div class="card-toolbar">
-					<div class="example-tools justify-content-center">
-						<a href="dashboard.php?module=<?php echo $module;?>&page=person-add-1" class="btn btn-success btn-sm font-weight-bold mr-2" title="เพิ่มบุคคล"><i class="fa fa-plus-circle" title="เพิ่มบุคคล" data-toggle="tooltip"></i>เพิ่มบุคคล</a>
-                    </div>
-				</div>
-			</div>
+<!--begin::Card-->
+<div class="card card-custom gutter-b example example-compact">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="far fa-user"></i>&nbsp;ข้อมูลบุคคล
+        </h3>
+        <div class="card-toolbar">
+            <div class="example-tools justify-content-center">
+                <a href="dashboard.php?module=<?php echo $module;?>&page=person-add-1"
+                    class="btn btn-success btn-sm font-weight-bold mr-2" title="เพิ่มบุคคล"><i class="fa fa-plus-circle"
+                        title="เพิ่มบุคคล" data-toggle="tooltip"></i>เพิ่มบุคคล</a>
+            </div>
+        </div>
+    </div>
 
-	<div class="card-body">
-    <form class="form" enctype="multipart/form-data" id="frmSearch" method="GET">
-    <input type="hidden" class="form-control"  name="act" id="act" value="search"/>
-    <input type="hidden" class="form-control"  name="module"  value="<?php echo $module;?>"/>
-    <input type="hidden" class="form-control"  name="page"  value="main"/>
-    <div class="form-group row">
-            <div class="col-lg-2">
-				<label>ระดับ</label>
-                <select class="form-control form-control-sm" name="slevel" id="slevel">
-                        
+    <div class="card-body">
+        <form class="form" enctype="multipart/form-data" id="frmSearch" method="GET">
+            <input type="hidden" class="form-control" name="act" id="act" value="search" />
+            <input type="hidden" class="form-control" name="module" value="<?php echo $module;?>" />
+            <input type="hidden" class="form-control" name="page" value="main" />
+            <div class="form-group row">
+                <div class="col-lg-2">
+                    <label>ระดับ</label>
+                    <select class="form-control form-control-sm" name="slevel" id="slevel">
+
                         <?php
                                 $stmt = $conn->prepare ("SELECT * FROM level_type ");
                                 $stmt->execute();
@@ -59,66 +61,68 @@ if($ctambon != ""){
                                 while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
                                 $id = $row->level_id;
                                 $name = $row->level; ?>
-                                <option value="<?php echo $id;?>" ><?php echo $name;?></option>
-                                <?php 
+                        <option value="<?php echo $id;?>"><?php echo $name;?></option>
+                        <?php 
                                 }
                         ?>
-                </select>			
-            </div>
-            <div class="col-lg-2">
-                <label>จังหวัด</label>
-                <select class="form-control form-control-sm" name="changwat" id="changwat" disabled>
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <label>จังหวัด</label>
+                    <select class="form-control form-control-sm" name="changwat" id="changwat" disabled>
 
-                    <?php
+                        <?php
                         $stmt = $conn->prepare ("SELECT * FROM cchangwat c   WHERE c.changwatcode = '30'");
                         $stmt->execute();
                         
                         while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
                         $id = $row->changwatcode;
                         $name = $row->changwatname; ?>
-                    <option value="<?php echo $id;?>"
-                        <?php if($row_person['changwat'] == $id){ echo "selected";}?>><?php echo $name;?>
-                    </option>
-                    <?php 
+                        <option value="<?php echo $id;?>" <?php if($row_person['changwat'] == $id){ echo "selected";}?>>
+                            <?php echo $name;?>
+                        </option>
+                        <?php 
                                                 }
                                             ?>
-                </select>
+                    </select>
+
+                </div>
+
+                <div class="col-lg-2">
+                    <label>อำเภอ</label>
+                    <select class="form-control form-control-sm" name="ampur" id="ampur">
+                        <option value="">ระบุ</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-2">
+                    <label>ตำบล</label>
+                    <select class="form-control form-control-sm" name="tambon" id="tambon">
+                        <option value="">ระบุ</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-2">
+                    <label>เลขบัตรประชาชน</label>
+                    <input type="text" class="form-control form-control-sm" placeholder="เลขบัตรประชาชน" name="cid"
+                        id="cid" value="<?php echo $cid;?>" />
+                </div>
+                <div class="col-lg-2">
+                    <label>ชื่อ-สกุล</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control form-control-sm" placeholder="ชื่อ-สกุล" name="search"
+                            id="search" value="<?php echo $search;?>" />
+                        <div class="input-group-append">
+                            <button class="btn btn-primary btn-sm" type="submit"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
-            <div class="col-lg-2">
-                <label>อำเภอ</label>
-                <select class="form-control form-control-sm" name="ampur" id="ampur">
-                    <option value="">ระบุ</option>
-                </select>
-            </div>
+        </form>
 
-            <div class="col-lg-2">
-                <label>ตำบล</label>
-                <select class="form-control form-control-sm" name="tambon" id="tambon">
-                    <option value="">ระบุ</option>
-                </select>
-            </div>
-
-            <div class="col-lg-2">
-				<label>เลขบัตรประชาชน</label>
-					<input type="text" class="form-control form-control-sm" placeholder="เลขบัตรประชาชน"  name="cid" id="cid"  value="<?php echo $cid;?>"/>
-			</div>
-             <div class="col-lg-2">
-				<label>ชื่อ-สกุล</label>
-				<div class="input-group">
-							<input type="text" class="form-control form-control-sm" placeholder="ชื่อ-สกุล"  name="search" id="search"  value="<?php echo $search;?>"/>
-							<div class="input-group-append">
-								<button class="btn btn-primary btn-sm" type="submit" ><i class="fas fa-search"></i></button>
-							</div>
-						</div>
-			</div>
-
-            </div>
-
-    </form> 
-
-    <?php
+        <?php
 
     if($logged_user_role_id == '1'){
         $conditions = " ";
@@ -170,26 +174,27 @@ if($ctambon != ""){
         $stmt_data->execute();		
     ?>
 
-<div class="table-responsive">
-	<table class="table table-bordered table-hover table-strip " id="tbData" style="margin-top: 13px !important; min-height: 300px;">
-    <thead>
-    <tr>
-        <th class="text-center">ลำดับ</th>
-        <th>ระดับ</th>
-        <th>รูป</th>
-        <th>เลขบัตรประชาชน</th>
-        <th>ชื่อ-สกุล</th>
-        <th>เพศ</th>
-        <th>อายุ</th>
-        <th>โทรศัพท์</th>
-        <th>ที่อยู่</th>
-        <!--<th class="text-center">สถานะ</th>-->
-        <th class="text-center">จัดการ</th>	
-    </tr>
-    </thead>
-    <tbody>
-            
-            <?php
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-strip " id="tbData"
+                style="margin-top: 13px !important; min-height: 300px;">
+                <thead>
+                    <tr>
+                        <th class="text-center">ลำดับ</th>
+                        <th>ระดับ</th>
+                        <th>รูป</th>
+                        <th>เลขบัตรประชาชน</th>
+                        <th>ชื่อ-สกุล</th>
+                        <th>เพศ</th>
+                        <th>อายุ</th>
+                        <th>โทรศัพท์</th>
+                        <th>ที่อยู่</th>
+                        <!--<th class="text-center">สถานะ</th>-->
+                        <th class="text-center">จัดการ</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <?php
 
             $i  = 0;
             $no = 1;
@@ -224,38 +229,44 @@ if($ctambon != ""){
                 $sexname = $row['sexname'];
                 $level = $row['name_level'];
                 ?>
-                <tr>
-                            <td class="text-center"><?php echo $no;?></td>
-                            <td><?php echo $level;?></td>
-                            <td class="text-center">
+                    <tr>
+                        <td class="text-center"><?php echo $no;?></td>
+                        <td><?php echo $level;?></td>
+                        <td class="text-center">
                             <?php if($img_profile == ""){?>
-                                <a  href="uploads/no-image.jpg" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
-                                <img src="uploads/no-image.jpg" alt="image"/>
-                                </div></a>
+                            <a href="uploads/no-image.jpg" class="example-image-link" data-lightbox="example-set"
+                                data-title="">
+                                <div class="symbol symbol-50 symbol-lg-60">
+                                    <img src="uploads/no-image.jpg" alt="image" />
+                                </div>
+                            </a>
                             <?php }else{?>
-                                <a  href="uploads/person/<?php echo $img_profile;?>" class="example-image-link" data-lightbox="example-set" data-title=""><div class="symbol symbol-50 symbol-lg-60">
-                                <img src="uploads/person/<?php echo $img_profile;?>" alt="image"/>
-                                </div></a>
-                                <?php } ?>
-                            </td>
-                            <td><?php echo $cid;?></td>
-                            <td><?php echo $fullname;?></td>
-                            <td><?php echo $sexname;?></td>
-                            <td><?php echo $age_y;?></td>
-                            <td><?php echo $telephone;?></td>
-                            <td><?php echo $addr;?></td>
-                            <!--<td class="text-center"><span class="label label-lg label-light-<?php echo $status_color;?> label-inline"><?php echo $status_title;?></span></td>-->
-                            <td class="text-center">
+                            <a href="uploads/person/<?php echo $img_profile;?>" class="example-image-link"
+                                data-lightbox="example-set" data-title="">
+                                <div class="symbol symbol-50 symbol-lg-60">
+                                    <img src="uploads/person/<?php echo $img_profile;?>" alt="image" />
+                                </div>
+                            </a>
+                            <?php } ?>
+                        </td>
+                        <td><?php echo $cid;?></td>
+                        <td><?php echo $fullname;?></td>
+                        <td><?php echo $sexname;?></td>
+                        <td><?php echo $age_y;?></td>
+                        <td><?php echo $telephone;?></td>
+                        <td><?php echo $addr;?></td>
+                        <!--<td class="text-center"><span class="label label-lg label-light-<?php echo $status_color;?> label-inline"><?php echo $status_title;?></span></td>-->
+                        <td class="text-center">
                             <!--begin::Dropdown-->
-                                <div class="dropdown">
-                                    <a href="#" class="btn btn-clean btn-icon" data-toggle="dropdown">
+                            <div class="dropdown">
+                                <a href="#" class="btn btn-clean btn-icon" data-toggle="dropdown">
                                     <i class="fas fa-sort-down"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
-                                        <!--begin::Navigation-->
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                                    <!--begin::Navigation-->
                                     <ul class="navi navi-hover py-1">
 
-                                    <!-- <li class="navi-item">
+                                        <!-- <li class="navi-item">
                                             <a href="?module=person&page=person-detail&personid=<?php echo $personid_enc;?>" class="navi-link">
                                                 <span class="navi-icon"><i class="fas fa-clipboard-list"></i></span>
                                                 <span class="navi-text">ประวัติบุคคล</span>
@@ -263,35 +274,37 @@ if($ctambon != ""){
                                         </li> -->
 
                                         <li class="navi-item">
-                                            <a href="dashboard.php?module=person&page=person-add-1&personid=<?php echo $personid_enc;?>&act=<?php echo base64_encode('edit');?>" class="navi-link">
+                                            <a href="dashboard.php?module=person&page=person-add-1&personid=<?php echo $personid_enc;?>&act=<?php echo base64_encode('edit');?>"
+                                                class="navi-link">
                                                 <span class="navi-icon"><i class="fas fa-user-edit"></i></span>
                                                 <span class="navi-text">แก้ไขข้อมูลบุคคล</span>
                                             </a>
                                         </li>
                                         <li class="navi-item">
-                                            <a href="dashboard.php?module=person&page=person-add-2&personid=<?php echo $personid_enc;?>&act=<?php echo base64_encode('edit');?>" class="navi-link">
+                                            <a href="dashboard.php?module=person&page=person-add-2&personid=<?php echo $personid_enc;?>&act=<?php echo base64_encode('edit');?>"
+                                                class="navi-link">
                                                 <span class="navi-icon"><i class="fas fa-user-edit"></i></span>
                                                 <span class="navi-text">แก้ไขข้อมูลสังกัด</span>
                                             </a>
                                         </li>
                                     </ul>
                                     <!--end::Navigation-->
-                                    </div>
                                 </div>
-                <!--end::Dropdown-->
-                            </td>
-                </tr>
-            <?php 
+                            </div>
+                            <!--end::Dropdown-->
+                        </td>
+                    </tr>
+                    <?php 
               } // end while
             ?>
-            </tbody>
+                </tbody>
             </table>
         </div>
 
-<div class="d-flex justify-content-between align-items-center flex-wrap">
-    <div class="d-flex flex-wrap py-2 mr-3">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <div class="d-flex flex-wrap py-2 mr-3">
 
-<?php 
+                <?php 
 $p = 4;	//	กำหนดช่วงตัวเลขทางซ้าย และ ขวา ของหน้าที่ถูกเลือก
 $Prev_Page = $pagenum-1;
 $Next_Page = $pagenum+1;
@@ -371,30 +384,29 @@ else if($Num_Pages!=1 && $Num_Pages!=2)	//	กรณีไม่ได้เล�
 
 ?>
 
-    </div>
+            </div>
 
-    <div class="d-flex align-items-center py-3">
-        <span class="text-muted">หน้า <?php echo $pagenum;?> / <?php echo $last;?> </span>
-    </div>
-</div>
+            <div class="d-flex align-items-center py-3">
+                <span class="text-muted">หน้า <?php echo $pagenum;?> / <?php echo $last;?> </span>
+            </div>
+        </div>
 
-<?php
+        <?php
 					} // end if
 					?>
-		
-	</div>
-	<div class="card-footer">
-		<div class="row">
-			
-		</div>
-	</div>
+
+    </div>
+    <div class="card-footer">
+        <div class="row">
+
+        </div>
+    </div>
 
 
 </div>
-		<!--end::Card-->
+<!--end::Card-->
 
 <script type="text/javascript">
-
 $(document).ready(function() {
     getoptselect_amphur();
 });
@@ -405,72 +417,70 @@ $("#ampur").change(function() {
 });
 
 function getoptselect_amphur() {
-    
-var changwatcode = 30;
-var ampur = $("#txt_ampur").val();
-$.ajax({
-    type: "POST",
-    url: "core/fn-get-ampur.php",
-    //dataType: "json",
-    data: {
-        changwatcode: changwatcode,
-        ampur: ampur
-    },
-    success: function(data) {
-        $("#ampur").empty();
-        $("#ampur").append(data);
-    } // success
-});
+
+    var changwatcode = 30;
+    var ampur = $("#txt_ampur").val();
+    $.ajax({
+        type: "POST",
+        url: "core/fn-get-ampur.php",
+        //dataType: "json",
+        data: {
+            changwatcode: changwatcode,
+            ampur: ampur
+        },
+        success: function(data) {
+            $("#ampur").empty();
+            $("#ampur").append(data);
+        } // success
+    });
 }
 
 
 function getoptselect_tambon() {
 
-var changwatcode = $("#changwat").val();
-var ampur = $("#txt_ampur").val();
-var ampurcode = $("#ampur").val();
-var tambon = $("#txt_tambon").val();
-$.ajax({
-    type: "POST",
-    url: "core/fn-get-tambon.php",
-    //dataType: "json",
-    data: {
-        changwatcode: changwatcode,
-        ampurcode: ampurcode,
-        ampur: ampur,
-        tambon: tambon
-    },
-    success: function(data) {
+    var changwatcode = $("#changwat").val();
+    var ampur = $("#txt_ampur").val();
+    var ampurcode = $("#ampur").val();
+    var tambon = $("#txt_tambon").val();
+    $.ajax({
+        type: "POST",
+        url: "core/fn-get-tambon.php",
+        //dataType: "json",
+        data: {
+            changwatcode: changwatcode,
+            ampurcode: ampurcode,
+            ampur: ampur,
+            tambon: tambon
+        },
+        success: function(data) {
 
-        $("#tambon").empty();
-        $("#tambon").append(data);
-    } // success
-});
+            $("#tambon").empty();
+            $("#tambon").append(data);
+        } // success
+    });
 
 }
+
 function confirm_borrow_delete(id) {
-                    Swal.fire({
-                        title: 'แน่ใจนะ?',
-                        text: "ต้องการยกเลิกรายการ",
-                        type: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        cancelButtonText: 'ยกเลิก',
-                        confirmButtonText: 'ใช่, ต้องการยกเลิกรายการ !'
-                    }).then((result) => {
-                        if (result.value) { //Yes
-                            $.post("core/borrow/borrow-main-del.php", {id: id}, function(result){
-                                //  $("test").html(result);
-                                // console.log(result.code);
-                                location.reload();
-                            });
-                        }
-                    })
-            }
-
-
+    Swal.fire({
+        title: 'แน่ใจนะ?',
+        text: "ต้องการยกเลิกรายการ",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'ยกเลิก',
+        confirmButtonText: 'ใช่, ต้องการยกเลิกรายการ !'
+    }).then((result) => {
+        if (result.value) { //Yes
+            $.post("core/borrow/borrow-main-del.php", {
+                id: id
+            }, function(result) {
+                //  $("test").html(result);
+                // console.log(result.code);
+                location.reload();
+            });
+        }
+    })
+}
 </script>
-
-
-

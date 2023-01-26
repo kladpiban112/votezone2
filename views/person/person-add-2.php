@@ -227,6 +227,48 @@ if($action == "edit"){
                             </select>
 
                         </div>
+                        <div class="col-lg-3">
+                            <label>ตำแหน่ง 2</label>
+                            <select class="form-control form-control-sm" name="cposition3" id="cposition3" disabled>
+                                <option value="">ระบุ</option>
+                                <?php
+                          $stmt_user_role = $conn->prepare("SELECT * FROM  cposition c ");
+                          $stmt_user_role->execute();		
+                          while ($row = $stmt_user_role->fetch(PDO::FETCH_ASSOC))
+                            {
+                            $id = $row['id'];
+                            $title_selected = stripslashes($row['name']);
+                            ?>
+                                <option value="<?php echo $id;?>"
+                                    <?php if($row_person['cposition3'] == $id ){echo "selected";} ?>>
+                                    <?php echo $title_selected;?></option>
+                                <?php
+                            }
+                          ?>
+                            </select>
+
+                        </div>
+                        <div class="col-lg-3">
+                            <label>ตำแหน่ง 2</label>
+                            <select class="form-control form-control-sm" name="cposition4" id="cposition4" disabled>
+                                <option value="">ระบุ</option>
+                                <?php
+                          $stmt_user_role = $conn->prepare("SELECT * FROM  cposition c ");
+                          $stmt_user_role->execute();		
+                          while ($row = $stmt_user_role->fetch(PDO::FETCH_ASSOC))
+                            {
+                            $id = $row['id'];
+                            $title_selected = stripslashes($row['name']);
+                            ?>
+                                <option value="<?php echo $id;?>"
+                                    <?php if($row_person['cposition4'] == $id ){echo "selected";} ?>>
+                                    <?php echo $title_selected;?></option>
+                                <?php
+                            }
+                          ?>
+                            </select>
+
+                        </div>
                     </div>
 
                     <div class="form-group row">

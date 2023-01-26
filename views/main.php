@@ -613,21 +613,24 @@ $stmt_data->execute();
 </div>
 <!--end::Card-->
 
-<script>
-$(document).ready(function() {
-    'use strict';
-    var longdomapserver =
-        'http://ms.longdo.com/mmmap/tile.php?zoom={z}&x={x}&y={y}&key=5e785cb06a872f9662a93d93ad733eed&proj=epsg3857&HD=1';
-    var tileLayer = new L.TileLayer(longdomapserver, {
-        'attribution': "© Longdo Map"
+<script type="text/javascript" src="https://api.longdo.com/map/?key=5e785cb06a872f9662a93d93ad733eed"></script>
+<script type="text/javascript">
+function init() {
+    var map = new longdo.Map({
+        placeholder: document.getElementById('map')
     });
+    map.Layers.setBase(longdo.Layers.POLITICAL);
+    map.location({
+        lon: 102.065279,
+        lat: 14.973517
+    }, true);
 
-    var map = new L.Map('map', {
-        'center': [14.9674218, 102.0682299],
-        'zoom': 10,
-        'layers': [tileLayer]
-    });
-
+    // map.Event.bind('overlayClick', function(overlay) {
+    //     overlay.update({
+    //         fillColor: 'rgba(101, 202, 246, 0.69)'
+    //     });
+    //     console.log(overlay)
+    // });
 
     $.ajax({
         type: "POST",
@@ -640,30 +643,75 @@ $(document).ready(function() {
             console.log(data);
             for (var i = 0; i < data.length; i++) {
 
-                var marker = L.marker([data[i].lat, data[i].lon]).addTo(map)
-
-                for (var j = 0; j < data[i].person.length; j++) {
-
-                    {
-
-                        marker.bindPopup(
-                            '<div class="container-fluid"  ><span class="w2-md p-2">เขตการเลือกตั้งที่ : ' +
-                            data[i].zone_number + '</span><br><span> หน่วยเลือกตั้งที่ : ' +
-                            data[i].area_number + '</span><br><span>ชื่อสถานที่ : ' +
-                            data[i].zone_name + '</span></div><p></p>จำนวน : ' + data[i].person
-                            .length + ' คน</div>'
-
-                        );
-                    }
-                }
-                marker.openPopup();
-
+                var object4 = new longdo.Overlays.Object(data[i].zone_code, 'IG', {
+                    combine: true,
+                    simplify: 0.00005,
+                    ignorefragment: false,
+                    lineColor: '#888',
+                    lineStyle: longdo.LineStyle.Dashed,
+                    fillColor: data[i].area_color,
+                    label: data[i].zone_name
+                });
+                map.Overlays.load(object4);
             }
 
 
         } //success 
 
     });
+
+    map.zoom(11, true);
+    map.Ui.Mouse.enableWheel(false);
+    map.Ui.Toolbar.visible(false);
+    map.Ui.LayerSelector.visible(false);
+    map.Ui.DPad.visible(false);
+    map.Ui.Crosshair.visible(false);
+    map.Ui.LayerSelector.visible(false);
+
+
+
+
+}
+</script>
+
+<script>
+$(document).ready(function() {
+    init();
+    // $.ajax({
+    //     type: "POST",
+    //     url: "core/treeview/treeview_test.php",
+    //     //dataType: "json",
+    //     data: {},
+    //     success: function(data) {
+
+    //         var data = JSON.parse(data);
+    //         console.log(data);
+    //         for (var i = 0; i < data.length; i++) {
+
+    //             var marker = L.marker([data[i].lat, data[i].lon]).addTo(map)
+
+    //             for (var j = 0; j < data[i].person.length; j++) {
+
+    //                 {
+
+    //                     marker.bindPopup(
+    //                         '<div class="container-fluid"  ><span class="w2-md p-2">เขตการเลือกตั้งที่ : ' +
+    //                         data[i].zone_number + '</span><br><span> หน่วยเลือกตั้งที่ : ' +
+    //                         data[i].area_number + '</span><br><span>ชื่อสถานที่ : ' +
+    //                         data[i].zone_name + '</span></div><p></p>จำนวน : ' + data[i].person
+    //                         .length + ' คน</div>'
+
+    //                     );
+    //                 }
+    //             }
+    //             marker.openPopup();
+
+    //         }
+
+
+    //     } //success 
+
+    // });
 
 
 
