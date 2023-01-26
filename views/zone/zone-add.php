@@ -80,7 +80,7 @@ if($action == "edit"){
                         value="<?php echo $row_person['tambon'];?>" />
                     <div class="form-group row">
 
-                        <div class="col-lg-3">
+                        <div class="col-lg-2">
                             <label>จังหวัด</label>
                             <select class="form-control form-control-sm" name="changwat" id="changwat">
                                 <?php
@@ -107,6 +107,15 @@ if($action == "edit"){
 
                         </div>
 
+                        <div class="col-md-1">
+                            <label>สีของเขต</label>
+                            <input type="color" id="color-picker" class="form-control form-control-sm" value="#ff0000"
+                                oninput="updateColorValue(event)">
+                            <input class="form-control form-control-sm" type="text" id="area_color" name="area_color"
+                                value="rgba(255,0,0,1)">
+
+                        </div>
+
                         <div class="col-lg-3">
                             <label>อำเภอ</label>
                             <select class="form-control form-control-sm" name="ampur" id="ampur">
@@ -116,7 +125,7 @@ if($action == "edit"){
 
                         <div class="col-lg-3">
                             <label>ตำบล</label>
-                            <select class=" form-control form-control-sm  " multiple name="tambon[]" id="tambon">
+                            <select class=" form-control form-control-sm  " name="tambon" id="tambon">
                                 <option value="" id="tambon">ระบุ</option>
                             </select>
 
@@ -237,6 +246,14 @@ $(document).ready(function() {
 </script> -->
 
 <script>
+function updateColorValue(event) {
+    var color = event.target.value;
+    var rgba = "rgba(" + parseInt(color.slice(-6, -4), 16) +
+        "," + parseInt(color.slice(-4, -2), 16) +
+        "," + parseInt(color.slice(-2), 16) +
+        ",0.4)";
+    document.getElementById("area_color").value = rgba;
+}
 $(document).ready(function() {
     'use strict';
     getoptselect_amphur();
