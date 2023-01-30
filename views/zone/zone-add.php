@@ -323,11 +323,14 @@ $("#changwat").change(function() {
 });
 
 
-$("#ampur").change(function() {
+// $("#ampur").change(function() {
+//     $("#txt_tambon").val('');
+//     getoptselect_tambon();
+// });
+$("#ampur").click(function() {
     $("#txt_tambon").val('');
     getoptselect_tambon();
 });
-
 
 $("#level").change(function() {
     if ($("#level").val() == 1) {
@@ -375,7 +378,6 @@ function getoptselect_tambon() {
             tambon: tambon
         },
         success: function(data) {
-
             $("#tambon").empty();
             $("#tambon").append(data);
         } // success

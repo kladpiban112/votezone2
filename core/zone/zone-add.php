@@ -12,7 +12,7 @@ $act = filter_input(INPUT_POST, 'act', FILTER_SANITIZE_STRING);
 $aid = filter_input(INPUT_POST, 'aid', FILTER_SANITIZE_STRING);
 $area_number = filter_input(INPUT_POST, 'area_number', FILTER_SANITIZE_STRING);
 $changwat = filter_input(INPUT_POST, 'changwat', FILTER_SANITIZE_STRING);
-$ampur = filter_input(INPUT_POST, 'ampur', FILTER_SANITIZE_STRING);
+$ampur = filter_input(INPUT_POST, 'ampur', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 $tambonA = filter_input(INPUT_POST, 'tambon',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 $village = filter_input(INPUT_POST, 'village', FILTER_SANITIZE_STRING);
 $zone_number = filter_input(INPUT_POST, 'zone_number', FILTER_SANITIZE_STRING);
@@ -24,6 +24,7 @@ $area_color = filter_input(INPUT_POST, 'area_color', FILTER_SANITIZE_STRING);
 
 $zone_code = "";
 $tambon = substr($tambonA[0],4);
+$ampurA = substr($ampur[0],2);
 $a = count($tambonA);
 for ($i = 0; $i < $a; $i++) {
 	if($i != $a-1)
@@ -39,7 +40,7 @@ if($act == 'add'){
 	$stmt = $conn->prepare($query);
 	$stmt->bindParam(1, $area_number, PDO::PARAM_STR);
 	$stmt->bindParam(2, $changwat, PDO::PARAM_STR);
-	$stmt->bindParam(3, $ampur, PDO::PARAM_STR);
+	$stmt->bindParam(3, $ampurA, PDO::PARAM_STR);
 	$stmt->bindParam(4, $tambon, PDO::PARAM_STR);
 	$stmt->bindParam(5, $village, PDO::PARAM_STR);
 	$stmt->bindParam(6, $zone_number, PDO::PARAM_INT);
