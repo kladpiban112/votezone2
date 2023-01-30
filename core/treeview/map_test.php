@@ -18,6 +18,9 @@ $stmt_data->execute();
                 $sub_data["zone_name"] = $row["zone_name"];
                 $sub_data["area_color"] = $row["area_color"];
                 $sub_data["aid"] = $row["aid"];
+                $sub_data["lat"] = $row["latitude"];
+                $sub_data["lon"] = $row["longitude"];
+
                 $data[] = $sub_data;
                 
              

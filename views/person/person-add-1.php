@@ -286,6 +286,25 @@ if($personid_enc != ""){
                     ?>
                             </select>
                         </div>
+
+                        <div class="col-lg-4">
+                            <label>สถานะในระบบ</label>
+                            <select class="form-control form-control-sm" name="status_pp" id="status_pp">
+                                <?php
+                        $stmt = $conn->prepare ("SELECT * FROM status_pp  ");
+                        $stmt->execute();
+                        echo "<option value=''>-ระบุ-</option>";
+                        while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
+                        $id = $row->sid;
+                        $name = $row->name; ?>
+                                <option value="<?php echo $id;?>"
+                                    <?php if($row_person['status'] == $id){echo "selected";}?>>
+                                    <?php echo $name;?></option>
+                                <?php 
+                        }
+                    ?>
+                            </select>
+                        </div>
                     </div>
 
                     <span><i class="fas fa-house-user"></i> ที่อยู่ :</span>

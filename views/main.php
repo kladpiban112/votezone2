@@ -1,4 +1,25 @@
 <!--begin::Card-->
+<style>
+    .ward-label {
+        width: max-content;
+        background-color: rgba(0, 116, 229, 0.75);
+        color: rgba(255, 255, 255, 1);
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-family: 'Mitr', sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .ward-label > .province {
+        font-size: 12px;
+      }
+      .ward-label > .no {
+        font-size: 14px;
+      }
+</style>
+
 <div class="card card-custom gutter-b example example-compact">
     <div class="card-header">
         <h3 class="card-title">
@@ -625,13 +646,6 @@ function init() {
         lat: 14.973517
     }, true);
 
-    // map.Event.bind('overlayClick', function(overlay) {
-    //     overlay.update({
-    //         fillColor: 'rgba(101, 202, 246, 0.69)'
-    //     });
-    //     console.log(overlay)
-    // });
-
     $.ajax({
         type: "POST",
         url: "core/treeview/treeview_test.php",
@@ -650,15 +664,39 @@ function init() {
                     lineColor: '#888',
                     lineStyle: longdo.LineStyle.Dashed,
                     fillColor: data[i].area_color,
-                    label: data[i].zone_name
+
                 });
                 map.Overlays.load(object4);
+
+                var marker1 = new longdo.Marker({ lon:data[i].lon , lat:data[i].lat  },
+{
+  title: 'Marker',
+  icon: {
+      html: `
+                  <div  class="ward-label" >
+                    <div class="no"> ${data[i].zone_name}</div>
+                  </div>
+                `,
+    offset: { x: 12, y: 45 }
+  },
+  detail: 'Drag me',
+  draggable: false,
+  weight: longdo.OverlayWeight.Top,
+});
+
+map.Overlays.add(marker1);
             }
+
+
 
 
         } //success 
 
     });
+
+
+
+
 
     map.zoom(11, true);
     map.Ui.Mouse.enableWheel(false);
@@ -667,6 +705,8 @@ function init() {
     map.Ui.DPad.visible(false);
     map.Ui.Crosshair.visible(false);
     map.Ui.LayerSelector.visible(false);
+
+
 
 
 

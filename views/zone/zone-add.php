@@ -112,20 +112,20 @@ if($action == "edit"){
                             <input type="color" id="color-picker" class="form-control form-control-sm" value="#ff0000"
                                 oninput="updateColorValue(event)">
                             <input class="form-control form-control-sm" type="text" id="area_color" name="area_color"
-                                value="rgba(255,0,0,1)">
+                                value="rgba(255,0,0,0.4)">
 
                         </div>
 
                         <div class="col-lg-3">
                             <label>อำเภอ</label>
-                            <select class="form-control form-control-sm" name="ampur" id="ampur">
+                            <select class="form-control form-control-sm" name="ampur[]" id="ampur" multiple>
                                 <option value="">ระบุ</option>
                             </select>
                         </div>
 
                         <div class="col-lg-3">
                             <label>ตำบล</label>
-                            <select class=" form-control form-control-sm  " name="tambon" id="tambon">
+                            <select class=" form-control form-control-sm  " multiple name="tambon[]" id="tambon">
                                 <option value="" id="tambon">ระบุ</option>
                             </select>
 
@@ -201,23 +201,21 @@ if($action == "edit"){
         <!--col-->
 
         <div>
-            <iframe
-                src="https://map.longdo.com/snippet/iframe.php?locale=th&zoom=12&mode=political&map=epsg4326&lat=14.97269980670208&long=102.09930002689362&zoombar=auto&toolbar=no&mapselector=no&scalebar=no&centermark=no"
-                style="border: none; width: 100%; height: 750px;"></iframe>
-        </div>
-        <!-- <br> -->
-        <div class="card-footer">
-            <div class="row">
-                <div class="col-lg-6">
-                    <button type="button" class="btn btn-primary mr-2 btn-sm" id="btnSaveArea"><i class="fa fa-save"
-                            title="บันทึก"></i> บันทึก</button>
-                    <button type="button" class="btn btn-warning btn-sm" onclick="javascript:history.back()"><i
-                            class="fa fa-chevron-left" title="ย้อนกลับ"></i> </button>
+            <div class=" col-6" id="map" style="width: 100%; height:650px;">
+            </div>
+            <!-- <br> -->
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-primary mr-2 btn-sm" id="btnSaveArea"><i class="fa fa-save"
+                                title="บันทึก"></i> บันทึก</button>
+                        <button type="button" class="btn btn-warning btn-sm" onclick="javascript:history.back()"><i
+                                class="fa fa-chevron-left" title="ย้อนกลับ"></i> </button>
+                    </div>
                 </div>
             </div>
         </div>
-</div>
-</form>
+    </form>
 </div>
 
 <!--end::Card-->
@@ -233,17 +231,59 @@ if($action == "edit"){
 <script src="js/bootstrap-multiselect.js"></script>
 <link rel="stylesheet" href="css/bootstrap-multiselect.css" />
 
+<script type="text/javascript" src="https://api.longdo.com/map/?key=5e785cb06a872f9662a93d93ad733eed"></script>
+<script type="text/javascript">
+function init() {
+    var map = new longdo.Map({
+        placeholder: document.getElementById('map')
 
-
-
-<!-- <script type="text/javascript">
-$(document).ready(function() {
-    $('#tambon').multiselect({
-        includeSelectAllOption: true,
-        selectAllValue: 'select-all-value'
     });
-});
-</script> -->
+    map.Layers.setBase(longdo.Layers.POLITICAL);
+    map.location({
+        lon: 102.065279,
+        lat: 14.973517
+    }, true);
+
+    var aid = $("#aid").val();
+    $.ajax({
+        type: "POST",
+        url: "core/treeview/map_test.php",
+        //dataType: "json",
+        data: {
+            aid: aid
+        },
+        success: function(data) {
+
+            var data = JSON.parse(data);
+            console.log(data);
+
+            var object4 = new longdo.Overlays.Object(data[0].zone_code, 'IG', {
+                combine: true,
+                simplify: 0.00005,
+                ignorefragment: false,
+                lineColor: '#888',
+                lineStyle: longdo.LineStyle.Dashed,
+                fillColor: data[0].area_color,
+                label: data[0].zone_name,
+            });
+            map.Overlays.load(object4);
+        } //success 
+    });
+
+
+    map.Event.bind('location', function() {
+        var location = map.location(); // Cross hair location
+        console.log(location);
+        document.getElementById('longitude').value = location.lon;
+        document.getElementById('latitude').value = location.lat;
+    });
+
+
+
+
+}
+</script>
+
 
 <script>
 function updateColorValue(event) {
@@ -258,13 +298,11 @@ $(document).ready(function() {
     'use strict';
     getoptselect_amphur();
     getoptselect_tambon();
+    init();
 
-    $('#tambon').multiselect({
-        nonSelectedText: 'Select Your Skills',
-        enableFiltering: true,
-        enableCaseInsensitiveFiltering: true,
-        buttonWidth: '400px'
-    });
+
+
+
 
 });
 

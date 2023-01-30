@@ -160,7 +160,7 @@ if($ctambon != ""){
         }
         $Page_Start = ($pagenum - 1) * $page_rows; // สำหรับลำดับ
         $max = ' LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;		
-        $stmt_data = $conn->prepare ("SELECT p.*,pr.prename AS prename_title,c.changwatname,a.ampurname,t.tambonname,s.sexname,lt.level AS name_level
+        $stmt_data = $conn->prepare ("SELECT p.*,pr.prename AS prename_title,c.changwatname,a.ampurname,t.tambonname,s.sexname,sp.*,lt.level AS name_level
         FROM ".DB_PREFIX."person_main p 
         LEFT JOIN ".DB_PREFIX."cprename pr ON p.prename = pr.id_prename
         LEFT JOIN ".DB_PREFIX."cchangwat c ON p.changwat = c.changwatcode
@@ -168,6 +168,8 @@ if($ctambon != ""){
         LEFT JOIN ".DB_PREFIX."ctambon t ON CONCAT(p.changwat,p.ampur,p.tambon) = t.tamboncodefull
         LEFT JOIN ".DB_PREFIX."csex s ON p.sex = s.sex
         LEFT JOIN ".DB_PREFIX."level_type lt ON p.level = lt.level_id
+        LEFT JOIN ".DB_PREFIX."status_pp sp ON p.status = sp.sid
+
         WHERE p.flag != '0' $conditions  $search_data  $cid_data  $slevel_data $cchangwat_data $campur_data $ctambon_data
         ORDER BY lt.level_id ASC
         $max");
@@ -188,6 +190,8 @@ if($ctambon != ""){
                         <th>อายุ</th>
                         <th>โทรศัพท์</th>
                         <th>ที่อยู่</th>
+                        <th>สถานะในระบบ</th>
+
                         <!--<th class="text-center">สถานะ</th>-->
                         <th class="text-center">จัดการ</th>
                     </tr>
@@ -220,6 +224,7 @@ if($ctambon != ""){
                 $diff = date_diff(date_create($row['birthdate']), date_create($today));
                 $age_y = $diff->format('%y');
                 
+                
                 $house = $row['house'];
                 $village = $row['village'];
                     $changwatname = $row['changwatname'];
@@ -228,6 +233,10 @@ if($ctambon != ""){
 					$addr =  "บ้านเลขที่ ".$house." ม.".$village." ต.".$tambonname." อ.".$ampurname." จ.".$changwatname;
                 $sexname = $row['sexname'];
                 $level = $row['name_level'];
+                $status = $row['name'];
+                $sid = $row['sid'];
+
+
                 ?>
                     <tr>
                         <td class="text-center"><?php echo $no;?></td>
@@ -250,11 +259,21 @@ if($ctambon != ""){
                             <?php } ?>
                         </td>
                         <td><?php echo $cid;?></td>
-                        <td><?php echo $fullname;?></td>
+                        <td><?php echo $fullname;?></br></br>
+                            <?php 
+												if($sid == 2){  ?>
+                            <span class="badge bg-success"><?php echo  $status ;?></span>
+                            <?php }
+												elseif ( $sid == 1   ) { ?>
+                            <span class="badge bg-warning"><?php echo  $status ;?></span>
+                            <?php }
+                            							?>
+                        </td>
                         <td><?php echo $sexname;?></td>
                         <td><?php echo $age_y;?></td>
                         <td><?php echo $telephone;?></td>
                         <td><?php echo $addr;?></td>
+
                         <!--<td class="text-center"><span class="label label-lg label-light-<?php echo $status_color;?> label-inline"><?php echo $status_title;?></span></td>-->
                         <td class="text-center">
                             <!--begin::Dropdown-->

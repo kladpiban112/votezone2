@@ -17,7 +17,6 @@ $ampurcodefull = $changwatcode.$ampurcode;
 $stmt_data = $conn->prepare ("SELECT tamboncodefull,tamboncode,tambonname FROM ".DB_PREFIX."ctambon WHERE ampurcode = '$ampurcodefull' ORDER BY tamboncode ");
 $stmt_data->execute();               
 ?>
-<option value="">--ระบุ--</option>
 <?php
             $r = 1;
             while ($row = $stmt_data->fetch(PDO::FETCH_ASSOC))
@@ -26,10 +25,8 @@ $stmt_data->execute();
                 $tamboncode = $row['tamboncode']; // 2 หลัก
                 $tambonname = $row['tambonname'];
                  ?>
-                <option value="<?php echo $tamboncodefull;?>" <?php if($tamboncodefull == $changwatcode.$ampurcode.$tambon){echo "selected";}?>><?php echo $tambonname;?></option>     
-            <?php 
+<option value="<?php echo $tamboncodefull;?>"
+    <?php if($tamboncodefull == $changwatcode.$ampurcode.$tambon){echo "selected";}?>><?php echo $tambonname;?></option>
+<?php 
         $r++;
         } ?>
-
-
-

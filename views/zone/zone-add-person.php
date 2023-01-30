@@ -189,7 +189,7 @@ $action = base64_decode($act);
                         <div class="col-lg-3">
                             <label>latitude</label>
                             <input type="text" class="form-control form-control-sm" name="latitude" id="latitude"
-                                placeholder="latitude" value="<?php echo $row_person['latitude'];?>" disabled />
+                                placeholder="latitude" value="<?php echo $row_person['Latitude'];?>" disabled />
 
                             </input>
 
@@ -198,7 +198,7 @@ $action = base64_decode($act);
                         <div class="col-lg-3">
                             <label>longitude</label>
                             <input type="text" class="form-control form-control-sm" name="longitude" id="longitude"
-                                placeholder="longitude" value="<?php echo $row_person['longitude'];?>" disabled />
+                                placeholder="longitude" value="<?php echo $row_person['Longitude'];?>" disabled />
 
                         </div>
                     </div>
@@ -370,7 +370,9 @@ function init() {
     });
 
 
-
+    map.Event.bind('overlayClick', function(overlay) {
+        alert('You clicked on the polygon!');
+    });
 
 
     map.zoom(10, true);
