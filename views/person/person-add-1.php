@@ -307,6 +307,34 @@ if($personid_enc != ""){
                         </div>
                     </div>
 
+                    <span><i class="far fa-money-bill-alt"></i> ค่าใช้จ่าย:</span>
+                    <hr>
+                    <div class="form-group row">
+                        <div class="col-lg-3">
+                            <label>ครั้งที่ 1</label>
+                            <input type="text" class="form-control form-control-sm" name="cost1" id="cost1"
+                                value="<?php echo $row_person['cost1'];?>" />
+
+                        </div>
+                        <div class="col-lg-3">
+                            <label>ครั้งที่ 2</label>
+                            <input type="text" class="form-control form-control-sm" name="cost2" id="cost2"
+                                value="<?php echo $row_person['cost2'];?>" />
+
+                        </div>
+                        <div class="col-lg-3">
+                            <label>ครั้งที่ 3</label>
+                            <input type="text" class="form-control form-control-sm" name="cost3" id="cost3"
+                                value="<?php echo $row_person['cost3'];?>" />
+
+                        </div>
+                        <div class="col-lg-3">
+                            <label>ครั้งที่ 4</label>
+                            <input type="text" class="form-control form-control-sm" name="cost4" id="cost4"
+                                value=" <?php echo $row_person['cost4'];?>" />
+
+                        </div>
+                    </div>
                     <span><i class="fas fa-house-user"></i> ที่อยู่ :</span>
                     <hr>
                     <div class="form-group row">

@@ -45,6 +45,10 @@ $level = filter_input(INPUT_POST, 'level', FILTER_SANITIZE_STRING);
 $head = filter_input(INPUT_POST, 'head_data', FILTER_SANITIZE_STRING);
 $team_id = filter_input(INPUT_POST, 'team_id', FILTER_SANITIZE_STRING);
 $status_pp = filter_input(INPUT_POST, 'status_pp', FILTER_SANITIZE_STRING);
+$cost1 = filter_input(INPUT_POST, 'cost1', FILTER_SANITIZE_STRING);
+$cost2 = filter_input(INPUT_POST, 'cost2', FILTER_SANITIZE_STRING);
+$cost3 = filter_input(INPUT_POST, 'cost3', FILTER_SANITIZE_STRING);
+$cost4 = filter_input(INPUT_POST, 'cost4', FILTER_SANITIZE_STRING);
 
 
 $parents = filter_input(INPUT_POST, 'parents', FILTER_SANITIZE_STRING);
@@ -161,7 +165,7 @@ if($exist_person != '0'){
 
 }else{
 if($level == "1"){$head = "0";}
-$query = "INSERT INTO ".DB_PREFIX."person_main ( cid, org_id, prename, fname, lname, sex,birthdate,telephone,house,community,road,village,tambon,ampur,changwat,flag,add_date,add_users,religion,cposition1,cposition2,cposition3,cposition4,abogroup,level,head,latitude,longitude,status) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?,?,?,?,?,?,?)"; 
+$query = "INSERT INTO ".DB_PREFIX."person_main ( cid, org_id, prename, fname, lname, sex,birthdate,telephone,house,community,road,village,tambon,ampur,changwat,flag,add_date,add_users,religion,cposition1,cposition2,cposition3,cposition4,abogroup,level,head,latitude,longitude,status,cost1,cost2,cost3,cost4) VALUES ( ?,?,?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?,?,?,?,?,?,?)"; 
 $stmt = $conn->prepare($query);
 $stmt->bindParam(1, $cid, PDO::PARAM_STR);
 $stmt->bindParam(2, $org_id, PDO::PARAM_STR);
@@ -192,6 +196,12 @@ $stmt->bindParam(26, $head, PDO::PARAM_STR);
 $stmt->bindParam(27, $latitude, PDO::PARAM_STR);
 $stmt->bindParam(28, $longitude, PDO::PARAM_STR);
 $stmt->bindParam(29, $status_pp, PDO::PARAM_STR);
+$stmt->bindParam(30, $cost1, PDO::PARAM_STR);
+$stmt->bindParam(31, $cost2, PDO::PARAM_STR);
+$stmt->bindParam(32, $cost3, PDO::PARAM_STR);
+$stmt->bindParam(33, $cost4, PDO::PARAM_STR);
+
+
 
 
 $stmt->execute();
@@ -268,7 +278,7 @@ if($level == "1"){
 	$head = "0";
 	$parents = $personid;
 }
-	$query = "UPDATE ".DB_PREFIX."person_main SET cid = ?, org_id = ?, prename = ?, fname = ?, lname = ?, sex = ?,birthdate = ?,telephone = ?,house = ?,community = ?,road = ?,village = ?,tambon = ?,ampur = ?,changwat = ?,flag = ?,edit_date = ?,edit_users = ?,religion = ? , cposition1 = ? ,cposition2 = ?,cposition3 = ? ,cposition4 = ?, abogroup = ?, level = ?, head = ? ,team_id = ? ,latitude = ? ,longitude = ?,status = ?  WHERE oid = ? LIMIT 1"; 
+	$query = "UPDATE ".DB_PREFIX."person_main SET cid = ?, org_id = ?, prename = ?, fname = ?, lname = ?, sex = ?,birthdate = ?,telephone = ?,house = ?,community = ?,road = ?,village = ?,tambon = ?,ampur = ?,changwat = ?,flag = ?,edit_date = ?,edit_users = ?,religion = ? , cposition1 = ? ,cposition2 = ?,cposition3 = ? ,cposition4 = ?, abogroup = ?, level = ?, head = ? ,team_id = ? ,latitude = ? ,longitude = ?,status = ?, cost1 =? ,cost2 = ?,cost3 = ?,cost4 = ? WHERE oid = ? LIMIT 1"; 
 	$stmt = $conn->prepare($query);
 	$stmt->bindParam(1, $cid, PDO::PARAM_STR);
 	$stmt->bindParam(2, $org_id, PDO::PARAM_STR);
@@ -300,7 +310,11 @@ if($level == "1"){
 	$stmt->bindParam(28, $latitude, PDO::PARAM_STR);
 	$stmt->bindParam(29, $longitude, PDO::PARAM_STR);
 	$stmt->bindParam(30, $status_pp, PDO::PARAM_STR);
-	$stmt->bindParam(31, $personid, PDO::PARAM_INT);
+	$stmt->bindParam(31, $cost1, PDO::PARAM_STR);
+	$stmt->bindParam(32, $cost2, PDO::PARAM_STR);
+	$stmt->bindParam(33, $cost3, PDO::PARAM_STR);
+	$stmt->bindParam(34, $cost4, PDO::PARAM_STR);
+	$stmt->bindParam(35, $personid, PDO::PARAM_INT);
 
 	$stmt->execute();
 

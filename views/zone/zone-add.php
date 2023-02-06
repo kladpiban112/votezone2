@@ -279,7 +279,13 @@ function init() {
     });
 
 
-
+    map.zoom(10, true);
+    map.Ui.Mouse.enableWheel(false);
+    map.Ui.Toolbar.visible(false);
+    map.Ui.LayerSelector.visible(false);
+    map.Ui.DPad.visible(false);
+    map.Ui.Crosshair.visible(true);
+    map.Ui.LayerSelector.visible(false);
 
 }
 </script>

@@ -26,38 +26,30 @@ $action = base64_decode($act);
 ?>
 
 
-
-<style type="text/css">
-.ldmap_lock_button {
-    width: 100% !important;
-    height: 100% !important;
-    top: 50%;
-    left: 50%;
-    bottom: unset;
-    right: unset;
-    transform: translate(-50%, -50%);
-    border: none;
-    outline: none;
-    background-color: rgba(0, 0, 0, .5);
-    color: #fff;
-    border-radius: 0;
-    font-size: 16px;
+<style>
+.ward-label {
+    width: max-content;
+    background-color: rgba(0, 116, 229, 0.75);
+    color: rgba(255, 255, 255, 1);
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-family: 'Mitr', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.ldmap_lock_button.active {
-    background-color: #fff;
-    box-shadow: 0 0 2px 2px rgb(0 0 0 / 20%);
-    border-radius: 3px;
-    width: unset !important;
-    height: 20px !important;
-    top: 5px;
-    left: unset;
-    right: 36px;
-    transform: translate(0);
-    color: #323232;
-    padding: 10px;
+.ward-label>.province {
+    font-size: 12px;
+}
+
+.ward-label>.no {
+    font-size: 14px;
 }
 </style>
+
+
 <!--begin::Card-->
 <div class="card card-custom gutter-b example example-compact">
     <div class="card-header ribbon ribbon-right">
@@ -363,6 +355,25 @@ function init() {
             });
             map.Overlays.load(object4);
 
+            var marker1 = new longdo.Marker({
+                lon: data[0].lon,
+                lat: data[0].lat
+            }, {
+                title: 'Marker',
+                icon: {
+                    html: `
+                  <div  class="ward-label" >
+                    <div class="no"> ${data[0].zone_name}</div>
+                  </div>
+                `
+                },
+
+                draggable: false,
+                weight: longdo.OverlayWeight.Top,
+            });
+
+            map.Overlays.add(marker1);
+
 
 
         } //success 
@@ -370,19 +381,16 @@ function init() {
     });
 
 
-    map.Event.bind('overlayClick', function(overlay) {
-        alert('You clicked on the polygon!');
-    });
 
 
-    map.zoom(10, true);
+
+    map.zoom(9, true);
     map.Ui.Mouse.enableWheel(false);
     map.Ui.Toolbar.visible(false);
     map.Ui.LayerSelector.visible(false);
     map.Ui.DPad.visible(false);
     map.Ui.Crosshair.visible(false);
     map.Ui.LayerSelector.visible(false);
-
 
 
 

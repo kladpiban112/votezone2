@@ -228,7 +228,7 @@ if($action == "edit"){
 
                         </div>
                         <div class="col-lg-3">
-                            <label>ตำแหน่ง 2</label>
+                            <label>ตำแหน่ง 3</label>
                             <select class="form-control form-control-sm" name="cposition3" id="cposition3" disabled>
                                 <option value="">ระบุ</option>
                                 <?php
@@ -249,7 +249,7 @@ if($action == "edit"){
 
                         </div>
                         <div class="col-lg-3">
-                            <label>ตำแหน่ง 2</label>
+                            <label>ตำแหน่ง 4</label>
                             <select class="form-control form-control-sm" name="cposition4" id="cposition4" disabled>
                                 <option value="">ระบุ</option>
                                 <?php
@@ -306,6 +306,25 @@ if($action == "edit"){
                     ?>
                             </select>
                         </div>
+
+                        <div class="col-lg-4">
+                            <label>สถานะในระบบ</label>
+                            <select class="form-control form-control-sm" name="status_pp" id="status_pp" disabled>
+                                <?php
+                        $stmt = $conn->prepare ("SELECT * FROM status_pp  ");
+                        $stmt->execute();
+                        echo "<option value=''>-ระบุ-</option>";
+                        while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
+                        $id = $row->sid;
+                        $name = $row->name; ?>
+                                <option value="<?php echo $id;?>"
+                                    <?php if($row_person['status'] == $id){echo "selected";}?>>
+                                    <?php echo $name;?></option>
+                                <?php 
+                        }
+                    ?>
+                            </select>
+                        </div>
                         <div class="col-lg-4">
                             <label>สังกัด</label>
                             <input type="text" class="form-control form-control-sm" name="name_head" id="name_head"
@@ -319,7 +338,34 @@ if($action == "edit"){
 
                         </div>
                     </div>
+                    <span><i class="far fa-money-bill-alt"></i> ค่าใช้จ่าย:</span>
+                    <hr>
+                    <div class="form-group row">
+                        <div class="col-lg-3">
+                            <label>ครั้งที่ 1</label>
+                            <input type="text" class="form-control form-control-sm" name="cost1" id="cost1"
+                                value="<?php echo $row_person['cost1'];?>" disabled />
 
+                        </div>
+                        <div class="col-lg-3">
+                            <label>ครั้งที่ 2</label>
+                            <input type="text" class="form-control form-control-sm" name="cost2" id="cost2"
+                                value="<?php echo $row_person['cost2'];?>" disabled />
+
+                        </div>
+                        <div class="col-lg-3">
+                            <label>ครั้งที่ 3</label>
+                            <input type="text" class="form-control form-control-sm" name="cost3" id="cost3"
+                                value="<?php echo $row_person['cost3'];?>" disabled />
+
+                        </div>
+                        <div class="col-lg-3">
+                            <label>ครั้งที่ 4</label>
+                            <input type="text" class="form-control form-control-sm" name="cost4" id="cost4"
+                                value=" <?php echo $row_person['cost4'];?>" disabled />
+
+                        </div>
+                    </div>
                     <span><i class="fas fa-house-user"></i> ที่อยู่ :</span>
                     <hr>
                     <div class="form-group row">
@@ -346,7 +392,8 @@ if($action == "edit"){
                         <div class="col-lg-2">
                             <label>หมู่ที่</label>
                             <select class="form-control form-control-sm" name="village" id="village" disabled>
-                                <option value="" <?php if($row_person['Village'] == "0"){ echo "selected";}?>>0</option>
+                                <option value="" <?php if($row_person['Village'] == "0"){ echo "selected";}?>>0
+                                </option>
 
                                 <?php for ($n_vil = 1; $n_vil <= 99; $n_vil++) { 
 									$n_vil_data = str_pad($n_vil,2,"0",STR_PAD_LEFT);
@@ -378,7 +425,8 @@ if($action == "edit"){
                                 $id = $row->changwatcode;
                                 $name = $row->changwatname; ?>
                                 <option value="<?php echo $id;?>"
-                                    <?php if($row_person['Changwat'] == $id){ echo "selected";}?>><?php echo $name;?>
+                                    <?php if($row_person['Changwat'] == $id){ echo "selected";}?>>
+                                    <?php echo $name;?>
                                 </option>
                                 <?php 
                                 }

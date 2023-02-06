@@ -1,23 +1,25 @@
 <!--begin::Card-->
 <style>
-    .ward-label {
-        width: max-content;
-        background-color: rgba(0, 116, 229, 0.75);
-        color: rgba(255, 255, 255, 1);
-        padding: 4px 12px;
-        border-radius: 12px;
-        font-family: 'Mitr', sans-serif;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-      .ward-label > .province {
-        font-size: 12px;
-      }
-      .ward-label > .no {
-        font-size: 14px;
-      }
+.ward-label {
+    width: max-content;
+    background-color: rgba(0, 116, 229, 0.75);
+    color: rgba(255, 255, 255, 1);
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-family: 'Mitr', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ward-label>.province {
+    font-size: 12px;
+}
+
+.ward-label>.no {
+    font-size: 14px;
+}
 </style>
 
 <div class="card card-custom gutter-b example example-compact">
@@ -668,23 +670,24 @@ function init() {
                 });
                 map.Overlays.load(object4);
 
-                var marker1 = new longdo.Marker({ lon:data[i].lon , lat:data[i].lat  },
-{
-  title: 'Marker',
-  icon: {
-      html: `
+                var marker1 = new longdo.Marker({
+                    lon: data[i].lon,
+                    lat: data[i].lat
+                }, {
+                    title: 'Marker',
+                    icon: {
+                        html: `
                   <div  class="ward-label" >
                     <div class="no"> ${data[i].zone_name}</div>
                   </div>
-                `,
-    offset: { x: 12, y: 45 }
-  },
-  detail: 'Drag me',
-  draggable: false,
-  weight: longdo.OverlayWeight.Top,
-});
+                `
+                    },
+                    detail: 'Drag me',
+                    draggable: false,
+                    weight: longdo.OverlayWeight.Top,
+                });
 
-map.Overlays.add(marker1);
+                map.Overlays.add(marker1);
             }
 
 
@@ -698,7 +701,7 @@ map.Overlays.add(marker1);
 
 
 
-    map.zoom(11, true);
+    map.zoom(9, true);
     map.Ui.Mouse.enableWheel(false);
     map.Ui.Toolbar.visible(false);
     map.Ui.LayerSelector.visible(false);

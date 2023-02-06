@@ -190,7 +190,6 @@ if($ctambon != ""){
                         <th>อายุ</th>
                         <th>โทรศัพท์</th>
                         <th>ที่อยู่</th>
-                        <th>สถานะในระบบ</th>
 
                         <!--<th class="text-center">สถานะ</th>-->
                         <th class="text-center">จัดการ</th>
