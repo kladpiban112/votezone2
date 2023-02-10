@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+
 
 $personid_enc = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
 $serviceid_enc = filter_input(INPUT_GET, 'serviceid', FILTER_SANITIZE_STRING);
@@ -17,7 +17,7 @@ if($action == "edit"){
     // $stmt_data->execute();	
     // $row_person = $stmt_data->fetch(PDO::FETCH_ASSOC);
 
-    $stmt_data = $conn->prepare ("SELECT *,pm1.cid AS CID,pm1.fname AS Fname,pm1.lname AS Lname,pm1.sex AS Sex,pm1.birthdate AS Birthdate,pm1.telephone AS Telephone,pm1.house AS House,pm1.community AS Community,pm1.road AS Road,pm1.village AS Village,pm1.tambon AS Tambon,pm1.ampur AS Ampur,pm1.changwat AS Changwat,pm1.img_profile AS Img_profile,pm1.religion AS Religion,pm1.occupation AS Occupation,pm1.education AS Education,pm1.abogroup AS Abogroup,pm1.prename AS pre,pm1.level AS pmlevel,
+    $stmt_data = $conn->prepare ("SELECT *,pm1.cid AS CID,pm1.fname AS Fname,pm1.lname AS Lname,pm1.sex AS Sex,pm1.birthdate AS Birthdate,pm1.telephone AS Telephone,pm1.house AS House,pm1.community AS Community,pm1.road AS Road,pm1.village AS Village,pm1.tambon AS Tambon,pm1.ampur AS Ampur,pm1.changwat AS Changwat,pm1.img_profile AS Img_profile,pm1.prename AS pre,pm1.level AS pmlevel,
         cp2.prename AS pre2,lt2.level AS namelevel2,pm2.fname AS fname2,pm2.lname AS lname2,
         cp3.prename AS pre3,lt3.level AS namelevel3,pm3.fname AS fname3,pm3.lname AS lname3
         FROM person_main pm1 LEFT JOIN person_main pm2 ON pm1.head = pm2.oid 
@@ -338,34 +338,7 @@ if($action == "edit"){
 
                         </div>
                     </div>
-                    <span><i class="far fa-money-bill-alt"></i> ค่าใช้จ่าย:</span>
-                    <hr>
-                    <div class="form-group row">
-                        <div class="col-lg-3">
-                            <label>ครั้งที่ 1</label>
-                            <input type="text" class="form-control form-control-sm" name="cost1" id="cost1"
-                                value="<?php echo $row_person['cost1'];?>" disabled />
 
-                        </div>
-                        <div class="col-lg-3">
-                            <label>ครั้งที่ 2</label>
-                            <input type="text" class="form-control form-control-sm" name="cost2" id="cost2"
-                                value="<?php echo $row_person['cost2'];?>" disabled />
-
-                        </div>
-                        <div class="col-lg-3">
-                            <label>ครั้งที่ 3</label>
-                            <input type="text" class="form-control form-control-sm" name="cost3" id="cost3"
-                                value="<?php echo $row_person['cost3'];?>" disabled />
-
-                        </div>
-                        <div class="col-lg-3">
-                            <label>ครั้งที่ 4</label>
-                            <input type="text" class="form-control form-control-sm" name="cost4" id="cost4"
-                                value=" <?php echo $row_person['cost4'];?>" disabled />
-
-                        </div>
-                    </div>
                     <span><i class="fas fa-house-user"></i> ที่อยู่ :</span>
                     <hr>
                     <div class="form-group row">
@@ -778,7 +751,7 @@ function getoptselect_amphur() {
     var ampur = $("#txt_ampur").val();
     $.ajax({
         type: "POST",
-        url: "core/fn-get-ampur.php",
+        url: "core/fn-get-ampur-now.php",
         //dataType: "json",
         data: {
             changwatcode: changwatcode,
@@ -801,7 +774,7 @@ function getoptselect_tambon() {
     var tambon = $("#txt_tambon").val();
     $.ajax({
         type: "POST",
-        url: "core/fn-get-tambon.php",
+        url: "core/fn-get-tambon-now.php",
         //dataType: "json",
         data: {
             changwatcode: changwatcode,

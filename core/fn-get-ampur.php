@@ -11,6 +11,7 @@ $ampur = filter_input(INPUT_POST, 'ampur', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY)
 $stmt_data = $conn->prepare ("SELECT ampurcode,ampurname,ampurcodefull FROM ".DB_PREFIX."campur WHERE changwatcode = '$changwatcode' ORDER BY ampurcodefull ");
 $stmt_data->execute();                
 ?>
+<option value="">--ระบุ--</option>
 <?php
             $r = 1;
             while ($row = $stmt_data->fetch(PDO::FETCH_ASSOC))

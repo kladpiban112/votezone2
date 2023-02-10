@@ -34,37 +34,42 @@ $serviceid = base64_decode($serviceid_enc);
 $action = base64_decode($act);
 
 ?>
-		<!--begin::Card-->
-		<div class="card card-custom gutter-b example example-compact">
-			<div class="card-header">
-				<h3 class="card-title">
-                <i class="far fa-user"></i>&nbsp;ข้อมูลเขตเลือกตั้ง
-				</h3>
-				<div class="card-toolbar">
-					<div class="example-tools justify-content-center">
-						<a href="dashboard.php?module=<?php echo $module;?>&page=zone-add" class="btn btn-success btn-sm font-weight-bold mr-2" title="เพิ่มบุคคล"><i class="fa fa-plus-circle" title="เพิ่มเขตเลือกตั้ง" data-toggle="tooltip"></i>เพิ่มเขตเลือกตั้ง</a>
-                    </div>
-				</div>
-			</div>
+<!--begin::Card-->
+<div class="card card-custom gutter-b example example-compact">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="far fa-user"></i>&nbsp;ข้อมูลเขตเลือกตั้ง
+        </h3>
+        <div class="card-toolbar">
+            <div class="example-tools justify-content-center">
+                <a href="dashboard.php?module=<?php echo $module;?>&page=zone-add"
+                    class="btn btn-success btn-sm font-weight-bold mr-2" title="เพิ่มบุคคล"><i class="fa fa-plus-circle"
+                        title="เพิ่มเขตเลือกตั้ง" data-toggle="tooltip"></i>เพิ่มเขตเลือกตั้ง</a>
+            </div>
+        </div>
+    </div>
 
-	<div class="card-body">
-    <form class="form" enctype="multipart/form-data" id="frmSearch" method="GET">
-    <input type="hidden" class="form-control"  name="act" id="act" value="search"/>
-    <input type="hidden" class="form-control"  name="module"  value="<?php echo $module;?>"/>
-    <input type="hidden" class="form-control"  name="page"  value="main"/>
-    
-    <input type="hidden" class="form-control"  name="txt_ampur" id="txt_ampur" value="<?php echo $row_person['ampur'];?>"/>
-    <input type="hidden" class="form-control"  name="txt_tambon" id="txt_tambon" value="<?php echo $row_person['tambon'];?>"/>
-    <div class="form-group row">
-    <div class="col-lg-1">
-				<label>เขตเลือกตั้ง</label>
-                <input type="number" class="form-control form-control-sm" id="sarea" name="sarea"   placeholder="เขตเลือกตั้ง" />
-                        
-			</div>
-    <div class="col-lg-2">
-    <label>จังหวัด</label>
-            <select class="form-control form-control-sm" name="changwat" id="changwat">
-                        
+    <div class="card-body">
+        <form class="form" enctype="multipart/form-data" id="frmSearch" method="GET">
+            <input type="hidden" class="form-control" name="act" id="act" value="search" />
+            <input type="hidden" class="form-control" name="module" value="<?php echo $module;?>" />
+            <input type="hidden" class="form-control" name="page" value="main" />
+
+            <input type="hidden" class="form-control" name="txt_ampur" id="txt_ampur"
+                value="<?php echo $row_person['ampur'];?>" />
+            <input type="hidden" class="form-control" name="txt_tambon" id="txt_tambon"
+                value="<?php echo $row_person['tambon'];?>" />
+            <div class="form-group row">
+                <div class="col-lg-1">
+                    <label>เขตเลือกตั้ง</label>
+                    <input type="number" class="form-control form-control-sm" id="sarea" name="sarea"
+                        placeholder="เขตเลือกตั้ง" />
+
+                </div>
+                <div class="col-lg-2">
+                    <label>จังหวัด</label>
+                    <select class="form-control form-control-sm" name="changwat" id="changwat">
+
                         <?php
                                 $stmt = $conn->prepare ("SELECT * FROM cchangwat c ");
                                 $stmt->execute();
@@ -72,49 +77,52 @@ $action = base64_decode($act);
                                 while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
                                 $id = $row->changwatcode;
                                 $name = $row->changwatname; ?>
-                                <option value="<?php echo $id;?>" <?php if($row_person['changwat'] == $id){ echo "selected";}?>><?php echo $name;?></option>
-                                <?php 
+                        <option value="<?php echo $id;?>" <?php if($row_person['changwat'] == $id){ echo "selected";}?>>
+                            <?php echo $name;?></option>
+                        <?php 
                                 }
                         ?>
-            </select>
-				
-			</div>
+                    </select>
 
-      <div class="col-lg-2">
-				<label>อำเภอ</label>
-            <select class="form-control form-control-sm" name="ampur" id="ampur">
-                        <option value="">ระบุ</option>
-            </select>
-			</div>
-
-      <div class="col-lg-2">
-				<label>ตำบล</label>
-            <select class="form-control form-control-sm" name="tambon" id="tambon">
-                        <option value="">ระบุ</option>
-            </select> 
-           
-           </div>
-           
-           <div class="col-lg-2">
-				<label>หน่วยเลือกตั้ง</label>
-                <input type="number" class="form-control form-control-sm"  id="szone_num" name="szone_num" placeholder="หน่วยเลือกตั้ง" />
-                        
-			</div>
-           <div class="col-lg-2">
-				<label>ชื่อหน่วยเลือกตั้ง</label>
-                <div class="input-group">
-                <input type="text" class="form-control form-control-sm" id="szone_name" name="szone_name"  placeholder="ชื่อหน่วยเลือกตั้ง" />
-                <div class="input-group-append">
-                    <button class="btn btn-primary btn-sm" type="submit" ><i class="fas fa-search"></i></button>  
-                </div>       
                 </div>
-			</div>
-            <div class="row-lg-2 mt-8" >
-			</div>
-            </div>
-    </form> 
 
-    <?php
+                <div class="col-lg-2">
+                    <label>อำเภอ</label>
+                    <select class="form-control form-control-sm" name="ampur" id="ampur">
+                        <option value="">ระบุ</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-2">
+                    <label>ตำบล</label>
+                    <select class="form-control form-control-sm" name="tambon" id="tambon">
+                        <option value="">ระบุ</option>
+                    </select>
+
+                </div>
+
+                <div class="col-lg-2">
+                    <label>หน่วยเลือกตั้ง</label>
+                    <input type="number" class="form-control form-control-sm" id="szone_num" name="szone_num"
+                        placeholder="หน่วยเลือกตั้ง" />
+
+                </div>
+                <div class="col-lg-2">
+                    <label>ชื่อหน่วยเลือกตั้ง</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control form-control-sm" id="szone_name" name="szone_name"
+                            placeholder="ชื่อหน่วยเลือกตั้ง" />
+                        <div class="input-group-append">
+                            <button class="btn btn-primary btn-sm" type="submit"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-lg-2 mt-8">
+                </div>
+            </div>
+        </form>
+
+        <?php
 
     if($logged_user_role_id == '1'){
         $conditions = " ";
@@ -157,15 +165,16 @@ $action = base64_decode($act);
         LEFT JOIN campur a ON CONCAT(p.changwat,p.ampur) = a.ampurcodefull
         LEFT JOIN ctambon t ON CONCAT(p.changwat,p.ampur,p.tambon) = t.tamboncodefull WHERE p.aid != '0'
         $search_data  $schangwat_data  $sampur_data  $stambon_data $szone_data $sarea_data 
-        ORDER BY p.aid DESC ");
+        ORDER BY p.aid  ");
         $stmt_data->execute();		
     ?>
 
 
-<div class="table-responsive">
-	<table class="table table-bordered table-hover table-strip " id="tbData" style="margin-top: 13px !important; min-height: 300px;">
-    <thead>
-    <tr>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-strip " id="tbData"
+                style="margin-top: 13px !important; min-height: 300px;">
+                <thead>
+                    <tr>
                         <th class="text-center">ลำดับ</th>
                         <th>เขตเลือกตั้ง</th>
                         <th>จังหวัด</th>
@@ -174,11 +183,11 @@ $action = base64_decode($act);
                         <th>หมู่</th>
                         <th>หน่วยเลือกตั้งที่</th>
                         <th>ชื่อหน่วยเลือกตั้ง</th>
-                        <th class="text-center">จัดการ</th>	
-    </tr>
-    </thead>
-    <tbody>
-            <?php
+                        <th class="text-center">จัดการ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
             $i  = 0;
             $no = 1;
 	        $no = $no * $Page_Start;
@@ -196,61 +205,64 @@ $action = base64_decode($act);
                 $zone_number = $row['zone_number'];
                 $zone_name = $row['zone_name'];
                 ?>
-                <tr>
-                            <td class="text-center"><?php echo $no;?></td>
-                            <td><?php echo $area_number;?></td>
-                            <td><?php echo $changwat;?></td>
-                            <td><?php echo $ampur;?></td>
-                            <td><?php echo $tambon;?></td>
-                            <td><?php echo $village;?></td>
-                            <td><?php echo $zone_number;?></td>
-                            <td><?php echo $zone_name;?></td>
-                            <!--<td class="text-center"><span class="label label-lg label-light-<?php echo $status_color;?> label-inline"><?php echo $status_title;?></span></td>-->
-                            <td class="text-center">
+                    <tr>
+                        <td class="text-center"><?php echo $no;?></td>
+                        <td><?php echo $area_number;?></td>
+                        <td><?php echo $changwat;?></td>
+                        <td><?php echo $ampur;?></td>
+                        <td><?php echo $tambon;?></td>
+                        <td><?php echo $village;?></td>
+                        <td><?php echo $zone_number;?></td>
+                        <td><?php echo $zone_name;?></td>
+                        <!--<td class="text-center"><span class="label label-lg label-light-<?php echo $status_color;?> label-inline"><?php echo $status_title;?></span></td>-->
+                        <td class="text-center">
                             <!--begin::Dropdown-->
-                                <div class="dropdown">
-                                    <a href="#" class="btn btn-clean btn-icon" data-toggle="dropdown">
+                            <div class="dropdown">
+                                <a href="#" class="btn btn-clean btn-icon" data-toggle="dropdown">
                                     <i class="fas fa-sort-down"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
-                                        <!--begin::Navigation-->
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                                    <!--begin::Navigation-->
                                     <ul class="navi navi-hover py-1">
                                         <li class="navi-item">
-                                            <a href="dashboard.php?module=zone&page=zone-add-person&aid=<?php echo $aid_enc;?>" class="navi-link">
+                                            <a href="dashboard.php?module=zone&page=zone-add-person&aid=<?php echo $aid_enc;?>"
+                                                class="navi-link">
                                                 <span class="navi-icon"><i class="fas fa-edit"></i></span>
                                                 <span class="navi-text">จัดการหน่วยเลือกตั้ง</span>
                                             </a>
                                         </li>
                                         <li class="navi-item">
-                                            <a href="dashboard.php?module=zone&page=zone-add-person-excel&aid=<?php echo $aid_enc;?>" class="navi-link">
+                                            <a href="dashboard.php?module=zone&page=zone-add-person-excel&aid=<?php echo $aid_enc;?>"
+                                                class="navi-link">
                                                 <span class="navi-icon"><i class="fas fa-print"></i></span>
                                                 <span class="navi-text">พิมพ์รายงาน</span>
                                             </a>
                                         </li>
                                         <li class="navi-item">
-                                            <a href="dashboard.php?module=zone&page=zone-add&aid=<?php echo $aid_enc;?>&act=<?php echo base64_encode('edit');?>" class="navi-link">
+                                            <a href="dashboard.php?module=zone&page=zone-add&aid=<?php echo $aid_enc;?>&act=<?php echo base64_encode('edit');?>"
+                                                class="navi-link">
                                                 <span class="navi-icon"><i class="fas fa-edit"></i></span>
                                                 <span class="navi-text">แก้ไข</span>
                                             </a>
                                         </li>
                                     </ul>
                                     <!--end::Navigation-->
-                                    </div>
                                 </div>
-                <!--end::Dropdown-->
-                            </td>
-                </tr>
-            <?php 
+                            </div>
+                            <!--end::Dropdown-->
+                        </td>
+                    </tr>
+                    <?php 
               } // end while
             ?>
-            </tbody>
+                </tbody>
             </table>
         </div>
 
-<div class="d-flex justify-content-between align-items-center flex-wrap">
-    <div class="d-flex flex-wrap py-2 mr-3">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <div class="d-flex flex-wrap py-2 mr-3">
 
-<?php 
+                <?php 
 $p = 4;	//	กำหนดช่วงตัวเลขทางซ้าย และ ขวา ของหน้าที่ถูกเลือก
 $Prev_Page = $pagenum-1;
 $Next_Page = $pagenum+1;
@@ -330,57 +342,56 @@ else if($Num_Pages!=1 && $Num_Pages!=2)	//	กรณีไม่ได้เล�
 
 ?>
 
-    </div>
+            </div>
 
-    <div class="d-flex align-items-center py-3">
-        <span class="text-muted">หน้า <?php echo $pagenum;?> / <?php echo $last;?> </span>
-    </div>
-</div>
+            <div class="d-flex align-items-center py-3">
+                <span class="text-muted">หน้า <?php echo $pagenum;?> / <?php echo $last;?> </span>
+            </div>
+        </div>
 
-            
-<?php
+
+        <?php
 					} // end if
 					?>
-		
-	</div>
-	<div class="card-footer">
-		<div class="row">
-			
-		</div>
-	</div>
+
+    </div>
+    <div class="card-footer">
+        <div class="row">
+
+        </div>
+    </div>
 
 
 </div>
-               
-		<!--end::Card-->
+
+<!--end::Card-->
 
 
 
-                    
+
 <!-- Datepicker Thai -->
 <script src="assets/js/bootstrap-datepicker.js"></script>
 <script src="assets/js/bootstrap-datepicker-thai.js"></script>
-<script src="assets/js/locales/bootstrap-datepicker.th.js"></script>  
+<script src="assets/js/locales/bootstrap-datepicker.th.js"></script>
 
 <script>
-
-$(document).ready(function () {
+$(document).ready(function() {
     'use strict';
     getoptselect_amphur();
-	getoptselect_tambon();
+    getoptselect_tambon();
 
 
-}); 
+});
 
-$(".add-more").click(function(){ 
-		  //alert(99);
-          var html = $(".copy").html();
-          $(".after-add-more").after(html);
-      });
+$(".add-more").click(function() {
+    //alert(99);
+    var html = $(".copy").html();
+    $(".after-add-more").after(html);
+});
 
 
 $('#birthdate').datepicker({
-        autoclose: true
+    autoclose: true
 });
 
 
@@ -401,16 +412,16 @@ $("#ampur").change(function() {
 
 
 $("#level").change(function() {
-    if($("#level").val() == 1 ){
+    if ($("#level").val() == 1) {
         $("#head_h").hide();
-    }else{
+    } else {
         $("#head_h").show();
     }
 });
 
 
 
-function getoptselect_amphur(){
+function getoptselect_amphur() {
 
     var changwatcode = $("#changwat").val();
     var ampur = $("#txt_ampur").val();
@@ -418,7 +429,10 @@ function getoptselect_amphur(){
         type: "POST",
         url: "core/fn-get-ampur.php",
         //dataType: "json",
-        data: {changwatcode:changwatcode,ampur:ampur},
+        data: {
+            changwatcode: changwatcode,
+            ampur: ampur
+        },
         success: function(data) {
             $("#ampur").empty();
             $("#ampur").append(data);
@@ -428,49 +442,51 @@ function getoptselect_amphur(){
 
 
 
-function getoptselect_tambon(){
+function getoptselect_tambon() {
 
-var changwatcode = $("#changwat").val();
-var ampur = $("#txt_ampur").val();
-var ampurcode = $("#ampur").val();
-var tambon = $("#txt_tambon").val();
+    var changwatcode = $("#changwat").val();
+    var ampur = $("#txt_ampur").val();
+    var ampurcode = $("#ampur").val();
+    var tambon = $("#txt_tambon").val();
     $.ajax({
         type: "POST",
         url: "core/fn-get-tambon.php",
         //dataType: "json",
-        data: {changwatcode:changwatcode,ampurcode:ampurcode,ampur:ampur,tambon:tambon},
+        data: {
+            changwatcode: changwatcode,
+            ampurcode: ampurcode,
+            ampur: ampur,
+            tambon: tambon
+        },
         success: function(data) {
-        
+
             $("#tambon").empty();
             $("#tambon").append(data);
         } // success
     });
 
-}	
+}
 
 function confirm_borrow_delete(id) {
-                    Swal.fire({
-                        title: 'แน่ใจนะ?',
-                        text: "ต้องการยกเลิกรายการ",
-                        type: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        cancelButtonText: 'ยกเลิก',
-                        confirmButtonText: 'ใช่, ต้องการยกเลิกรายการ !'
-                    }).then((result) => {
-                        if (result.value) { //Yes
-                            $.post("core/borrow/borrow-main-del.php", {id: id}, function(result){
-                                //  $("test").html(result);
-                                // console.log(result.code);
-                                location.reload();
-                            });
-                        }
-                    })
-            }
-
-
+    Swal.fire({
+        title: 'แน่ใจนะ?',
+        text: "ต้องการยกเลิกรายการ",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'ยกเลิก',
+        confirmButtonText: 'ใช่, ต้องการยกเลิกรายการ !'
+    }).then((result) => {
+        if (result.value) { //Yes
+            $.post("core/borrow/borrow-main-del.php", {
+                id: id
+            }, function(result) {
+                //  $("test").html(result);
+                // console.log(result.code);
+                location.reload();
+            });
+        }
+    })
+}
 </script>
-
-
-
