@@ -22,7 +22,6 @@ $lname = filter_input(INPUT_POST, 'lname', FILTER_SANITIZE_STRING);
 $sex = filter_input(INPUT_POST, 'sex', FILTER_SANITIZE_STRING);
 $telephone = filter_input(INPUT_POST, 'telephone', FILTER_SANITIZE_STRING);
 $birthdate = filter_input(INPUT_POST, 'birthdate', FILTER_SANITIZE_STRING);
-$birthdate = date_saveto_db($birthdate);
 
 $house = filter_input(INPUT_POST, 'house', FILTER_SANITIZE_STRING);
 $community = filter_input(INPUT_POST, 'community', FILTER_SANITIZE_STRING);
@@ -33,14 +32,11 @@ $changwat = "30";
 $ampur = filter_input(INPUT_POST, 'ampur', FILTER_SANITIZE_STRING);
 $tambon = filter_input(INPUT_POST, 'tambon', FILTER_SANITIZE_STRING);
 
-$religion = filter_input(INPUT_POST, 'religion', FILTER_SANITIZE_STRING);
 $cposition1 = filter_input(INPUT_POST, 'cposition1', FILTER_SANITIZE_STRING);
 $cposition2 = filter_input(INPUT_POST, 'cposition2', FILTER_SANITIZE_STRING);
 $cposition3 = filter_input(INPUT_POST, 'cposition3', FILTER_SANITIZE_STRING);
 $cposition4 = filter_input(INPUT_POST, 'cposition4', FILTER_SANITIZE_STRING);
 
-$education = filter_input(INPUT_POST, 'education', FILTER_SANITIZE_STRING);
-$abogroup = filter_input(INPUT_POST, 'abogroup', FILTER_SANITIZE_STRING);
 $level = filter_input(INPUT_POST, 'level', FILTER_SANITIZE_STRING);
 $head = filter_input(INPUT_POST, 'head_data', FILTER_SANITIZE_STRING);
 $team_id = filter_input(INPUT_POST, 'team_id', FILTER_SANITIZE_STRING);
@@ -60,112 +56,12 @@ $longitude = filter_input(INPUT_POST, 'longitude', FILTER_SANITIZE_STRING);
 
 $flag = '1';
 $now = date("Y-m-d H:i:s");
-
-
-
 $exist_person = "";
+
 if($act == 'add'){
 
-// check for duplicate email
-$stmt = $conn->prepare("SELECT * FROM ".DB_PREFIX."person_main WHERE cid = ? AND org_id = ?   ");
-$stmt->execute([$cid,$org_id]);
-$row = $stmt->fetch(PDO::FETCH_ASSOC);
-//$exist_person = $stmt->fetchColumn();
-$exist_person = $stmt->rowCount();
-
-if($exist_person != '0'){
-
-	
-	// $personid = $row['oid'];
-	// if($level == "1"){
-	// 	$head = "0";
-	//     $team_id = $personid;
-	// }
-
-	// $query = "UPDATE ".DB_PREFIX."person_main SET cid = ?, org_id = ?, prename = ?, fname = ?, lname = ?, sex = ?,birthdate = ?,telephone = ?,house = ?,community = ?,road = ?,village = ?,tambon = ?,ampur = ?,changwat = ?,flag = ?,edit_date = ?,edit_users = ?,religion = ? , occupation = ? ,education = ?, abogroup = ?, level = ?, head = ? ,email = ?,team_id = ? WHERE oid = ? LIMIT 1"; 
-	// $stmt = $conn->prepare($query);
-	// $stmt->bindParam(1, $cid, PDO::PARAM_STR);
-	// $stmt->bindParam(2, $org_id, PDO::PARAM_STR);
-	// $stmt->bindParam(3, $prename, PDO::PARAM_STR);
-	// $stmt->bindParam(4, $fname);
-	// $stmt->bindParam(5, $lname, PDO::PARAM_STR);
-	// $stmt->bindParam(6, $sex, PDO::PARAM_INT);
-	// $stmt->bindParam(7, $birthdate, PDO::PARAM_STR);
-	// $stmt->bindParam(8, $telephone, PDO::PARAM_STR);
-	// $stmt->bindParam(9, $house, PDO::PARAM_STR);
-	// $stmt->bindParam(10, $community, PDO::PARAM_STR);
-	// $stmt->bindParam(11, $road, PDO::PARAM_STR);
-	// $stmt->bindParam(12, $village, PDO::PARAM_STR);
-	// $stmt->bindParam(13, $tambon, PDO::PARAM_STR);
-	// $stmt->bindParam(14, $ampur, PDO::PARAM_STR);
-	// $stmt->bindParam(15, $changwat, PDO::PARAM_STR);
-	// $stmt->bindParam(16, $flag, PDO::PARAM_STR);
-	// $stmt->bindParam(17, $now, PDO::PARAM_STR);
-	// $stmt->bindParam(18, $logged_user_id, PDO::PARAM_STR);
-	// $stmt->bindParam(19, $religion, PDO::PARAM_STR);
-	// $stmt->bindParam(20, $occupation, PDO::PARAM_STR);
-	// $stmt->bindParam(21, $education, PDO::PARAM_STR);
-	// $stmt->bindParam(22, $abogroup, PDO::PARAM_STR);
-	// $stmt->bindParam(23, $level, PDO::PARAM_STR);
-	// $stmt->bindParam(24, $head, PDO::PARAM_STR);
-	// $stmt->bindParam(25, $email, PDO::PARAM_STR);
-	// $stmt->bindParam(26, $team_id, PDO::PARAM_STR);
-	// $stmt->bindParam(27, $personid, PDO::PARAM_INT);
-	// $stmt->execute();
-
-	// $service_oid = $conn->lastInsertId(); // last inserted ID
-	// // AVATAR
-	// 	if($_FILES['img_profile']['name'])
-	// 	{
-	// 	$f = $_FILES['img_profile']['name'];
-	// 	$ext = strtolower(substr(strrchr($f, '.'), 1));
-	// 	if (($ext!= "jpg") && ($ext != "jpeg") && ($ext != "gif") && ($ext != "png")) 
-	// 		{
-	// 		}
-
-	// 	else
-	// 		{
-	// 		$image_code = random_code();
-	// 		$image = $image_code."-".$_FILES['img_profile']['name'];
-	// 		$image = RewriteFile($image);
-	// 		move_uploaded_file($_FILES["img_profile"]["tmp_name"], "../../uploads/person/".$image);
-
-	// 		// create avatar image
-	// 		// $resizeObj = new resize("../../uploads/temp/".$image); 
-	// 		// $resizeObj -> resizeImage(200, 200, 'crop'); // (options: exact, portrait, landscape, auto, crop) 
-	// 		// $resizeObj -> saveImage("../../uploads/person/".$image);
-			
-	// 		// @unlink ("../../uploads/temp/".$image);
-	// 		$sql = "UPDATE ".DB_PREFIX."person_main SET img_profile = ? WHERE oid = ? LIMIT 1"; 
-	// 		$conn->prepare($sql)->execute([$image, $personid]);
-	// 		}
-	// 	}
-
-	// 	$person_oid_enc = base64_encode($personid);
-	// 	// if($row['head']==""){
-	// 	// 	$query = "INSERT INTO ".DB_PREFIX."mapping_person (oid_head,oid) VALUES ( ?, ?)"; 
-	// 	// 	$stmt = $conn->prepare($query);
-	// 	// 	$stmt->bindParam(1, $personid, PDO::PARAM_STR);
-	// 	// 	$stmt->bindParam(2, $head, PDO::PARAM_STR);
-	// 	// 	$stmt->execute();
-	// 	// }else{
-	// 	// 	$query = "UPDATE ".DB_PREFIX."mapping_person SET oid_head = ? WHERE oid = ?"; 
-	// 	// 	$stmt = $conn->prepare($query);
-	// 	// 	$stmt->bindParam(1, $head, PDO::PARAM_STR);
-	// 	// 	$stmt->bindParam(2, $personid, PDO::PARAM_STR);
-	// 	// 	$stmt->execute();
-	// 	// }
-
-	
-	// 	$act_enc = base64_encode('edit');
-	// 	$msg = "success";
-		// echo json_encode(['code'=>200, 'msg'=>$exist_person,'personid'=>$person_oid_enc,'act'=>$act_enc,'action'=>$act]);
-		
-	echo json_encode(['code'=>300]);
-
-}else{
 if($level == "1"){$head = "0";}
-$query = "INSERT INTO ".DB_PREFIX."person_main ( cid, org_id, prename, fname, lname, sex,birthdate,telephone,house,community,road,village,tambon,ampur,changwat,flag,add_date,add_users,religion,cposition1,cposition2,cposition3,cposition4,abogroup,level,head,latitude,longitude,status,cost1,cost2,cost3,cost4) VALUES ( ?,?,?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?,?,?,?,?,?,?)"; 
+$query = "INSERT INTO ".DB_PREFIX."person_sub ( cid, org_id, prename, fname, lname, sex,birthdate,telephone,house,community,road,village,tambon,ampur,changwat,flag,add_date,add_users,cposition1,cposition2,cposition3,cposition4,level,head,latitude,longitude,status,cost1,cost2,cost3,cost4) VALUES ( ?,?,?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?,?,?,?,?,? )"; 
 $stmt = $conn->prepare($query);
 $stmt->bindParam(1, $cid, PDO::PARAM_STR);
 $stmt->bindParam(2, $org_id, PDO::PARAM_STR);
@@ -185,60 +81,44 @@ $stmt->bindParam(15, $changwat, PDO::PARAM_STR);
 $stmt->bindParam(16, $flag, PDO::PARAM_STR);
 $stmt->bindParam(17, $now, PDO::PARAM_STR);
 $stmt->bindParam(18, $logged_user_id, PDO::PARAM_STR);
-$stmt->bindParam(19, $religion, PDO::PARAM_STR);
-$stmt->bindParam(20, $cposition1, PDO::PARAM_STR);
-$stmt->bindParam(21, $cposition2, PDO::PARAM_STR);
-$stmt->bindParam(22, $cposition3, PDO::PARAM_STR);
-$stmt->bindParam(23, $cposition4, PDO::PARAM_STR);
-$stmt->bindParam(24, $abogroup, PDO::PARAM_STR);
-$stmt->bindParam(25, $level, PDO::PARAM_STR);
-$stmt->bindParam(26, $head, PDO::PARAM_STR);
-$stmt->bindParam(27, $latitude, PDO::PARAM_STR);
-$stmt->bindParam(28, $longitude, PDO::PARAM_STR);
-$stmt->bindParam(29, $status_pp, PDO::PARAM_STR);
-$stmt->bindParam(30, $cost1, PDO::PARAM_STR);
-$stmt->bindParam(31, $cost2, PDO::PARAM_STR);
-$stmt->bindParam(32, $cost3, PDO::PARAM_STR);
-$stmt->bindParam(33, $cost4, PDO::PARAM_STR);
-
-
-
+$stmt->bindParam(19, $cposition1, PDO::PARAM_STR);
+$stmt->bindParam(20, $cposition2, PDO::PARAM_STR);
+$stmt->bindParam(21, $cposition3, PDO::PARAM_STR);
+$stmt->bindParam(22, $cposition4, PDO::PARAM_STR);
+$stmt->bindParam(23, $level, PDO::PARAM_STR);
+$stmt->bindParam(24, $head, PDO::PARAM_STR);
+$stmt->bindParam(25, $latitude, PDO::PARAM_STR);
+$stmt->bindParam(26, $longitude, PDO::PARAM_STR);
+$stmt->bindParam(27, $status_pp, PDO::PARAM_STR);
+$stmt->bindParam(28, $cost1, PDO::PARAM_STR);
+$stmt->bindParam(29, $cost2, PDO::PARAM_STR);
+$stmt->bindParam(30, $cost3, PDO::PARAM_STR);
+$stmt->bindParam(31, $cost4, PDO::PARAM_STR);
 
 $stmt->execute();
+
 
 $person_oid = $conn->lastInsertId(); // last inserted ID
 $person_oid_enc = base64_encode($person_oid);
 
+
+
+
 if($level == "1"){
-	$query1 = "UPDATE ".DB_PREFIX."person_main SET team_id = ? WHERE oid = ? LIMIT 1"; 
+	$query1 = "UPDATE ".DB_PREFIX."person_sub SET team_id = ? WHERE oid = ? LIMIT 1"; 
 	$stmt1 = $conn->prepare($query1);
 	$stmt1->bindParam(1, $person_oid, PDO::PARAM_STR);
 	$stmt1->bindParam(2, $person_oid, PDO::PARAM_STR);
 	$stmt1->execute();
 }else if($parents != 0 OR $parents != null){
-	$query1 = "UPDATE ".DB_PREFIX."person_main SET team_id = ? WHERE oid = ? LIMIT 1"; 
+	$query1 = "UPDATE ".DB_PREFIX."person_sub SET team_id = ? WHERE oid = ? LIMIT 1"; 
 	$stmt1 = $conn->prepare($query1);
 	$stmt1->bindParam(1, $parents, PDO::PARAM_STR);
 	$stmt1->bindParam(2, $person_oid, PDO::PARAM_STR);
 	$stmt1->execute();
 }
 
-// if($row['head'] == null){
-// 	$query = "INSERT INTO ".DB_PREFIX."mapping_person (oid_head,oid) VALUES ( ?, ?)"; 
-// 	$stmt = $conn->prepare($query);
-// 	$stmt->bindParam(1, $head, PDO::PARAM_STR);
-// 	$stmt->bindParam(2, $person_oid, PDO::PARAM_STR);
-// 	$stmt->execute();
-// }else{
-// 	$query = "UPDATE ".DB_PREFIX."mapping_person SET oid_head = ? WHERE oid = ?"; 
-// 	$stmt = $conn->prepare($query);
-// 	$stmt->bindParam(1, $head, PDO::PARAM_STR);
-// 	$stmt->bindParam(2, $person_oid, PDO::PARAM_STR);
-// 	$stmt->execute();
-// }
 
-
-// AVATAR
 if($_FILES['img_profile']['name'])
 	{
 	$f = $_FILES['img_profile']['name'];
@@ -254,23 +134,28 @@ if($_FILES['img_profile']['name'])
 		$image = RewriteFile($image);
 		move_uploaded_file($_FILES["img_profile"]["tmp_name"], "../../uploads/person/".$image);
 
-		// create avatar image
-		// $resizeObj = new resize("../../uploads/temp/".$image); 
-		// $resizeObj -> resizeImage(200, 200, 'crop'); // (options: exact, portrait, landscape, auto, crop) 
-		// $resizeObj -> saveImage("../../uploads/person/".$image);
-		
-		// @unlink ("../../uploads/temp/".$image);
-		$sql = "UPDATE ".DB_PREFIX."person_main SET img_profile = ? WHERE oid = ? LIMIT 1"; 
+	
+		$sql = "UPDATE ".DB_PREFIX."person_sub  SET img_profile = ? WHERE oid = ? LIMIT 1"; 
 		$conn->prepare($sql)->execute([$image, $person_oid]);
 		}
 	}
 
+		$sql3 = "UPDATE " . DB_PREFIX . "person_sub p
+		INNER JOIN level_type l ON p.level = l.level_id
+		INNER JOIN cchangwat c ON p.changwat = c.changwatcode
+		INNER JOIN campur a ON CONCAT(p.changwat,p.ampur) = a.ampurcodefull
+		INNER JOIN  ctambon t ON CONCAT(p.changwat,p.ampur,p.tambon) = t.tamboncodefull
+		INNER JOIN csex s ON p.sex = s.sex
+		SET p.levelname = l.level,p.changwatname = c.changwatname,p.ampurname = a.ampurname ,p.tambonname = t.tambonname,p.sexname = s.sexname";
+		$stmt = $conn->prepare($sql3);
+		$stmt->bindParam(1, $cid, PDO::PARAM_STR);
+$stmt->execute();
+	
 			$act_enc = base64_encode('edit');
 			$msg = "success";
 			echo json_encode(['code'=>200, 'msg'=>$exist_person,'personid'=>$person_oid_enc,'act'=>$act_enc,'action'=>$act]);
-		  
-	}	
-			
+		  	
+
 	
 	
 }else if($act == 'edit'){
@@ -278,7 +163,7 @@ if($level == "1"){
 	$head = "0";
 	$parents = $personid;
 }
-	$query = "UPDATE ".DB_PREFIX."person_main SET cid = ?, org_id = ?, prename = ?, fname = ?, lname = ?, sex = ?,birthdate = ?,telephone = ?,house = ?,community = ?,road = ?,village = ?,tambon = ?,ampur = ?,changwat = ?,flag = ?,edit_date = ?,edit_users = ?,religion = ? , cposition1 = ? ,cposition2 = ?,cposition3 = ? ,cposition4 = ?, abogroup = ?, level = ?, head = ? ,team_id = ? ,latitude = ? ,longitude = ?,status = ?, cost1 =? ,cost2 = ?,cost3 = ?,cost4 = ? WHERE oid = ? LIMIT 1"; 
+	$query = "UPDATE ".DB_PREFIX."person_sub SET cid = ?, org_id = ?, prename = ?, fname = ?, lname = ?, sex = ?,birthdate = ?,telephone = ?,house = ?,community = ?,road = ?,village = ?,tambon = ?,ampur = ?,changwat = ?,flag = ?,edit_date = ?,edit_users = ?,  cposition1 = ? ,cposition2 = ?,cposition3 = ? ,cposition4 = ?, level = ?, head = ? ,team_id = ? ,latitude = ? ,longitude = ?,status = ?, cost1 =? ,cost2 = ?,cost3 = ?,cost4 = ? WHERE oid = ? LIMIT 1"; 
 	$stmt = $conn->prepare($query);
 	$stmt->bindParam(1, $cid, PDO::PARAM_STR);
 	$stmt->bindParam(2, $org_id, PDO::PARAM_STR);
@@ -298,26 +183,29 @@ if($level == "1"){
 	$stmt->bindParam(16, $flag, PDO::PARAM_STR);
 	$stmt->bindParam(17, $now, PDO::PARAM_STR);
 	$stmt->bindParam(18, $logged_user_id, PDO::PARAM_STR);
-	$stmt->bindParam(19, $religion, PDO::PARAM_STR);
-	$stmt->bindParam(20, $cposition1, PDO::PARAM_STR);
-	$stmt->bindParam(21, $cposition2, PDO::PARAM_STR);
-	$stmt->bindParam(22, $cposition3, PDO::PARAM_STR);
-	$stmt->bindParam(23, $cposition4, PDO::PARAM_STR);
-	$stmt->bindParam(24, $abogroup, PDO::PARAM_STR);
-	$stmt->bindParam(25, $level, PDO::PARAM_STR);
-	$stmt->bindParam(26, $head, PDO::PARAM_STR);
-	$stmt->bindParam(27, $parents, PDO::PARAM_STR);
-	$stmt->bindParam(28, $latitude, PDO::PARAM_STR);
-	$stmt->bindParam(29, $longitude, PDO::PARAM_STR);
-	$stmt->bindParam(30, $status_pp, PDO::PARAM_STR);
-	$stmt->bindParam(31, $cost1, PDO::PARAM_STR);
-	$stmt->bindParam(32, $cost2, PDO::PARAM_STR);
-	$stmt->bindParam(33, $cost3, PDO::PARAM_STR);
-	$stmt->bindParam(34, $cost4, PDO::PARAM_STR);
-	$stmt->bindParam(35, $personid, PDO::PARAM_INT);
+	$stmt->bindParam(19, $cposition1, PDO::PARAM_STR);
+	$stmt->bindParam(20, $cposition2, PDO::PARAM_STR);
+	$stmt->bindParam(21, $cposition3, PDO::PARAM_STR);
+	$stmt->bindParam(22, $cposition4, PDO::PARAM_STR);
+	$stmt->bindParam(23, $level, PDO::PARAM_STR);
+	$stmt->bindParam(24, $head, PDO::PARAM_STR);
+	$stmt->bindParam(25, $parents, PDO::PARAM_STR);
+	$stmt->bindParam(26, $latitude, PDO::PARAM_STR);
+	$stmt->bindParam(27, $longitude, PDO::PARAM_STR);
+	$stmt->bindParam(28, $status_pp, PDO::PARAM_STR);
+	$stmt->bindParam(29, $cost1, PDO::PARAM_STR);
+	$stmt->bindParam(30, $cost2, PDO::PARAM_STR);
+	$stmt->bindParam(31, $cost3, PDO::PARAM_STR);
+	$stmt->bindParam(32, $cost4, PDO::PARAM_STR);
+	$stmt->bindParam(33, $personid, PDO::PARAM_INT);
 
 	$stmt->execute();
 
+	$sql2 = "UPDATE " . DB_PREFIX . "person_sub p INNER JOIN level_type l ON p.level = l.level_id SET p.levelname = l.level WHERE p.cid = ?";
+$stmt = $conn->prepare($sql2);
+$stmt->bindParam(1, $cid, PDO::PARAM_STR);
+$stmt->execute();
+	
 	// AVATAR
 		if($_FILES['img_profile']['name'])
 		{
@@ -334,13 +222,8 @@ if($level == "1"){
 			$image = RewriteFile($image);
 			move_uploaded_file($_FILES["img_profile"]["tmp_name"], "../../uploads/person/".$image);
 
-			// create avatar image
-			// $resizeObj = new resize("../../uploads/temp/".$image); 
-			// $resizeObj -> resizeImage(200, 200, 'crop'); // (options: exact, portrait, landscape, auto, crop) 
-			// $resizeObj -> saveImage("../../uploads/person/".$image);
 			
-			// @unlink ("../../uploads/temp/".$image);
-			$sql = "UPDATE ".DB_PREFIX."person_main SET img_profile = ? WHERE oid = ? LIMIT 1"; 
+			$sql = "UPDATE ".DB_PREFIX."person_sub  SET img_profile = ? WHERE  = ? LIMIT 1"; 
 			$conn->prepare($sql)->execute([$image, $personid]);
 			}
 		}

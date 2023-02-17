@@ -33,10 +33,6 @@ $personid = base64_decode($personid_enc);
 $serviceid = base64_decode($serviceid_enc);
 $action = base64_decode($act);
 
-
-    
-
-
 ?>
 <!--begin::Card-->
 <div class="card card-custom gutter-b example example-compact">
@@ -45,7 +41,11 @@ $action = base64_decode($act);
             <i class="far fa-user"></i>&nbsp;ข้อมูลเขตเลือกตั้ง
         </h3>
         <div class="card-toolbar">
-
+            <div class="example-tools justify-content-center">
+                <a href="dashboard.php?module=<?php echo $module;?>&page=zone-add"
+                    class="btn btn-success btn-sm font-weight-bold mr-2" title="เพิ่มบุคคล"><i class="fa fa-plus-circle"
+                        title="เพิ่มเขตเลือกตั้ง" data-toggle="tooltip"></i>เพิ่มเขตเลือกตั้ง</a>
+            </div>
         </div>
     </div>
 
@@ -167,8 +167,6 @@ $action = base64_decode($act);
         $search_data  $schangwat_data  $sampur_data  $stambon_data $szone_data $sarea_data 
         ORDER BY p.aid  ");
         $stmt_data->execute();		
-
-        
     ?>
 
 
@@ -178,14 +176,12 @@ $action = base64_decode($act);
                 <thead>
                     <tr>
                         <th class="text-center">ลำดับ</th>
-                        <th>ชื่อหน่วยเลือกตั้ง</th>
+                        <th>เขตเลือกตั้ง</th>
+                        <th>จังหวัด</th>
+                        <th>อำเภอ</th>
+                        <th>ตำบล</th>
 
-                        <th>A</th>
-                        <th>B</th>
-                        <th>C</th>
-                        <th>D</th>
-                        <th>N</th>
-                        <th>อยู๋ในระบบ</th>
+                        <th>ชื่อหน่วยเลือกตั้ง</th>
                         <th class="text-center">จัดการ</th>
                     </tr>
                 </thead>
@@ -207,55 +203,14 @@ $action = base64_decode($act);
                 $village = $row['village'];
                 $zone_number = $row['zone_number'];
                 $zone_name = $row['zone_name'];
-
-
-                $numb_A = $conn->query("SELECT COUNT(level) AS num FROM".DB_PREFIX." mapping_person mp 
-                                         INNER  JOIN area a ON a.aid = mp.aid
-                                         INNER  JOIN person_sub pm ON mp.oid_map = pm.team_id
-                                         WHERE mp.aid = ".$aid." AND pm.level = '1' ORDER BY mp.oid_map" )->fetchColumn();
-                 $numb_B = $conn->query("SELECT COUNT(level) AS num FROM".DB_PREFIX." mapping_person mp 
-                                         INNER  JOIN area a ON a.aid = mp.aid
-                                         INNER  JOIN person_sub pm ON mp.oid_map = pm.team_id
-                                         WHERE mp.aid = ".$aid." AND pm.level = '2' ORDER BY mp.oid_map" )->fetchColumn();
-                 $numb_C = $conn->query("SELECT COUNT(level) AS num FROM".DB_PREFIX." mapping_person mp 
-                                         INNER  JOIN area a ON a.aid = mp.aid
-                                         INNER  JOIN person_sub pm ON mp.oid_map = pm.team_id
-                                         WHERE mp.aid = ".$aid." AND pm.level = '3' ORDER BY mp.oid_map" )->fetchColumn();
-                 $numb_D = $conn->query("SELECT COUNT(level) AS num FROM".DB_PREFIX." mapping_person mp 
-                                         INNER  JOIN area a ON a.aid = mp.aid
-                                         INNER  JOIN person_sub pm ON mp.oid_map = pm.team_id
-                                         WHERE mp.aid = ".$aid." AND pm.level = '4' ORDER BY mp.oid_map" )->fetchColumn();
-                $numb_N = $conn->query("SELECT COUNT(level) AS num FROM".DB_PREFIX." mapping_person mp 
-                                         INNER  JOIN area a ON a.aid = mp.aid
-                                         INNER  JOIN person_sub pm ON mp.oid_map = pm.team_id
-                                         WHERE mp.aid = ".$aid." AND pm.level = '5' ORDER BY mp.oid_map" )->fetchColumn();
-                 $numb_T = $conn->query("SELECT COUNT(level) AS num FROM".DB_PREFIX." mapping_person mp 
-                                         INNER  JOIN area a ON a.aid = mp.aid
-                                         INNER  JOIN person_sub pm ON mp.oid_map = pm.team_id
-                                         WHERE mp.aid = ".$aid." ORDER BY mp.oid_map" )->fetchColumn();
-                
                 ?>
                     <tr>
                         <td class="text-center"><?php echo $no;?></td>
+                        <td><?php echo $area_number;?></td>
+                        <td><?php echo $changwat;?></td>
+                        <td><?php echo $ampur;?></td>
+                        <td><?php echo $tambon;?></td>
                         <td><?php echo $zone_name;?></td>
-                        <td>
-                            <h5><?php echo  number_format($numb_A);?> </h5>
-                        </td>
-                        <td>
-                            <h5><?php echo  number_format($numb_B);?> </h5>
-                        </td>
-                        <td>
-                            <h5><?php echo  number_format($numb_C);?> </h5>
-                        </td>
-                        <td>
-                            <h5><?php echo  number_format($numb_D);?> </h5>
-                        </td>
-                        <td>
-                            <h5><?php echo  number_format($numb_N);?> </h5>
-                        </td>
-                        <td>
-                            <h5><?php echo  number_format($numb_T);?> </h5>
-                        </td>
                         <!--<td class="text-center"><span class="label label-lg label-light-<?php echo $status_color;?> label-inline"><?php echo $status_title;?></span></td>-->
                         <td class="text-center">
                             <!--begin::Dropdown-->
@@ -273,7 +228,20 @@ $action = base64_decode($act);
                                                 <span class="navi-text">จัดการหน่วยเลือกตั้ง</span>
                                             </a>
                                         </li>
-
+                                        <li class="navi-item">
+                                            <a href="dashboard.php?module=zone&page=zone-add-person-excel&aid=<?php echo $aid_enc;?>"
+                                                class="navi-link">
+                                                <span class="navi-icon"><i class="fas fa-print"></i></span>
+                                                <span class="navi-text">พิมพ์รายงาน</span>
+                                            </a>
+                                        </li>
+                                        <li class="navi-item">
+                                            <a href="dashboard.php?module=zone&page=zone-add&aid=<?php echo $aid_enc;?>&act=<?php echo base64_encode('edit');?>"
+                                                class="navi-link">
+                                                <span class="navi-icon"><i class="fas fa-edit"></i></span>
+                                                <span class="navi-text">แก้ไข</span>
+                                            </a>
+                                        </li>
                                     </ul>
                                     <!--end::Navigation-->
                                 </div>

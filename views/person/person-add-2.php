@@ -20,8 +20,8 @@ if($action == "edit"){
     $stmt_data = $conn->prepare ("SELECT *,pm1.cid AS CID,pm1.fname AS Fname,pm1.lname AS Lname,pm1.sex AS Sex,pm1.birthdate AS Birthdate,pm1.telephone AS Telephone,pm1.house AS House,pm1.community AS Community,pm1.road AS Road,pm1.village AS Village,pm1.tambon AS Tambon,pm1.ampur AS Ampur,pm1.changwat AS Changwat,pm1.img_profile AS Img_profile,pm1.prename AS pre,pm1.level AS pmlevel,
         cp2.prename AS pre2,lt2.level AS namelevel2,pm2.fname AS fname2,pm2.lname AS lname2,
         cp3.prename AS pre3,lt3.level AS namelevel3,pm3.fname AS fname3,pm3.lname AS lname3
-        FROM person_main pm1 LEFT JOIN person_main pm2 ON pm1.head = pm2.oid 
-        LEFT JOIN person_main pm3 ON pm1.team_id = pm3.oid 
+        FROM person_sub pm1 LEFT JOIN person_sub pm2 ON pm1.head = pm2.oid 
+        LEFT JOIN person_sub pm3 ON pm1.team_id = pm3.oid 
         LEFT JOIN cprename cp1 ON pm1.prename = cp1.id_prename 
         LEFT JOIN cprename cp2 ON pm2.prename = cp2.id_prename 
         LEFT JOIN cprename cp3 ON pm3.prename = cp3.id_prename 
@@ -313,7 +313,6 @@ if($action == "edit"){
                                 <?php
                         $stmt = $conn->prepare ("SELECT * FROM status_pp  ");
                         $stmt->execute();
-                        echo "<option value=''>-ระบุ-</option>";
                         while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
                         $id = $row->sid;
                         $name = $row->name; ?>

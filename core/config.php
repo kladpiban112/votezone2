@@ -10,7 +10,7 @@ define('DB_HOST', 'localhost'); // Database host ## Datenbank Server
 define('DB_PORT', 3306); // Enter the database port for your mysql server
 define('DB_USER', 'root'); // Database user ## Datenbank Benutzername
 define('DB_PASS', ''); // Database password ## Datenbank Passwort
-define('DB_NAME', 'thaiakitec_demo1'); // Database name ## Datenbank Name
+define('DB_NAME', 'thaikitech_demo1'); // Database name ## Datenbank Name
 
 // OTHER SETTINGS (YOU DON'T NEED TO CHANGE THIS IF YOU ARE NOT SURE)
 define('DB_PREFIX', ''); // Database prefix use (a-z) and (_), for example: cms_ 

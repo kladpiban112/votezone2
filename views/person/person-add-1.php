@@ -12,7 +12,7 @@ if($action == "edit"){
 	$txt_title = "แก้ไข";
 	$action = $action;
 
-	$stmt_data = $conn->prepare ("SELECT p.*,o.org_name FROM ".DB_PREFIX."person_main p 
+	$stmt_data = $conn->prepare ("SELECT p.*,o.org_name FROM ".DB_PREFIX."person_sub p 
 	LEFT JOIN ".DB_PREFIX."org_main o ON p.org_id = o.org_id 
     WHERE p.oid = '$personid'  LIMIT 1");
     $stmt_data->execute();	
@@ -25,7 +25,7 @@ if($action == "edit"){
 
 if($personid_enc != ""){
 
-	$stmt_data = $conn->prepare ("SELECT p.*,o.org_name FROM ".DB_PREFIX."person_main p 
+	$stmt_data = $conn->prepare ("SELECT p.*,o.org_name FROM ".DB_PREFIX."person_sub p 
 	LEFT JOIN ".DB_PREFIX."org_main o ON p.org_id = o.org_id 
     WHERE p.oid = '$personid'  LIMIT 1");
     $stmt_data->execute();	
@@ -81,13 +81,16 @@ if($personid_enc != ""){
 
                     <div class="form-group row">
                         <div class="col-lg-3">
-                            <label>เลขบัตรประชาชน</label>
-
-                            <input type="text" class="form-control form-control-sm" placeholder="เลขบัตรประชาชน 13 หลัก"
-                                name="cid" id="cid" maxlength="13" value="<?php echo $row_person['cid'];?>" />
-
+                            <label>เลขบัตรประชาชน </label> <label class="text-danger">*</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="เลขบัตรประชาชน/เลขผู้เสียภาษี"
+                                    name="cid" id="cid" maxlength="13" value="<?php echo $row_person['cid'];?>" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="button" id="cidSearch"><i
+                                            class="fas fa-search"></i></button>
+                                </div>
+                            </div> <br /><span style="color:#A42022" id="errorcid"></span>
                         </div>
-
                         <div class="col-lg-2">
                             <label>คำนำหน้า</label>
                             <select class="form-control form-control-sm" name="prename" id="prename">
@@ -387,10 +390,10 @@ if($personid_enc != ""){
 
                         <div class="col-lg-3">
                             <label>จังหวัด</label>
-                            <select class="form-control form-control-sm" name="changwat" id="changwat" disabled>
+                            <select class="form-control form-control-sm" name="changwat" id="changwat">
 
                                 <?php
-                                                            $stmt = $conn->prepare ("SELECT * FROM cchangwat c   WHERE c.changwatcode = '30'");
+                                                            $stmt = $conn->prepare ("SELECT * FROM cchangwat c  ");
                                                             $stmt->execute();
                                                            
                                                             while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
@@ -889,44 +892,27 @@ function confirm_person_image(id) {
 }
 
 
-function Script_checkID(id) {
-    if (!IsNumeric(id)) return false;
-    if (id.substring(0, 1) == 0) return false;
-    if (id.length != 13) return false;
-    for (i = 0, sum = 0; i < 12; i++)
-        sum += parseFloat(id.charAt(i)) * (13 - i);
-    if ((11 - sum % 11) % 10 != parseFloat(id.charAt(12))) return false;
-    return true;
-}
+// function Script_checkID(id) {
+//     if (!IsNumeric(id)) return false;
+//     if (id.substring(0, 1) == 0) return false;
+//     if (id.length != 13) return false;
+//     for (i = 0, sum = 0; i < 12; i++)
+//         sum += parseFloat(id.charAt(i)) * (13 - i);
+//     if ((11 - sum % 11) % 10 != parseFloat(id.charAt(12))) return false;
+//     return true;
+// }
 
 
-function IsNumeric(input) {
-    var RE = /^-?(0|INF|(0[1-7][0-7]*)|(0x[0-9a-fA-F]+)|((0|[1-9][0-9]*|(?=[\.,]))([\.,][0-9]+)?([eE]-?\d+)?))$/;
-    return (RE.test(input));
-}
+// function IsNumeric(input) {
+//     var RE = /^-?(0|INF|(0[1-7][0-7]*)|(0x[0-9a-fA-F]+)|((0|[1-9][0-9]*|(?=[\.,]))([\.,][0-9]+)?([eE]-?\d+)?))$/;
+//     return (RE.test(input));
+// }
 
 
 $('#btnSavePerson').click(function(e) {
     e.preventDefault();
     var cid = $('#cid').val();
-    var result_cid = Script_checkID(cid);
-
-    if ($('#cid').val().length == "") {
-        Swal.fire({
-            icon: 'error',
-            title: 'กรุณาระบุเลขบัตรประชาชน',
-            showConfirmButton: false,
-            timer: 1000
-
-        });
-    } else if (result_cid === false) {
-        Swal.fire({
-            icon: 'error',
-            title: 'เลขบัตรประชาชนไม่ถูกต้อง',
-            showConfirmButton: false,
-            timer: 1000
-        });
-    } else if ($('#fname').val().length == "") {
+    if ($('#fname').val().length == "") {
         Swal.fire({
             icon: 'error',
             title: 'กรุณาระบุชื่อ',
@@ -1003,64 +989,115 @@ $('#btnSavePerson').click(function(e) {
 }); //  click
 
 
+
+
 $('#cidSearch').click(function(e) {
     e.preventDefault();
-    if ($('#cid').val().length == "") {
-        Swal.fire({
-            icon: 'error',
-            title: 'กรุณาระบุเลขบัตรประชาชน',
-            showConfirmButton: false,
-            timer: 1000
-        });
-    } else if ($('#org_id').val().length == "") {
-        Swal.fire({
-            icon: 'error',
-            title: 'กรุณาระบุหน่วยงาน',
-            showConfirmButton: false,
-            timer: 1000
-        });
-    } else {
+    var data = new FormData(this.form);
+    $.ajax({
+        type: "POST",
+        url: "core/person/person-get-id-code.php",
+        dataType: "json",
+        data: data,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            if (data.code == "200") {
+                Swal.fire({
+                        icon: 'success',
+                        title: 'ค้นหาข้อมูลสำเร็จ',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    .then((value) => {
+                        console.log(data)
+                        $('#prename').val(data.data['prename']);
+                        $('#fname').val(data.data['fname']);
+                        $('#lname').val(data.data['lname']);
+                        $('#village').val(data.data['village']);
+                        $("#changwat").val(data.data['changwat']).change();
+                        getoptselect_tambon_selected(data.data['changwat'], data.data['ampur'],
+                            data.data['tambon']);
+                        getoptselect_amphur_selected(data.data['changwat'], data.data['ampur'],
+                            data.data['tambon']);
+                        $('#cost1').val(data.data['cost1']);
+                        $('#cost2').val(data.data['cost2']);
+                        $('#cost3').val(data.data['cost3']);
+                        $('#cost4').val(data.data['cost4']);
+                        $('#sex').val(data.data['sex']);
+                        $('#birthdate').val(data.data['birthdate']);
+                        $('#cposition1').val(data.data['cposition1']);
+                        $('#cposition2').val(data.data['cposition2']);
+                        $('#cposition3').val(data.data['cposition3']);
+                        $('#cposition4').val(data.data['cposition4']);
+                        $('#status_pp').val(data.data['status']);
 
-        var data = new FormData(this.form);
+
+
+
+
+                    });
+            } else if (data.code == "404") {
+                //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
+                Swal.fire({
+                        icon: 'error',
+                        title: 'ไม่พบข้อมูลที่ค้นหา',
+                        //text: 'กรุณาลองใหม่อีกครั้ง'
+                    })
+                    .then((value) => {
+                        //liff.closeWindow();
+                    });
+            }
+        },
+        error: function(jqXHR, exception) {
+            console.log(jqXHR); // success 
+        }
+    });
+
+
+    function getoptselect_amphur_selected(changwatcode, ampur, tambon) {
+
         $.ajax({
             type: "POST",
-            url: "core/healthcare/person-search.php",
-            dataType: "json",
-            data: data,
-            processData: false,
-            contentType: false,
+            url: "core/fn-get-ampur-now.php",
+            //dataType: "json",
+            data: {
+                changwatcode: changwatcode,
+                ampur: ampur
+            },
             success: function(data) {
-                if (data.code == "200") {
-                    Swal.fire({
-                            icon: 'success',
-                            title: 'ค้นหาข้อมูลสำเร็จ',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                        .then((value) => {
 
-                            $('#prename').val(data.prename);
-                            $('#fname').val(data.fname);
-                            $('#lname').val(data.lname);
-                            //liff.closeWindow();
-                            //window.location.replace("dashboard.php?module=borrow");
-                            //window.location.replace("dashboard.php?module=borrow&page=borrow-add&personid="+data.personid+"&serviceid="+data.serviceid+"&act="+data.act);
-                        });
-                } else if (data.code == "404") {
-                    //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
-                    Swal.fire({
-                            icon: 'error',
-                            title: 'ไม่พบข้อมูลที่ค้นหา',
-                            //text: 'กรุณาลองใหม่อีกครั้ง'
-                        })
-                        .then((value) => {
-                            //liff.closeWindow();
-                        });
-                }
+                $("#ampur").empty();
+                $("#ampur").append(data);
+
+            } // success
+        });
+    }
+
+    function getoptselect_tambon_selected(changwatcode, ampurcode, tambon) {
+
+        var ampur = $("#txt_ampur").val();
+
+        $.ajax({
+            type: "POST",
+            url: "core/fn-get-tambon-now.php",
+            //dataType: "json",
+            data: {
+                changwatcode: changwatcode,
+                ampurcode: ampurcode,
+                ampur: ampur,
+                tambon: tambon
+            },
+            success: function(data) {
+
+                $("#tambon").empty();
+                $("#tambon").append(data);
             } // success
         });
 
     }
+
+
 
 }); //  click
 </script>

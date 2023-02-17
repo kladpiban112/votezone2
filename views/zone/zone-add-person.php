@@ -17,7 +17,7 @@ $action = base64_decode($act);
     $stmt_data->execute();	
     $row_person = $stmt_data->fetch(PDO::FETCH_ASSOC);
 
-    $stmt = $conn->prepare("SELECT COUNT(pm.team_id) FROM ".DB_PREFIX."mapping_person mp LEFT JOIN area a ON a.aid = mp.aid LEFT JOIN person_main pm ON mp.oid = pm.team_id WHERE mp.aid = ? ");
+    $stmt = $conn->prepare("SELECT COUNT(pm.team_id) FROM ".DB_PREFIX."mapping_person mp LEFT JOIN area a ON a.aid = mp.aid LEFT JOIN person_sub pm ON mp.oid_map = pm.team_id WHERE mp.aid = ? ");
     $stmt->execute([$aid]);
     // $person_num = $stmt->fetch(PDO::FETCH_ASSOC);
     $person_num = $stmt->fetchColumn();
@@ -280,7 +280,7 @@ $action = base64_decode($act);
                             <label>หัวคะแนน</label>
                             <select class="js-example-basic-single " style="width: 50%" name="level_a" id="level_a">
                                 <?php
-                                    $stmt = $conn->prepare ("SELECT * FROM person_main WHERE level = 1 ");
+                                    $stmt = $conn->prepare ("SELECT * FROM person_sub WHERE level = 1 ");
                                     $stmt->execute();
                                     echo "<option value=''>-ระบุ-</option>";
                                     while ($row = $stmt->fetch(PDO::FETCH_OBJ)){

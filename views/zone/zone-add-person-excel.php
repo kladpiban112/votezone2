@@ -20,7 +20,7 @@ $action = base64_decode($act);
     $stmt_data->execute();	
     $row_person = $stmt_data->fetch(PDO::FETCH_ASSOC);
 
-    $stmt = $conn->prepare("SELECT COUNT(pm.team_id) FROM ".DB_PREFIX."mapping_person mp LEFT JOIN area a ON a.aid = mp.aid LEFT JOIN person_main pm ON mp.oid = pm.team_id WHERE mp.aid = ? ");
+    $stmt = $conn->prepare("SELECT COUNT(pm.team_id) FROM ".DB_PREFIX."mapping_person mp LEFT JOIN area a ON a.aid = mp.aid LEFT JOIN person_sub pm ON mp.oid_map = pm.team_id WHERE mp.aid = ? ");
     $stmt->execute([$aid]);
     // $person_num = $stmt->fetch(PDO::FETCH_ASSOC);
     $person_num = $stmt->fetchColumn();
@@ -28,9 +28,9 @@ $action = base64_decode($act);
 
 ?>
 
-    <!--begin::Card-->
-    <div class="card card-custom gutter-b example example-compact" >
-        <div id="excel">
+<!--begin::Card-->
+<div class="card card-custom gutter-b example example-compact">
+    <div id="excel">
         <div class="card-header ribbon ribbon-right">
             <!-- <div class="ribbon-target bg-primary" style="top: 10px; right: -2px;"></div> -->
             <h3 class="card-title">
@@ -38,10 +38,11 @@ $action = base64_decode($act);
             </h3>
         </div>
 
-        <form class="form" enctype="multipart/form-data" >
+        <form class="form" enctype="multipart/form-data">
             <input type="hidden" class="form-control" name="act" id="act" value="<?php echo $action;?>" />
             <input type="hidden" class="form-control" name="personid" id="personid" value="<?php echo $personid;?>" />
-            <input type="hidden" class="form-control" name="serviceid" id="serviceid" value="<?php echo $serviceid;?>" />
+            <input type="hidden" class="form-control" name="serviceid" id="serviceid"
+                value="<?php echo $serviceid;?>" />
             <input type="hidden" class="form-control" name="org_id" id="org_id" value="<?php echo $logged_org_id;?>" />
             <input type="hidden" class="form-control" name="aid" id="aid" value="<?php echo $aid;?>" />
             <input type="hidden" class="form-control" name="la" id="la" value="<?php echo $row_person['latitude'];?>" />
@@ -49,26 +50,34 @@ $action = base64_decode($act);
                 value="<?php echo $row_person['longitude'];?>" />
 
             <div class="card-body">
-<table class="table">
+                <table class="table">
 
-<tr>
-    <th class="l">เขตเลือกตั้ง</th><td><?php echo $row_person['area_number'];?></td>
-    <th class="l">จังหวัด</th><td><?php echo $row_person['changwatname'];?></td>
-</tr>
-<tr>
-    <th class="l">อำเภอ</th><td><?php echo $row_person['ampurname'];?></td>
-    <th class="l">ตำบล</th><td><?php echo $row_person['tambonname'];?></td> 
-    <th class="l">หมู่</th><td class="r"><?php echo $row_person['village'];?></td>
-</tr>
-<tr>
-    <th class="l">หน่วยเลือกตั้งที่</th><td><?php echo $row_person['zone_number'];?></td>
-    <th class="l">ชื่อหน่วยเลือกตั้ง</th><td><?php echo $row_person['zone_name'];?></td>
-</tr>
-<tr>
-    <th class="l">สรุปจำนวนคะแนน(คน)</th><td class="l" ><?php echo $person_num;?></td>
-</tr>
+                    <tr>
+                        <th class="l">เขตเลือกตั้ง</th>
+                        <td><?php echo $row_person['area_number'];?></td>
+                        <th class="l">จังหวัด</th>
+                        <td><?php echo $row_person['changwatname'];?></td>
+                    </tr>
+                    <tr>
+                        <th class="l">อำเภอ</th>
+                        <td><?php echo $row_person['ampurname'];?></td>
+                        <th class="l">ตำบล</th>
+                        <td><?php echo $row_person['tambonname'];?></td>
+                        <th class="l">หมู่</th>
+                        <td class="r"><?php echo $row_person['village'];?></td>
+                    </tr>
+                    <tr>
+                        <th class="l">หน่วยเลือกตั้งที่</th>
+                        <td><?php echo $row_person['zone_number'];?></td>
+                        <th class="l">ชื่อหน่วยเลือกตั้ง</th>
+                        <td><?php echo $row_person['zone_name'];?></td>
+                    </tr>
+                    <tr>
+                        <th class="l">สรุปจำนวนคะแนน(คน)</th>
+                        <td class="l"><?php echo $person_num;?></td>
+                    </tr>
 
-</table>
+                </table>
                 <div class="row">
                     <!-- <div class="row col-lg-12">
 
@@ -79,32 +88,42 @@ $action = base64_decode($act);
                     <!-- <br> -->
                 </div>
                 <!--col-->
-            </div><!--col-->
-        <div class="row col-lg-12">
-            <div class="col-12" id="map1" style="width: 100%;" >
-                <div><h4>ระดับ A - เขตเลือกตั้ง</h4></div>
+            </div>
+            <!--col-->
+            <div class="row col-lg-12">
+                <div class="col-12" id="map1" style="width: 100%;">
+                    <div>
+                        <h4>ระดับ A - เขตเลือกตั้ง</h4>
+                    </div>
                     <div id="person_area_A"></div>
-                <div><h4>ระดับ B - ระดับอำเภอ</h4></div>
+                    <div>
+                        <h4>ระดับ B - ระดับอำเภอ</h4>
+                    </div>
                     <div id="person_area_B"></div>
-                <div><h4>ระดับ C - ระดับตำบล</h4></div>
+                    <div>
+                        <h4>ระดับ C - ระดับตำบล</h4>
+                    </div>
                     <div id="person_area_C"></div>
-                <div><h4>ระดับ D - ระดับหมูบ้าน</h4></div>
+                    <div>
+                        <h4>ระดับ D - ระดับหมูบ้าน</h4>
+                    </div>
                     <div id="person_area_D"></div>
+                </div>
+            </div>
+
+    </div>
+    <!-- <br> -->
+    <div class="card-footer">
+        <div class="row">
+            <div class="col-lg-6">
+                <button type="button" class="btn btn-primary mr-2 btn-sm" onClick="PrintDiv();"><i class="fa fa-save"
+                        title="พิมพ์รายงาน"></i> พิมพ์รายงาน</button>
             </div>
         </div>
-
-        </div>
-                <!-- <br> -->
-                <div class="card-footer">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <button type="button" class="btn btn-primary mr-2 btn-sm"  onClick="PrintDiv();"><i class="fa fa-save" title="พิมพ์รายงาน" ></i> พิมพ์รายงาน</button>
-                        </div>
-                    </div>
-                </div>
-        </div>
-        </form>
     </div>
+</div>
+</form>
+</div>
 
 
 
@@ -124,7 +143,7 @@ $action = base64_decode($act);
 
 <script>
 $(document).ready(function() {
-    
+
     'use strict';
     getoptselect_amphur();
     getoptselect_tambon();
@@ -137,7 +156,7 @@ $(document).ready(function() {
     load_person_area_data_C();
     load_person_area_data_D();
 
-}); 
+});
 
 $(".add-more").click(function() {
     //alert(99);
@@ -297,6 +316,7 @@ function load_person_area_data_A() {
         } // success
     });
 }
+
 function load_person_area_data_B() {
     var aid = $("#aid").val();
     $.ajax({
@@ -312,6 +332,7 @@ function load_person_area_data_B() {
         } // success
     });
 }
+
 function load_person_area_data_C() {
     var aid = $("#aid").val();
     $.ajax({
@@ -327,6 +348,7 @@ function load_person_area_data_C() {
         } // success
     });
 }
+
 function load_person_area_data_D() {
     var aid = $("#aid").val();
     $.ajax({
@@ -426,18 +448,16 @@ function delPersonAera(id) {
 
 function PrintDiv() {
     var divToPrint = document.getElementById('excel'); // เลือก div id ที่เราต้องการพิมพ์
-	var html =  '<html>'+ // 
-				'<head>'+
-					'<link href="views/zone/print.css?v=1011" rel="stylesheet" type="text/css">'+
-				'</head>'+
-					'<body onload="window.print(); window.close();">' + divToPrint.innerHTML + '</body>'+
-				'</html>';
-				
-	var popupWin = window.open();
-	popupWin.document.open();
-	popupWin.document.write(html); //โหลด print.css ให้ทำงานก่อนสั่งพิมพ์
-	popupWin.document.close();	
+    var html = '<html>' + // 
+        '<head>' +
+        '<link href="views/zone/print.css?v=1011" rel="stylesheet" type="text/css">' +
+        '</head>' +
+        '<body onload="window.print(); window.close();">' + divToPrint.innerHTML + '</body>' +
+        '</html>';
+
+    var popupWin = window.open();
+    popupWin.document.open();
+    popupWin.document.write(html); //โหลด print.css ให้ทำงานก่อนสั่งพิมพ์
+    popupWin.document.close();
 }
-
 </script>
-

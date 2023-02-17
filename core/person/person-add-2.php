@@ -32,10 +32,6 @@ $changwat = filter_input(INPUT_POST, 'changwat', FILTER_SANITIZE_STRING);
 $ampur = filter_input(INPUT_POST, 'ampur', FILTER_SANITIZE_STRING);
 $tambon = filter_input(INPUT_POST, 'tambon', FILTER_SANITIZE_STRING);
 
-$religion = filter_input(INPUT_POST, 'religion', FILTER_SANITIZE_STRING);
-$occupation = filter_input(INPUT_POST, 'occupation', FILTER_SANITIZE_STRING);
-$education = filter_input(INPUT_POST, 'education', FILTER_SANITIZE_STRING);
-$abogroup = filter_input(INPUT_POST, 'abogroup', FILTER_SANITIZE_STRING);
 $level = filter_input(INPUT_POST, 'level', FILTER_SANITIZE_STRING);
 $head = filter_input(INPUT_POST, 'head_data', FILTER_SANITIZE_STRING);
 $team_id = filter_input(INPUT_POST, 'team_id', FILTER_SANITIZE_STRING);
@@ -49,7 +45,7 @@ $flag = '1';
 $now = date("Y-m-d H:i:s");
 
 
-	$query1 = "UPDATE ".DB_PREFIX."person_main SET head = ?,team_id = ? WHERE oid = ? LIMIT 1"; 
+	$query1 = "UPDATE ".DB_PREFIX."person_sub SET head = ?,team_id = ? WHERE oid = ? LIMIT 1"; 
 	$stmt1 = $conn->prepare($query1);
 	$stmt1->bindParam(1, $head, PDO::PARAM_STR);
 	$stmt1->bindParam(2, $parents, PDO::PARAM_STR);
@@ -67,5 +63,3 @@ $now = date("Y-m-d H:i:s");
 			
 			
 			?>
-
-

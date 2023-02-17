@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 error_reporting(0);
 $search = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING);
 $cid_search = filter_input(INPUT_GET, 'cid', FILTER_SANITIZE_STRING);
@@ -8,13 +8,24 @@ $slevel = filter_input(INPUT_GET, 'slevel', FILTER_SANITIZE_STRING);
 $cchangwat = filter_input(INPUT_GET, 'changwat', FILTER_SANITIZE_STRING);
 $campur = filter_input(INPUT_GET, 'ampur', FILTER_SANITIZE_STRING);
 $ctambon = filter_input(INPUT_GET, 'tambon', FILTER_SANITIZE_STRING);
+$cposition1 = filter_input(INPUT_GET, 'cposition1', FILTER_SANITIZE_STRING);
+
+
+    $numb_A = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."person_sub WHERE  level ='1' ")->fetchColumn();//แจ้งซ่อมวันนี้
+    $numb_B = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."person_sub  WHERE  level ='2' ")->fetchColumn();//แจ้งซ่อมวันนี้
+    $numb_C = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."person_sub  WHERE  level ='3' ")->fetchColumn();//แจ้งซ่อมวันนี้
+    $numb_D = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."person_sub  WHERE  level ='4' ")->fetchColumn();//แจ้งซ่อมวันนี้
+    $numb_N = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."person_sub  WHERE  level ='5' ")->fetchColumn();//แจ้งซ่อมวันนี้
+    $numb_T = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."person_sub  WHERE  oid ")->fetchColumn();//แจ้งซ่อมวันนี้
+
+
 
 
 if($cid_search != ""){
     $cid_data = " AND p.cid LIKE '%$cid_search%'  ";
 }
 if($search != ""){
-    $search_data = " AND  p.fname LIKE '%$search%'  ";
+    $search_data = " AND  p.fname LIKE '%$search%'  OR p.lname LIKE '%$search%'  ";
 }
 if($slevel != ""){
     $slevel_data = " AND  p.level = '$slevel' ";
@@ -28,7 +39,107 @@ if($campur != ""){
 if($ctambon != ""){
     $ctambon_data = " AND  p.tambon = '$ctambon' ";
 }
+if($cposition1 != ""){
+    $cposition1_data = " AND  p.cposition1 = '$cposition1' ";
+}
 ?>
+
+<div class="row">
+    <div class="col-xl-2">
+        <a href="././dashboard.php?act=search&module=person&page=main&slevel=1&ampur=&tambon=&cid=&cposition1=&search="
+            class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">
+            <div class="card card-custom gutter-b bg-warning" style="height: 150px">
+                <div class="card-body">
+
+                    <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bx-calendar bx-lg'></i></span> -->
+                    <!-- แจ้งซ่อมวันนี้ -->
+                    <div class="text-dark font-weight-bolder font-size-h2 mt-3">
+                        <?php echo $numb_A;?>
+                    </div>
+                    <strong>สมาชิกกลุ่ม A</strong>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-xl-2">
+        <a href="././dashboard.php?act=search&module=person&page=main&slevel=2&ampur=&tambon=&cid=&cposition1=&search="
+            class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">
+            <div class="card card-custom gutter-b bg-warning" style="height: 150px">
+                <div class="card-body">
+
+                    <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-collection bx-lg'></i></span> -->
+                    <!-- รายการซ่อมทั้งหมด -->
+                    <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo  $numb_B;?>
+                    </div>
+                    <strong>สมาชิกกลุ่ม B</strong>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-xl-2">
+        <a href="././dashboard.php?act=search&module=person&page=main&slevel=3&ampur=&tambon=&cid=&cposition1=&search="
+            class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">
+            <div class="card card-custom gutter-b bg-success" style="height: 150px">
+                <div class="card-body">
+                    <!-- <span class="svg-icon svg-icon-3x svg-icon-success "><i class='bx bx-message-alt-check bx-lg'></i></span> -->
+                    <!-- รอซ่อม -->
+                    <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo  $numb_C;?>
+                    </div>
+                    <strong>สมาชิกกลุ่ม C</strong>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-xl-2">
+        <a href="././dashboard.php?act=search&module=person&page=main&slevel=4&ampur=&tambon=&cid=&cposition1=&search="
+            class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">
+            <div class="card card-custom gutter-b bg-success" style="height: 150px">
+                <div class="card-body">
+                    <!-- <span class="svg-icon svg-icon-3x svg-icon-success "><i class='bx bx-message-alt-check bx-lg'></i></span> -->
+                    <!-- เสนอราคา -->
+                    <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo  $numb_D;?></div>
+
+                    <strong>สมาชิกกลุ่ม D</strong>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-xl-2">
+        <a href="././dashboard.php?act=search&module=person&page=main&slevel=5&ampur=&tambon=&cid=&cposition1=&search="
+            class="text-dark text-hover-primary font-weight-bold font-size-lg mt-3">
+            <div class="card card-custom gutter-b bg-success" style="height: 150px">
+                <div class="card-body">
+                    <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-cog bx-lg'></i></span> -->
+                    <!-- กำลังซ่อม -->
+                    <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo  $numb_N;?>
+                    </div>
+                    <strong>สมาชิกกลุ่ม N</strong>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-xl-2">
+        <div class="card card-custom gutter-b bg-success" style="height: 150px">
+            <div class="card-body">
+                <!-- <span class="svg-icon svg-icon-3x svg-icon-success"><i class='bx bxs-cog bx-lg'></i></span> -->
+                <!-- กำลังซ่อม -->
+                <div class="text-dark font-weight-bolder font-size-h2 mt-3"><?php echo  $numb_T;?>
+                </div>
+                <strong>อยู๋ในระบบ</strong>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+</div>
 <!--begin::Card-->
 <div class="card card-custom gutter-b example example-compact">
     <div class="card-header">
@@ -67,7 +178,7 @@ if($ctambon != ""){
                         ?>
                     </select>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-1">
                     <label>จังหวัด</label>
                     <select class="form-control form-control-sm" name="changwat" id="changwat" disabled>
 
@@ -107,6 +218,24 @@ if($ctambon != ""){
                     <input type="text" class="form-control form-control-sm" placeholder="เลขบัตรประชาชน" name="cid"
                         id="cid" value="<?php echo $cid;?>" />
                 </div>
+
+                <div class="col-lg-1">
+                    <label>อาชีพ</label>
+                    <select class="form-control form-control-sm" name="cposition1" id="cposition1">
+
+                        <?php
+                                $stmt = $conn->prepare ("SELECT * FROM cposition ");
+                                $stmt->execute();
+                                echo "<option value=''>-ระบุ-</option>";
+                                while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
+                                $id = $row->id;
+                                $name = $row->name; ?>
+                        <option value="<?php echo $id;?>"><?php echo $name;?></option>
+                        <?php 
+                                }
+                        ?>
+                    </select>
+                </div>
                 <div class="col-lg-2">
                     <label>ชื่อ-สกุล</label>
                     <div class="input-group">
@@ -130,13 +259,13 @@ if($ctambon != ""){
         $conditions = " ";
     }
 
-    $numb_data = $conn->query("SELECT count(1) FROM ".DB_PREFIX."person_main p  WHERE p.flag != '0' $conditions  $search_data    $cid_data  $slevel_data $cchangwat_data $campur_data $ctambon_data ")->fetchColumn();
+    $numb_data = $conn->query("SELECT count(1) FROM ".DB_PREFIX."person_sub p WHERE p.flag != '0' $conditions  $search_data    $cid_data  $slevel_data $cchangwat_data $campur_data $ctambon_data $cposition1_data ")->fetchColumn();
 
   
         if (!(isset($pagenum))) { $pagenum = 1; }
         if ($numb_data==0) { echo "No Data"; }
         else{
-        $page_rows = 20;
+        $page_rows = 15;
         $last = ceil($numb_data/$page_rows);
 
         if ($pagenum < 1)
@@ -160,18 +289,10 @@ if($ctambon != ""){
         }
         $Page_Start = ($pagenum - 1) * $page_rows; // สำหรับลำดับ
         $max = ' LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;		
-        $stmt_data = $conn->prepare ("SELECT p.*,pr.prename AS prename_title,c.changwatname,a.ampurname,t.tambonname,s.sexname,sp.*,lt.level AS name_level
-        FROM ".DB_PREFIX."person_main p 
-        LEFT JOIN ".DB_PREFIX."cprename pr ON p.prename = pr.id_prename
-        LEFT JOIN ".DB_PREFIX."cchangwat c ON p.changwat = c.changwatcode
-		LEFT JOIN ".DB_PREFIX."campur a ON CONCAT(p.changwat,p.ampur) = a.ampurcodefull
-        LEFT JOIN ".DB_PREFIX."ctambon t ON CONCAT(p.changwat,p.ampur,p.tambon) = t.tamboncodefull
-        LEFT JOIN ".DB_PREFIX."csex s ON p.sex = s.sex
-        LEFT JOIN ".DB_PREFIX."level_type lt ON p.level = lt.level_id
-        LEFT JOIN ".DB_PREFIX."status_pp sp ON p.status = sp.sid
-
-        WHERE p.flag != '0' $conditions  $search_data  $cid_data  $slevel_data $cchangwat_data $campur_data $ctambon_data
-        ORDER BY lt.level_id ASC
+        $stmt_data = $conn->prepare ("SELECT p.*
+    
+        FROM ".DB_PREFIX."person_sub p
+        WHERE p.flag != '0' $conditions  $search_data  $cid_data  $slevel_data $cchangwat_data $campur_data $ctambon_data $cposition1_data
         $max");
         $stmt_data->execute();		
     ?>
@@ -231,7 +352,7 @@ if($ctambon != ""){
 					$tambonname = $row['tambonname'];
 					$addr =  "บ้านเลขที่ ".$house." ม.".$village." ต.".$tambonname." อ.".$ampurname." จ.".$changwatname;
                 $sexname = $row['sexname'];
-                $level = $row['name_level'];
+                $level = $row['levelname'];
                 $status = $row['name'];
                 $sid = $row['sid'];
 
@@ -326,7 +447,7 @@ if($ctambon != ""){
 $p = 4;	//	กำหนดช่วงตัวเลขทางซ้าย และ ขวา ของหน้าที่ถูกเลือก
 $Prev_Page = $pagenum-1;
 $Next_Page = $pagenum+1;
-$page_link = "dashboard.php?module=$module&page=main&search=$search&cid=$cid_search&hn=$hn_search&pagenum";
+$page_link = "dashboard.php?module=$module&page=$page&search=$search&cid=$cid_search&hn=$hn_search&pagenum";
 
 if($pagenum==1)		//	กรณีอยู่หน้า 1 หรือยังไม่เลือกหน้า
 {
@@ -440,7 +561,7 @@ function getoptselect_amphur() {
     var ampur = $("#txt_ampur").val();
     $.ajax({
         type: "POST",
-        url: "core/fn-get-ampur.php",
+        url: "core/fn-get-ampur-now.php",
         //dataType: "json",
         data: {
             changwatcode: changwatcode,
@@ -462,7 +583,7 @@ function getoptselect_tambon() {
     var tambon = $("#txt_tambon").val();
     $.ajax({
         type: "POST",
-        url: "core/fn-get-tambon.php",
+        url: "core/fn-get-tambon-now.php",
         //dataType: "json",
         data: {
             changwatcode: changwatcode,

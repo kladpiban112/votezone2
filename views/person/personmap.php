@@ -1,48 +1,56 @@
-<?php
+﻿<?php
 error_reporting(0);
-$search = filter_input(INPUT_GET, 'szone_name', FILTER_SANITIZE_STRING);
-$schangwat = filter_input(INPUT_GET, 'changwat', FILTER_SANITIZE_STRING);
-$sampur = filter_input(INPUT_GET, 'ampur', FILTER_SANITIZE_STRING);
-$stambon = filter_input(INPUT_GET, 'tambon', FILTER_SANITIZE_STRING);
-$szone_num = filter_input(INPUT_GET, 'szone_num', FILTER_SANITIZE_STRING);
-$sarea = filter_input(INPUT_GET, 'sarea', FILTER_SANITIZE_STRING);
 
+$search = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING);
+$cid_search = filter_input(INPUT_GET, 'cid', FILTER_SANITIZE_STRING);
+$hn_search = filter_input(INPUT_GET, 'hn', FILTER_SANITIZE_STRING);
+$cid_search = filter_input(INPUT_GET, 'cid', FILTER_SANITIZE_STRING);
+$slevel = filter_input(INPUT_GET, 'slevel', FILTER_SANITIZE_STRING);
+$cchangwat = filter_input(INPUT_GET, 'changwat', FILTER_SANITIZE_STRING);
+$campur = filter_input(INPUT_GET, 'ampur', FILTER_SANITIZE_STRING);
+$ctambon = filter_input(INPUT_GET, 'tambon', FILTER_SANITIZE_STRING);
+$cposition1 = filter_input(INPUT_GET, 'cposition1', FILTER_SANITIZE_STRING);
+$area= filter_input(INPUT_GET, 'area', FILTER_SANITIZE_STRING);
+
+
+
+
+
+
+
+if($cid_search != ""){
+    $cid_data = " AND ps.cid LIKE '%$cid_search%'  ";
+}
 if($search != ""){
-    $search_data = " AND  p.zone_name LIKE '%$search%'  ";
+    $search_data = " AND  ps.fname LIKE '%$search%'  OR ps.lname LIKE '%$search%'  ";
 }
-if($schangwat != ""){
-    $schangwat_data = " AND  p.changwat = '$schangwat'  ";
+if($slevel != ""){
+    $slevel_data = " AND  ps.level = '$slevel' ";
 }
-if($sampur != ""){
-    $sampur_data = " AND  p.ampur = '$sampur' ";
+if($cchangwat != ""){
+    $cchangwat_data = " AND  ps.changwat = '$cchangwat' ";
 }
-if($stambon != ""){
-    $stambon_data = " AND  p.tambon  = '$stambon'  ";
+if($campur != ""){
+    $campur_data = " AND  ps.ampur = '$campur' ";
 }
-if($szone_num != ""){
-    $szone_data = " AND  p.zone_number = '$szone_num'  ";
+if($ctambon != ""){
+    $ctambon_data = " AND  ps.tambon = '$ctambon' ";
 }
-if($sarea != ""){
-    $sarea_data = " AND  p.area_number = '$sarea' ";
+if($cposition1 != ""){
+    $cposition1_data = " AND  ps.cposition1 = '$cposition1' ";
 }
-
-$personid_enc = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
-$serviceid_enc = filter_input(INPUT_GET, 'serviceid', FILTER_SANITIZE_STRING);
-$act = filter_input(INPUT_GET, 'act', FILTER_SANITIZE_STRING);
-$personid = base64_decode($personid_enc);
-$serviceid = base64_decode($serviceid_enc);
-$action = base64_decode($act);
-
-
-    
-
+if($area != ""){
+    $area_data = " AND  a.aid = '$area' ";
+}
 
 ?>
+
+
 <!--begin::Card-->
 <div class="card card-custom gutter-b example example-compact">
     <div class="card-header">
         <h3 class="card-title">
-            <i class="far fa-user"></i>&nbsp;ข้อมูลเขตเลือกตั้ง
+            <i class="far fa-map"></i>&nbsp;แบ่งตามเขตการเลือกตั้ง
         </h3>
         <div class="card-toolbar">
 
@@ -53,73 +61,113 @@ $action = base64_decode($act);
         <form class="form" enctype="multipart/form-data" id="frmSearch" method="GET">
             <input type="hidden" class="form-control" name="act" id="act" value="search" />
             <input type="hidden" class="form-control" name="module" value="<?php echo $module;?>" />
-            <input type="hidden" class="form-control" name="page" value="main" />
-
-            <input type="hidden" class="form-control" name="txt_ampur" id="txt_ampur"
-                value="<?php echo $row_person['ampur'];?>" />
-            <input type="hidden" class="form-control" name="txt_tambon" id="txt_tambon"
-                value="<?php echo $row_person['tambon'];?>" />
+            <input type="hidden" class="form-control" name="page" value="personmap" />
             <div class="form-group row">
-                <div class="col-lg-1">
-                    <label>เขตเลือกตั้ง</label>
-                    <input type="number" class="form-control form-control-sm" id="sarea" name="sarea"
-                        placeholder="เขตเลือกตั้ง" />
-
-                </div>
                 <div class="col-lg-2">
-                    <label>จังหวัด</label>
-                    <select class="form-control form-control-sm" name="changwat" id="changwat">
+                    <label>เขตเลือกตั้ง</label>
+                    <select class="form-control form-control-sm" name="area" id="area">
 
                         <?php
-                                $stmt = $conn->prepare ("SELECT * FROM cchangwat c ");
+                                $stmt = $conn->prepare ("SELECT * FROM area ");
                                 $stmt->execute();
                                 echo "<option value=''>-ระบุ-</option>";
                                 while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
-                                $id = $row->changwatcode;
-                                $name = $row->changwatname; ?>
-                        <option value="<?php echo $id;?>" <?php if($row_person['changwat'] == $id){ echo "selected";}?>>
-                            <?php echo $name;?></option>
+                                $id = $row->aid;
+                                $name = $row->zone_name; ?>
+                        <option value="<?php echo $id;?>"><?php echo $name;?></option>
                         <?php 
                                 }
                         ?>
                     </select>
+                </div>
+                <div class="col-lg-2">
+                    <label>ระดับ</label>
+                    <select class="form-control form-control-sm" name="slevel" id="slevel">
+
+                        <?php
+                                $stmt = $conn->prepare ("SELECT * FROM level_type ");
+                                $stmt->execute();
+                                echo "<option value=''>-ระบุ-</option>";
+                                while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
+                                $id = $row->level_id;
+                                $name = $row->level; ?>
+                        <option value="<?php echo $id;?>"><?php echo $name;?></option>
+                        <?php 
+                                }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-lg-1">
+                    <label>จังหวัด</label>
+                    <select class="form-control form-control-sm" name="changwat" id="changwat" disabled>
+
+                        <?php
+                        $stmt = $conn->prepare ("SELECT * FROM cchangwat c   WHERE c.changwatcode = '30'");
+                        $stmt->execute();
+                        
+                        while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
+                        $id = $row->changwatcode;
+                        $name = $row->changwatname; ?>
+                        <option value="<?php echo $id;?>" <?php if($row_person['changwat'] == $id){ echo "selected";}?>>
+                            <?php echo $name;?>
+                        </option>
+                        <?php 
+                                                }
+                                            ?>
+                    </select>
 
                 </div>
 
-                <div class="col-lg-2">
+                <div class="col-lg-1">
                     <label>อำเภอ</label>
                     <select class="form-control form-control-sm" name="ampur" id="ampur">
                         <option value="">ระบุ</option>
                     </select>
                 </div>
 
-                <div class="col-lg-2">
+                <div class="col-lg-1">
                     <label>ตำบล</label>
                     <select class="form-control form-control-sm" name="tambon" id="tambon">
                         <option value="">ระบุ</option>
                     </select>
-
                 </div>
 
                 <div class="col-lg-2">
-                    <label>หน่วยเลือกตั้ง</label>
-                    <input type="number" class="form-control form-control-sm" id="szone_num" name="szone_num"
-                        placeholder="หน่วยเลือกตั้ง" />
+                    <label>เลขบัตรประชาชน</label>
+                    <input type="text" class="form-control form-control-sm" placeholder="เลขบัตรประชาชน" name="cid"
+                        id="cid" value="<?php echo $cid;?>" />
+                </div>
 
+                <div class="col-lg-1">
+                    <label>อาชีพ</label>
+                    <select class="form-control form-control-sm" name="cposition1" id="cposition1">
+
+                        <?php
+                                $stmt = $conn->prepare ("SELECT * FROM cposition ");
+                                $stmt->execute();
+                                echo "<option value=''>-ระบุ-</option>";
+                                while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
+                                $id = $row->id;
+                                $name = $row->name; ?>
+                        <option value="<?php echo $id;?>"><?php echo $name;?></option>
+                        <?php 
+                                }
+                        ?>
+                    </select>
                 </div>
                 <div class="col-lg-2">
-                    <label>ชื่อหน่วยเลือกตั้ง</label>
+                    <label>ชื่อ-สกุล</label>
                     <div class="input-group">
-                        <input type="text" class="form-control form-control-sm" id="szone_name" name="szone_name"
-                            placeholder="ชื่อหน่วยเลือกตั้ง" />
+                        <input type="text" class="form-control form-control-sm" placeholder="ชื่อ-สกุล" name="search"
+                            id="search" value="<?php echo $search;?>" />
                         <div class="input-group-append">
                             <button class="btn btn-primary btn-sm" type="submit"><i class="fas fa-search"></i></button>
                         </div>
                     </div>
                 </div>
-                <div class="row-lg-2 mt-8">
-                </div>
+
             </div>
+
         </form>
 
         <?php
@@ -130,13 +178,16 @@ $action = base64_decode($act);
         $conditions = " ";
     }
 
-    $numb_data = $conn->query("SELECT count(1) FROM ".DB_PREFIX."area AS p  WHERE p.flag != '0'  $search_data  $schangwat_data  $sampur_data  $stambon_data $szone_data $sarea_data ")->fetchColumn();
+    $numb_data = $conn->query("SELECT count(1) FROM ".DB_PREFIX."person_sub	ps
+        INNER  JOIN".DB_PREFIX." mapping_person mp	ON 	 mp.oid_map = ps.team_id 
+	    INNER  JOIN ".DB_PREFIX."	area a ON 	a.aid = mp.aid
+        WHERE ps.flag != '0' $conditions  $search_data  $cid_data  $slevel_data $cchangwat_data $campur_data $ctambon_data $cposition1_data  $area_data ")->fetchColumn();
 
   
         if (!(isset($pagenum))) { $pagenum = 1; }
         if ($numb_data==0) { echo "No Data"; }
         else{
-        $page_rows = 20;
+        $page_rows = 15;
         $last = ceil($numb_data/$page_rows);
 
         if ($pagenum < 1)
@@ -160,17 +211,14 @@ $action = base64_decode($act);
         }
         $Page_Start = ($pagenum - 1) * $page_rows; // สำหรับลำดับ
         $max = ' LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;		
-        $stmt_data = $conn->prepare ("SELECT * FROM ".DB_PREFIX." area p 
-        LEFT JOIN cchangwat c ON p.changwat = c.changwatcode
-        LEFT JOIN campur a ON CONCAT(p.changwat,p.ampur) = a.ampurcodefull
-        LEFT JOIN ctambon t ON CONCAT(p.changwat,p.ampur,p.tambon) = t.tamboncodefull WHERE p.aid != '0'
-        $search_data  $schangwat_data  $sampur_data  $stambon_data $szone_data $sarea_data 
-        ORDER BY p.aid  ");
+        $stmt_data = $conn->prepare ("SELECT mp.*,a.*,ps.*
+        FROM ".DB_PREFIX." person_sub ps
+        INNER JOIN".DB_PREFIX." mapping_person mp ON  mp.oid_map = ps.team_id 
+	    INNER  JOIN ".DB_PREFIX."area a ON a.aid = mp.aid
+        WHERE ps.flag != '0'  $conditions  $search_data  $cid_data  $slevel_data $cchangwat_data $campur_data $ctambon_data $cposition1_data $area_data
+        $max");
         $stmt_data->execute();		
-
-        
     ?>
-
 
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-strip " id="tbData"
@@ -178,19 +226,25 @@ $action = base64_decode($act);
                 <thead>
                     <tr>
                         <th class="text-center">ลำดับ</th>
-                        <th>ชื่อหน่วยเลือกตั้ง</th>
+                        <th>ระดับ</th>
 
-                        <th>A</th>
-                        <th>B</th>
-                        <th>C</th>
-                        <th>D</th>
-                        <th>N</th>
-                        <th>อยู๋ในระบบ</th>
+                        <th>เลขบัตรประชาชน</th>
+                        <th>ชื่อ-สกุล</th>
+                        <th>เพศ</th>
+                        <th>อายุ</th>
+                        <th>โทรศัพท์</th>
+                        <th>ที่อยู่</th>
+                        <th>เขตที่</th>
+                        <th>สังกัด</th>
+
+                        <!--<th class="text-center">สถานะ</th>-->
                         <th class="text-center">จัดการ</th>
                     </tr>
                 </thead>
                 <tbody>
+
                     <?php
+
             $i  = 0;
             $no = 1;
 	        $no = $no * $Page_Start;
@@ -198,64 +252,61 @@ $action = base64_decode($act);
             {
                 $i++;
                 $no++;
-                $aid = $row['aid'];
-                $aid_enc = base64_encode($aid);
-                $area_number = $row['area_number'];
-                $changwat = $row['changwatname'];
-                $ampur = $row['ampurname'];
-                $tambon = $row['tambonname'];
-                $village = $row['village'];
-                $zone_number = $row['zone_number'];
-                $zone_name = $row['zone_name'];
-
-
-                $numb_A = $conn->query("SELECT COUNT(level) AS num FROM".DB_PREFIX." mapping_person mp 
-                                         INNER  JOIN area a ON a.aid = mp.aid
-                                         INNER  JOIN person_sub pm ON mp.oid_map = pm.team_id
-                                         WHERE mp.aid = ".$aid." AND pm.level = '1' ORDER BY mp.oid_map" )->fetchColumn();
-                 $numb_B = $conn->query("SELECT COUNT(level) AS num FROM".DB_PREFIX." mapping_person mp 
-                                         INNER  JOIN area a ON a.aid = mp.aid
-                                         INNER  JOIN person_sub pm ON mp.oid_map = pm.team_id
-                                         WHERE mp.aid = ".$aid." AND pm.level = '2' ORDER BY mp.oid_map" )->fetchColumn();
-                 $numb_C = $conn->query("SELECT COUNT(level) AS num FROM".DB_PREFIX." mapping_person mp 
-                                         INNER  JOIN area a ON a.aid = mp.aid
-                                         INNER  JOIN person_sub pm ON mp.oid_map = pm.team_id
-                                         WHERE mp.aid = ".$aid." AND pm.level = '3' ORDER BY mp.oid_map" )->fetchColumn();
-                 $numb_D = $conn->query("SELECT COUNT(level) AS num FROM".DB_PREFIX." mapping_person mp 
-                                         INNER  JOIN area a ON a.aid = mp.aid
-                                         INNER  JOIN person_sub pm ON mp.oid_map = pm.team_id
-                                         WHERE mp.aid = ".$aid." AND pm.level = '4' ORDER BY mp.oid_map" )->fetchColumn();
-                $numb_N = $conn->query("SELECT COUNT(level) AS num FROM".DB_PREFIX." mapping_person mp 
-                                         INNER  JOIN area a ON a.aid = mp.aid
-                                         INNER  JOIN person_sub pm ON mp.oid_map = pm.team_id
-                                         WHERE mp.aid = ".$aid." AND pm.level = '5' ORDER BY mp.oid_map" )->fetchColumn();
-                 $numb_T = $conn->query("SELECT COUNT(level) AS num FROM".DB_PREFIX." mapping_person mp 
-                                         INNER  JOIN area a ON a.aid = mp.aid
-                                         INNER  JOIN person_sub pm ON mp.oid_map = pm.team_id
-                                         WHERE mp.aid = ".$aid." ORDER BY mp.oid_map" )->fetchColumn();
+                $oid = $row['oid'];
+                $personid = $oid;
+                $personid_enc = base64_encode($oid);
+                $prename = $row['prename_title'];
+                $fname = $row['fname'];
+                $lname = $row['lname'];
+                $fullname = $prename." ".$fname." ".$lname;
+                $cid = $row['cid'];
+                $telephone = $row['telephone'];
+                $birthdate = date_db_2form($row['birthdate']);
+                $img_profile = $row['img_profile'];
+                $today = date("Y-m-d");
+                $diff = date_diff(date_create($row['birthdate']), date_create($today));
+                $age_y = $diff->format('%y');
                 
+                
+                $house = $row['house'];
+                $village = $row['village'];
+                    $changwatname = $row['changwatname'];
+					$ampurname = $row['ampurname'];
+					$tambonname = $row['tambonname'];
+					$addr =  "บ้านเลขที่ ".$house." ม.".$village." ต.".$tambonname." อ.".$ampurname." จ.".$changwatname;
+                $sexname = $row['sexname'];
+                $level = $row['levelname'];
+                $status = $row['name'];
+                $sid = $row['sid'];
+                $zonename = $row['zone_name'];
+                $detail = $row['detail'];
+
+
+
                 ?>
                     <tr>
                         <td class="text-center"><?php echo $no;?></td>
-                        <td><?php echo $zone_name;?></td>
-                        <td>
-                            <h5><?php echo  number_format($numb_A);?> </h5>
+                        <td><?php echo $level;?></td>
+
+                        <td><?php echo $cid;?></td>
+                        <td><?php echo $fullname;?></br></br>
+                            <?php 
+												if($sid == 2){  ?>
+                            <span class="badge bg-success"><?php echo  $status ;?></span>
+                            <?php }
+												elseif ( $sid == 1   ) { ?>
+                            <span class="badge bg-warning"><?php echo  $status ;?></span>
+                            <?php }
+                            							?>
                         </td>
-                        <td>
-                            <h5><?php echo  number_format($numb_B);?> </h5>
-                        </td>
-                        <td>
-                            <h5><?php echo  number_format($numb_C);?> </h5>
-                        </td>
-                        <td>
-                            <h5><?php echo  number_format($numb_D);?> </h5>
-                        </td>
-                        <td>
-                            <h5><?php echo  number_format($numb_N);?> </h5>
-                        </td>
-                        <td>
-                            <h5><?php echo  number_format($numb_T);?> </h5>
-                        </td>
+                        <td><?php echo $sexname;?></td>
+                        <td><?php echo $age_y;?></td>
+                        <td><?php echo $telephone;?></td>
+                        <td><?php echo $addr;?></td>
+                        <td><?php echo $zonename;?></td>
+                        <td><?php echo $detail;?></td>
+
+
                         <!--<td class="text-center"><span class="label label-lg label-light-<?php echo $status_color;?> label-inline"><?php echo $status_title;?></span></td>-->
                         <td class="text-center">
                             <!--begin::Dropdown-->
@@ -266,14 +317,28 @@ $action = base64_decode($act);
                                 <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
                                     <!--begin::Navigation-->
                                     <ul class="navi navi-hover py-1">
+
+                                        <!-- <li class="navi-item">
+                                            <a href="?module=person&page=person-detail&personid=<?php echo $personid_enc;?>" class="navi-link">
+                                                <span class="navi-icon"><i class="fas fa-clipboard-list"></i></span>
+                                                <span class="navi-text">ประวัติบุคคล</span>
+                                            </a>
+                                        </li> -->
+
                                         <li class="navi-item">
-                                            <a href="dashboard.php?module=zone&page=zone-add-person&aid=<?php echo $aid_enc;?>"
+                                            <a href="dashboard.php?module=person&page=person-add-1&personid=<?php echo $personid_enc;?>&act=<?php echo base64_encode('edit');?>"
                                                 class="navi-link">
-                                                <span class="navi-icon"><i class="fas fa-edit"></i></span>
-                                                <span class="navi-text">จัดการหน่วยเลือกตั้ง</span>
+                                                <span class="navi-icon"><i class="fas fa-user-edit"></i></span>
+                                                <span class="navi-text">แก้ไขข้อมูลบุคคล</span>
                                             </a>
                                         </li>
-
+                                        <li class="navi-item">
+                                            <a href="dashboard.php?module=person&page=person-add-2&personid=<?php echo $personid_enc;?>&act=<?php echo base64_encode('edit');?>"
+                                                class="navi-link">
+                                                <span class="navi-icon"><i class="fas fa-user-edit"></i></span>
+                                                <span class="navi-text">แก้ไขข้อมูลสังกัด</span>
+                                            </a>
+                                        </li>
                                     </ul>
                                     <!--end::Navigation-->
                                 </div>
@@ -295,7 +360,7 @@ $action = base64_decode($act);
 $p = 4;	//	กำหนดช่วงตัวเลขทางซ้าย และ ขวา ของหน้าที่ถูกเลือก
 $Prev_Page = $pagenum-1;
 $Next_Page = $pagenum+1;
-$page_link = "dashboard.php?module=$module&page=main&search=$search&cid=$cid_search&hn=$hn_search&pagenum";
+$page_link = "dashboard.php?module=$module&page=$page&search=$search&cid=$cid_search&hn=$hn_search&pagenum";
 
 if($pagenum==1)		//	กรณีอยู่หน้า 1 หรือยังไม่เลือกหน้า
 {
@@ -378,7 +443,6 @@ else if($Num_Pages!=1 && $Num_Pages!=2)	//	กรณีไม่ได้เล�
             </div>
         </div>
 
-
         <?php
 					} // end if
 					?>
@@ -392,71 +456,25 @@ else if($Num_Pages!=1 && $Num_Pages!=2)	//	กรณีไม่ได้เล�
 
 
 </div>
-
 <!--end::Card-->
 
-
-
-
-<!-- Datepicker Thai -->
-<script src="assets/js/bootstrap-datepicker.js"></script>
-<script src="assets/js/bootstrap-datepicker-thai.js"></script>
-<script src="assets/js/locales/bootstrap-datepicker.th.js"></script>
-
-<script>
+<script type="text/javascript">
 $(document).ready(function() {
-    'use strict';
     getoptselect_amphur();
-    getoptselect_tambon();
-
-
 });
-
-$(".add-more").click(function() {
-    //alert(99);
-    var html = $(".copy").html();
-    $(".after-add-more").after(html);
-});
-
-
-$('#birthdate').datepicker({
-    autoclose: true
-});
-
-
-
-$("#changwat").change(function() {
-    $("#txt_ampur").val('');
-    $("#txt_tambon").val('');
-    getoptselect_amphur();
-    getoptselect_tambon();
-});
-
-
 
 $("#ampur").change(function() {
     $("#txt_tambon").val('');
     getoptselect_tambon();
 });
 
-
-$("#level").change(function() {
-    if ($("#level").val() == 1) {
-        $("#head_h").hide();
-    } else {
-        $("#head_h").show();
-    }
-});
-
-
-
 function getoptselect_amphur() {
 
-    var changwatcode = $("#changwat").val();
+    var changwatcode = 30;
     var ampur = $("#txt_ampur").val();
     $.ajax({
         type: "POST",
-        url: "core/fn-get-ampur.php",
+        url: "core/fn-get-ampur-now.php",
         //dataType: "json",
         data: {
             changwatcode: changwatcode,
@@ -470,7 +488,6 @@ function getoptselect_amphur() {
 }
 
 
-
 function getoptselect_tambon() {
 
     var changwatcode = $("#changwat").val();
@@ -479,7 +496,7 @@ function getoptselect_tambon() {
     var tambon = $("#txt_tambon").val();
     $.ajax({
         type: "POST",
-        url: "core/fn-get-tambon.php",
+        url: "core/fn-get-tambon-now.php",
         //dataType: "json",
         data: {
             changwatcode: changwatcode,

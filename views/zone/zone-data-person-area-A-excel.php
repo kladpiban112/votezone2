@@ -19,9 +19,9 @@ $personid_enc = base64_encode($personid);
 
 
 $stmt_data = $conn->prepare('SELECT * FROM mapping_person mp 
-LEFT JOIN area a ON a.aid = mp.aid
-LEFT JOIN person_main pm ON mp.oid = pm.team_id
-WHERE mp.aid = '.$aid.' AND pm.level = 1 ORDER BY mp.oid');
+INNER  JOIN area a ON a.aid = mp.aid
+INNER  JOIN person_sub pm ON mp.oid_map = pm.team_id
+WHERE mp.aid = '.$aid.' AND pm.level = 1 ORDER BY mp.oid_map');
 $stmt_data->execute();
 $numb_rows = $stmt_data->rowCount();
 
@@ -30,14 +30,14 @@ $numb_rows = $stmt_data->rowCount();
 ?>
 
 
-<div class="table-responsive" >
+<div class="table-responsive">
     <table class="table table-bordered table-hover table-strip" id="tbData" style="">
         <thead style="position: sticky; top: 0; z-index: 1;background:#eee;">
             <tr>
                 <th class="text-center">ลำดับ</th>
                 <th style="width:30%">ชื่อ-สกุล</th>
                 <th style="width:20%">รายละเอียด</th>
-                <th >จำนวนสมาชิก(N-ผู้มีสิทธิ)</th>
+                <th>จำนวนสมาชิก(N-ผู้มีสิทธิ)</th>
             </tr>
         </thead>
         <tbody>
@@ -50,14 +50,14 @@ $numb_rows = $stmt_data->rowCount();
             $name =  $row['fname'].' '. $row['lname'];
             $de =  $row['datail'];
             $oid = $row['oid'];
-            $sql = $conn->prepare("SELECT COUNT(team_id) AS num FROM person_main WHERE level = 5 AND head = ".$oid." AND team_id = ".$oid);
+            $sql = $conn->prepare("SELECT COUNT(team_id) AS num FROM person_sub WHERE level = 5 AND head = ".$oid." AND team_id = ".$oid);
             $sql->execute();
             $count_num = $sql->fetchColumn();
             ?>
 
-            <tr >
+            <tr>
                 <td class="text-center" width="20px"><?php echo $i; ?></td>
-                <td ><?php echo $name; ?></td>
+                <td><?php echo $name; ?></td>
                 <td><?php echo $de; ?></td>
                 <td><?php echo $count_num; ?></td>
 

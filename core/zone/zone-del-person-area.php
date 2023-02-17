@@ -11,7 +11,7 @@ $oid = filter_input(INPUT_POST, 'oid', FILTER_SANITIZE_STRING);
 $aid = filter_input(INPUT_POST, 'aid', FILTER_SANITIZE_STRING);
 
 
-$query = "DELETE FROM ".DB_PREFIX."mapping_person WHERE oid = '$oid' AND aid = '$aid' LIMIT 1"; 
+$query = "DELETE FROM ".DB_PREFIX."mapping_person WHERE oid_map = '$oid' AND aid = '$aid' LIMIT 1"; 
 $stmt = $conn->prepare($query);
 $stmt->execute();
 

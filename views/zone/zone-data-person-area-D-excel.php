@@ -19,9 +19,9 @@ $personid_enc = base64_encode($personid);
 
 
 $stmt_data = $conn->prepare('SELECT * ,pm.oid AS h FROM mapping_person mp 
-LEFT JOIN area a ON a.aid = mp.aid
-LEFT JOIN person_main pm ON mp.oid = pm.team_id
-WHERE mp.aid = '.$aid.' AND pm.level = 4 ORDER BY mp.oid');
+INNER JOIN area a ON a.aid = mp.aid
+INNER JOIN person_sub pm ON mp.oid_map = pm.team_id
+WHERE mp.aid = '.$aid.' AND pm.level = 4 ORDER BY mp.oid_map');
 $stmt_data->execute();
 $numb_rows = $stmt_data->rowCount();
 
@@ -30,7 +30,7 @@ $numb_rows = $stmt_data->rowCount();
 ?>
 
 
-<div class="table-responsive" >
+<div class="table-responsive">
     <table class="table table-bordered table-hover table-strip" id="tbData" style="">
         <thead style="position: sticky; top: 0; z-index: 1;background:#eee;">
             <tr>

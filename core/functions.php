@@ -778,6 +778,8 @@ function getOrgName($orgid){
             return $org_name;
 }
 
+
+
 function getOrgLogo($orgid){
             global $conn;
             if ($orgid != '') {
