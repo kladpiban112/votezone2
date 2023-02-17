@@ -53,7 +53,13 @@ if($area != ""){
             <i class="far fa-map"></i>&nbsp;แบ่งตามเขตการเลือกตั้ง
         </h3>
         <div class="card-toolbar">
-
+            <div class="example-tools justify-content-right">
+                <button
+                    onclick="location.href='views/person/excelmap.php?&area=<?php echo $area;?> &slevel=<?php echo $slevel;?>&ampur=<?php echo $campur;?>&tambon=<?php echo  $ctambon;?>&cid=<?php echo $cid;?>&cposition1=<?php echo $cposition1;?>&search=<?php echo  $search ;?>&act=export'"
+                    name="export_excel" class="btn btn-primary">
+                    Export to Excel
+                </button>
+            </div>
         </div>
     </div>
 
@@ -216,7 +222,7 @@ if($area != ""){
         INNER JOIN".DB_PREFIX." mapping_person mp ON  mp.oid_map = ps.team_id 
 	    INNER  JOIN ".DB_PREFIX."area a ON a.aid = mp.aid
         WHERE ps.flag != '0'  $conditions  $search_data  $cid_data  $slevel_data $cchangwat_data $campur_data $ctambon_data $cposition1_data $area_data
-        $max");
+        ORDER BY ps.level ASC$max");
         $stmt_data->execute();		
     ?>
 

@@ -293,7 +293,7 @@ if($cposition1 != ""){
     
         FROM ".DB_PREFIX."person_sub p
         WHERE p.flag != '0' $conditions  $search_data  $cid_data  $slevel_data $cchangwat_data $campur_data $ctambon_data $cposition1_data
-        $max");
+        ORDER BY p.level ASC  $max ");
         $stmt_data->execute();		
     ?>
 
@@ -343,6 +343,10 @@ if($cposition1 != ""){
                 $today = date("Y-m-d");
                 $diff = date_diff(date_create($row['birthdate']), date_create($today));
                 $age_y = $diff->format('%y');
+                $team_id = $row['team_id'];
+                $team_id_enc= base64_encode($team_id);
+                $level_id = $row['level'];
+
                 
                 
                 $house = $row['house'];
@@ -426,6 +430,24 @@ if($cposition1 != ""){
                                                 <span class="navi-text">แก้ไขข้อมูลสังกัด</span>
                                             </a>
                                         </li>
+                                        <li class="navi-item">
+
+
+                                            <?php 
+												if($level_id == 5){  ?>
+
+                                            <?php }
+												else { ?>
+                                            <a href="dashboard.php?module=person&page=report&personid=<?php echo $personid_enc;?>&teamid=<?php echo $team_id_enc;?>&levelid=<?php echo $level_id;?>"
+                                                class="navi-link">
+                                                <span class="navi-icon"><i class="fas fa-user-edit"></i></span>
+                                                <span class="navi-text">ออกรายงาน</span>
+                                            </a>
+                                            <?php }
+                            							?>
+
+
+                                        </li>
                                     </ul>
                                     <!--end::Navigation-->
                                 </div>
@@ -434,8 +456,8 @@ if($cposition1 != ""){
                         </td>
                     </tr>
                     <?php 
-              } // end while
-            ?>
+            } // end while
+                ?>
                 </tbody>
             </table>
         </div>

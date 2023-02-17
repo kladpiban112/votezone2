@@ -45,7 +45,12 @@ $action = base64_decode($act);
             <i class="far fa-user"></i>&nbsp;ข้อมูลเขตเลือกตั้ง
         </h3>
         <div class="card-toolbar">
-
+            <div class="example-tools justify-content-right">
+                <button onclick="location.href='views/zone/excel.php?&act=export'" name="export_excel"
+                    class="btn btn-primary">
+                    Export to Excel
+                </button>
+            </div>
         </div>
     </div>
 

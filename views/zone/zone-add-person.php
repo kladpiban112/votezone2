@@ -297,7 +297,8 @@ $action = base64_decode($act);
                     <div class="form-group row">
                         <div class="col-lg-12">
                             <label>รายละเอียด</label>
-                            <textarea class="form-control editor" name="details" id="details"></textarea>
+                            <textarea class="form-control editor" name="details" id="details"
+                                placeholder="กรุณาระบุชื่อหัวคะแนน"></textarea>
                         </div>
                     </div>
                     <div class="form-group row">

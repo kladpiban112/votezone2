@@ -37,9 +37,7 @@ if($cposition1 != ""){
         <h3 class="card-title">
             <i class="far fa-user"></i>&nbsp;ข้อมูลบุคคล
         </h3>
-        <div class="card-toolbar">
 
-        </div>
     </div>
 
     <div class="card-body">

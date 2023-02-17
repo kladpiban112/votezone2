@@ -58,11 +58,11 @@
 
             <?php
     
-    $numb_A = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."person_main  WHERE  level ='1' ")->fetchColumn();//แจ้งซ่อมวันนี้
-    $numb_B = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."person_main  WHERE  level ='2' ")->fetchColumn();//แจ้งซ่อมวันนี้
-    $numb_C = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."person_main  WHERE  level ='3' ")->fetchColumn();//แจ้งซ่อมวันนี้
-    $numb_D = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."person_main  WHERE  level ='4' ")->fetchColumn();//แจ้งซ่อมวันนี้
-    $numb_N = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."person_main  WHERE  level ='5' ")->fetchColumn();//แจ้งซ่อมวันนี้
+    $numb_A = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."person_sub  WHERE  level ='1' ")->fetchColumn();//แจ้งซ่อมวันนี้
+    $numb_B = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."person_sub  WHERE  level ='2' ")->fetchColumn();//แจ้งซ่อมวันนี้
+    $numb_C = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."person_sub  WHERE  level ='3' ")->fetchColumn();//แจ้งซ่อมวันนี้
+    $numb_D = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."person_sub  WHERE  level ='4' ")->fetchColumn();//แจ้งซ่อมวันนี้
+    $numb_N = $conn->query("SELECT COUNT(1) FROM ".DB_PREFIX."person_sub  WHERE  level ='5' ")->fetchColumn();//แจ้งซ่อมวันนี้
 
 
 
