@@ -764,6 +764,9 @@ function getOrgAddr($orgid){
             return $addr;
 }
 
+
+
+
 function getOrgName($orgid){
             global $conn;
             if ($orgid != '') {
@@ -776,6 +779,20 @@ function getOrgName($orgid){
             }
 
             return $org_name;
+}
+
+function getOrgid($orgid){
+            global $conn;
+            if ($orgid != '') {
+                $stmt = $conn->prepare('SELECT o.* FROM org_main o WHERE o.org_id = ? ');
+                $stmt->execute([$orgid]);
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $org_id = $row['org_id'];
+            } else {
+                $org_id = '';
+            }
+
+            return $org_id;
 }
 
 

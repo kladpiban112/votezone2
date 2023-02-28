@@ -72,7 +72,7 @@
 
             <!-- Text Column1 -->
             <div class="col-md-4  ">
-                <a href="#demo" data-bs-toggle="collapse">
+                <a href="?act=search&module=person&page=main&slevel=1" >
                     <div class="row-sm-2 ">
                         <div class="card text-white">
                             <div class="card-header bg-success ">
@@ -96,7 +96,7 @@
 
                 <!-- Text Column2 -->
                 <div class="row-md-2  ">
-                    <a href="#demo2" data-bs-toggle="collapse">
+                    <a href="?act=search&module=person&page=main&slevel=2">
                         <div class="card text-white">
                             <div class="card-header bg-warning">
 
@@ -117,7 +117,7 @@
 
                     <!-- Text Column3 -->
                     <div class="row-md-2">
-                        <a href="#demo3" data-bs-toggle="collapse">
+                        <a href="?act=search&module=person&page=main&slevel=3" >
                             <div class="card text-white">
                                 <div class="card-header bg-primary">
                                     <div class="d-flex justify-content-between mb-3">
@@ -137,7 +137,7 @@
                         <br />
                         <!-- Text Column2 -->
                         <div class="row-md-2  ">
-                            <a href="#demo4" data-bs-toggle="collapse">
+                            <a href="?act=search&module=person&page=main&slevel=4" >
                                 <div class="card text-white">
                                     <div class="card-header bg-info">
 
@@ -158,7 +158,7 @@
                         <br />
                         <!-- Text Column2 -->
                         <div class="row-md-2  ">
-                            <a href="#demo4" data-bs-toggle="collapse">
+                            <a href="?act=search&module=person&page=main&slevel=5">
                                 <div class="card text-white">
                                     <div class="card-header bg-info">
 

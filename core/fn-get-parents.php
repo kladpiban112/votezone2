@@ -5,7 +5,7 @@ require_once "../core/config.php";
 require_once ABSPATH."/checklogin.php";
 require_once ABSPATH."/functions.php";
 
-$person = filter_input(INPUT_POST, 'person', FILTER_SANITIZE_STRING);  
+$person = filter_input(INPUT_POST, 'person', FILTER_SANITIZE_STRING);  // team_id
 $id_h = 0;
 
 $stmt = $conn->prepare ("SELECT * FROM person_sub l WHERE l.oid = ".$person." limit 1");
@@ -14,7 +14,10 @@ $stmt->execute();
         $id_h = $row->team_id;
     }
 if($id_h != 0){
-$stmt1 = $conn->prepare ("SELECT *,lt.level AS levelname FROM person_sub l LEFT JOIN level_type lt ON l.level = lt.level_id WHERE l.oid = ".$id_h." limit 1");
+$stmt1 = $conn->prepare ("SELECT *,lt.level AS levelname 
+FROM person_sub l 
+LEFT JOIN level_type lt ON l.level = lt.level_id 
+WHERE l.oid = ".$id_h." limit 1");
 $stmt1->execute();     
     while ($row1 = $stmt1->fetch(PDO::FETCH_OBJ)){
         $id = $row1->oid;

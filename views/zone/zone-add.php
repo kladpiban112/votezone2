@@ -99,6 +99,24 @@ if($action == "edit"){
                             </select>
                         </div>
 
+                        <div class="col-lg-3">
+                            <label>อำเภอ</label>
+                            <select class="form-control form-control-sm" name="ampur2" id="ampur2">
+                                <option value="">ระบุ</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>ตำบล</label>
+                            <select class=" form-control form-control-sm  " name="tambon2" id="tambon2">
+                                <option value="">ระบุ</option>
+                            </select>
+
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <div class="col-lg-2">
                             <label>เขตการเลือกตั้ง</label>
                             <input type="number" class="form-control form-control-sm" name="area_number"
@@ -128,13 +146,8 @@ if($action == "edit"){
                             <select class=" form-control form-control-sm  " multiple name="tambon[]" id="tambon">
                                 <option value="" id="tambon">ระบุ</option>
                             </select>
-
-
                         </div>
-
-
                     </div>
-
                     <div class="form-group row">
 
                         <div class="col-lg-2">
@@ -306,6 +319,9 @@ $(document).ready(function() {
     getoptselect_tambon();
     init();
 
+    getoptselect_amphur2();
+    getoptselect_tambon2();
+
 
 
 
@@ -326,13 +342,19 @@ $("#changwat").change(function() {
     $("#txt_tambon").val('');
     getoptselect_amphur();
     getoptselect_tambon();
+
+    $("#txt_ampur2").val('');
+    $("#txt_tambon2").val('');
+    getoptselect_amphur2();
+    getoptselect_tambon2();
 });
 
 
-// $("#ampur").change(function() {
-//     $("#txt_tambon").val('');
-//     getoptselect_tambon();
-// });
+$("#ampur2").change(function() {
+    $("#txt_tambon2").val('');
+    getoptselect_tambon2();
+});
+
 $("#ampur").click(function() {
     $("#txt_tambon").val('');
     getoptselect_tambon();
@@ -391,6 +413,50 @@ function getoptselect_tambon() {
 
 }
 
+function getoptselect_amphur2() {
+
+    var changwatcode = $("#changwat").val();
+    var ampur2 = $("#txt_ampur2").val();
+    $.ajax({
+        type: "POST",
+        url: "core/fn-get-ampur-now.php",
+        //dataType: "json",
+        data: {
+            changwatcode: changwatcode,
+            ampur2: ampur2
+        },
+        success: function(data) {
+            $("#ampur2").empty();
+            $("#ampur2").append(data);
+        } // success
+    });
+}
+
+
+function getoptselect_tambon2() {
+
+    var changwatcode = $("#changwat").val();
+    var ampur2 = $("#txt_ampur2").val();
+    var ampurcode = $("#ampur2").val();
+    var tambon2 = $("#txt_tambon2").val();
+    $.ajax({
+        type: "POST",
+        url: "core/fn-get-tambon-now.php",
+        //dataType: "json",
+        data: {
+            changwatcode: changwatcode,
+            ampurcode: ampurcode,
+            ampur2: ampur2,
+            tambon2: tambon2
+        },
+        success: function(data) {
+            $("#tambon2").empty();
+            $("#tambon2").append(data);
+        } // success
+    });
+
+}
+
 
 $('#btnSaveArea').click(function(e) {
     e.preventDefault();
@@ -402,13 +468,13 @@ $('#btnSaveArea').click(function(e) {
         alert('กรุณากรอกข้อมูลให้ครบถ้วน');
         $('#changwat').focus();
         return false;
-    } else if ($('#ampur').val().length == "") {
+    } else if ($('#ampur2').val().length == "") {
         alert('กรุณากรอกข้อมูลให้ครบถ้วน');
-        $('#ampur').focus();
+        $('#ampur2').focus();
         return false;
-    } else if ($('#tambon').val().length == "") {
+    } else if ($('#tambon2').val().length == "") {
         alert('กรุณากรอกข้อมูลให้ครบถ้วน');
-        $('#tambon').focus();
+        $('#tambon2').focus();
         return false;
     } else if ($('#village').val().length == "") {
         alert('กรุณากรอกข้อมูลให้ครบถ้วน');

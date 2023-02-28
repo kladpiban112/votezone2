@@ -22,6 +22,9 @@ $longitude = filter_input(INPUT_POST, 'longitude', FILTER_SANITIZE_STRING);
 $details = filter_input(INPUT_POST, 'details', FILTER_SANITIZE_STRING);
 $area_color = filter_input(INPUT_POST, 'area_color', FILTER_SANITIZE_STRING);
 
+$ampur2 = filter_input(INPUT_POST, 'ampur2', FILTER_SANITIZE_STRING);
+$tambon2 = filter_input(INPUT_POST, 'tambon2',FILTER_SANITIZE_STRING);
+
 $zone_code = "";
 $tambon = substr($tambonA[0],4);
 $ampurA = substr($ampur[0],2);
@@ -40,8 +43,8 @@ if($act == 'add'){
 	$stmt = $conn->prepare($query);
 	$stmt->bindParam(1, $area_number, PDO::PARAM_STR);
 	$stmt->bindParam(2, $changwat, PDO::PARAM_STR);
-	$stmt->bindParam(3, $ampurA, PDO::PARAM_STR);
-	$stmt->bindParam(4, $tambon, PDO::PARAM_STR);
+	$stmt->bindParam(3, $ampur2, PDO::PARAM_STR);
+	$stmt->bindParam(4, $tambon2, PDO::PARAM_STR);
 	$stmt->bindParam(5, $village, PDO::PARAM_STR);
 	$stmt->bindParam(6, $zone_number, PDO::PARAM_INT);
 	$stmt->bindParam(7, $zone_name, PDO::PARAM_INT);
@@ -62,8 +65,8 @@ if($act == 'add'){
 	$stmt = $conn->prepare($query);
 	$stmt->bindParam(1, $area_number, PDO::PARAM_STR);
 	$stmt->bindParam(2, $changwat, PDO::PARAM_STR);
-	$stmt->bindParam(3, $ampur, PDO::PARAM_STR);
-	$stmt->bindParam(4, $tambon, PDO::PARAM_STR);
+	$stmt->bindParam(3, $ampur2, PDO::PARAM_STR);
+	$stmt->bindParam(4, $tambon2, PDO::PARAM_STR);
 	$stmt->bindParam(5, $village, PDO::PARAM_STR);
 	$stmt->bindParam(6, $zone_number, PDO::PARAM_INT);
 	$stmt->bindParam(7, $zone_name, PDO::PARAM_INT);

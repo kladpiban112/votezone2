@@ -1,35 +1,29 @@
-<?php
+﻿<?php
 error_reporting(0);
 ini_set('display_errors', 1);
 session_start();
 include_once "../../core/config.php";
 require_once ABSPATH.'/functions.php';
 
-$team_id_enc = filter_input(INPUT_GET, 'teamid', FILTER_SANITIZE_STRING);
-$team_id = base64_decode($team_id_enc);
-$level_id = filter_input(INPUT_GET, 'levelid', FILTER_SANITIZE_STRING);
-$personid_enc = filter_input(INPUT_GET, 'personid', FILTER_SANITIZE_STRING);
-$personid = base64_decode($personid_enc);
+$cchangwat = filter_input(INPUT_GET, 'changwat', FILTER_SANITIZE_STRING);
+$campur = filter_input(INPUT_GET, 'ampur', FILTER_SANITIZE_STRING);
+$ctambon = filter_input(INPUT_GET, 'tambon', FILTER_SANITIZE_STRING);
+$village = filter_input(INPUT_GET, 'village', FILTER_SANITIZE_STRING);
 
 
 
 
-$sql = "SELECT pm.* FROM person_sub pm
-        WHERE pm.level > {$level_id} AND pm.team_id={$personid} OR pm.head={$personid} ORDER BY pm.`level` ASC   ";
+
+$sql = "SELECT * FROM person_onerecord p WHERE p.cid NOT IN (SELECT ps.cid FROM person_sub ps) AND p.changwat={$cchangwat} AND p.ampur={$campur} AND p.tambon={$ctambon} AND p.village={$village} ";
         $stmt_data = $conn->prepare($sql);
         $row = $stmt_data->execute();
 
- $sql_person = "SELECT pm.* FROM person_sub pm
-                WHERE pm.oid = {$personid} ORDER BY pm.`level` ASC LIMIT 100 ";
-    $stmt_person = $conn->prepare($sql_person);
-    $stmt_person->execute();
-    $row_person = $stmt_person->fetch(PDO::FETCH_ASSOC);
  
 $total_rows = $stmt_data->rowCount(); // จำนวน rows
 $total_column = $stmt_data->columnCount(); // จำนวน column
 $i = 0;
 
-$strExcelFileName = "ลูกทีม ".$row_person['fname'].".xls";
+$strExcelFileName = "รายชื่อที่ไม่อยู่ในระบบ.xls";
 header("Content-Type: application/x-msexcel; name=\"$strExcelFileName\"");
 header("Content-Disposition: inline; filename=\"$strExcelFileName\"");
 header("Pragma:no-cache");
@@ -71,7 +65,6 @@ header("Pragma:no-cache");
                             <th>อายุ</th>
                             <th>โทรศัพท์</th>
                             <th>ที่อยู่</th>
-                            <th>ลูกทีมของ</th>
 
                             <!--<th class="text-center">สถานะ</th>-->
 
@@ -115,9 +108,8 @@ header("Pragma:no-cache");
                 $level = $row['levelname'];
                 $status = $row['name'];
                 $sid = $row['sid'];
-                $zonename = $row['zone_name'];
-                $detail = $row['detail'];
-                $head =$row_person['fname'];
+              
+          
                 
                 
 
@@ -143,7 +135,7 @@ header("Pragma:no-cache");
                             <td><?php echo $age_y;?></td>
                             <td><?php echo $telephone;?></td>
                             <td><?php echo $addr;?></td>
-                            <td><?php echo  $head;?></td>
+
                         </tr>
                         <?php 
               } // end while

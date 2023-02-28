@@ -15,7 +15,7 @@ $personid = base64_decode($personid_enc);
 
 
 $sql = "SELECT pm.* FROM person_sub pm
-        WHERE pm.team_id={$team_id} AND pm.level > {$level_id} ORDER BY pm.`level` ASC LIMIT 100 ";
+        WHERE pm.level > {$level_id} AND pm.team_id={$personid} OR pm.head={$personid} ORDER BY pm.`level` ASC   ";
         $stmt_data = $conn->prepare($sql);
         $row = $stmt_data->execute();
 

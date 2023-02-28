@@ -1,9 +1,12 @@
 ﻿<?php
 error_reporting(0);
-$search = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING);
+$searchf = filter_input(INPUT_GET, 'searchf', FILTER_SANITIZE_STRING);
+$searchl = filter_input(INPUT_GET, 'searchl', FILTER_SANITIZE_STRING);
+
 $cid_search = filter_input(INPUT_GET, 'cid', FILTER_SANITIZE_STRING);
 $hn_search = filter_input(INPUT_GET, 'hn', FILTER_SANITIZE_STRING);
 $cid_search = filter_input(INPUT_GET, 'cid', FILTER_SANITIZE_STRING);
+$slevel = filter_input(INPUT_GET, 'slevel', FILTER_SANITIZE_STRING);
 $cchangwat = filter_input(INPUT_GET, 'changwat', FILTER_SANITIZE_STRING);
 $campur = filter_input(INPUT_GET, 'ampur', FILTER_SANITIZE_STRING);
 $ctambon = filter_input(INPUT_GET, 'tambon', FILTER_SANITIZE_STRING);
@@ -14,10 +17,12 @@ $village = filter_input(INPUT_GET, 'village', FILTER_SANITIZE_STRING);
 if($cid_search != ""){
     $cid_data = " AND p.cid LIKE '%$cid_search%'  ";
 }
-if($search != ""){
-    $search_data = " AND  p.fname  LIKE '%$search%'  OR p.lname LIKE '%$search%' ";
+if($searchf!= ""){
+    $searchf_data = " AND  p.fname LIKE '%$searchf%'  ";
 }
-
+if($searchl != ""){
+    $searchl_data = " AND  p.lname LIKE '%$searchl%'  ";
+}
 if($cchangwat != ""){
     $cchangwat_data = " AND  p.changwat = '$cchangwat' ";
 }
@@ -27,13 +32,20 @@ if($campur != ""){
 if($ctambon != ""){
     $ctambon_data = " AND  p.tambon = '$ctambon' ";
 }
-if($cposition1 != ""){
-    $cposition1_data = " AND  p.cposition1 = '$cposition1' ";
-}
 if($village != ""){
-    $village_data = " AND  p.village = '$village' ";
+    $village_data = " AND  p.village ='$village' ";
 }
+
 ?>
+
+<div class="row">
+
+
+
+
+
+
+</div>
 <!--begin::Card-->
 <div class="card card-custom gutter-b example example-compact">
     <div class="card-header">
@@ -41,23 +53,33 @@ if($village != ""){
             <i class="far fa-user"></i>&nbsp;ข้อมูลบุคคล
         </h3>
 
+        <div class="card-toolbar">
+            <div class="example-tools justify-content-right">
+                <button
+                    onclick="location.href=' views/person/outsystem-excel.php?&changwat=<?php echo $cchangwat;?>&ampur=<?php echo $campur;?>&tambon=<?php echo $ctambon;?>&village=<?php echo $village;?>&act=export'"
+                    name="export_excel" class="btn btn-primary">
+                    Export to Excel
+                </button>
+            </div>
+        </div>
+
     </div>
 
     <div class="card-body">
         <form class="form" enctype="multipart/form-data" id="frmSearch" method="GET">
             <input type="hidden" class="form-control" name="act" id="act" value="search" />
             <input type="hidden" class="form-control" name="module" value="<?php echo $module;?>" />
-            <input type="hidden" class="form-control" name="page" value="totalperson" />
+            <input type="hidden" class="form-control" name="page" value="<?php echo $page;?>" />
             <div class="form-group row">
 
-                <div class="col-lg-2">
+                <div class="col-lg-1">
                     <label>จังหวัด</label>
-                    <select class="form-control form-control-sm" name="changwat" id="changwat" >
-
+                    <select class="form-control form-control-sm" name="changwat" id="changwat">
+                        <option value="">ระบุ</option>
                         <?php
-                        $stmt = $conn->prepare ("SELECT * FROM cchangwat c  ");
+                        $stmt = $conn->prepare ("SELECT * FROM cchangwat ");
                         $stmt->execute();
-                        echo "<option value=''>-ระบุ-</option>";
+                        
                         while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
                         $id = $row->changwatcode;
                         $name = $row->changwatname; ?>
@@ -71,14 +93,14 @@ if($village != ""){
 
                 </div>
 
-                <div class="col-lg-2">
+                <div class="col-lg-1">
                     <label>อำเภอ</label>
                     <select class="form-control form-control-sm" name="ampur" id="ampur">
                         <option value="">ระบุ</option>
                     </select>
                 </div>
 
-                <div class="col-lg-2">
+                <div class="col-lg-1">
                     <label>ตำบล</label>
                     <select class="form-control form-control-sm" name="tambon" id="tambon">
                         <option value="">ระบุ</option>
@@ -86,24 +108,23 @@ if($village != ""){
                 </div>
 
                 <div class="col-lg-1">
-                            <label>หมู่ที่</label>
-                            <select class="form-control form-control-sm" name="village" id="village">
-                            <option value="" <?php if($village == ""){ echo "selected";}?>>-</option>
-                            <option value="" <?php if($village == "0"){ echo "selected";}?>>0
-                                </option>
+                    <label>หมู่ที่</label>
+                    <select class="form-control form-control-sm" name="village" id="village">
+                        <option value="" <?php if($village == ""){ echo "selected";}?>>-</option>
+                        <option value="" <?php if($village == "0"){ echo "selected";}?>>0
+                        </option>
 
-                                <?php for ($n_vil = 1; $n_vil <= 99; $n_vil++) { 
+                        <?php for ($n_vil = 1; $n_vil <= 99; $n_vil++) { 
 									$n_vil_data = str_pad($n_vil,2,"0",STR_PAD_LEFT);
 									?>
-                                <option value="<?php echo $n_vil_data;?>"
-                                    <?php if($village == $n_vil_data){ echo "selected";}?>>
-                                    <?php echo $n_vil;?></option>
-                                <?php } ?>
+                        <option value="<?php echo $n_vil_data;?>"
+                            <?php if($village == $n_vil_data){ echo "selected";}?>>
+                            <?php echo $n_vil;?></option>
+                        <?php } ?>
 
 
-                            </select>
-                        </div>
-
+                    </select>
+                </div>
 
                 <div class="col-lg-2">
                     <label>เลขบัตรประชาชน</label>
@@ -111,28 +132,21 @@ if($village != ""){
                         id="cid" value="<?php echo $cid;?>" />
                 </div>
 
-                <div class="col-lg-1">
-                    <label>อาชีพ</label>
-                    <select class="form-control form-control-sm" name="cposition1" id="cposition1">
 
-                        <?php
-                                $stmt = $conn->prepare ("SELECT * FROM cposition ");
-                                $stmt->execute();
-                                echo "<option value=''>-ระบุ-</option>";
-                                while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
-                                $id = $row->id;
-                                $name = $row->name; ?>
-                        <option value="<?php echo $id;?>"><?php echo $name;?></option>
-                        <?php 
-                                }
-                        ?>
-                    </select>
+
+                <div class="col-lg-1">
+                    <label>ชื่อ</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control form-control-sm" placeholder="ชื่อ" name="searchf"
+                            id="searchf" value="<?php echo $searchf;?>" />
+
+                    </div>
                 </div>
                 <div class="col-lg-2">
-                    <label>ชื่อ-สกุล</label>
+                    <label>สกุล</label>
                     <div class="input-group">
-                        <input type="text" class="form-control form-control-sm" placeholder="ชื่อ-สกุล" name="search"
-                            id="search" value="<?php echo $search;?>" />
+                        <input type="text" class="form-control form-control-sm" placeholder="สกุล" name="searchl"
+                            id="searchl" value="<?php echo $searchl;?>" />
                         <div class="input-group-append">
                             <button class="btn btn-primary btn-sm" type="submit"><i class="fas fa-search"></i></button>
                         </div>
@@ -151,7 +165,7 @@ if($village != ""){
         $conditions = " ";
     }
 
-    $numb_data = $conn->query("SELECT count(1) FROM ".DB_PREFIX."person_onerecord p  WHERE p.flag != '0' $conditions  $search_data    $cid_data   $cchangwat_data $campur_data $ctambon_data $cposition1_data $village_data ")->fetchColumn();
+    $numb_data = $conn->query("SELECT count(1) FROM ".DB_PREFIX." person_onerecord p  WHERE p.cid NOT IN (SELECT ps.cid FROM person_sub ps)   $conditions  $searchf_data $searchl_data  $cid_data  $cchangwat_data $campur_data $ctambon_data $village_data ")->fetchColumn();
 
   
         if (!(isset($pagenum))) { $pagenum = 1; }
@@ -181,10 +195,7 @@ if($village != ""){
         }
         $Page_Start = ($pagenum - 1) * $page_rows; // สำหรับลำดับ
         $max = ' LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;		
-        $stmt_data = $conn->prepare ("SELECT p.*
-        FROM ".DB_PREFIX."person_onerecord p 
-        WHERE p.flag != '0' $conditions  $search_data  $cid_data  $cchangwat_data $campur_data $ctambon_data $cposition1_data $village_data
-        ORDER BY p.oid ASC$max ");
+        $stmt_data = $conn->prepare ("SELECT * FROM  person_onerecord p WHERE p.cid NOT IN (SELECT ps.cid FROM person_sub ps)   $conditions  $searchf_data $searchl_data  $cid_data  $cchangwat_data $campur_data $ctambon_data   $village_data   $max ");
         $stmt_data->execute();		
     ?>
 
@@ -195,13 +206,14 @@ if($village != ""){
                     <tr>
                         <th class="text-center">ลำดับ</th>
 
-                        <th>รูป</th>
+
                         <th>เลขบัตรประชาชน</th>
                         <th>ชื่อ-สกุล</th>
                         <th>เพศ</th>
                         <th>อายุ</th>
                         <th>โทรศัพท์</th>
                         <th>ที่อยู่</th>
+
 
                         <!--<th class="text-center">สถานะ</th>-->
 
@@ -234,41 +246,30 @@ if($village != ""){
                 $today = date("Y-m-d");
                 $diff = date_diff(date_create($row['birthdate']), date_create($today));
                 $age_y = $diff->format('%y');
-                
+                $team_id = $row['team_id'];
+                $team_id_enc= base64_encode($team_id);
+                $level_id = $row['level'];
+
+                $addr_note = $row['addr_note'];
                 
                 $house = $row['house'];
-                $village = $row['village'];
+                $village_addr = $row['village'];
                     $changwatname = $row['changwatname'];
 					$ampurname = $row['ampurname'];
 					$tambonname = $row['tambonname'];
-					$addr =  "บ้านเลขที่ ".$house." ม.".$village." ต.".$tambonname." อ.".$ampurname." จ.".$changwatname;
+					$addr =  "บ้านเลขที่ ".$house." ม.".$village_addr." ต.".$tambonname." อ.".$ampurname." จ.".$changwatname;
                 $sexname = $row['sexname'];
                 $level = $row['levelname'];
                 $status = $row['name'];
                 $sid = $row['sid'];
+
+             
 
 
                 ?>
                     <tr>
                         <td class="text-center"><?php echo $no;?></td>
 
-                        <td class="text-center">
-                            <?php if($img_profile == ""){?>
-                            <a href="uploads/no-image.jpg" class="example-image-link" data-lightbox="example-set"
-                                data-title="">
-                                <div class="symbol symbol-50 symbol-lg-60">
-                                    <img src="uploads/no-image.jpg" alt="image" />
-                                </div>
-                            </a>
-                            <?php }else{?>
-                            <a href="uploads/person/<?php echo $img_profile;?>" class="example-image-link"
-                                data-lightbox="example-set" data-title="">
-                                <div class="symbol symbol-50 symbol-lg-60">
-                                    <img src="uploads/person/<?php echo $img_profile;?>" alt="image" />
-                                </div>
-                            </a>
-                            <?php } ?>
-                        </td>
                         <td><?php echo $cid;?></td>
                         <td><?php echo $fullname;?></br></br>
                             <?php 
@@ -285,12 +286,12 @@ if($village != ""){
                         <td><?php echo $telephone;?></td>
                         <td><?php echo $addr;?></td>
 
-                        <!--<td class="text-center"><span class="label label-lg label-light-<?php echo $status_color;?> label-inline"><?php echo $status_title;?></span></td>-->
+
 
                     </tr>
                     <?php 
-              } // end while
-            ?>
+            } // end while
+                ?>
                 </tbody>
             </table>
         </div>
@@ -302,7 +303,7 @@ if($village != ""){
 $p = 4;	//	กำหนดช่วงตัวเลขทางซ้าย และ ขวา ของหน้าที่ถูกเลือก
 $Prev_Page = $pagenum-1;
 $Next_Page = $pagenum+1;
-$page_link = "dashboard.php?module=$module&page=$page&changwat=$cchangwat&ampur=$campur&tambon=$ctambon&cid=$cid_search&cposition1=$cposition1&search=$search&village=$village&pagenum";
+$page_link = "dashboard.php?module=$module&page=$page&ampur=$campur&tambon=$ctambon&cid=$cid_search&searchf=$searchf&searchl=$searchl&village=$village&pagenum";
 
 if($pagenum==1)		//	กรณีอยู่หน้า 1 หรือยังไม่เลือกหน้า
 {

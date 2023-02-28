@@ -352,7 +352,7 @@ function init() {
                 lineColor: '#888',
                 lineStyle: longdo.LineStyle.Dashed,
                 fillColor: data[0].area_color,
-                label: data[0].zone_name,
+               
             });
             map.Overlays.load(object4);
 
@@ -460,7 +460,7 @@ function getoptselect_amphur() {
     var ampur = $("#txt_ampur").val();
     $.ajax({
         type: "POST",
-        url: "core/fn-get-ampur.php",
+        url: "core/fn-get-ampur-now.php",
         //dataType: "json",
         data: {
             changwatcode: changwatcode,
@@ -482,7 +482,7 @@ function getoptselect_tambon() {
     var tambon = $("#txt_tambon").val();
     $.ajax({
         type: "POST",
-        url: "core/fn-get-tambon.php",
+        url: "core/fn-get-tambon-now.php",
         //dataType: "json",
         data: {
             changwatcode: changwatcode,

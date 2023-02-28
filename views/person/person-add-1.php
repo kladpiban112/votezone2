@@ -114,15 +114,20 @@ if($personid_enc != ""){
                         </div>
                         <div class="col-lg-3">
                             <label>ชื่อ</label>
-                            <input type="text" class="form-control form-control-sm" name="fname" id="fname"
-                                placeholder="ชื่อ" value="<?php echo $row_person['fname'];?>" />
+                            <input type="text" class="form-control" name="fname" id="fname" placeholder="ชื่อ"
+                                value="<?php echo $row_person['fname'];?>" />
 
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <label>สกุล</label>
-                            <input type="text" class="form-control form-control-sm" name="lname" id="lname"
-                                placeholder="สกุล" value="<?php echo $row_person['lname'];?>" />
-
+                            <div class="input-group">
+                                <input type="text" class="form-control " name="lname" id="lname" placeholder="สกุล"
+                                    value="<?php echo $row_person['lname'];?>" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="button" id="flSearch"><i
+                                            class="fas fa-search"></i></button>
+                                </div>
+                            </div>
                         </div>
 
 
@@ -366,7 +371,8 @@ if($personid_enc != ""){
                         <div class="col-lg-2">
                             <label>หมู่ที่</label>
                             <select class="form-control form-control-sm" name="village" id="village">
-                                <option value="" <?php if($row_person['village'] == "0"){ echo "selected";}?>>0</option>
+                                <option value="" <?php if($row_person['village'] == "0"){ echo "selected";}?>>0
+                                </option>
 
                                 <?php for ($n_vil = 1; $n_vil <= 99; $n_vil++) { 
 									$n_vil_data = str_pad($n_vil,2,"0",STR_PAD_LEFT);
@@ -400,7 +406,8 @@ if($personid_enc != ""){
                                                             $id = $row->changwatcode;
                                                             $name = $row->changwatname; ?>
                                 <option value="<?php echo $id;?>"
-                                    <?php if($row_person['changwat'] == $id){ echo "selected";}?>><?php echo $name;?>
+                                    <?php if($row_person['changwat'] == $id){ echo "selected";}?>>
+                                    <?php echo $name;?>
                                 </option>
                                 <?php 
                                                             }
@@ -422,10 +429,25 @@ if($personid_enc != ""){
                                 <option value="">ระบุ</option>
                             </select>
                         </div>
-
+                        <div class="col-lg-3">
+                            <label>หมายเหตุ</label>
+                            <select class="form-control form-control-sm" name="addr_note" id="addr_note">
+                                <option value="" <?php if($row_person['addr_note'] == ""){ echo "selected";}?>>-
+                                </option>
+                                <option value="กทม." <?php if($row_person['addr_note'] == "กทม."){ echo "selected";}?>>
+                                    กทม.
+                                </option>
+                                <option value="ตจว." <?php if($row_person['addr_note'] == "ตจว."){ echo "selected";}?>>
+                                    ตจว.
+                                </option>
+                            </select>
+                        </div>
 
 
                     </div>
+
+
+
 
                     <div class="row">
 
@@ -581,67 +603,22 @@ if($personid_enc != ""){
                         </div>
                     </div>
 
-                    <!-- <span><i class="fas fa-list"></i> ข้อมูลความพิการ
-                <?php if($action == "edit"){?>
-                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalAddDisab"><i class="far fa-plus-square"></i> บันทึกความพิการ</a>
-                <?php }else{?>
-               <a href="#" class="btn btn-sm btn-default" disabled><i class="far fa-plus-square"></i> บันทึกความพิการ</a>
-                <?php }?>
-                </span>
-                <hr> 
-                <div id="disab_detail"></div>  
 
 
-                <span><i class="fas fa-list"></i> ข้อมูลครอบครัว 
-                <?php if($action == "edit"){?>
-                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalAddFamily"><i class="far fa-plus-square"></i> เพิ่มครอบครัว</a>
-                <?php }else{?>
-               <a href="#" class="btn btn-sm btn-default" disabled><i class="far fa-plus-square"></i> เพิ่มครอบครัว</a>
-                <?php }?>
-                </span>
-                <hr> 
-                <div id="family_detail"></div>  
-
-                <span><i class="fas fa-list"></i> ผู้ดูแลหรือญาติ
-                <?php if($action == "edit"){?>
-                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalAddRelative"><i class="far fa-plus-square"></i> เพิ่มผู้ดูแลหรือญาติ</a>
-                <?php }else{?>
-               <a href="#" class="btn btn-sm btn-default" disabled><i class="far fa-plus-square"></i> เพิ่มผู้ดูแลหรือญาติ</a>
-                <?php }?>
-                </span>
-                <hr>
-                <div id="relative_detail"></div>  
- -->
-                    <!-- <div class="col-lg-12">
-				<label>ระดับ</label>
-            <select class="form-control form-control-sm" name="level" id="level" >
-                <?php
-                    $stmt = $conn->prepare ("SELECT * FROM level_type l ");
-                    $stmt->execute();
-                    echo "<option value=''>-ระบุ-</option>";
-                    while ($row = $stmt->fetch(PDO::FETCH_OBJ)){
-                    $id = $row->level_id;
-                    $name = $row->level; ?>
-                    <option value="<?php echo $id;?>" <?php if($row_person['level'] == $id){ echo "selected";}elseif($row_person['level'] == "" && $id == "4"){echo "selected";}?>><?php echo $name;?></option>
-                    <?php 
-                    }
-                ?>
-            </select>
-		</div>
-        </br>           
-        <div class="col-lg-12" id="head_h">
-				<label>สังกัด</label>
-            <select class="js-example-basic-single col-lg-12" name="head_data" id="head_data" >
-            </select>
-		</div>
-        </br>
-        <div class="col-lg-12" id="parents_h">
-			<label>สังกัดใหญ่</label>
-            <select class="form-control form-control-sm" name="parents" id="parents"  >   
-                <option id="parents_val" value="" selected>--ระบุ--</option>          
-            </select>
-            </select>
-		</div> -->
+                    </br>
+                    <div class="col-lg-12" id="head_h">
+                        <label>สังกัด</label>
+                        <select class="js-example-basic-single col-lg-12" name="head_data" id="head_data">
+                        </select>
+                    </div>
+                    </br>
+                    <div class="col-lg-12" id="parents_h">
+                        <label>สังกัดใหญ่</label>
+                        <select class="form-control form-control-sm" name="parents" id="parents">
+                            <option id="parents_val" value="" selected>--ระบุ--</option>
+                        </select>
+                        </select>
+                    </div>
 
                 </div>
 
@@ -1025,7 +1002,8 @@ $('#cidSearch').click(function(e) {
                         $('#cost3').val(data.data['cost3']);
                         $('#cost4').val(data.data['cost4']);
                         $('#sex').val(data.data['sex']);
-                        $('#birthdate').val(data.data['birthdate']);
+                        //$('#birthdate').val(data.data['birthdate']);
+                        $('#birthdate').val(data.data['bdate']);
                         $('#cposition1').val(data.data['cposition1']);
                         $('#cposition2').val(data.data['cposition2']);
                         $('#cposition3').val(data.data['cposition3']);
@@ -1054,50 +1032,110 @@ $('#cidSearch').click(function(e) {
         }
     });
 
-
-    function getoptselect_amphur_selected(changwatcode, ampur, tambon) {
-
-        $.ajax({
-            type: "POST",
-            url: "core/fn-get-ampur-now.php",
-            //dataType: "json",
-            data: {
-                changwatcode: changwatcode,
-                ampur: ampur
-            },
-            success: function(data) {
-
-                $("#ampur").empty();
-                $("#ampur").append(data);
-
-            } // success
-        });
-    }
-
-    function getoptselect_tambon_selected(changwatcode, ampurcode, tambon) {
-
-        var ampur = $("#txt_ampur").val();
-
-        $.ajax({
-            type: "POST",
-            url: "core/fn-get-tambon-now.php",
-            //dataType: "json",
-            data: {
-                changwatcode: changwatcode,
-                ampurcode: ampurcode,
-                ampur: ampur,
-                tambon: tambon
-            },
-            success: function(data) {
-
-                $("#tambon").empty();
-                $("#tambon").append(data);
-            } // success
-        });
-
-    }
+}); //  click
 
 
 
+function getoptselect_amphur_selected(changwatcode, ampur, tambon) {
+
+    $.ajax({
+        type: "POST",
+        url: "core/fn-get-ampur-now.php",
+        //dataType: "json",
+        data: {
+            changwatcode: changwatcode,
+            ampur: ampur
+        },
+        success: function(data) {
+
+            $("#ampur").empty();
+            $("#ampur").append(data);
+
+        } // success
+    });
+}
+
+function getoptselect_tambon_selected(changwatcode, ampurcode, tambon) {
+
+    var ampur = $("#txt_ampur").val();
+
+    $.ajax({
+        type: "POST",
+        url: "core/fn-get-tambon-now.php",
+        //dataType: "json",
+        data: {
+            changwatcode: changwatcode,
+            ampurcode: ampurcode,
+            ampur: ampur,
+            tambon: tambon
+        },
+        success: function(data) {
+
+            $("#tambon").empty();
+            $("#tambon").append(data);
+        } // success
+    });
+
+}
+
+
+$('#flSearch').click(function(e) {
+    e.preventDefault();
+    var data = new FormData(this.form);
+    $.ajax({
+        type: "POST",
+        url: "/core/person/person-get-flname.php",
+        dataType: "json",
+        data: data,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            if (data.code == "200") {
+                Swal.fire({
+                        icon: 'success',
+                        title: 'ค้นหาข้อมูลสำเร็จ',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    .then((value) => {
+                        console.log(data)
+                        $('#cid').val(data.data['cid']);
+                        $('#prename').val(data.data['prename']);
+                        $('#village').val(data.data['village']);
+                        $("#changwat").val(data.data['changwat']).change();
+                        getoptselect_tambon_selected(data.data['changwat'], data
+                            .data['ampur'],
+                            data.data['tambon']);
+                        getoptselect_amphur_selected(data.data['changwat'], data
+                            .data['ampur'],
+                            data.data['tambon']);
+                        $('#cost1').val(data.data['cost1']);
+                        $('#cost2').val(data.data['cost2']);
+                        $('#cost3').val(data.data['cost3']);
+                        $('#cost4').val(data.data['cost4']);
+                        $('#sex').val(data.data['sex']);
+                        $('#birthdate').val(data.data['bdate']);
+                        $('#cposition1').val(data.data['cposition1']);
+                        $('#cposition2').val(data.data['cposition2']);
+                        $('#cposition3').val(data.data['cposition3']);
+                        $('#cposition4').val(data.data['cposition4']);
+                        $('#status_pp').val(data.data['status']);
+                    });
+            } else if (data.code == "404") {
+                //swal("ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง")
+                Swal.fire({
+                        icon: 'error',
+                        title: 'ไม่พบข้อมูลที่ค้นหา',
+                        //text: 'กรุณาลองใหม่อีกครั้ง'
+                    })
+                    .then((value) => {
+                        //liff.closeWindow();
+                    });
+            }
+        },
+        error: function(jqXHR, exception) {
+            console.log(jqXHR); // success 
+        }
+    });
 }); //  click
 </script>

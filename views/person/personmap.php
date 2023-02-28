@@ -55,7 +55,7 @@ if($area != ""){
         <div class="card-toolbar">
             <div class="example-tools justify-content-right">
                 <button
-                    onclick="location.href='views/person/excelmap.php?&area=<?php echo $area;?> &slevel=<?php echo $slevel;?>&ampur=<?php echo $campur;?>&tambon=<?php echo  $ctambon;?>&cid=<?php echo $cid;?>&cposition1=<?php echo $cposition1;?>&search=<?php echo  $search ;?>&act=export'"
+                    onclick="location.href='views/person/excelmap.php?&area=<?php echo $area;?>&slevel=<?php echo $slevel;?>&ampur=<?php echo $campur;?>&tambon=<?php echo  $ctambon;?>&cid=<?php echo $cid;?>&cposition1=<?php echo $cposition1;?>&search=<?php echo  $search ;?>&act=export'"
                     name="export_excel" class="btn btn-primary">
                     Export to Excel
                 </button>
@@ -366,7 +366,7 @@ if($area != ""){
 $p = 4;	//	กำหนดช่วงตัวเลขทางซ้าย และ ขวา ของหน้าที่ถูกเลือก
 $Prev_Page = $pagenum-1;
 $Next_Page = $pagenum+1;
-$page_link = "dashboard.php?module=$module&page=$page&search=$search&cid=$cid_search&hn=$hn_search&pagenum";
+$page_link = "dashboard.php?module=$module&page=$page&area=$area&slevel=$slevel&ampur=$campur&tambon=$ctambon&cid=$cid_search&cposition1= $cposition1&search=$search&pagenum";
 
 if($pagenum==1)		//	กรณีอยู่หน้า 1 หรือยังไม่เลือกหน้า
 {

@@ -190,7 +190,7 @@ $action = base64_decode($act);
                         <th>C</th>
                         <th>D</th>
                         <th>N</th>
-                        <th>อยู๋ในระบบ</th>
+                        <th>อยู่ในระบบ</th>
                         <th class="text-center">จัดการ</th>
                     </tr>
                 </thead>

@@ -7,7 +7,7 @@ require_once ABSPATH."/checklogin.php";
 require_once ABSPATH."/functions.php";
 require_once ABSPATH."/PasswordHash.php";
 require_once ABSPATH."/resize-class.php";
-
+require_once ABSPATH."/BarcodeQR.php";
 
 $act = filter_input(INPUT_POST, 'act', FILTER_SANITIZE_STRING);
 $repairid = filter_input(INPUT_POST, 'repairid', FILTER_SANITIZE_STRING);
@@ -41,6 +41,7 @@ $cposition4 = filter_input(INPUT_POST, 'cposition4', FILTER_SANITIZE_STRING);
 
 $level = filter_input(INPUT_POST, 'level', FILTER_SANITIZE_STRING);
 $head = filter_input(INPUT_POST, 'head_data', FILTER_SANITIZE_STRING);
+$team = filter_input(INPUT_POST, 'team_data', FILTER_SANITIZE_STRING);
 $team_id = filter_input(INPUT_POST, 'team_id', FILTER_SANITIZE_STRING);
 $status_pp = filter_input(INPUT_POST, 'status_pp', FILTER_SANITIZE_STRING);
 $cost1 = filter_input(INPUT_POST, 'cost1', FILTER_SANITIZE_STRING);
@@ -55,8 +56,6 @@ $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
 $latitude = filter_input(INPUT_POST, 'latitude', FILTER_SANITIZE_STRING);
 $longitude = filter_input(INPUT_POST, 'longitude', FILTER_SANITIZE_STRING);
 $addr_note = filter_input(INPUT_POST, 'addr_note', FILTER_SANITIZE_STRING);
-
-
 
 $flag = '1';
 $now = date("Y-m-d H:i:s");
@@ -74,7 +73,7 @@ if ($row) {
   echo json_encode(['code'=>300, 'msg'=>$exist_person]);
 } else {
  if($level == "1"){$head = "0";}
-	$query = "INSERT INTO ".DB_PREFIX."person_sub ( cid, org_id, prename, fname, lname, sex,birthdate,telephone,house,community,road,village,tambon,ampur,changwat,flag,add_date,add_users,cposition1,cposition2,cposition3,cposition4,level,head,latitude,longitude,status,cost1,cost2,cost3,cost4,addr_note) VALUES ( ?,?,?,?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?,?,?,?,?,? )"; 
+	$query = "INSERT INTO ".DB_PREFIX."person_sub ( cid, org_id, prename, fname, lname, sex,birthdate,telephone,house,community,road,village,tambon,ampur,changwat,flag,add_date,add_users,cposition1,cposition2,cposition3,cposition4,level,head,latitude,longitude,status,cost1,cost2,cost3,cost4,addr_note) VALUES ( ?,?,?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?,?,?,?,?,?,? )"; 
 	$stmt = $conn->prepare($query);
 	$stmt->bindParam(1, $cid, PDO::PARAM_STR);
 	$stmt->bindParam(2, $org_id, PDO::PARAM_STR);
@@ -107,10 +106,7 @@ if ($row) {
 	$stmt->bindParam(29, $cost2, PDO::PARAM_STR);
 	$stmt->bindParam(30, $cost3, PDO::PARAM_STR);
 	$stmt->bindParam(31, $cost4, PDO::PARAM_STR);
-	$stmt->bindParam(32, $addr_note, PDO::PARAM_STR);
-
-	
-
+    $stmt->bindParam(32, $addr_note, PDO::PARAM_STR);
 	$stmt->execute();
 
 
@@ -126,10 +122,10 @@ if($level == "1"){
 	$stmt1->bindParam(1, $person_oid, PDO::PARAM_STR);
 	$stmt1->bindParam(2, $person_oid, PDO::PARAM_STR);
 	$stmt1->execute();
-}else if($parents != 0 OR $parents != null){
+}else if($team != 0 OR $team != null){
 	$query1 = "UPDATE ".DB_PREFIX."person_sub SET team_id = ? WHERE oid = ? LIMIT 1"; 
 	$stmt1 = $conn->prepare($query1);
-	$stmt1->bindParam(1, $parents, PDO::PARAM_STR);
+	$stmt1->bindParam(1, $team, PDO::PARAM_STR);
 	$stmt1->bindParam(2, $person_oid, PDO::PARAM_STR);
 	$stmt1->execute();
 }
@@ -162,10 +158,9 @@ if($_FILES['img_profile']['name'])
 		INNER JOIN campur a ON CONCAT(p.changwat,p.ampur) = a.ampurcodefull
 		INNER JOIN  ctambon t ON CONCAT(p.changwat,p.ampur,p.tambon) = t.tamboncodefull
 		INNER JOIN csex s ON p.sex = s.sex
-		SET p.levelname = l.level,p.changwatname = c.changwatname,p.ampurname = a.ampurname ,p.tambonname = t.tambonname,p.sexname = s.sexname
-		WHERE p.cid = :cid";  // adding WHERE clause
-$stmt = $conn->prepare($sql3);
-$stmt->bindParam(':cid', $cid, PDO::PARAM_STR);
+		SET p.levelname = l.level,p.changwatname = c.changwatname,p.ampurname = a.ampurname ,p.tambonname = t.tambonname,p.sexname = s.sexname";
+		$stmt = $conn->prepare($sql3);
+		$stmt->bindParam(1, $cid, PDO::PARAM_STR);
 $stmt->execute();
 	
 			$act_enc = base64_encode('edit');
@@ -183,7 +178,7 @@ if($level == "1"){
 	$head = "0";
 	$parents = $personid;
 }
-	$query = "UPDATE ".DB_PREFIX."person_sub SET cid = ?, org_id = ?, prename = ?, fname = ?, lname = ?, sex = ?,telephone = ?,house = ?,community = ?,road = ?,village = ?,tambon = ?,ampur = ?,changwat = ?,flag = ?,edit_date = ?,edit_users = ?,cposition1 = ? ,cposition2 = ?,cposition3 = ? ,cposition4 = ?, level = ?, head = ? ,team_id = ? ,latitude = ? ,longitude = ?,status = ?, cost1 =? ,cost2 = ?,cost3 = ?,cost4 = ? , birthdate = ? WHERE oid = ? LIMIT 1"; 
+	$query = "UPDATE ".DB_PREFIX."person_sub SET cid = ?, org_id = ?, prename = ?, fname = ?, lname = ?, sex = ?,telephone = ?,house = ?,community = ?,road = ?,village = ?,tambon = ?,ampur = ?,changwat = ?,flag = ?,edit_date = ?,edit_users = ?,cposition1 = ? ,cposition2 = ?,cposition3 = ? ,cposition4 = ?, level = ?, head = ? ,team_id = ? ,latitude = ? ,longitude = ?,status = ?, cost1 =? ,cost2 = ?,cost3 = ?,cost4 = ? , birthdate = ? , addr_note = ? WHERE oid = ? LIMIT 1"; 
 	$stmt = $conn->prepare($query);
 	$stmt->bindParam(1, $cid, PDO::PARAM_STR);
 	$stmt->bindParam(2, $org_id, PDO::PARAM_STR);
@@ -208,7 +203,7 @@ if($level == "1"){
 	$stmt->bindParam(21, $cposition4, PDO::PARAM_STR);
 	$stmt->bindParam(22, $level, PDO::PARAM_STR);
 	$stmt->bindParam(23, $head, PDO::PARAM_STR);
-	$stmt->bindParam(24, $parents, PDO::PARAM_STR);
+	$stmt->bindParam(24, $team, PDO::PARAM_STR);
 	$stmt->bindParam(25, $latitude, PDO::PARAM_STR);
 	$stmt->bindParam(26, $longitude, PDO::PARAM_STR);
 	$stmt->bindParam(27, $status_pp, PDO::PARAM_STR);
@@ -217,13 +212,18 @@ if($level == "1"){
 	$stmt->bindParam(30, $cost3, PDO::PARAM_STR);
 	$stmt->bindParam(31, $cost4, PDO::PARAM_STR);
 	$stmt->bindParam(32, $birthdate, PDO::PARAM_STR);
-	$stmt->bindParam(33, $personid, PDO::PARAM_INT);
+    $stmt->bindParam(33, $addr_note, PDO::PARAM_STR);
+	$stmt->bindParam(34, $personid, PDO::PARAM_INT);
 
 	$stmt->execute();
 
 	$sql2 = "UPDATE " . DB_PREFIX . "person_sub p 
 		INNER JOIN level_type l ON p.level = l.level_id
-		SET p.levelname = l.level";
+		INNER JOIN cchangwat c ON p.changwat = c.changwatcode
+		INNER JOIN campur a ON CONCAT(p.changwat,p.ampur) = a.ampurcodefull
+		INNER JOIN  ctambon t ON CONCAT(p.changwat,p.ampur,p.tambon) = t.tamboncodefull
+		INNER JOIN csex s ON p.sex = s.sex
+		SET p.levelname = l.level,p.changwatname = c.changwatname,p.ampurname = a.ampurname ,p.tambonname = t.tambonname,p.sexname = s.sexname";
 $stmt = $conn->prepare($sql2);
 $stmt->bindParam(1, $cid, PDO::PARAM_STR);
 $stmt->execute();
